@@ -92,7 +92,7 @@ func_eh_ex(() => {
 		background-color: #e3e0d1;
 	}
 	
-	#div_ee8413b2 #category_loading_div{
+	#div_ee8413b2 #category_loading_div {
 		height: 527px;
 		width: 100%;
 		line-height: 527px;
@@ -744,7 +744,8 @@ func_eh_ex(() => {
 	}
 	
 	#dms #googleTranslateDiv,
-	.t_popular_toppane #googleTranslateDiv {
+	.t_popular_toppane #googleTranslateDiv,
+	.t_toplist_ido #googleTranslateDiv {
 		float: left;
 		background-color: #edebdf;
 		padding: 2px 3px 6px 7px;
@@ -763,8 +764,14 @@ func_eh_ex(() => {
 		margin-top: -30px;
 	}
 	
+	.t_toplist_ido #googleTranslateDiv {
+		top: 40px;
+		right: 10px;
+	}
+	
 	#dms #translateLabel,
-	.t_popular_toppane #translateLabel {
+	.t_popular_toppane #translateLabel,
+	.t_toplist_ido #translateLabel {
 		padding-left: 5px;
 		font-weight: bold;
 		font-size: 13px;
@@ -775,7 +782,9 @@ func_eh_ex(() => {
 	#dms #googleTranslateCheckbox,
 	#dms #translateLabel,
 	.t_popular_toppane #googleTranslateDiv,
-	.t_popular_toppane #translateLabel {
+	.t_popular_toppane #translateLabel,
+	.t_toplist_ido #googleTranslateDiv,
+	.t_toplist_ido #translateLabel {
 		cursor: pointer;
 	}
 	
@@ -787,7 +796,8 @@ func_eh_ex(() => {
 		color: white;
 	}
 	
-	#gd5 #googleTranslateDiv {
+	#gd5 #googleTranslateDiv,
+	.t_toplist_ido #googleTranslateDiv {
 		background-color: #edebdf;
 		padding: 2px 3px 6px 7px;
 		margin-left: 10px;
@@ -797,7 +807,8 @@ func_eh_ex(() => {
 		margin-bottom: 15px;
 	}
 	
-	#gd5 #googleTranslateDiv #translateLabel {
+	#gd5 #googleTranslateDiv #translateLabel,
+	.t_toplist_ido #googleTranslateDiv #translateLabel {
 		padding-left: 5px;
 		font-weight: bold;
 		font-size: 13px;
@@ -806,7 +817,8 @@ func_eh_ex(() => {
 	
 	#gd5 #googleTranslateDiv,
 	#gd5 #googleTranslateDiv #googleTranslateCheckbox,
-	#gd5 #googleTranslateDiv #translateLabel {
+	#gd5 #googleTranslateDiv #translateLabel,
+	.t_toplist_ido #googleTranslateDiv {
 		cursor: pointer;
 	}
 	
@@ -833,7 +845,8 @@ func_eh_ex(() => {
 	#div_ee8413b2_detail_clearBtn:hover,
 	#div_ee8413b2_detail_addFavoriteBtn:hover,
 	#div_ee8413b2_detail_searchBtn:hover,
-	.t_popular_toppane #googleTranslateDiv:hover {
+	.t_popular_toppane #googleTranslateDiv:hover,
+	.t_toplist_ido #googleTranslateDiv:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
 	
@@ -913,6 +926,12 @@ func_eh_ex(() => {
 		border-top: 2px solid #070101;
 		padding-top: 6px !important;
 		margin-top: -8px;
+	}
+	
+	.t_toplist_ido h2 {
+		padding: 20px 0 10px 0;
+		border-bottom: 1px solid #5c0d12;
+		font-size: 1.5em;
 	}`;
 	styleInject(category_style);
 }, () => {

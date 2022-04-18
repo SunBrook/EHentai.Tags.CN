@@ -97,13 +97,13 @@ const dbVersionKey = "categoryVersion";
 const dbCategoryListHtmlKey = "categoryListHtml";
 
 // 全部列表折叠
-const dbCategoryListExpendKey = "categoryListExpendArray"; 
+const dbCategoryListExpendKey = "categoryListExpendArray";
 
 // 本地收藏折叠
-const dbFavoriteListExpendKey = "favoriteListExpendArray"; 
+const dbFavoriteListExpendKey = "favoriteListExpendArray";
 
 // 本地收藏列表
-const dbFavoriteKey = "favoriteDict"; 
+const dbFavoriteKey = "favoriteDict";
 
 // 头部搜索菜单显示隐藏
 const dbOldSearchDivVisibleKey = "oldSearchDivVisibleKey";
@@ -205,5 +205,50 @@ const defaultFontSubHoverColor_EH = "#ff4500";
 
 //#endregion
 
+//#region 排行榜翻译
+
+const toplist_parent_dict = {
+	"Gallery Toplists": "作品排行",
+	"Uploader Toplists": "上传者排行",
+	"Tagging Toplists": "标签排行",
+	"Hentai@Home Toplists": "用户主页排行",
+	"EHTracker Toplists": "做种排行",
+	"Cleanup Toplists": "清理排行",
+	"Rating & Reviewing Toplists": "评分 & 评论排行"
+};
+
+const toplie_subtitle_dict = {
+	"EHG Toplists": "EHentai 画廊排行榜",
+	"Galleries All-Time": "作品总排行",
+	"Galleries Past Year": "作品年排行",
+	"Galleries Past Month": "作品月排行",
+	"Galleries Yesterday": "作品日排行",
+	"Uploader All-Time": "上传者总排行",
+	"Uploader Past Year": "上传者年排行",
+	"Uploader Past Month": "上传者月排行",
+	"Uploader Yesterday": "上传者日排行",
+	"Tagging All-Time": "标签总排行",
+	"Tagging All-Time": "标签年排行",
+	"Tagging All-Time": "标签月排行",
+	"Tagging Yesterday": "标签日排行",
+	"Hentai@Home All-Time": "用户主页总排行",
+	"Hentai@Home Past Year": "用户主页年排行",
+	"Hentai@Home Past Month": "用户主页月排行",
+	"Hentai@Home Yesterday": "用户主页日排行",
+	"EHTracker All-Time": "做种总排行",
+	"EHTracker Past Year": "做种年排行",
+	"EHTracker Past Month": "做种月排行",
+	"EHTracker Yesterday": "做种日排行",
+	"Cleanup All-Time": "清理总排行",
+	"Cleanup Past Year": "清理年排行",
+	"Cleanup Past Month": "清理月排行",
+	"Cleanup Yesterday": "清理日排行",
+	"Rating & Reviewing All-Time": "评分 & 评论总排行",
+	"Rating & Reviewing Past Year": "评分 & 评论年排行",
+	"Rating & Reviewing Past Month": "评分 & 评论月排行",
+	"Rating & Reviewing Yesterday": "评分 & 评论日排行"
+}
+
+//#endregion
 
 //#endregion
