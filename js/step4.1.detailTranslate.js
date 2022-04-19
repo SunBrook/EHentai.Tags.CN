@@ -36,7 +36,15 @@ function detailPageTranslate() {
     }
 
 
-    var trList = document.getElementById("gdd").querySelectorAll("tr");
+    var gddDiv = document.getElementById("gdd");
+    var trList = gddDiv.querySelectorAll("tr");
+
+    // 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
+    var spanElement = document.createElement("span");
+    spanElement.style.display = "none";
+    var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
+    spanElement.appendChild(spanTxt);
+    gddDiv.appendChild(spanElement);
 
     // 上传时间
     trList[0].firstChild.innerText = "上传:";
@@ -78,6 +86,9 @@ function detailPageTranslate() {
 
     // 添加到收藏(Ex 账号)
     document.getElementById("favoritelink").innerText = "收藏到 (Ex 账号)";
+
+
+
 
     //#endregion
 
