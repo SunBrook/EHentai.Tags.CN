@@ -907,3 +907,17 @@ table .gtw {
     background-color: #4f535b;
     top: -87px;
 }
+
+.gm #h1Origin_copy {
+    font-size: 10pt;
+    padding: 0 0 2px;
+    margin: 3px 15px;
+    color: #b8b8b8;
+    border-bottom: 1px solid #000000;
+}
+
+.gm #h1Title_copy {
+    font-size: 12pt;
+    padding: 0 0 2px;
+    margin: 3px 15px;
+}

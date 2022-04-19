@@ -930,3 +930,17 @@ table .gtw {
     border-bottom: 1px solid #5c0d12;
     font-size: 1.5em;
 }
+
+.gm #h1Origin_copy {
+    font-size: 10pt;
+    padding: 0 0 2px;
+    margin: 3px 15px;
+    color: #9F8687;
+    border-bottom: 1px solid #5C0D12;
+}
+
+.gm #h1Title_copy {
+    font-size: 12pt;
+    padding: 0 0 2px;
+    margin: 3px 15px;
+}

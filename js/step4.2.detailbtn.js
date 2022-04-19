@@ -20,11 +20,11 @@ function translateDetailPageTitle() {
 
 function translateDetailPageTitleDisplay() {
     var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-    var h1 = document.getElementById("gj");
-    if (!h1.innerText) {
-        h1 = document.getElementById("gn");
-    }
 
+    var h1 = document.getElementById("h1Origin_copy");
+    if (!h1.innerText) {
+        h1 = document.getElementById("h1Title_copy");;
+    }
 
     var signDictArray = [];
     var txtArray = [];
@@ -220,11 +220,32 @@ function detailPageTitleTranslate() {
                 translateCheckbox.setAttribute("checked", true);
                 translateDetailPageTitleDisplay();
             }
-        }, () => {  });
+        }, () => { });
     });
-    
+
 }
 
+function detailPageTitleCopy(){
+    var gd2 = document.getElementById("gd2");
+    
+    var h1Title = document.getElementById("gn");
+    h1Title.style.display = "none";
+
+    var h1Title_copy = document.createElement("h1");
+    h1Title_copy.id = "h1Title_copy";
+    h1Title_copy.innerText = h1Title.innerText;
+    gd2.appendChild(h1Title_copy);
+
+    var h1Origin = document.getElementById("gj");
+    h1Origin.style.display = "none";
+
+    var h1Origin_copy = document.createElement("h1");
+    h1Origin_copy.id = "h1Origin_copy";
+    h1Origin_copy.innerText = h1Origin.innerText;
+    gd2.appendChild(h1Origin_copy);
+
+   
+}
 
 // 右侧按钮
 function detailPageRightButtons() {

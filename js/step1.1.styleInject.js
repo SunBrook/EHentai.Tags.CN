@@ -932,6 +932,20 @@ func_eh_ex(() => {
 		padding: 20px 0 10px 0;
 		border-bottom: 1px solid #5c0d12;
 		font-size: 1.5em;
+	}
+	
+	.gm #h1Origin_copy {
+		font-size: 10pt;
+		padding: 0 0 2px;
+		margin: 3px 15px;
+		color: #9F8687;
+		border-bottom: 1px solid #5C0D12;
+	}
+	
+	.gm #h1Title_copy {
+		font-size: 12pt;
+		padding: 0 0 2px;
+		margin: 3px 15px;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -1844,6 +1858,20 @@ func_eh_ex(() => {
 	.t_favorite_ido .nosel .fp:last-child {
 		background-color: #4f535b;
 		top: -87px;
+	}
+	
+	.gm #h1Origin_copy {
+		font-size: 10pt;
+		padding: 0 0 2px;
+		margin: 3px 15px;
+		color: #b8b8b8;
+		border-bottom: 1px solid #000000;
+	}
+	
+	.gm #h1Title_copy {
+		font-size: 12pt;
+		padding: 0 0 2px;
+		margin: 3px 15px;
 	}`;
 	styleInject(category_style);
 });
