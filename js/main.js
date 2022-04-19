@@ -1,5 +1,4 @@
-//#region main.js
-// 主方法
+//#region main.js 主方法
 
 // 标记可用浏览器版本
 // 头部菜单汉化
@@ -10,9 +9,26 @@ if (window.location.pathname.indexOf("/g/") != -1) {
 	// 详情页
 	detailPage();
 }
-else if (window.location.pathname.length == 1) {
-	// 首页
-	mainPageCategory();
+else {
+	switch (window.location.pathname) {
+		case '/':				// 首页
+			mainPageCategory();
+			break;
+		case '/watched':		// 偏好
+			break;
+		case '/popular':		// 热门
+			popularPage();
+			break;
+		case '/torrents.php':	// 种子
+			break;
+		case '/favorites.php':	// 收藏
+			//favoritePage();
+			break;
+		case '/toplist.php': // 排行榜
+			//toplistPage();
+			break;
+		// 设置、我的标签、悬赏
+	}
 }
 
 function mainPageCategory() {
@@ -26,7 +42,6 @@ function mainPageCategory() {
 	// 消息通知提前，只要数据改变就应该马上通知，方便快速其他页面快速反应	
 	// 初始化用户配置信息
 	initUserSettings(() => {
-		console.log('初始化用户配置信息完毕');
 
 		// 首页头部样式调整，补充事件
 		frontPageTopStyleStep02();
@@ -51,14 +66,16 @@ function mainPageCategory() {
 		var addFavoritesDisabledBtn = document.getElementById("category_addFavorites_button_disabled");
 		var searchCloseBtn = document.getElementById("search_close");
 
-		// 展示区包裹层div、全部类别Div、收藏Div、类别列表div、类别_恋物列表div、类别_ehtag列表div、收藏列表div
+		// 展示区包裹层div、全部类别Div、收藏Div、类别列表div、类别_恋物列表div、类别_ehtag列表div、收藏列表div、加载词库等待div
 		var displayDiv = document.getElementById("display_div");
 		var categoryDisplayDiv = document.getElementById("category_all_div");
 		var favoritesDisplayDiv = document.getElementById("category_favorites_div");
+		var categoryEditor = document.getElementById("category_editor");
 		var categoryListDiv = document.getElementById("category_list");
 		var categoryList_fetishDiv = document.getElementById("category_list_fetishList");
 		var categoryList_ehTagDiv = document.getElementById("category_list_ehTag");
 		var favoriteListDiv = document.getElementById("favorites_list");
+		var categoryLoadingDiv = document.getElementById("category_loading_div");
 
 		// [标签 + 收藏] 全部展开按钮、标签全部折叠按钮、标签展开折叠按钮、标签
 		var allExtend = document.getElementById("all_expand");
@@ -187,7 +204,6 @@ function mainPageCategory() {
 				reader.readAsDataURL(resultFile);
 				reader.onload = function (e) {
 					var fileContent = e.target.result;
-					console.log(fileContent);
 					t_imgBase64 = fileContent;
 					setListBackgroundImage(t_imgBase64);
 
@@ -587,7 +603,6 @@ function mainPageCategory() {
 
 		//#endregion
 
-
 		//#region step6.3.drugDialog.js 鼠标拖拽设置对话框
 
 		var x = 0, y = 0;
@@ -653,7 +668,6 @@ function mainPageCategory() {
 		}
 
 		//#endregion
-
 
 		var searchItemDict = {}; // 搜索框字典
 
@@ -731,260 +745,368 @@ function mainPageCategory() {
 
 		//#endregion
 
-		// indexedDB 数据存储初始化
-		tagDataDispose(() => {
-			console.log('初始化完毕');
+		//#region step3.6.category.js 本地列表模块
 
-			// 首页谷歌翻译：标签
-			mainPageTranslate();
-
-			// 本地列表Html + 功能
-			//#region step3.6.category.js 本地列表模块
-
-			// 折叠方法
-			function extendDiv(extendSpans, extendArray) {
-				if (extendArray.length > 0) {
-					for (const i in extendSpans) {
-						if (Object.hasOwnProperty.call(extendSpans, i)) {
-							const span = extendSpans[i];
-							var parent_en = span.dataset.category;
-							var itemDiv = document.getElementById("items_div_" + parent_en);
-							if (extendArray.indexOf(parent_en) != -1) {
-								span.innerText = "+";
-								itemDiv.style.display = "none";
-							} else {
-								span.innerText = "-";
-								itemDiv.style.display = "block";
-							}
-						}
-					}
-				} else {
-					for (const i in extendSpans) {
-						if (Object.hasOwnProperty.call(extendSpans, i)) {
-							const span = extendSpans[i];
-							var parent_en = span.dataset.category;
-							var itemDiv = document.getElementById("items_div_" + parent_en);
+		// 折叠方法
+		function extendDiv(extendSpans, extendArray) {
+			if (extendArray.length > 0) {
+				for (const i in extendSpans) {
+					if (Object.hasOwnProperty.call(extendSpans, i)) {
+						const span = extendSpans[i];
+						var parent_en = span.dataset.category;
+						var itemDiv = document.getElementById("items_div_" + parent_en);
+						if (extendArray.indexOf(parent_en) != -1) {
+							span.innerText = "+";
+							itemDiv.style.display = "none";
+						} else {
 							span.innerText = "-";
 							itemDiv.style.display = "block";
 						}
 					}
 				}
-
-			}
-
-			// 单个折叠、展开
-			function parentItemsExtend(extendSpans) {
+			} else {
 				for (const i in extendSpans) {
 					if (Object.hasOwnProperty.call(extendSpans, i)) {
-						const item = extendSpans[i];
-						item.addEventListener("click", function () {
-							// 获取存储折叠信息
-							read(table_Settings, table_Settings_key_CategoryList_Extend, result => {
-								var extendData = [];
-								if (result) {
-									extendData = result.value;
-								}
+						const span = extendSpans[i];
+						var parent_en = span.dataset.category;
+						var itemDiv = document.getElementById("items_div_" + parent_en);
+						span.innerText = "-";
+						itemDiv.style.display = "block";
+					}
+				}
+			}
 
-								var cateDivName = item.dataset.category;
-								if (item.innerHTML == "+") {
-									// 需要展开
-									item.innerHTML = "-";
-									document.getElementById("items_div_" + cateDivName).style.display = "block";
-									if (extendData.indexOf(cateDivName) != -1) {
-										extendData.remove(cateDivName);
-									}
-								}
-								else {
-									// 需要折叠
-									item.innerHTML = "+";
-									document.getElementById("items_div_" + cateDivName).style.display = "none";
-									if (extendData.indexOf(cateDivName) == -1) {
-										extendData.push(cateDivName);
-									}
-								}
+		}
 
-								// 保存存储信息
-								var setting_categoryExtend = {
-									item: table_Settings_key_CategoryList_Extend,
-									value: extendData
-								}
-								update(table_Settings, setting_categoryExtend, () => {
-									// 通知折叠
-									setDbSyncMessage(sync_categoryList_Extend);
-								}, () => { });
+		// 单个折叠、展开
+		function parentItemsExtend(extendSpans) {
+			for (const i in extendSpans) {
+				if (Object.hasOwnProperty.call(extendSpans, i)) {
+					const item = extendSpans[i];
+					item.addEventListener("click", function () {
+						// 获取存储折叠信息
+						read(table_Settings, table_Settings_key_CategoryList_Extend, result => {
+							var extendData = [];
+							if (result) {
+								extendData = result.value;
+							}
 
+							var cateDivName = item.dataset.category;
+							if (item.innerHTML == "+") {
+								// 需要展开
+								item.innerHTML = "-";
+								document.getElementById("items_div_" + cateDivName).style.display = "block";
+								if (extendData.indexOf(cateDivName) != -1) {
+									extendData.remove(cateDivName);
+								}
+							}
+							else {
+								// 需要折叠
+								item.innerHTML = "+";
+								document.getElementById("items_div_" + cateDivName).style.display = "none";
+								if (extendData.indexOf(cateDivName) == -1) {
+									extendData.push(cateDivName);
+								}
+							}
+
+							// 保存存储信息
+							var setting_categoryExtend = {
+								item: table_Settings_key_CategoryList_Extend,
+								value: extendData
+							}
+							update(table_Settings, setting_categoryExtend, () => {
+								// 通知折叠
+								setDbSyncMessage(sync_categoryList_Extend);
 							}, () => { });
-						});
-					}
-				}
-			}
 
-			// 添加小项到搜索框
-			function addItemToInput(parent_en, parent_zh, sub_en, sub_zh, sub_desc) {
-				if (searchItemDict[`${parent_en}:${sub_en}`] == undefined) {
-					if (checkDictNull(searchItemDict)) {
-						inputClearBtn.style.display = "block";
-						searchBtn.innerText = "搜索";
-					}
-
-					var newSearchInputItem = document.createElement("span");
-					newSearchInputItem.classList.add("input_item");
-					newSearchInputItem.id = `input_item_${parent_en}_${sub_en}`;
-					newSearchInputItem.title = sub_en;
-
-					const key = `${parent_en}:${sub_en}`;
-					newSearchInputItem.dataset.item = key;
-					searchItemDict[key] = { parent_en, parent_zh, sub_en, sub_zh, sub_desc };
-
-					var searchItemText = document.createTextNode(`${parent_zh} : ${sub_zh} X`);
-					newSearchInputItem.appendChild(searchItemText);
-					newSearchInputItem.addEventListener("click", removeSearchItem);
-					readonlyDiv.appendChild(newSearchInputItem);
-
-					addFavoritesBtn.style.display = "block";
-					addFavoritesDisabledBtn.style.display = "none";
-
-					// 滚动条滚动到底部
-					searchInput.scrollTop = searchInput.scrollHeight;
-				}
-			}
-
-
-			// 点击小项加入到搜索框
-			function cItemJsonSearchInput(cItems) {
-				for (const i in cItems) {
-					if (Object.hasOwnProperty.call(cItems, i)) {
-						const searchItem = cItems[i];
-						searchItem.addEventListener("click", function () {
-							var parentEn = searchItem.dataset.parent_en;
-							var parentZh = searchItem.dataset.parent_zh;
-							var subDesc = searchItem.dataset.sub_desc;
-							var enItem = searchItem.dataset.item;
-							var zhItem = searchItem.innerHTML;
-
-							addItemToInput(parentEn, parentZh, enItem, zhItem, subDesc);
-						});
-					}
-				}
-			}
-
-			// 初始化本地列表页面
-			function categoryInit() {
-				// 恋物列表模块
-				read(table_Settings, table_Settings_key_FetishList_Html, result => {
-					// 生成 html 代码
-					categoryList_fetishDiv.innerHTML = result.value;
-					// 读取折叠并设置
-					var extendSpans = document.getElementsByClassName("category_extend_fetish");
-					read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
-						if (extendResult) {
-							extendDiv(extendSpans, extendResult.value);
-						}
-					}, () => { });
-					// 单个展开折叠
-					parentItemsExtend(extendSpans);
-					// 具体小项点击加入搜索框
-					var cItems = document.getElementsByClassName("c_item_fetish");
-					cItemJsonSearchInput(cItems);
-				}, () => { });
-
-				// EhTag列表模块
-				read(table_Settings, table_Settings_key_EhTag_Html, result => {
-					// 生成 html 代码
-					categoryList_ehTagDiv.innerHTML = result.value;
-					// 读取折叠并设置
-					var extendSpans = document.getElementsByClassName("category_extend_ehTag");
-					read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
-						if (extendResult) {
-							extendDiv(extendSpans, extendResult.value);
-						}
-					}, () => { });
-					// 单个展开折叠
-					parentItemsExtend(extendSpans);
-					// 具体小项点击加入搜索框
-					var cItems = document.getElementsByClassName("c_item_ehTag");
-					cItemJsonSearchInput(cItems);
-				}, () => { });
-			}
-			categoryInit();
-
-			// 全部折叠
-			allCollapse.onclick = function () {
-				var extendBtns = document.getElementsByClassName("category_extend");
-				for (const i in extendBtns) {
-					if (Object.hasOwnProperty.call(extendBtns, i)) {
-						const btn = extendBtns[i];
-						if (btn.innerHTML != "+") {
-							btn.innerHTML = "+";
-						}
-					}
-				}
-
-				var categoryItemsDiv = document.getElementsByClassName("category_items_div");
-				for (const i in categoryItemsDiv) {
-					if (Object.hasOwnProperty.call(categoryItemsDiv, i)) {
-						const div = categoryItemsDiv[i];
-						if (div.style.display != "none") {
-							div.style.display = "none";
-						}
-					}
-				}
-
-				// 存储全部父级
-				var allParentDataArray = [];
-
-				// 并更新存储全部的父级名称
-				read(table_Settings, table_Settings_key_FetishList_ParentEnArray, fetishParentData => {
-					allParentDataArray = fetishParentData.value;
-					read(table_Settings, table_Settings_key_EhTag_ParentEnArray, ehTagParentData => {
-						allParentDataArray = allParentDataArray.concat(ehTagParentData.value);
-						// 存储全部
-						var setting_categoryExtend = {
-							item: table_Settings_key_CategoryList_Extend,
-							value: allParentDataArray
-						}
-						update(table_Settings, setting_categoryExtend, () => {
-							// 通知折叠
-							setDbSyncMessage(sync_categoryList_Extend);
 						}, () => { });
+					});
+				}
+			}
+		}
+
+		// 添加小项到搜索框
+		function addItemToInput(parent_en, parent_zh, sub_en, sub_zh, sub_desc) {
+			if (searchItemDict[`${parent_en}:${sub_en}`] == undefined) {
+				if (checkDictNull(searchItemDict)) {
+					inputClearBtn.style.display = "block";
+					searchBtn.innerText = "搜索";
+				}
+
+				var newSearchInputItem = document.createElement("span");
+				newSearchInputItem.classList.add("input_item");
+				newSearchInputItem.id = `input_item_${parent_en}_${sub_en}`;
+				newSearchInputItem.title = sub_en;
+
+				const key = `${parent_en}:${sub_en}`;
+				newSearchInputItem.dataset.item = key;
+				searchItemDict[key] = { parent_en, parent_zh, sub_en, sub_zh, sub_desc };
+
+				var searchItemText = document.createTextNode(`${parent_zh} : ${sub_zh} X`);
+				newSearchInputItem.appendChild(searchItemText);
+				newSearchInputItem.addEventListener("click", removeSearchItem);
+				readonlyDiv.appendChild(newSearchInputItem);
+
+				addFavoritesBtn.style.display = "block";
+				addFavoritesDisabledBtn.style.display = "none";
+
+				// 滚动条滚动到底部
+				searchInput.scrollTop = searchInput.scrollHeight;
+			}
+		}
+
+
+		// 点击小项加入到搜索框
+		function cItemJsonSearchInput(cItems) {
+			for (const i in cItems) {
+				if (Object.hasOwnProperty.call(cItems, i)) {
+					const searchItem = cItems[i];
+					searchItem.addEventListener("click", function () {
+						var parentEn = searchItem.dataset.parent_en;
+						var parentZh = searchItem.dataset.parent_zh;
+						var subDesc = searchItem.dataset.sub_desc;
+						var enItem = searchItem.dataset.item;
+						var zhItem = searchItem.innerHTML;
+						addItemToInput(parentEn, parentZh, enItem, zhItem, subDesc);
+					});
+				}
+			}
+		}
+
+		// 初始化本地列表页面，已存在数据
+		function categoryInit() {
+			var complete1 = false;
+			var complete2 = false;
+			var complete3 = false;
+			var complete4 = false;
+
+			// 恋物列表模块
+			read(table_Settings, table_Settings_key_FetishList_Html, result => {
+				// 生成 html 代码
+				categoryList_fetishDiv.innerHTML = result.value;
+
+				// 读取折叠并设置
+				var extendSpans = document.getElementsByClassName("category_extend_fetish");
+				read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
+					if (extendResult) {
+						extendDiv(extendSpans, extendResult.value);
+					}
+					complete2 = true;
+				}, () => { complete2 = true; });
+				// 单个展开折叠
+				parentItemsExtend(extendSpans);
+				// 具体小项点击加入搜索框
+				var cItems = document.getElementsByClassName("c_item_fetish");
+				cItemJsonSearchInput(cItems);
+				complete1 = true;
+			}, () => {
+				complete1 = true;
+				complete2 = true;
+			});
+
+			// EhTag列表模块
+			read(table_Settings, table_Settings_key_EhTag_Html, result => {
+				// 生成 html 代码
+				categoryList_ehTagDiv.innerHTML = result.value;
+
+				// 读取折叠并设置
+				var extendSpans = document.getElementsByClassName("category_extend_ehTag");
+				read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
+					if (extendResult) {
+						extendDiv(extendSpans, extendResult.value);
+					}
+					complete4 = true;
+				}, () => { complete4 = true; });
+				// 单个展开折叠
+				parentItemsExtend(extendSpans);
+				// 具体小项点击加入搜索框
+				var cItems = document.getElementsByClassName("c_item_ehTag");
+				cItemJsonSearchInput(cItems);
+				complete3 = true;
+			}, () => {
+				complete3 = true;
+				complete4 = true;
+			});
+
+			var t = setInterval(() => {
+				if (complete1 && complete2 && complete3 && complete4) {
+					t && clearInterval(t);
+					// 隐藏等待div
+					categoryLoadingDiv.style.display = "none";
+					// 展示列表
+					categoryEditor.style.display = "block";
+					categoryListDiv.style.display = "block";
+				}
+			}, 10);
+		}
+
+		// 如果存在可用的词库的话，先尝试使用旧词库，然后比对版本号，看是否需要更新
+		function tryUseOldDataFirst(func_compelete) {
+			indexDbInit(() => {
+
+				// 验证数据完整性
+				checkDataIntact(() => {
+					// 判断是否存在旧数据
+					var fetishHasValue = false;
+					var ehTagHasValue = false;
+					var complete1 = false;
+					var complete2 = false;
+					checkFieldEmpty(table_Settings, table_Settings_key_FetishList_Html, () => {
+						complete1 = true;
+					}, () => {
+						fetishHasValue = true;
+						complete1 = true;
+					});
+					checkFieldEmpty(table_Settings, table_Settings_key_EhTag_Html, () => {
+						complete2 = true;
+					}, () => {
+						ehTagHasValue = true;
+						complete2 = true;
+					});
+
+					var t = setInterval(() => {
+						if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+							t && clearInterval(t);
+							// 存在数据
+							categoryInit();
+							// 检查更新
+							checkUpdateData(() => {
+								// 存在更新
+								categoryInit();
+								func_compelete();
+							}, () => {
+								func_compelete();
+							});
+						} else if (complete1 && complete2) {
+							t && clearInterval(t);
+							// 不存在数据
+							checkUpdateData(() => {
+								// 存在更新
+								categoryInit();
+								func_compelete();
+							}, () => {
+								func_compelete();
+							});
+						}
+					}, 10);
+				});
+			});
+		}
+
+
+		// 全部折叠
+		allCollapse.onclick = function () {
+			var extendBtns = document.getElementsByClassName("category_extend");
+			for (const i in extendBtns) {
+				if (Object.hasOwnProperty.call(extendBtns, i)) {
+					const btn = extendBtns[i];
+					if (btn.innerHTML != "+") {
+						btn.innerHTML = "+";
+					}
+				}
+			}
+
+			var categoryItemsDiv = document.getElementsByClassName("category_items_div");
+			for (const i in categoryItemsDiv) {
+				if (Object.hasOwnProperty.call(categoryItemsDiv, i)) {
+					const div = categoryItemsDiv[i];
+					if (div.style.display != "none") {
+						div.style.display = "none";
+					}
+				}
+			}
+
+			// 存储全部父级
+			var allParentDataArray = [];
+
+			// 并更新存储全部的父级名称
+			read(table_Settings, table_Settings_key_FetishList_ParentEnArray, fetishParentData => {
+				allParentDataArray = fetishParentData.value;
+				read(table_Settings, table_Settings_key_EhTag_ParentEnArray, ehTagParentData => {
+					allParentDataArray = allParentDataArray.concat(ehTagParentData.value);
+					// 存储全部
+					var setting_categoryExtend = {
+						item: table_Settings_key_CategoryList_Extend,
+						value: allParentDataArray
+					}
+					update(table_Settings, setting_categoryExtend, () => {
+						// 通知折叠
+						setDbSyncMessage(sync_categoryList_Extend);
 					}, () => { });
 				}, () => { });
-			}
+			}, () => { });
+		}
 
-			// 全部展开
-			allExtend.onclick = function () {
-				var extendBtns = document.getElementsByClassName("category_extend");
-				for (const i in extendBtns) {
-					if (Object.hasOwnProperty.call(extendBtns, i)) {
-						const btn = extendBtns[i];
-						if (btn.innerHTML != "-") {
-							btn.innerHTML = "-";
-						}
+		// 全部展开
+		allExtend.onclick = function () {
+			var extendBtns = document.getElementsByClassName("category_extend");
+			for (const i in extendBtns) {
+				if (Object.hasOwnProperty.call(extendBtns, i)) {
+					const btn = extendBtns[i];
+					if (btn.innerHTML != "-") {
+						btn.innerHTML = "-";
 					}
 				}
-
-				var categoryItemsDiv = document.getElementsByClassName("category_items_div");
-				for (const i in categoryItemsDiv) {
-					if (Object.hasOwnProperty.call(categoryItemsDiv, i)) {
-						const div = categoryItemsDiv[i];
-						if (div.style.display != "block") {
-							div.style.display = "block";
-						}
-					}
-				}
-
-				// 清空折叠记录
-				remove(table_Settings, table_Settings_key_CategoryList_Extend, () => {
-					// 通知折叠
-					setDbSyncMessage(sync_categoryList_Extend);
-				}, () => { });
 			}
 
-			//#endregion
+			var categoryItemsDiv = document.getElementsByClassName("category_items_div");
+			for (const i in categoryItemsDiv) {
+				if (Object.hasOwnProperty.call(categoryItemsDiv, i)) {
+					const div = categoryItemsDiv[i];
+					if (div.style.display != "block") {
+						div.style.display = "block";
+					}
+				}
+			}
 
+			// 清空折叠记录
+			remove(table_Settings, table_Settings_key_CategoryList_Extend, () => {
+				// 通知折叠
+				setDbSyncMessage(sync_categoryList_Extend);
+			}, () => { });
+		}
+
+		// 删除搜索框子项
+		function removeSearchItem(e) {
+			var id = e.path[0].id;
+			var item = document.getElementById(id);
+			var cateItem = item.dataset.item;
+			delete searchItemDict[cateItem];
+
+			if (checkDictNull(searchItemDict)) {
+				inputClearBtn.style.display = "none";
+				searchBtn.innerText = "首页";
+				addFavoritesBtn.style.display = "none";
+				addFavoritesDisabledBtn.style.display = "block";
+			}
+
+			item.parentNode.removeChild(item);
+		}
+
+		//#endregion
+
+		// 首页谷歌翻译：标签
+		indexDbInit(() => {
+			mainPageTranslate();
+		});
+
+		// 词库数据
+		tryUseOldDataFirst(() => {
 			//#region step3.7.search.js 搜索框功能
 
 			// 进入页面，根据地址栏信息生成搜索栏标签
+			function readSearchParentAndInput(parentEn, subEn) {
+				read(table_detailParentItems, parentEn, result => {
+					if (result) {
+						addItemToInput(result.row, result.name, subEn, subEn, '');
+					} else {
+						addItemToInput(parentEn, parentEn, subEn, subEn, '');
+					}
+				}, () => {
+					addItemToInput(parentEn, parentEn, subEn, subEn, '');
+				});
+			}
+
 			var f_searchs = GetQueryString("f_search");
 			if (f_searchs) {
 				var searchArray = f_searchs.split("\"+\"");
@@ -1001,15 +1123,25 @@ function mainPageCategory() {
 								var subEn = itemArray[1];
 								// 从EhTag中查询，看是否存在
 								read(table_EhTagSubItems, items, ehTagData => {
-									addItemToInput(ehTagData.parent_en, ehTagData.parent_zh, ehTagData.sub_en, ehTagData.sub_zh, ehTagData.sub_desc);
+									if (ehTagData) {
+										addItemToInput(ehTagData.parent_en, ehTagData.parent_zh, ehTagData.sub_en, ehTagData.sub_zh, ehTagData.sub_desc);
+									} else {
+										// 尝试翻译父级
+										readSearchParentAndInput(parentEn, subEn);
+									}
 								}, () => {
-									addItemToInput(parentEn, subEn, subEn, subEn, '');
+									// 尝试翻译父级
+									readSearchParentAndInput(parentEn, subEn);
 								});
 							}
 							else {
 								// 从恋物列表中查询，看是否存在
 								readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
-									addItemToInput(fetishData.parent_en, fetishData.parent_zh, fetishData.sub_en, fetishData.sub_zh, fetishData.sub_desc);
+									if (fetishData) {
+										addItemToInput(fetishData.parent_en, fetishData.parent_zh, fetishData.sub_en, fetishData.sub_zh, fetishData.sub_desc);
+									} else {
+										addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
+									}
 								}, () => {
 									// 用户自定义搜索关键字
 									addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
@@ -1020,24 +1152,7 @@ function mainPageCategory() {
 				}
 			}
 
-			// 删除搜索框子项
-			function removeSearchItem(e) {
-				var id = e.path[0].id;
-				var item = document.getElementById(id);
-				var cateItem = item.dataset.item;
-				delete searchItemDict[cateItem];
-				console.log(cateItem);
-				console.log(searchItemDict);
 
-				if (checkDictNull(searchItemDict)) {
-					inputClearBtn.style.display = "none";
-					searchBtn.innerText = "首页";
-					addFavoritesBtn.style.display = "none";
-					addFavoritesDisabledBtn.style.display = "block";
-				}
-
-				item.parentNode.removeChild(item);
-			}
 
 			// 清空选择
 			inputClearBtn.onclick = function () {
@@ -1429,7 +1544,6 @@ function mainPageCategory() {
 			function firstUpdateFavoriteSubItems(favoriteSubItems, foundTotalCount) {
 				// 更新本地收藏表
 				batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteSubItems, foundTotalCount, () => {
-					console.log('批量添加本地收藏表完成');
 					// 稳妥起见，更新完之后再删除本地的原始收藏列表
 					remove(table_Settings, table_Settings_key_FavoriteList, () => { }, () => { });
 				});
@@ -2219,7 +2333,6 @@ function mainPageCategory() {
 
 			window.onstorage = function (e) {
 				try {
-					console.log(e);
 					switch (e.newValue) {
 						case sync_oldSearchTopVisible:
 							updatePageTopVisible();
@@ -2287,9 +2400,9 @@ function mainPageCategory() {
 				// 读取收藏折叠并应用，每个收藏项的点击事件
 				indexDbInit(() => {
 					var favoriteListDiv = document.getElementById("favorites_list");
+
 					// 退出编辑模式
 					editToFavorite();
-
 					read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
 						if (result && result.value) {
 							// 存在收藏 html
@@ -2399,55 +2512,57 @@ function mainPageCategory() {
 
 			//#endregion
 
-
 		});
+
 	});
-
-
 
 }
 
 function detailPage() {
-	// 初始化用户配置信息
-	initUserSettings(() => {
-		// 头部数据更新
-		detailDataUpdate();
 
-		// 保证完整数据
-		tagDataDispose(() => {
-			detailPageTranslate();
-			detailPageFavorite();
-		});
+	// 头部数据更新
+	detailDataUpdate();
 
-		//#region step5.2.dataSync.detailPage.js 详情页数据同步
+	// 右侧按钮
+	detailPageRightButtons();
 
-		window.onstorage = function (e) {
-			// try {
-			console.log(e);
+	// 页面其他元素
+	detailPageTranslate();
+
+	indexDbInit(() => {
+		// 标题翻译
+		detailPageTitleTranslate();
+		// 标签翻译
+		detailTryUseOldData();
+	});
+
+	//#region step5.2.dataSync.detailPage.js 详情页数据同步
+
+	window.onstorage = function (e) {
+		try {
 			switch (e.newValue) {
 				case sync_googleTranslate_detailPage_title:
 					updateGoogleTranslateDetailPageTitle();
 					break;
 			}
-			// } catch (error) {
-			//     removeDbSyncMessage();
-			// }
+		} catch (error) {
+			removeDbSyncMessage();
 		}
+	}
 
-		// 详情页谷歌翻译标题
-		function updateGoogleTranslateDetailPageTitle() {
-			indexDbInit(() => {
-				read(table_Settings, table_Settings_key_TranslateDetailPageTitles, result => {
-					var translateCheckbox = document.getElementById("googleTranslateCheckbox");
-					translateCheckbox.checked = result && result.value;
-					translateDetailPageTitleDisplay();
-					removeDbSyncMessage();
-				}, () => { removeDbSyncMessage(); });
-			})
-		}
+	// 详情页谷歌翻译标题
+	function updateGoogleTranslateDetailPageTitle() {
+		indexDbInit(() => {
+			read(table_Settings, table_Settings_key_TranslateDetailPageTitles, result => {
+				var translateCheckbox = document.getElementById("googleTranslateCheckbox");
+				translateCheckbox.checked = result && result.value;
+				translateDetailPageTitleDisplay();
+				removeDbSyncMessage();
+			}, () => { removeDbSyncMessage(); });
+		})
+	}
 
-		//#endregion
-	});
+	//#endregion
 }
 
 //#endregion

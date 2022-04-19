@@ -74,6 +74,7 @@ function updatePageFavoriteList() {
         editToFavorite();
 
         read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
+            console.log('r',result);
             if (result && result.value) {
                 // 存在收藏 html
                 // 页面附加Html

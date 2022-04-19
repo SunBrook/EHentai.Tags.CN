@@ -160,7 +160,10 @@ function tableTagTranslate() {
 	var gt = document.getElementsByClassName("gt");
 	function translate(gt, i) {
 		const item = gt[i];
-		var ps_en = item.title;
+		if (!item.dataset.title) {
+			item.dataset.title = item.title;
+		}
+		var ps_en = item.dataset.title;
 		read(table_EhTagSubItems, ps_en, result => {
 			if (result) {
 				if (rightSelect.value == "e") {
@@ -204,7 +207,10 @@ function tableTagTranslate() {
 	for (const i in gtl) {
 		if (Object.hasOwnProperty.call(gtl, i)) {
 			const item = gtl[i];
-			var ps_en = item.title;
+			if (!item.dataset.title) {
+				item.dataset.title = item.title;
+			}
+			var ps_en = item.dataset.title;
 			read(table_EhTagSubItems, ps_en, result => {
 				if (result) {
 					item.innerText = result.sub_zh;

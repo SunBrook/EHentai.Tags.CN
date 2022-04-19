@@ -50,10 +50,6 @@ function detailPageTranslate() {
 
     // 语言
     trList[3].firstChild.innerText = "语言:";
-    var language = trList[3].lastChild.innerText.toLowerCase().replace(/(\s*$)/g, "");
-    readByIndex(table_EhTagSubItems, table_EhTagSubItems_index_subEn, language, result => {
-        trList[3].lastChild.innerText = result.sub_zh;
-    }, () => { });
 
     // 文件大小
     trList[4].firstChild.innerText = "大小:";

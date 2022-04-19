@@ -52,7 +52,6 @@ function popularPage() {
     // 作品类型翻译
     bookTypeTranslate();
 
-
     indexDbInit(() => {
         // 谷歌机翻标题
         read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
@@ -62,17 +61,68 @@ function popularPage() {
             }
         }, () => { });
 
-        // 确保存在标签数据
-        tagDataDispose(() => {
-            // 表格标签翻译
-            tableTagTranslate();
-        })
+        // 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
+        // 表格标签翻译
+        popularTryUseOldData();
     });
 
     // 同步谷歌机翻标题
     DataSyncCommonTranslateTitle();
+
+
+
 }
 
+function popularTryUseOldData() {
+    // 验证数据完整性
+    checkDataIntact(() => {
+        // 判断是否存在旧数据
+        var fetishHasValue = false;
+        var ehTagHasValue = false;
+        var complete1 = false;
+        var complete2 = false;
+
+        checkTableEmpty(table_fetishListSubItems, () => {
+            // 数据为空
+            complete1 = true;
+        }, () => {
+            // 存在数据
+            fetishHasValue = true;
+            complete1 = true;
+        });
+
+        checkTableEmpty(table_EhTagSubItems, () => {
+            // 数据为空
+            complete2 = true;
+        }, () => {
+            // 存在数据
+            ehTagHasValue = true;
+            complete2 = true;
+        });
+
+        var t = setInterval(() => {
+            if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+                t && clearInterval(t);
+                // 存在数据
+                tableTagTranslate();
+                // 检查更新
+                checkUpdateData(() => {
+                    // 存在更新
+                    tableTagTranslate();
+                }, () => { });
+            } else if (complete1 && complete2) {
+                t && clearInterval(t);
+                // 不存在数据
+                checkUpdateData(() => {
+                    // 存在更新
+                    tableTagTranslate();
+                }, () => {
+                    tableTagTranslate();
+                });
+            }
+        }, 10);
+    });
+}
 
 
 //#endregion

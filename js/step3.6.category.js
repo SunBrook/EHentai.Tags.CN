@@ -120,14 +120,13 @@ function cItemJsonSearchInput(cItems) {
                 var subDesc = searchItem.dataset.sub_desc;
                 var enItem = searchItem.dataset.item;
                 var zhItem = searchItem.innerHTML;
-
                 addItemToInput(parentEn, parentZh, enItem, zhItem, subDesc);
             });
         }
     }
 }
 
-// 初始化本地列表页面
+// 初始化本地列表页面，已存在数据
 function categoryInit() {
     var complete1 = false;
     var complete2 = false;
@@ -193,7 +192,60 @@ function categoryInit() {
         }
     }, 10);
 }
-categoryInit();
+
+// 如果存在可用的词库的话，先尝试使用旧词库，然后比对版本号，看是否需要更新
+function tryUseOldDataFirst(func_compelete) {
+    indexDbInit(() => {
+
+        // 验证数据完整性
+        checkDataIntact(() => {
+            // 判断是否存在旧数据
+            var fetishHasValue = false;
+            var ehTagHasValue = false;
+            var complete1 = false;
+            var complete2 = false;
+            checkFieldEmpty(table_Settings, table_Settings_key_FetishList_Html, () => {
+                complete1 = true;
+            }, () => {
+                fetishHasValue = true;
+                complete1 = true;
+            });
+            checkFieldEmpty(table_Settings, table_Settings_key_EhTag_Html, () => {
+                complete2 = true;
+            }, () => {
+                ehTagHasValue = true;
+                complete2 = true;
+            });
+
+            var t = setInterval(() => {
+                if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+                    t && clearInterval(t);
+                    // 存在数据
+                    categoryInit();
+                    // 检查更新
+                    checkUpdateData(() => {
+                        // 存在更新
+                        categoryInit();
+                        func_compelete();
+                    }, () => {
+                        func_compelete();
+                    });
+                } else if (complete1 && complete2) {
+                    t && clearInterval(t);
+                    // 不存在数据
+                    checkUpdateData(() => {
+                        // 存在更新
+                        categoryInit();
+                        func_compelete();
+                    }, () => {
+                        func_compelete();
+                    });
+                }
+            }, 10);
+        });
+    });
+}
+
 
 // 全部折叠
 allCollapse.onclick = function () {
@@ -265,6 +317,25 @@ allExtend.onclick = function () {
         // 通知折叠
         setDbSyncMessage(sync_categoryList_Extend);
     }, () => { });
+}
+
+// 删除搜索框子项
+function removeSearchItem(e) {
+    var id = e.path[0].id;
+    var item = document.getElementById(id);
+    var cateItem = item.dataset.item;
+    delete searchItemDict[cateItem];
+    console.log(cateItem);
+    console.log(searchItemDict);
+
+    if (checkDictNull(searchItemDict)) {
+        inputClearBtn.style.display = "none";
+        searchBtn.innerText = "首页";
+        addFavoritesBtn.style.display = "none";
+        addFavoritesDisabledBtn.style.display = "block";
+    }
+
+    item.parentNode.removeChild(item);
 }
 
 //#endregion
