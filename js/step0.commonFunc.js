@@ -153,7 +153,7 @@ function slideRight(element, realWidth, speed, func) {
 }
 function slideLeft(element, speed, func) {
     clearInterval(slideTimer2);
-    slideTimer2 = setInterval(function(){
+    slideTimer2 = setInterval(function () {
         var step = (0 - element.clientWidth) / 10;
         step = Math.floor(step);
         element.style.width = `${element.clientWidth + step}px`;
@@ -200,6 +200,14 @@ function urlEncode(str) {
 
     return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
         replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+}
+
+// 跨域
+function crossDomain() {
+    var meta = document.createElement("meta");
+    meta.httpEquiv = "Content-Security-Policy";
+    meta.content = "upgrade-insecure-requests";
+    document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
 //#endregion

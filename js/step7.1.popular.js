@@ -3,10 +3,7 @@
 function popularPage() {
 
     // 跨域
-    var meta = document.createElement("meta");
-    meta.httpEquiv = "Content-Security-Policy";
-    meta.content = "upgrade-insecure-requests";
-    document.getElementsByTagName("head")[0].appendChild(meta);
+	crossDomain();
 
     // 头部标题改成中文
     var ihTitle = document.getElementsByClassName("ih");
@@ -51,6 +48,9 @@ function popularPage() {
 
     // 作品类型翻译
     bookTypeTranslate();
+
+    // 作品篇幅
+    tableBookPages();
 
     indexDbInit(() => {
         // 谷歌机翻标题

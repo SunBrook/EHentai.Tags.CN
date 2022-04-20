@@ -769,6 +769,11 @@ func_eh_ex(() => {
 		right: 10px;
 	}
 	
+	.t_toplist_bookrage #googleTranslateDiv {
+		top: 11px;
+		left: 5px;
+	}
+	
 	#dms #translateLabel,
 	.t_popular_toppane #translateLabel,
 	.t_toplist_ido #translateLabel {
@@ -930,7 +935,7 @@ func_eh_ex(() => {
 	
 	.t_toplist_ido h2 {
 		padding: 20px 0 10px 0;
-		border-bottom: 1px solid #5c0d12;
+		border-bottom: 1px dashed #5c0d12;
 		font-size: 1.5em;
 	}
 	

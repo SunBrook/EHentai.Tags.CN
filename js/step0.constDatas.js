@@ -70,8 +70,9 @@ const dropData = {
 const thData = {
 	"": "作品类型",
 	"Published": "上传日期",
-	"Title": "标题",
-	"Uploader": "上传人员"
+	"Title": "作品名称",
+	"Uploader": "上传人员",
+	"Name": "作品名称"
 };
 
 //#endregion

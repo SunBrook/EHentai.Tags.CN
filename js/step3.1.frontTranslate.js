@@ -224,13 +224,46 @@ function tableTagTranslate() {
 	}
 }
 
+// 作品篇幅
+function tableBookPages() {
+	var select = dms.querySelectorAll("select");
+	var rightSelect = select[0];
+	if (rightSelect.value == "l") {
+		// 标题 + 悬浮图 + 标签
+		var tdPages = document.getElementsByClassName("glhide");
+		for (const i in tdPages) {
+			if (Object.hasOwnProperty.call(tdPages, i)) {
+				const td = tdPages[i];
+				innerTextPageToYe(td.lastChild);
+			}
+		}
+	} else if (rightSelect.value == "e") {
+		// 标题 + 图片 + 标签
+		var gl3eDivs = document.getElementsByClassName("gl3e");
+		for (const i in gl3eDivs) {
+			if (Object.hasOwnProperty.call(gl3eDivs, i)) {
+				const gl3e = gl3eDivs[i];
+				var childLength = gl3e.children.length;
+				var pageDiv = gl3e.children[childLength - 2];
+				innerTextPageToYe(pageDiv);
+			}
+		}
+	}
+}
+
+// page -> 页
+function innerTextPageToYe(element){
+	if (!element.innerText) return;
+	if (element.innerText.indexOf(" pages") != -1) {
+		element.innerText = element.innerText.replace(" pages", " 页");
+	} else if (element.innerText.indexOf(" page") != -1) {
+		element.innerText = element.innerText.replace(" page", " 页");
+	}
+}
 
 function mainPageTranslate() {
-	// 首页添加 Meta
-	var meta = document.createElement("meta");
-	meta.httpEquiv = "Content-Security-Policy";
-	meta.content = "upgrade-insecure-requests";
-	document.getElementsByTagName("head")[0].appendChild(meta);
+	// 跨域
+	crossDomain();
 
 	// 展示总数量
 	var ip = document.getElementsByClassName("ip");
@@ -319,6 +352,9 @@ function mainPageTranslate() {
 
 	// 表格标签翻译
 	tableTagTranslate();
+
+	// 表格页数翻译
+	tableBookPages();
 }
 
 //#endregion

@@ -13,11 +13,8 @@ function detailDataUpdate() {
 // 详情页翻译
 function detailPageTranslate() {
 
-    // 详情页添加 Meta
-    var meta = document.createElement("meta");
-    meta.httpEquiv = "Content-Security-Policy";
-    meta.content = "upgrade-insecure-requests";
-    document.getElementsByTagName("head")[0].appendChild(meta);
+    // 跨域
+	crossDomain();
 
     //#region 左侧作品详情
 
@@ -64,7 +61,7 @@ function detailPageTranslate() {
 
     // 篇幅
     trList[5].firstChild.innerText = "篇幅:";
-    trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "张图");
+    trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
 
     // 收藏
     trList[6].firstChild.innerText = "收藏:";
