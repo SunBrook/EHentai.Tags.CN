@@ -4320,7 +4320,30 @@ function translateDetailPageTitleDisplay() {
 	}
 }
 
-function detailPageTitleTranslate() {
+function detailPageTitleCopy() {
+	var gd2 = document.getElementById("gd2");
+
+	var h1Title = document.getElementById("gn");
+	h1Title.style.display = "none";
+
+	var h1Title_copy = document.createElement("h1");
+	h1Title_copy.id = "h1Title_copy";
+	h1Title_copy.innerText = h1Title.innerText;
+	gd2.appendChild(h1Title_copy);
+
+	var h1Origin = document.getElementById("gj");
+	h1Origin.style.display = "none";
+
+	var h1Origin_copy = document.createElement("h1");
+	h1Origin_copy.id = "h1Origin_copy";
+	h1Origin_copy.innerText = h1Origin.innerText;
+	gd2.appendChild(h1Origin_copy);
+
+
+}
+
+// 右侧按钮
+function detailPageRightButtons() {
 	// 右侧操作列
 	var rightDiv = document.getElementById("gd5");
 
@@ -4349,35 +4372,6 @@ function detailPageTitleTranslate() {
 			}
 		}, () => { });
 	});
-
-}
-
-function detailPageTitleCopy() {
-	var gd2 = document.getElementById("gd2");
-
-	var h1Title = document.getElementById("gn");
-	h1Title.style.display = "none";
-
-	var h1Title_copy = document.createElement("h1");
-	h1Title_copy.id = "h1Title_copy";
-	h1Title_copy.innerText = h1Title.innerText;
-	gd2.appendChild(h1Title_copy);
-
-	var h1Origin = document.getElementById("gj");
-	h1Origin.style.display = "none";
-
-	var h1Origin_copy = document.createElement("h1");
-	h1Origin_copy.id = "h1Origin_copy";
-	h1Origin_copy.innerText = h1Origin.innerText;
-	gd2.appendChild(h1Origin_copy);
-
-
-}
-
-// 右侧按钮
-function detailPageRightButtons() {
-	// 右侧操作列
-	var rightDiv = document.getElementById("gd5");
 
 	// 清空选择按钮
 	var clearBtn = document.createElement("div");
@@ -4582,7 +4576,7 @@ function detailPageRightButtons() {
 		}
 
 		// 构建请求链接
-		var searchLink = `https://${webHost}/?f_search=${searchArray.join("+")}`;
+		var searchLink = `${window.location.origin}/?f_search=${searchArray.join("+")}`;
 		window.location.href = searchLink;
 	}
 }
@@ -4758,8 +4752,6 @@ function detailTryUseOldData() {
 }
 
 //#endregion
-
-
 
 
 
@@ -5399,28 +5391,28 @@ if (window.location.pathname.indexOf("/g/") != -1) {
 	detailPage();
 }
 else {
-	switch (window.location.pathname) {
-		case '/':				// 首页
-		case '/watched':		// 偏好
-			mainPageCategory();
-			break;
-		case '/popular':		// 热门
-			popularPage();
-			break;
-		case '/torrents.php':	// 种子
-			break;
-		case '/favorites.php':	// 收藏
-			//favoritePage();
-			break;
-		case '/toplist.php': // 排行榜
-			toplistPage();
-			break;
-		// 设置、我的标签、悬赏
-	}
-
 	if (window.location.pathname.indexOf("/uploader/") != -1) {
 		// 用户上传
 		mainPageCategory();
+	} else {
+		switch (window.location.pathname) {
+			case '/':				// 首页
+			case '/watched':		// 偏好
+				mainPageCategory();
+				break;
+			case '/popular':		// 热门
+				popularPage();
+				break;
+			case '/torrents.php':	// 种子
+				break;
+			case '/favorites.php':	// 收藏
+				//favoritePage();
+				break;
+			case '/toplist.php': // 排行榜
+				toplistPage();
+				break;
+			// 设置、我的标签、悬赏
+		}
 	}
 }
 
@@ -6506,7 +6498,7 @@ function mainPageCategory() {
 			}
 
 			var f_searchs = urlDecode(GetQueryString("f_search"));
-			if (f_searchs) {
+			if (f_searchs && f_searchs != "null") {
 				var searchArray = f_searchs.split("+");
 				for (const i in searchArray) {
 					if (Object.hasOwnProperty.call(searchArray, i)) {
@@ -6603,7 +6595,7 @@ function mainPageCategory() {
 				}
 				searchBtn.innerText = "···";
 				// 构建请求链接
-				var searchLink = `https://${webHost}/?f_search=${enItemArray.join("+")}`;
+				var searchLink = `${window.location.origin}${window.location.pathname}?f_search=${enItemArray.join("+")}`;
 				window.location.href = searchLink;
 			}
 
@@ -6622,7 +6614,7 @@ function mainPageCategory() {
 				}
 				searchBtn.innerText = "···";
 				// 构建请求链接
-				var searchLink = `https://${webHost}/?f_search=${enItemArray.join("+")}`;
+				var searchLink = `${window.location.origin}${window.location.pathname}?f_search=${enItemArray.join("+")}`;
 				window.location.href = searchLink;
 			}
 
@@ -6630,7 +6622,7 @@ function mainPageCategory() {
 			searchBtn.onclick = function () {
 				if (searchBtn.innerText == "全部") {
 					searchBtn.innerText = "···";
-					window.location.href = `https://${webHost}`;
+					window.location.href = `${window.location.origin}${window.location.pathname}`;
 				}
 				else if (searchBtn.innerText == "搜索") {
 					read(table_Settings, table_Settings_key_FetishList_ParentEnArray, fetishParentResult => {
@@ -7966,26 +7958,21 @@ function mainPageCategory() {
 
 function detailPage() {
 
+	indexDbInit(() => {
+		// 右侧按钮
+		detailPageRightButtons();
+		// 标签翻译
+		detailTryUseOldData();
+	});
+
 	// 头部数据更新
 	detailDataUpdate();
 
 	// 复制标题供其他脚本使用
 	detailPageTitleCopy();
 
-	// 右侧按钮
-	detailPageRightButtons();
-
 	// 页面其他元素
 	detailPageTranslate();
-
-
-	indexDbInit(() => {
-		// 标题翻译
-		detailPageTitleTranslate();
-		// 标签翻译
-		detailTryUseOldData();
-	});
-
 
 
 	//#region step5.2.dataSync.detailPage.js 详情页数据同步

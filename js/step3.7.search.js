@@ -13,8 +13,9 @@ function readSearchParentAndInput(parentEn, subEn) {
     });
 }
 
+
 var f_searchs = urlDecode(GetQueryString("f_search"));
-if (f_searchs) {
+if (f_searchs && f_searchs != "null") {
     var searchArray = f_searchs.split("+");
     for (const i in searchArray) {
         if (Object.hasOwnProperty.call(searchArray, i)) {
@@ -111,7 +112,7 @@ function SearchWithParentEn(fetishParentArray) {
     }
     searchBtn.innerText = "···";
     // 构建请求链接
-    var searchLink = `https://${webHost}/?f_search=${enItemArray.join("+")}`;
+    var searchLink = `${window.location.origin}${window.location.pathname}?f_search=${enItemArray.join("+")}`;
     window.location.href = searchLink;
 }
 
@@ -130,7 +131,7 @@ function SearchWithoutParentEn() {
     }
     searchBtn.innerText = "···";
     // 构建请求链接
-    var searchLink = `https://${webHost}/?f_search=${enItemArray.join("+")}`;
+    var searchLink = `${window.location.origin}${window.location.pathname}?f_search=${enItemArray.join("+")}`;
     window.location.href = searchLink;
 }
 
@@ -138,7 +139,7 @@ function SearchWithoutParentEn() {
 searchBtn.onclick = function () {
     if (searchBtn.innerText == "全部") {
         searchBtn.innerText = "···";
-        window.location.href = `https://${webHost}`;
+        window.location.href = `${window.location.origin}${window.location.pathname}`;
     }
     else if (searchBtn.innerText == "搜索") {
         read(table_Settings, table_Settings_key_FetishList_ParentEnArray, fetishParentResult => {
@@ -262,7 +263,7 @@ function userInputOnInputEvent(inputValue) {
     });
 
     // 从收藏中的上传者自定义中模糊搜索，绑定数据
-    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray =>{
+    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray => {
         if (uploaderArray.length > 0) {
             var foundArrays = [];
             for (const i in uploaderArray) {

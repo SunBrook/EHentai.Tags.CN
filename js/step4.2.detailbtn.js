@@ -193,7 +193,30 @@ function translateDetailPageTitleDisplay() {
     }
 }
 
-function detailPageTitleTranslate() {
+function detailPageTitleCopy(){
+    var gd2 = document.getElementById("gd2");
+    
+    var h1Title = document.getElementById("gn");
+    h1Title.style.display = "none";
+
+    var h1Title_copy = document.createElement("h1");
+    h1Title_copy.id = "h1Title_copy";
+    h1Title_copy.innerText = h1Title.innerText;
+    gd2.appendChild(h1Title_copy);
+
+    var h1Origin = document.getElementById("gj");
+    h1Origin.style.display = "none";
+
+    var h1Origin_copy = document.createElement("h1");
+    h1Origin_copy.id = "h1Origin_copy";
+    h1Origin_copy.innerText = h1Origin.innerText;
+    gd2.appendChild(h1Origin_copy);
+
+   
+}
+
+// 右侧按钮
+function detailPageRightButtons() {
     // 右侧操作列
     var rightDiv = document.getElementById("gd5");
 
@@ -222,35 +245,6 @@ function detailPageTitleTranslate() {
             }
         }, () => { });
     });
-
-}
-
-function detailPageTitleCopy(){
-    var gd2 = document.getElementById("gd2");
-    
-    var h1Title = document.getElementById("gn");
-    h1Title.style.display = "none";
-
-    var h1Title_copy = document.createElement("h1");
-    h1Title_copy.id = "h1Title_copy";
-    h1Title_copy.innerText = h1Title.innerText;
-    gd2.appendChild(h1Title_copy);
-
-    var h1Origin = document.getElementById("gj");
-    h1Origin.style.display = "none";
-
-    var h1Origin_copy = document.createElement("h1");
-    h1Origin_copy.id = "h1Origin_copy";
-    h1Origin_copy.innerText = h1Origin.innerText;
-    gd2.appendChild(h1Origin_copy);
-
-   
-}
-
-// 右侧按钮
-function detailPageRightButtons() {
-    // 右侧操作列
-    var rightDiv = document.getElementById("gd5");
 
     // 清空选择按钮
     var clearBtn = document.createElement("div");
@@ -455,7 +449,7 @@ function detailPageRightButtons() {
         }
 
         // 构建请求链接
-        var searchLink = `https://${webHost}/?f_search=${searchArray.join("+")}`;
+        var searchLink = `${window.location.origin}/?f_search=${searchArray.join("+")}`;
         window.location.href = searchLink;
     }
 }
