@@ -498,7 +498,6 @@ const toplie_subtitle_dict = {
 
 //#endregion
 
-
 //#region step0.localstorage.js localstorage 数据方法，迁入 indexdb，如无特殊需要，删除之前存储的数据
 
 // 版本号数据 读取、删除
@@ -2479,7 +2478,6 @@ func_eh_ex(() => {
 
 //#endregion
 
-
 //#region step1.2.translateTopMenu.js 头部菜单翻译
 
 function topMenuTranslateZh() {
@@ -2514,7 +2512,6 @@ function topMenuTranslateZh() {
 }
 
 //#endregion
-
 
 //#region step2.getTagDatas.js 获取标签数据
 
@@ -2591,19 +2588,16 @@ function indexDbInit(func_start_use) {
 	} else {
 		request.onsuccess = function () {
 			db = request.result;
-			console.log("数据库打开成功", db);
 			func_start_use();
 		}
 	}
 }
 
 request.onerror = function (event) {
-	console.log("数据库打开报错", event);
 }
 
 request.onupgradeneeded = function (event) {
 	db = event.target.result;
-	console.log("升级数据库", db);
 
 	// 对象仓库 Settings
 	// 
@@ -2648,7 +2642,6 @@ function read(tableName, key, func_success, func_error) {
 	var request = objectStore.get(key);
 
 	request.onerror = function (event) {
-		console.log('读取事务失败', event);
 		func_error();
 	}
 
@@ -2665,7 +2658,6 @@ function readAll(tableName, func_success, func_end) {
 			func_success(cursor.key, cursor.value);
 			cursor.continue();
 		} else {
-			console.log('没有更多数据了');
 			func_end();
 		}
 	}
@@ -2681,7 +2673,6 @@ function readByIndex(tableName, indexName, indexValue, func_success, func_none) 
 		if (result) {
 			func_success(result);
 		} else {
-			console.log('没找到');
 			func_none();
 		}
 	}
@@ -2737,12 +2728,10 @@ function add(tableName, data, func_success, func_error) {
 		.add(data);
 
 	request.onsuccess = function (event) {
-		console.log('数据写入成功', event);
 		func_success(event);
 	}
 
 	request.onerror = function (event) {
-		console.log('数据写入失败', event);
 		func_error(event);
 	}
 }
@@ -2775,12 +2764,10 @@ function update(tableName, data, func_success, func_error) {
 		.put(data);
 
 	request.onsuccess = function (event) {
-		console.log("数据更新成功", event);
 		func_success();
 	}
 
 	request.onerror = function (event) {
-		console.log("数据更新失败");
 		func_error(event);
 	}
 }
@@ -2790,11 +2777,9 @@ function remove(tableName, key, func_success, func_error) {
 		.objectStore(tableName)
 		.delete(key);
 	request.onsuccess = function (event) {
-		console.log("数据删除成功", event);
 		func_success();
 	}
 	request.onerror = function (event) {
-		console.log('数据删除失败', event);
 		func_error(event);
 	}
 }
@@ -2855,7 +2840,6 @@ function fetishListDataInit(update_func, local_func) {
 			}
 		});
 	}, error => {
-		console.log('error', error);
 	})
 }
 
@@ -2874,7 +2858,6 @@ function ehTagDataInit(update_func, local_func) {
 		});
 
 	}, error => {
-		console.log('error', error);
 	});
 }
 
@@ -2968,7 +2951,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete1 = true;
 				batchAdd(table_fetishListSubItems, table_fetishListSubItems_key, newData.data, newData.count, () => {
 					complete2 = true;
-					console.log('批量添加完成');
 				});
 			});
 
@@ -3023,7 +3005,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete3 = true;
 			complete4 = true;
 			complete5 = true;
-			console.log('fet', "没有新数据");
 		});
 
 		// 如果 EhTag 版本更新，这尝试更新用户收藏（可能没有翻译过的标签进行翻译）
@@ -3091,14 +3072,12 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete6 = true;
 				batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
 					complete7 = true;
-					console.log("批量添加完成");
 				});
 			});
 
 			// 批量添加详情页父级信息
 			batchAdd(table_detailParentItems, table_detailParentItems_key, detailDict, detailDictCount, () => {
 				complete8 = true;
-				console.log("批量添加完成");
 			});
 
 			var settings_ehTag_parentEnArray = {
@@ -3154,7 +3133,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete9 = true;
 			complete10 = true;
 			complete11 = true;
-			console.log('ehtag', "没有新数据");
 		});
 
 		// 用户收藏更新
@@ -3419,8 +3397,6 @@ function initUserSettings(func_compelete) {
 }
 
 //#endregion
-
-
 
 //#region step3.1.frontTranslate.js 首页谷歌翻译
 
@@ -3783,8 +3759,6 @@ function mainPageTranslate() {
 
 //#endregion
 
-
-
 //#region step3.2.frontPageTopStyle 首页头部搜索显示隐藏
 
 // 添加样式和逻辑，从 localstroage 中读取显示隐藏
@@ -3993,140 +3967,138 @@ function frontPageHtml() {
 
 //#endregion
 
-
 //#region step4.1.detailTranslate.js 详情页翻译
 
 // 头部添加词库更新提示
 function detailDataUpdate() {
-	var dataUpdateDiv = document.createElement("div");
-	dataUpdateDiv.id = "data_update_tip";
-	var dataUpdateText = document.createTextNode("词库升级中...");
-	dataUpdateDiv.appendChild(dataUpdateText);
-	var gd2Div = document.getElementById("gd2");
-	gd2Div.appendChild(dataUpdateDiv);
+    var dataUpdateDiv = document.createElement("div");
+    dataUpdateDiv.id = "data_update_tip";
+    var dataUpdateText = document.createTextNode("词库升级中...");
+    dataUpdateDiv.appendChild(dataUpdateText);
+    var gd2Div = document.getElementById("gd2");
+    gd2Div.appendChild(dataUpdateDiv);
 }
 
 // 详情页翻译
 function detailPageTranslate() {
 
-	// 跨域
-	crossDomain();
+    // 跨域
+    crossDomain();
 
-	//#region 左侧作品详情
+    //#region 左侧作品详情
 
-	// 类型
-	var bookType = document.getElementsByClassName("cs");
-	if (bookType.length > 0) {
-		bookType[0].innerText = bookTypeData[bookType[0].innerText] ?? bookType[0].innerText;
-	}
+    // 类型
+    var bookType = document.getElementsByClassName("cs");
+    if (bookType.length > 0) {
+        bookType[0].innerText = bookTypeData[bookType[0].innerText] ?? bookType[0].innerText;
+    }
 
-	// 上传人员
-	var uploder = document.getElementById("gdn");
-	if (uploder) {
-		var up = uploder.innerHTML;
-		var newInnerHtml = `由 ${up} 上传`;
-		uploder.innerHTML = newInnerHtml;
-	}
-
-
-	var gddDiv = document.getElementById("gdd");
-	var trList = gddDiv.querySelectorAll("tr");
-
-	// 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
-	var spanElement = document.createElement("span");
-	spanElement.style.display = "none";
-	var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
-	spanElement.appendChild(spanTxt);
-	gddDiv.appendChild(spanElement);
-
-	// 上传时间
-	trList[0].firstChild.innerText = "上传:";
-
-	// 父级
-	trList[1].firstChild.innerText = "父级:";
-	if (trList[1].lastChild.innerText == "None") {
-		trList[1].lastChild.innerText = "无";
-	}
-
-	// 是否可见
-	trList[2].firstChild.innerText = "可见:";
-	trList[2].lastChild.innerText = trList[2].lastChild.innerText == "Yes" ? "是" : "否";
-
-	// 语言
-	trList[3].firstChild.innerText = "语言:";
-
-	// 文件大小
-	trList[4].firstChild.innerText = "大小:";
-
-	// 篇幅
-	trList[5].firstChild.innerText = "篇幅:";
-	trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
-
-	// 收藏
-	trList[6].firstChild.innerText = "收藏:";
-	var favoriteText = trList[6].lastChild.innerText;
-	if (favoriteText == "None") {
-		trList[6].lastChild.innerText = "0 次";
-	}
-	else if (favoriteText == "Once") {
-		trList[6].lastChild.innerText = "1 次";
-	}
-	else {
-		trList[6].lastChild.innerText = favoriteText.replace("times", "次");
-	}
-
-	// 评分
-	var trRateList = document.getElementById("gdr").querySelectorAll("tr");
-	trRateList[0].firstChild.innerText = "评分:";
-	trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
-
-	// 添加到收藏(Ex 账号)
-	document.getElementById("favoritelink").innerText = "收藏到 (Ex 账号)";
+    // 上传人员
+    var uploder = document.getElementById("gdn");
+    if (uploder) {
+        var up = uploder.innerHTML;
+        var newInnerHtml = `由 ${up} 上传`;
+        uploder.innerHTML = newInnerHtml;
+    }
 
 
+    var gddDiv = document.getElementById("gdd");
+    var trList = gddDiv.querySelectorAll("tr");
+
+    // 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
+    var spanElement = document.createElement("span");
+    spanElement.style.display = "none";
+    var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
+    spanElement.appendChild(spanTxt);
+    gddDiv.appendChild(spanElement);
+
+    // 上传时间
+    trList[0].firstChild.innerText = "上传:";
+
+    // 父级
+    trList[1].firstChild.innerText = "父级:";
+    if (trList[1].lastChild.innerText == "None") {
+        trList[1].lastChild.innerText = "无";
+    }
+
+    // 是否可见
+    trList[2].firstChild.innerText = "可见:";
+    trList[2].lastChild.innerText = trList[2].lastChild.innerText == "Yes" ? "是" : "否";
+
+    // 语言
+    trList[3].firstChild.innerText = "语言:";
+
+    // 文件大小
+    trList[4].firstChild.innerText = "大小:";
+
+    // 篇幅
+    trList[5].firstChild.innerText = "篇幅:";
+    trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
+
+    // 收藏
+    trList[6].firstChild.innerText = "收藏:";
+    var favoriteText = trList[6].lastChild.innerText;
+    if (favoriteText == "None") {
+        trList[6].lastChild.innerText = "0 次";
+    }
+    else if (favoriteText == "Once") {
+        trList[6].lastChild.innerText = "1 次";
+    }
+    else {
+        trList[6].lastChild.innerText = favoriteText.replace("times", "次");
+    }
+
+    // 评分
+    var trRateList = document.getElementById("gdr").querySelectorAll("tr");
+    trRateList[0].firstChild.innerText = "评分:";
+    trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
+
+    // 添加到收藏(Ex 账号)
+    document.getElementById("favoritelink").innerText = "收藏到 (Ex 账号)";
 
 
-	//#endregion
 
-	// 文本框提示
-	document.getElementById("newtagfield").placeholder = "添加新标签，用逗号分隔";
-	document.getElementById("newtagbutton").value = "添加";
 
-	// 右侧五个菜单
-	var gd5a = document.getElementById("gd5").querySelectorAll("a");
-	for (const i in gd5a) {
-		if (Object.hasOwnProperty.call(gd5a, i)) {
-			const a = gd5a[i];
-			if (a.innerText.indexOf("Torrent Download") != -1) {
-				a.innerText = a.innerText.replace("Torrent Download", "种子下载");
-			} else {
-				a.innerText = gd5aDict[a.innerText] ?? a.innerText;
-			}
-		}
-	}
+    //#endregion
 
-	// 展示数量
-	var gpc = document.getElementsByClassName("gpc")[0];
-	gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
+    // 文本框提示
+    document.getElementById("newtagfield").placeholder = "添加新标签，用逗号分隔";
+    document.getElementById("newtagbutton").value = "添加";
 
-	// 展示行数
-	var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
-	for (const i in gdo2) {
-		if (Object.hasOwnProperty.call(gdo2, i)) {
-			const div = gdo2[i];
-			div.innerText = div.innerText.replace("rows", "行");
-		}
-	}
+    // 右侧五个菜单
+    var gd5a = document.getElementById("gd5").querySelectorAll("a");
+    for (const i in gd5a) {
+        if (Object.hasOwnProperty.call(gd5a, i)) {
+            const a = gd5a[i];
+            if (a.innerText.indexOf("Torrent Download") != -1) {
+                a.innerText = a.innerText.replace("Torrent Download", "种子下载");
+            } else {
+                a.innerText = gd5aDict[a.innerText] ?? a.innerText;
+            }
+        }
+    }
 
-	// 图片尺寸
-	var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
-	gdo4[0].innerText = "小图";
-	gdo4[1].innerText = "大图";
+    // 展示数量
+    var gpc = document.getElementsByClassName("gpc")[0];
+    gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
+
+    // 展示行数
+    var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
+    for (const i in gdo2) {
+        if (Object.hasOwnProperty.call(gdo2, i)) {
+            const div = gdo2[i];
+            div.innerText = div.innerText.replace("rows", "行");
+        }
+    }
+
+    // 图片尺寸
+    var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
+    gdo4[0].innerText = "小图";
+    gdo4[1].innerText = "大图";
 
 }
 
 //#endregion
-
 
 //#region step4.2.detailbtn.js 详情页主要按钮功能
 
@@ -4195,9 +4167,6 @@ function translateDetailPageTitleDisplay() {
 				txtArray.push(cstr);
 			}
 
-			console.log(txtArray);
-			console.log(signDictArray);
-
 			var totalCount = txtArray.length;
 			var indexCount = 0;
 			for (const i in txtArray) {
@@ -4230,7 +4199,6 @@ function translateDetailPageTitleDisplay() {
 			}, 50);
 
 			function translateCompelete() {
-				console.log(translateDict);
 				if (signDictArray.length == 0 && txtArray.length > 0) {
 					// 纯文字
 					var str = '';
@@ -4756,15 +4724,12 @@ function detailTryUseOldData() {
 
 //#endregion
 
-
-
 //#region step5.3.datasync.common.translateTitle.js 热门页数据同步
 
 function DataSyncCommonTranslateTitle() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_frontPage_title:
 					updateGoogleTranslateFrontPageTitle();
@@ -4918,8 +4883,6 @@ function popularTryUseOldData() {
 
 
 //#endregion
-
-
 
 //#region step7.2.favorite.js 收藏列表
 
@@ -5369,22 +5332,6 @@ function toplistBookpages() {
 
 //#endregion
 
-
-//TODO 参考首页，用户上传页面、偏好页面
-//TODO 收藏页面
-//TODO 我的首页
-//TODO 悬赏页面 (EH)
-//TODO 设置页面
-//TODO 种子页面
-//TODO 我的标签和本地标签的导入、导出，我的标签翻译 (EX)
-//TODO 样式细化
-//TODO 悬浮显示预览图
-//TODO 上下键选择候选项
-//TODO 收藏上传者，显示 收藏他/她 或者 取消收藏
-//TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
-//TODO 首页显示已收藏的标签
-
-
 //#region main.js 主方法
 
 // 标记可用浏览器版本
@@ -5433,7 +5380,6 @@ function mainPageCategory() {
 	// 消息通知提前，只要数据改变就应该马上通知，方便快速其他页面快速反应	
 	// 初始化用户配置信息
 	initUserSettings(() => {
-		console.log('初始化用户配置信息完毕');
 
 		// 首页头部样式调整，补充事件
 		frontPageTopStyleStep02();
@@ -5596,7 +5542,6 @@ function mainPageCategory() {
 				reader.readAsDataURL(resultFile);
 				reader.onload = function (e) {
 					var fileContent = e.target.result;
-					console.log(fileContent);
 					t_imgBase64 = fileContent;
 					setListBackgroundImage(t_imgBase64);
 
@@ -6465,8 +6410,6 @@ function mainPageCategory() {
 			var item = document.getElementById(id);
 			var cateItem = item.dataset.item;
 			delete searchItemDict[cateItem];
-			console.log(cateItem);
-			console.log(searchItemDict);
 
 			if (checkDictNull(searchItemDict)) {
 				inputClearBtn.style.display = "none";
@@ -6503,18 +6446,7 @@ function mainPageCategory() {
 				});
 			}
 
-			var searchParam = GetQueryString("f_search");
-			if (searchParam.indexOf("%20") != -1) {
-				// 需要转义
-				searchParam = urlDecode(searchParam);
-			} else {
-				searchParam = searchParam.replace(/\%3A/g, ':');
-				searchParam = searchParam.replace(/\"\+\"/g, '"$"');
-				searchParam = searchParam.replace(/\+/g, " ");
-				searchParam = searchParam.replace(/\"\$\"/g, '"+"');
-			}
-
-			var f_searchs = searchParam;
+			var f_searchs = urlDecode(GetQueryString("f_search"));
 			if (f_searchs && f_searchs != "null") {
 				var searchArray = f_searchs.split("+");
 				for (const i in searchArray) {
@@ -6548,7 +6480,6 @@ function mainPageCategory() {
 								}
 							}
 							else {
-								console.log(itemArray);
 								// 从恋物列表中查询，看是否存在
 								readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
 									if (fetishData) {
@@ -6572,8 +6503,6 @@ function mainPageCategory() {
 				var item = document.getElementById(id);
 				var cateItem = item.dataset.item;
 				delete searchItemDict[cateItem];
-				console.log(cateItem);
-				console.log(searchItemDict);
 
 				if (checkDictNull(searchItemDict)) {
 					inputClearBtn.style.display = "none";
@@ -6843,8 +6772,6 @@ function mainPageCategory() {
 
 			//#endregion
 
-
-
 			//#region step3.8.favorite.js 收藏功能
 
 			// 读取转换本地收藏数据
@@ -6998,7 +6925,6 @@ function mainPageCategory() {
 			function firstUpdateFavoriteSubItems(favoriteSubItems, foundTotalCount) {
 				// 更新本地收藏表
 				batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteSubItems, foundTotalCount, () => {
-					console.log('批量添加本地收藏表完成');
 					// 稳妥起见，更新完之后再删除本地的原始收藏列表
 					remove(table_Settings, table_Settings_key_FavoriteList, () => { }, () => { });
 				});
@@ -7788,7 +7714,6 @@ function mainPageCategory() {
 
 			window.onstorage = function (e) {
 				try {
-					console.log(e);
 					switch (e.newValue) {
 						case sync_oldSearchTopVisible:
 							updatePageTopVisible();
@@ -7993,13 +7918,10 @@ function detailPage() {
 	});
 
 
-
-
 	//#region step5.2.dataSync.detailPage.js 详情页数据同步
 
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_detailPage_title:
 					updateGoogleTranslateDetailPageTitle();

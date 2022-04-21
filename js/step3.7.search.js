@@ -13,8 +13,18 @@ function readSearchParentAndInput(parentEn, subEn) {
     });
 }
 
+var searchParam = GetQueryString("f_search");
+if (searchParam.indexOf("%20") != -1) {
+    // 需要转义
+    searchParam = urlDecode(searchParam);
+} else {
+    searchParam = searchParam.replace(/\%3A/g, ':');
+    searchParam = searchParam.replace(/\"\+\"/g, '"$"');
+    searchParam = searchParam.replace(/\+/g, " ");
+    searchParam = searchParam.replace(/\"\$\"/g, '"+"');
+}
 
-var f_searchs = urlDecode(GetQueryString("f_search"));
+var f_searchs = searchParam;
 if (f_searchs && f_searchs != "null") {
     var searchArray = f_searchs.split("+");
     for (const i in searchArray) {
@@ -48,6 +58,7 @@ if (f_searchs && f_searchs != "null") {
                     }
                 }
                 else {
+                    console.log(itemArray);
                     // 从恋物列表中查询，看是否存在
                     readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
                         if (fetishData) {
