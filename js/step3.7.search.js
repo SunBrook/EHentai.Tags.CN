@@ -15,7 +15,7 @@ function readSearchParentAndInput(parentEn, subEn) {
 
 var f_searchs = urlDecode(GetQueryString("f_search"));
 if (f_searchs) {
-    var searchArray = f_searchs.split("\"+\"");
+    var searchArray = f_searchs.split("+");
     for (const i in searchArray) {
         if (Object.hasOwnProperty.call(searchArray, i)) {
 
@@ -27,18 +27,24 @@ if (f_searchs) {
                 if (itemArray.length == 2) {
                     var parentEn = itemArray[0];
                     var subEn = itemArray[1];
-                    // 从EhTag中查询，看是否存在
-                    read(table_EhTagSubItems, items, ehTagData => {
-                        if (ehTagData) {
-                            addItemToInput(ehTagData.parent_en, ehTagData.parent_zh, ehTagData.sub_en, ehTagData.sub_zh, ehTagData.sub_desc);
-                        } else {
+
+                    // 判断是否是上传者
+                    if (parentEn == "uploader") {
+                        addItemToInput("uploader", "上传者", subEn, subEn, '');
+                    } else {
+                        // 从EhTag中查询，看是否存在
+                        read(table_EhTagSubItems, items, ehTagData => {
+                            if (ehTagData) {
+                                addItemToInput(ehTagData.parent_en, ehTagData.parent_zh, ehTagData.sub_en, ehTagData.sub_zh, ehTagData.sub_desc);
+                            } else {
+                                // 尝试翻译父级
+                                readSearchParentAndInput(parentEn, subEn);
+                            }
+                        }, () => {
                             // 尝试翻译父级
                             readSearchParentAndInput(parentEn, subEn);
-                        }
-                    }, () => {
-                        // 尝试翻译父级
-                        readSearchParentAndInput(parentEn, subEn);
-                    });
+                        });
+                    }
                 }
                 else {
                     // 从恋物列表中查询，看是否存在
@@ -242,7 +248,28 @@ function userInputOnInputEvent(inputValue) {
             for (const i in customArray) {
                 if (Object.hasOwnProperty.call(customArray, i)) {
                     const item = customArray[i];
-                    if (item.sub_en.indexOf(inputValue) != -1) {
+                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en}`;
+                    if (searchKey.indexOf(inputValue) != -1) {
+                        foundArrays.push(item);
+                    }
+                }
+            }
+
+            if (foundArrays.length > 0) {
+                addInputSearchItems(foundArrays);
+            }
+        }
+    });
+
+    // 从收藏中的上传者自定义中模糊搜索，绑定数据
+    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray =>{
+        if (uploaderArray.length > 0) {
+            var foundArrays = [];
+            for (const i in uploaderArray) {
+                if (Object.hasOwnProperty.call(uploaderArray, i)) {
+                    const item = uploaderArray[i];
+                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en}`;
+                    if (searchKey.indexOf(inputValue) != -1) {
                         foundArrays.push(item);
                     }
                 }
