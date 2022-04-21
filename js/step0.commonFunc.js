@@ -202,6 +202,11 @@ function urlEncode(str) {
         replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
+// UrlDecode
+function urlDecode(str) {
+    return decodeURIComponent(str);
+}
+
 // 跨域
 function crossDomain() {
     var meta = document.createElement("meta");

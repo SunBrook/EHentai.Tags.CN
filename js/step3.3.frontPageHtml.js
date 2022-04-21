@@ -14,7 +14,7 @@ const category_html = `
 				<input type="text" id="user_input">
 				<span id="user_input_enter" title="按回车键添加">↵</span>
 			</div>
-			<div id="category_enter_button">首页</div>
+			<div id="category_enter_button">全部</div>
 			<div id="input_clear">X</div>
 			<div id="category_user_input_recommend"></div>
 		</div>

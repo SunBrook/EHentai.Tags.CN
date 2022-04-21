@@ -27,216 +27,220 @@
 
 // 检查字典是否为空
 function checkDictNull(dict) {
-	for (const n in dict) {
-		return false;
-	}
-	return true;
+    for (const n in dict) {
+        return false;
+    }
+    return true;
 }
 
 // 获取地址参数
 function GetQueryString(name) {
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-	var r = window.location.search.substring(1).match(reg);
-	if (r != null) return decodeURI(r[2]); return null;
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substring(1).match(reg);
+    if (r != null) return decodeURI(r[2]); return null;
 }
 
 // 数组删除元素
 Array.prototype.remove = function (val) {
-	var index = this.indexOf(val);
-	if (index > -1) {
-		this.splice(index, 1);
-	}
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
 };
 
 // 数组差集
 function getDiffSet(array1, array2) {
-	return array1.filter(item => !new Set(array2).has(item));
+    return array1.filter(item => !new Set(array2).has(item));
 }
 
 // 导出json文件
 function saveJSON(data, filename) {
-	if (!data) return;
-	if (!filename) filename = "json.json";
-	if (typeof data === "object") {
-		data = JSON.stringify(data, undefined, 4);
-	}
-	// 要创建一个 blob 数据
-	let blob = new Blob([data], { type: "text/json" }),
-		a = document.createElement("a");
-	a.download = filename;
+    if (!data) return;
+    if (!filename) filename = "json.json";
+    if (typeof data === "object") {
+        data = JSON.stringify(data, undefined, 4);
+    }
+    // 要创建一个 blob 数据
+    let blob = new Blob([data], { type: "text/json" }),
+        a = document.createElement("a");
+    a.download = filename;
 
-	// 将blob转换为地址
-	// 创建 URL 的 Blob 对象
-	a.href = window.URL.createObjectURL(blob);
+    // 将blob转换为地址
+    // 创建 URL 的 Blob 对象
+    a.href = window.URL.createObjectURL(blob);
 
-	// 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
-	a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-	// 添加鼠标事件
-	let event = new MouseEvent("click", {});
+    // 添加鼠标事件
+    let event = new MouseEvent("click", {});
 
-	// 向一个指定的事件目标派发一个事件
-	a.dispatchEvent(event);
+    // 向一个指定的事件目标派发一个事件
+    a.dispatchEvent(event);
 }
 
 // 获取当前时间
 function getCurrentDate(format) {
-	var now = new Date();
-	var year = now.getFullYear(); //年份
-	var month = now.getMonth();//月份
-	var date = now.getDate();//日期
-	var day = now.getDay();//周几
-	var hour = now.getHours();//小时
-	var minu = now.getMinutes();//分钟
-	var sec = now.getSeconds();//秒
-	month = month + 1;
-	if (month < 10) month = "0" + month;
-	if (date < 10) date = "0" + date;
-	if (hour < 10) hour = "0" + hour;
-	if (minu < 10) minu = "0" + minu;
-	if (sec < 10) sec = "0" + sec;
-	var time = "";
-	//精确到天
-	if (format == 1) {
-		time = year + "-" + month + "-" + date;
-	}
-	//精确到分
-	else if (format == 2) {
-		time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
-	}
-	return time;
+    var now = new Date();
+    var year = now.getFullYear(); //年份
+    var month = now.getMonth();//月份
+    var date = now.getDate();//日期
+    var day = now.getDay();//周几
+    var hour = now.getHours();//小时
+    var minu = now.getMinutes();//分钟
+    var sec = now.getSeconds();//秒
+    month = month + 1;
+    if (month < 10) month = "0" + month;
+    if (date < 10) date = "0" + date;
+    if (hour < 10) hour = "0" + hour;
+    if (minu < 10) minu = "0" + minu;
+    if (sec < 10) sec = "0" + sec;
+    var time = "";
+    //精确到天
+    if (format == 1) {
+        time = year + "-" + month + "-" + date;
+    }
+    //精确到分
+    else if (format == 2) {
+        time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
+    }
+    return time;
 }
 
 // 调用谷歌翻译接口
 function getGoogleTranslate(text, func) {
-	var httpRequest = new XMLHttpRequest();
-	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
-	httpRequest.open("GET", url, true);
-	httpRequest.send();
+    var httpRequest = new XMLHttpRequest();
+    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
+    httpRequest.open("GET", url, true);
+    httpRequest.send();
 
-	httpRequest.onreadystatechange = function () {
-		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-			var json = JSON.parse(httpRequest.responseText);
-			func(json);
-		}
-	}
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var json = JSON.parse(httpRequest.responseText);
+            func(json);
+        }
+    }
 }
 
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {
-	clearInterval(slideTimer);
-	var h = 0;
-	slideTimer = setInterval(function () {
-		// 当目标高度与实际高度小于10px时，以1px的速度步进
-		var step = (realHeight - h) / 10;
-		step = Math.ceil(step);
-		h += step;
-		if (Math.abs(realHeight - h) <= Math.abs(step)) {
-			h = realHeight;
-			element.style.height = `${realHeight}px`;
-			func();
-			clearInterval(slideTimer);
-		} else {
-			element.style.height = `${h}px`;
-		}
-	}, speed);
+    clearInterval(slideTimer);
+    var h = 0;
+    slideTimer = setInterval(function () {
+        // 当目标高度与实际高度小于10px时，以1px的速度步进
+        var step = (realHeight - h) / 10;
+        step = Math.ceil(step);
+        h += step;
+        if (Math.abs(realHeight - h) <= Math.abs(step)) {
+            h = realHeight;
+            element.style.height = `${realHeight}px`;
+            func();
+            clearInterval(slideTimer);
+        } else {
+            element.style.height = `${h}px`;
+        }
+    }, speed);
 }
 function slideUp(element, speed, func) {
-	clearInterval(slideTimer);
-	slideTimer = setInterval(function () {
-		var step = (0 - element.clientHeight) / 10;
-		step = Math.floor(step);
-		element.style.height = `${element.clientHeight + step}px`;
-		if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
-			element.style.height = "0px";
-			func();
-			clearInterval(slideTimer);
-		}
-	}, speed);
+    clearInterval(slideTimer);
+    slideTimer = setInterval(function () {
+        var step = (0 - element.clientHeight) / 10;
+        step = Math.floor(step);
+        element.style.height = `${element.clientHeight + step}px`;
+        if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
+            element.style.height = "0px";
+            func();
+            clearInterval(slideTimer);
+        }
+    }, speed);
 }
 
 // 展开折叠动画 (右左)
 var slideTimer2 = null;
 function slideRight(element, realWidth, speed, func) {
-	clearInterval(slideTimer2);
-	var w = 0;
-	slideTimer2 = setInterval(function () {
-		// 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
-		var step = (realWidth - w) / 10;
-		step = Math.ceil(step);
-		w += step;
-		if (Math.abs(realWidth - w) <= Math.abs(step)) {
-			w = realWidth;
-			element.style.width = `${realWidth}px`;
-			func();
-			clearInterval(slideTimer2);
-		} else {
-			element.style.width = `${w}px`;
-		}
-	}, speed);
+    clearInterval(slideTimer2);
+    var w = 0;
+    slideTimer2 = setInterval(function () {
+        // 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
+        var step = (realWidth - w) / 10;
+        step = Math.ceil(step);
+        w += step;
+        if (Math.abs(realWidth - w) <= Math.abs(step)) {
+            w = realWidth;
+            element.style.width = `${realWidth}px`;
+            func();
+            clearInterval(slideTimer2);
+        } else {
+            element.style.width = `${w}px`;
+        }
+    }, speed);
 }
 function slideLeft(element, speed, func) {
-	clearInterval(slideTimer2);
-	slideTimer2 = setInterval(function () {
-		var step = (0 - element.clientWidth) / 10;
-		step = Math.floor(step);
-		element.style.width = `${element.clientWidth + step}px`;
-		if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
-			element.style.width = "0px";
-			func();
-			clearInterval(slideTimer2);
-		}
-	})
+    clearInterval(slideTimer2);
+    slideTimer2 = setInterval(function () {
+        var step = (0 - element.clientWidth) / 10;
+        step = Math.floor(step);
+        element.style.width = `${element.clientWidth + step}px`;
+        if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
+            element.style.width = "0px";
+            func();
+            clearInterval(slideTimer2);
+        }
+    })
 }
 
 
 // 页面样式注入
 function styleInject(css, ref) {
-	if (ref === void 0) ref = {};
-	var insertAt = ref.insertAt;
+    if (ref === void 0) ref = {};
+    var insertAt = ref.insertAt;
 
-	if (!css || typeof document === 'undefined') { return; }
+    if (!css || typeof document === 'undefined') { return; }
 
-	var head = document.head || document.getElementsByTagName('head')[0];
-	var style = document.createElement('style');
-	style.type = 'text/css';
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.type = 'text/css';
 
-	if (insertAt === 'top') {
-		if (head.firstChild) {
-			head.insertBefore(style, head.firstChild);
-		} else {
-			head.appendChild(style);
-		}
-	} else {
-		head.appendChild(style);
-	}
+    if (insertAt === 'top') {
+        if (head.firstChild) {
+            head.insertBefore(style, head.firstChild);
+        } else {
+            head.appendChild(style);
+        }
+    } else {
+        head.appendChild(style);
+    }
 
-	if (style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		style.appendChild(document.createTextNode(css));
-	}
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
 }
 
 // UrlEncode
 function urlEncode(str) {
-	str = (str + '').toString();
+    str = (str + '').toString();
 
-	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-		replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+}
+
+// UrlDecode
+function urlDecode(str) {
+    return decodeURIComponent(str);
 }
 
 // 跨域
 function crossDomain() {
-	var meta = document.createElement("meta");
-	meta.httpEquiv = "Content-Security-Policy";
-	meta.content = "upgrade-insecure-requests";
-	document.getElementsByTagName("head")[0].appendChild(meta);
+    var meta = document.createElement("meta");
+    meta.httpEquiv = "Content-Security-Policy";
+    meta.content = "upgrade-insecure-requests";
+    document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
 //#endregion
-
 
 //#region step0.constDatas.js 数据字典
 
@@ -3891,7 +3895,7 @@ const category_html = `
 				<input type="text" id="user_input">
 				<span id="user_input_enter" title="按回车键添加">↵</span>
 			</div>
-			<div id="category_enter_button">首页</div>
+			<div id="category_enter_button">全部</div>
 			<div id="input_clear">X</div>
 			<div id="category_user_input_recommend"></div>
 		</div>
@@ -5371,7 +5375,6 @@ function toplistBookpages() {
 //#endregion
 
 
-//TODO 首页标题翻译
 //TODO 参考首页，用户上传页面、偏好页面
 //TODO 收藏页面
 //TODO 我的首页
@@ -5397,9 +5400,8 @@ if (window.location.pathname.indexOf("/g/") != -1) {
 else {
 	switch (window.location.pathname) {
 		case '/':				// 首页
-			mainPageCategory();
-			break;
 		case '/watched':		// 偏好
+			mainPageCategory();
 			break;
 		case '/popular':		// 热门
 			popularPage();
@@ -5413,6 +5415,11 @@ else {
 			toplistPage();
 			break;
 		// 设置、我的标签、悬赏
+	}
+
+	if (window.location.pathname.indexOf("/uploader/") != -1) {
+		// 用户上传
+		mainPageCategory();
 	}
 }
 
@@ -6484,319 +6491,319 @@ function mainPageCategory() {
 
 			//#region step3.7.search.js 搜索框功能
 
-			// 进入页面，根据地址栏信息生成搜索栏标签
-			function readSearchParentAndInput(parentEn, subEn) {
-				read(table_detailParentItems, parentEn, result => {
-					if (result) {
-						addItemToInput(result.row, result.name, subEn, subEn, '');
-					} else {
-						addItemToInput(parentEn, parentEn, subEn, subEn, '');
-					}
-				}, () => {
-					addItemToInput(parentEn, parentEn, subEn, subEn, '');
-				});
-			}
+// 进入页面，根据地址栏信息生成搜索栏标签
+function readSearchParentAndInput(parentEn, subEn) {
+    read(table_detailParentItems, parentEn, result => {
+        if (result) {
+            addItemToInput(result.row, result.name, subEn, subEn, '');
+        } else {
+            addItemToInput(parentEn, parentEn, subEn, subEn, '');
+        }
+    }, () => {
+        addItemToInput(parentEn, parentEn, subEn, subEn, '');
+    });
+}
 
-			var f_searchs = GetQueryString("f_search");
-			if (f_searchs) {
-				var searchArray = f_searchs.split("\"+\"");
-				for (const i in searchArray) {
-					if (Object.hasOwnProperty.call(searchArray, i)) {
+var f_searchs = urlDecode(GetQueryString("f_search"));
+if (f_searchs) {
+    var searchArray = f_searchs.split("\"+\"");
+    for (const i in searchArray) {
+        if (Object.hasOwnProperty.call(searchArray, i)) {
 
-						var items = searchArray[i].replace(/\+/g, " ").replace(/\"/g, "");
-						var itemArray = items.split(":");
-						searchItem(itemArray);
+            var items = searchArray[i].replace(/\+/g, " ").replace(/\"/g, "");
+            var itemArray = items.split(":");
+            searchItem(itemArray);
 
-						function searchItem(itemArray) {
-							if (itemArray.length == 2) {
-								var parentEn = itemArray[0];
-								var subEn = itemArray[1];
-								// 从EhTag中查询，看是否存在
-								read(table_EhTagSubItems, items, ehTagData => {
-									if (ehTagData) {
-										addItemToInput(ehTagData.parent_en, ehTagData.parent_zh, ehTagData.sub_en, ehTagData.sub_zh, ehTagData.sub_desc);
-									} else {
-										// 尝试翻译父级
-										readSearchParentAndInput(parentEn, subEn);
-									}
-								}, () => {
-									// 尝试翻译父级
-									readSearchParentAndInput(parentEn, subEn);
-								});
-							}
-							else {
-								// 从恋物列表中查询，看是否存在
-								readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
-									if (fetishData) {
-										addItemToInput(fetishData.parent_en, fetishData.parent_zh, fetishData.sub_en, fetishData.sub_zh, fetishData.sub_desc);
-									} else {
-										addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
-									}
-								}, () => {
-									// 用户自定义搜索关键字
-									addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
-								});
-							}
-						}
-					}
-				}
-			}
+            function searchItem(itemArray) {
+                if (itemArray.length == 2) {
+                    var parentEn = itemArray[0];
+                    var subEn = itemArray[1];
+                    // 从EhTag中查询，看是否存在
+                    read(table_EhTagSubItems, items, ehTagData => {
+                        if (ehTagData) {
+                            addItemToInput(ehTagData.parent_en, ehTagData.parent_zh, ehTagData.sub_en, ehTagData.sub_zh, ehTagData.sub_desc);
+                        } else {
+                            // 尝试翻译父级
+                            readSearchParentAndInput(parentEn, subEn);
+                        }
+                    }, () => {
+                        // 尝试翻译父级
+                        readSearchParentAndInput(parentEn, subEn);
+                    });
+                }
+                else {
+                    // 从恋物列表中查询，看是否存在
+                    readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
+                        if (fetishData) {
+                            addItemToInput(fetishData.parent_en, fetishData.parent_zh, fetishData.sub_en, fetishData.sub_zh, fetishData.sub_desc);
+                        } else {
+                            addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
+                        }
+                    }, () => {
+                        // 用户自定义搜索关键字
+                        addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
+                    });
+                }
+            }
+        }
+    }
+}
 
-			// 删除搜索框子项
-			function removeSearchItem(e) {
-				var id = e.path[0].id;
-				var item = document.getElementById(id);
-				var cateItem = item.dataset.item;
-				delete searchItemDict[cateItem];
-				console.log(cateItem);
-				console.log(searchItemDict);
+// 删除搜索框子项
+function removeSearchItem(e) {
+    var id = e.path[0].id;
+    var item = document.getElementById(id);
+    var cateItem = item.dataset.item;
+    delete searchItemDict[cateItem];
+    console.log(cateItem);
+    console.log(searchItemDict);
 
-				if (checkDictNull(searchItemDict)) {
-					inputClearBtn.style.display = "none";
-					searchBtn.innerText = "首页";
-					addFavoritesBtn.style.display = "none";
-					addFavoritesDisabledBtn.style.display = "block";
-				}
+    if (checkDictNull(searchItemDict)) {
+        inputClearBtn.style.display = "none";
+        searchBtn.innerText = "全部";
+        addFavoritesBtn.style.display = "none";
+        addFavoritesDisabledBtn.style.display = "block";
+    }
 
-				item.parentNode.removeChild(item);
-			}
+    item.parentNode.removeChild(item);
+}
 
-			// 清空选择
-			inputClearBtn.onclick = function () {
-				searchItemDict = {};
-				readonlyDiv.innerHTML = "";
-				inputClearBtn.style.display = "none";
-				searchBtn.innerText = "首页";
-				addFavoritesBtn.style.display = "none";
-				addFavoritesDisabledBtn.style.display = "block";
-			}
+// 清空选择
+inputClearBtn.onclick = function () {
+    searchItemDict = {};
+    readonlyDiv.innerHTML = "";
+    inputClearBtn.style.display = "none";
+    searchBtn.innerText = "全部";
+    addFavoritesBtn.style.display = "none";
+    addFavoritesDisabledBtn.style.display = "block";
+}
 
-			// 搜索包含父级
-			function SearchWithParentEn(fetishParentArray) {
-				var enItemArray = [];
-				for (const i in searchItemDict) {
-					if (Object.hasOwnProperty.call(searchItemDict, i)) {
-						var item = searchItemDict[i];
-						if (fetishParentArray.indexOf(item.parent_en) != -1) {
-							enItemArray.push(`"${item.sub_en}"`);
-						}
-						else if (item.parent_en == "userCustom") {
-							enItemArray.push(`"${item.sub_en}"`);
-						} else {
-							enItemArray.push(`"${item.parent_en}:${item.sub_en}"`);
-						}
-					}
-				}
-				searchBtn.innerText = "···";
-				// 构建请求链接
-				var searchLink = `https://${webHost}/?f_search=${enItemArray.join("+")}`;
-				window.location.href = searchLink;
-			}
+// 搜索包含父级
+function SearchWithParentEn(fetishParentArray) {
+    var enItemArray = [];
+    for (const i in searchItemDict) {
+        if (Object.hasOwnProperty.call(searchItemDict, i)) {
+            var item = searchItemDict[i];
+            if (fetishParentArray.indexOf(item.parent_en) != -1) {
+                enItemArray.push(`"${item.sub_en}"`);
+            }
+            else if (item.parent_en == "userCustom") {
+                enItemArray.push(`"${item.sub_en}"`);
+            } else {
+                enItemArray.push(`"${item.parent_en}:${item.sub_en}"`);
+            }
+        }
+    }
+    searchBtn.innerText = "···";
+    // 构建请求链接
+    var searchLink = `https://${webHost}/?f_search=${enItemArray.join("+")}`;
+    window.location.href = searchLink;
+}
 
-			// 搜索只有子级
-			function SearchWithoutParentEn() {
-				var enItemArray = [];
-				for (const i in searchItemDict) {
-					if (Object.hasOwnProperty.call(searchItemDict, i)) {
-						var item = searchItemDict[i];
-						if (item.parent_en == "userCustom") {
-							enItemArray.push(`"${item.sub_en}"`);
-						} else if (enItemArray.indexOf(item.sub_en) == -1) {
-							enItemArray.push(`"${item.sub_en}"`);
-						}
-					}
-				}
-				searchBtn.innerText = "···";
-				// 构建请求链接
-				var searchLink = `https://${webHost}/?f_search=${enItemArray.join("+")}`;
-				window.location.href = searchLink;
-			}
+// 搜索只有子级
+function SearchWithoutParentEn() {
+    var enItemArray = [];
+    for (const i in searchItemDict) {
+        if (Object.hasOwnProperty.call(searchItemDict, i)) {
+            var item = searchItemDict[i];
+            if (item.parent_en == "userCustom") {
+                enItemArray.push(`"${item.sub_en}"`);
+            } else if (enItemArray.indexOf(item.sub_en) == -1) {
+                enItemArray.push(`"${item.sub_en}"`);
+            }
+        }
+    }
+    searchBtn.innerText = "···";
+    // 构建请求链接
+    var searchLink = `https://${webHost}/?f_search=${enItemArray.join("+")}`;
+    window.location.href = searchLink;
+}
 
-			// 搜索按钮 or 首页按钮
-			searchBtn.onclick = function () {
-				if (searchBtn.innerText == "首页") {
-					searchBtn.innerText = "···";
-					window.location.href = `https://${webHost}`;
-				}
-				else if (searchBtn.innerText == "搜索") {
-					read(table_Settings, table_Settings_key_FetishList_ParentEnArray, fetishParentResult => {
-						if (fetishParentResult) {
-							SearchWithParentEn(fetishParentResult.value);
-						} else {
-							SearchWithoutParentEn();
-						}
-					}, () => {
-						SearchWithoutParentEn();
-					});
-				}
-			}
+// 搜索按钮 or 全部按钮
+searchBtn.onclick = function () {
+    if (searchBtn.innerText == "全部") {
+        searchBtn.innerText = "···";
+        window.location.href = `https://${webHost}`;
+    }
+    else if (searchBtn.innerText == "搜索") {
+        read(table_Settings, table_Settings_key_FetishList_ParentEnArray, fetishParentResult => {
+            if (fetishParentResult) {
+                SearchWithParentEn(fetishParentResult.value);
+            } else {
+                SearchWithoutParentEn();
+            }
+        }, () => {
+            SearchWithoutParentEn();
+        });
+    }
+}
 
-			// 搜索按钮，点击后如果鼠标悬浮指针改为转圈
-			searchBtn.onmouseover = function () {
-				if (searchBtn.innerText == "···") {
-					searchBtn.style.cursor = "wait";
-				}
-			}
+// 搜索按钮，点击后如果鼠标悬浮指针改为转圈
+searchBtn.onmouseover = function () {
+    if (searchBtn.innerText == "···") {
+        searchBtn.style.cursor = "wait";
+    }
+}
 
-			// 鼠标悬浮显示输入框
-			searchInput.onmouseover = function () {
-				if (userInput.value == "") {
-					userInput.classList.add("user_input_null_backcolor");
-				} else {
-					userInput.classList.add("user_input_value_backColor");
-				}
+// 鼠标悬浮显示输入框
+searchInput.onmouseover = function () {
+    if (userInput.value == "") {
+        userInput.classList.add("user_input_null_backcolor");
+    } else {
+        userInput.classList.add("user_input_value_backColor");
+    }
 
-			}
+}
 
-			// 鼠标移出移除输入框
-			searchInput.onmouseout = function () {
-				if (userInput.value == "") {
-					userInput.classList.remove("user_input_null_backcolor");
-					userInput.classList.remove("user_input_value_backColor");
-				}
-			}
+// 鼠标移出移除输入框
+searchInput.onmouseout = function () {
+    if (userInput.value == "") {
+        userInput.classList.remove("user_input_null_backcolor");
+        userInput.classList.remove("user_input_value_backColor");
+    }
+}
 
-			// 输入框输入时候选
-			userInput.oninput = function () {
-				var inputValue = userInput.value.toLowerCase();
-				userInputOnInputEvent(inputValue);
-			}
+// 输入框输入时候选
+userInput.oninput = function () {
+    var inputValue = userInput.value.toLowerCase();
+    userInputOnInputEvent(inputValue);
+}
 
-			function userInputOnInputEvent(inputValue) {
-				// 清空候选项
-				userInputRecommendDiv.innerHTML = "";
-				userInputRecommendDiv.style.display = "block";
-				var tempDiv = document.createElement("div");
-				userInputRecommendDiv.appendChild(tempDiv);
+function userInputOnInputEvent(inputValue) {
+    // 清空候选项
+    userInputRecommendDiv.innerHTML = "";
+    userInputRecommendDiv.style.display = "block";
+    var tempDiv = document.createElement("div");
+    userInputRecommendDiv.appendChild(tempDiv);
 
-				if (!inputValue) {
-					userInputRecommendDiv.style.display = "none";
-					return;
-				}
-
-
-
-				// 添加搜索候选
-				function addInputSearchItems(foundArrays) {
-					for (const i in foundArrays) {
-						if (Object.hasOwnProperty.call(foundArrays, i)) {
-							const item = foundArrays[i];
-							var commendDiv = document.createElement("div");
-							commendDiv.classList.add("category_user_input_recommend_items");
-							commendDiv.title = item.sub_desc;
-
-							var chTextDiv = document.createElement("div");
-							chTextDiv.style.float = "left";
-							var chTextNode = document.createTextNode(`${item.parent_zh} : ${item.sub_zh}`);
-							chTextDiv.appendChild(chTextNode);
-
-							var enTextDiv = document.createElement("div");
-							enTextDiv.style.float = "right";
-							var enTextNode = document.createTextNode(`${item.parent_en} : ${item.sub_en}`);
-							enTextDiv.appendChild(enTextNode);
-
-							commendDiv.appendChild(chTextDiv);
-							commendDiv.appendChild(enTextDiv);
-
-							commendDiv.addEventListener("click", function () {
-								addItemToInput(item.parent_en, item.parent_zh, item.sub_en, item.sub_zh, item.sub_desc);
-								userInputRecommendDiv.innerHTML = "";
-								userInput.value = "";
-								userInput.focus();
-							});
-							tempDiv.appendChild(commendDiv);
-						}
-					}
-				}
-
-				// 从恋物表中模糊搜索，绑定数据
-				readByCursorIndexFuzzy(table_fetishListSubItems, table_fetishListSubItems_index_searchKey, inputValue, foundArrays => {
-					addInputSearchItems(foundArrays);
-				});
-
-				// 从EhTag中模糊搜索，绑定数据
-				readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, inputValue, foundArrays => {
-					addInputSearchItems(foundArrays);
-				});
-
-				// 从收藏中的用户自定义中模糊搜索，绑定数据
-				readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "userCustom", customArray => {
-					if (customArray.length > 0) {
-						var foundArrays = [];
-						for (const i in customArray) {
-							if (Object.hasOwnProperty.call(customArray, i)) {
-								const item = customArray[i];
-								if (item.sub_en.indexOf(inputValue) != -1) {
-									foundArrays.push(item);
-								}
-							}
-						}
-
-						if (foundArrays.length > 0) {
-							addInputSearchItems(foundArrays);
-						}
-					}
-				});
-
-			}
-
-			// 输入框检测回车事件
-			userInput.onkeydown = function (e) {
-				var theEvent = window.event || e;
-				var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
-				if (code == 13) {
-					userInputEnter();
-				}
-			}
-
-			userInputEnterBtn.onclick = userInputEnter;
-
-			function userInputEnter() {
-				var inputValue = userInput.value.replace(/(^\s*)|(\s*$)/g, '');
-				if (!inputValue) return;
+    if (!inputValue) {
+        userInputRecommendDiv.style.display = "none";
+        return;
+    }
 
 
-				var recommendItems = document.getElementsByClassName("category_user_input_recommend_items");
-				if (recommendItems.length > 0) {
-					// 从候选下拉列表中匹配，如果有相同的，使用匹配内容，否则直接新增自定义文本
-					var isFound = false;
-					for (const i in recommendItems) {
-						if (Object.hasOwnProperty.call(recommendItems, i)) {
-							const recommendItem = recommendItems[i];
-							var zhDiv = recommendItem.firstChild;
-							var enDiv = recommendItem.lastChild;
-							var zhArray = zhDiv.innerText.split(" : ");
-							var enArray = enDiv.innerText.split(" : ");
-							var sub_zh = zhArray[1];
-							var sub_en = enArray[1];
-							var sub_desc = recommendItem.title;
-							if (sub_zh == inputValue || sub_en == inputValue) {
-								// 符合条件
-								var parent_zh = zhArray[0];
-								var parent_en = enArray[0];
-								addItemToInput(parent_en, parent_zh, sub_en, sub_zh, sub_desc);
-								isFound = true;
-								break;
-							}
-						}
-					}
 
-					if (!isFound) {
-						// 没有找到符合条件的
-						addItemToInput("userCustom", "自定义", inputValue, inputValue, '');
-					}
+    // 添加搜索候选
+    function addInputSearchItems(foundArrays) {
+        for (const i in foundArrays) {
+            if (Object.hasOwnProperty.call(foundArrays, i)) {
+                const item = foundArrays[i];
+                var commendDiv = document.createElement("div");
+                commendDiv.classList.add("category_user_input_recommend_items");
+                commendDiv.title = item.sub_desc;
 
-				} else {
-					// 如果没有下拉列表，直接新增自定义文本
-					addItemToInput("userCustom", "自定义", inputValue, inputValue, '');
-				}
+                var chTextDiv = document.createElement("div");
+                chTextDiv.style.float = "left";
+                var chTextNode = document.createTextNode(`${item.parent_zh} : ${item.sub_zh}`);
+                chTextDiv.appendChild(chTextNode);
 
-				// 清空文本框
-				userInput.value = "";
-				userInputRecommendDiv.style.display = "none";
-			}
+                var enTextDiv = document.createElement("div");
+                enTextDiv.style.float = "right";
+                var enTextNode = document.createTextNode(`${item.parent_en} : ${item.sub_en}`);
+                enTextDiv.appendChild(enTextNode);
 
-			//#endregion
+                commendDiv.appendChild(chTextDiv);
+                commendDiv.appendChild(enTextDiv);
+
+                commendDiv.addEventListener("click", function () {
+                    addItemToInput(item.parent_en, item.parent_zh, item.sub_en, item.sub_zh, item.sub_desc);
+                    userInputRecommendDiv.innerHTML = "";
+                    userInput.value = "";
+                    userInput.focus();
+                });
+                tempDiv.appendChild(commendDiv);
+            }
+        }
+    }
+
+    // 从恋物表中模糊搜索，绑定数据
+    readByCursorIndexFuzzy(table_fetishListSubItems, table_fetishListSubItems_index_searchKey, inputValue, foundArrays => {
+        addInputSearchItems(foundArrays);
+    });
+
+    // 从EhTag中模糊搜索，绑定数据
+    readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, inputValue, foundArrays => {
+        addInputSearchItems(foundArrays);
+    });
+
+    // 从收藏中的用户自定义中模糊搜索，绑定数据
+    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "userCustom", customArray => {
+        if (customArray.length > 0) {
+            var foundArrays = [];
+            for (const i in customArray) {
+                if (Object.hasOwnProperty.call(customArray, i)) {
+                    const item = customArray[i];
+                    if (item.sub_en.indexOf(inputValue) != -1) {
+                        foundArrays.push(item);
+                    }
+                }
+            }
+
+            if (foundArrays.length > 0) {
+                addInputSearchItems(foundArrays);
+            }
+        }
+    });
+
+}
+
+// 输入框检测回车事件
+userInput.onkeydown = function (e) {
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+    if (code == 13) {
+        userInputEnter();
+    }
+}
+
+userInputEnterBtn.onclick = userInputEnter;
+
+function userInputEnter() {
+    var inputValue = userInput.value.replace(/(^\s*)|(\s*$)/g, '');
+    if (!inputValue) return;
+
+
+    var recommendItems = document.getElementsByClassName("category_user_input_recommend_items");
+    if (recommendItems.length > 0) {
+        // 从候选下拉列表中匹配，如果有相同的，使用匹配内容，否则直接新增自定义文本
+        var isFound = false;
+        for (const i in recommendItems) {
+            if (Object.hasOwnProperty.call(recommendItems, i)) {
+                const recommendItem = recommendItems[i];
+                var zhDiv = recommendItem.firstChild;
+                var enDiv = recommendItem.lastChild;
+                var zhArray = zhDiv.innerText.split(" : ");
+                var enArray = enDiv.innerText.split(" : ");
+                var sub_zh = zhArray[1];
+                var sub_en = enArray[1];
+                var sub_desc = recommendItem.title;
+                if (sub_zh == inputValue || sub_en == inputValue) {
+                    // 符合条件
+                    var parent_zh = zhArray[0];
+                    var parent_en = enArray[0];
+                    addItemToInput(parent_en, parent_zh, sub_en, sub_zh, sub_desc);
+                    isFound = true;
+                    break;
+                }
+            }
+        }
+
+        if (!isFound) {
+            // 没有找到符合条件的
+            addItemToInput("userCustom", "自定义", inputValue, inputValue, '');
+        }
+
+    } else {
+        // 如果没有下拉列表，直接新增自定义文本
+        addItemToInput("userCustom", "自定义", inputValue, inputValue, '');
+    }
+
+    // 清空文本框
+    userInput.value = "";
+    userInputRecommendDiv.style.display = "none";
+}
+
+//#endregion
 
 
 			//#region step3.8.favorite.js 收藏功能

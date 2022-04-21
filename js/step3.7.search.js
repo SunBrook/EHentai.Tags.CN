@@ -13,7 +13,7 @@ function readSearchParentAndInput(parentEn, subEn) {
     });
 }
 
-var f_searchs = GetQueryString("f_search");
+var f_searchs = urlDecode(GetQueryString("f_search"));
 if (f_searchs) {
     var searchArray = f_searchs.split("\"+\"");
     for (const i in searchArray) {
@@ -69,7 +69,7 @@ function removeSearchItem(e) {
 
     if (checkDictNull(searchItemDict)) {
         inputClearBtn.style.display = "none";
-        searchBtn.innerText = "首页";
+        searchBtn.innerText = "全部";
         addFavoritesBtn.style.display = "none";
         addFavoritesDisabledBtn.style.display = "block";
     }
@@ -82,7 +82,7 @@ inputClearBtn.onclick = function () {
     searchItemDict = {};
     readonlyDiv.innerHTML = "";
     inputClearBtn.style.display = "none";
-    searchBtn.innerText = "首页";
+    searchBtn.innerText = "全部";
     addFavoritesBtn.style.display = "none";
     addFavoritesDisabledBtn.style.display = "block";
 }
@@ -128,9 +128,9 @@ function SearchWithoutParentEn() {
     window.location.href = searchLink;
 }
 
-// 搜索按钮 or 首页按钮
+// 搜索按钮 or 全部按钮
 searchBtn.onclick = function () {
-    if (searchBtn.innerText == "首页") {
+    if (searchBtn.innerText == "全部") {
         searchBtn.innerText = "···";
         window.location.href = `https://${webHost}`;
     }
