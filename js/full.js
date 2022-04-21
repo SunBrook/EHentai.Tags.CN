@@ -27,212 +27,212 @@
 
 // 检查字典是否为空
 function checkDictNull(dict) {
-    for (const n in dict) {
-        return false;
-    }
-    return true;
+	for (const n in dict) {
+		return false;
+	}
+	return true;
 }
 
 // 获取地址参数
 function GetQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substring(1).match(reg);
-    if (r != null) return decodeURI(r[2]); return null;
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substring(1).match(reg);
+	if (r != null) return decodeURI(r[2]); return null;
 }
 
 // 数组删除元素
 Array.prototype.remove = function (val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-        this.splice(index, 1);
-    }
+	var index = this.indexOf(val);
+	if (index > -1) {
+		this.splice(index, 1);
+	}
 };
 
 // 数组差集
 function getDiffSet(array1, array2) {
-    return array1.filter(item => !new Set(array2).has(item));
+	return array1.filter(item => !new Set(array2).has(item));
 }
 
 // 导出json文件
 function saveJSON(data, filename) {
-    if (!data) return;
-    if (!filename) filename = "json.json";
-    if (typeof data === "object") {
-        data = JSON.stringify(data, undefined, 4);
-    }
-    // 要创建一个 blob 数据
-    let blob = new Blob([data], { type: "text/json" }),
-        a = document.createElement("a");
-    a.download = filename;
+	if (!data) return;
+	if (!filename) filename = "json.json";
+	if (typeof data === "object") {
+		data = JSON.stringify(data, undefined, 4);
+	}
+	// 要创建一个 blob 数据
+	let blob = new Blob([data], { type: "text/json" }),
+		a = document.createElement("a");
+	a.download = filename;
 
-    // 将blob转换为地址
-    // 创建 URL 的 Blob 对象
-    a.href = window.URL.createObjectURL(blob);
+	// 将blob转换为地址
+	// 创建 URL 的 Blob 对象
+	a.href = window.URL.createObjectURL(blob);
 
-    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
-    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+	// 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+	a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-    // 添加鼠标事件
-    let event = new MouseEvent("click", {});
+	// 添加鼠标事件
+	let event = new MouseEvent("click", {});
 
-    // 向一个指定的事件目标派发一个事件
-    a.dispatchEvent(event);
+	// 向一个指定的事件目标派发一个事件
+	a.dispatchEvent(event);
 }
 
 // 获取当前时间
 function getCurrentDate(format) {
-    var now = new Date();
-    var year = now.getFullYear(); //年份
-    var month = now.getMonth();//月份
-    var date = now.getDate();//日期
-    var day = now.getDay();//周几
-    var hour = now.getHours();//小时
-    var minu = now.getMinutes();//分钟
-    var sec = now.getSeconds();//秒
-    month = month + 1;
-    if (month < 10) month = "0" + month;
-    if (date < 10) date = "0" + date;
-    if (hour < 10) hour = "0" + hour;
-    if (minu < 10) minu = "0" + minu;
-    if (sec < 10) sec = "0" + sec;
-    var time = "";
-    //精确到天
-    if (format == 1) {
-        time = year + "-" + month + "-" + date;
-    }
-    //精确到分
-    else if (format == 2) {
-        time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
-    }
-    return time;
+	var now = new Date();
+	var year = now.getFullYear(); //年份
+	var month = now.getMonth();//月份
+	var date = now.getDate();//日期
+	var day = now.getDay();//周几
+	var hour = now.getHours();//小时
+	var minu = now.getMinutes();//分钟
+	var sec = now.getSeconds();//秒
+	month = month + 1;
+	if (month < 10) month = "0" + month;
+	if (date < 10) date = "0" + date;
+	if (hour < 10) hour = "0" + hour;
+	if (minu < 10) minu = "0" + minu;
+	if (sec < 10) sec = "0" + sec;
+	var time = "";
+	//精确到天
+	if (format == 1) {
+		time = year + "-" + month + "-" + date;
+	}
+	//精确到分
+	else if (format == 2) {
+		time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
+	}
+	return time;
 }
 
 // 调用谷歌翻译接口
 function getGoogleTranslate(text, func) {
-    var httpRequest = new XMLHttpRequest();
-    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
-    httpRequest.open("GET", url, true);
-    httpRequest.send();
+	var httpRequest = new XMLHttpRequest();
+	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
+	httpRequest.open("GET", url, true);
+	httpRequest.send();
 
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var json = JSON.parse(httpRequest.responseText);
-            func(json);
-        }
-    }
+	httpRequest.onreadystatechange = function () {
+		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+			var json = JSON.parse(httpRequest.responseText);
+			func(json);
+		}
+	}
 }
 
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {
-    clearInterval(slideTimer);
-    var h = 0;
-    slideTimer = setInterval(function () {
-        // 当目标高度与实际高度小于10px时，以1px的速度步进
-        var step = (realHeight - h) / 10;
-        step = Math.ceil(step);
-        h += step;
-        if (Math.abs(realHeight - h) <= Math.abs(step)) {
-            h = realHeight;
-            element.style.height = `${realHeight}px`;
-            func();
-            clearInterval(slideTimer);
-        } else {
-            element.style.height = `${h}px`;
-        }
-    }, speed);
+	clearInterval(slideTimer);
+	var h = 0;
+	slideTimer = setInterval(function () {
+		// 当目标高度与实际高度小于10px时，以1px的速度步进
+		var step = (realHeight - h) / 10;
+		step = Math.ceil(step);
+		h += step;
+		if (Math.abs(realHeight - h) <= Math.abs(step)) {
+			h = realHeight;
+			element.style.height = `${realHeight}px`;
+			func();
+			clearInterval(slideTimer);
+		} else {
+			element.style.height = `${h}px`;
+		}
+	}, speed);
 }
 function slideUp(element, speed, func) {
-    clearInterval(slideTimer);
-    slideTimer = setInterval(function () {
-        var step = (0 - element.clientHeight) / 10;
-        step = Math.floor(step);
-        element.style.height = `${element.clientHeight + step}px`;
-        if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
-            element.style.height = "0px";
-            func();
-            clearInterval(slideTimer);
-        }
-    }, speed);
+	clearInterval(slideTimer);
+	slideTimer = setInterval(function () {
+		var step = (0 - element.clientHeight) / 10;
+		step = Math.floor(step);
+		element.style.height = `${element.clientHeight + step}px`;
+		if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
+			element.style.height = "0px";
+			func();
+			clearInterval(slideTimer);
+		}
+	}, speed);
 }
 
 // 展开折叠动画 (右左)
 var slideTimer2 = null;
 function slideRight(element, realWidth, speed, func) {
-    clearInterval(slideTimer2);
-    var w = 0;
-    slideTimer2 = setInterval(function () {
-        // 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
-        var step = (realWidth - w) / 10;
-        step = Math.ceil(step);
-        w += step;
-        if (Math.abs(realWidth - w) <= Math.abs(step)) {
-            w = realWidth;
-            element.style.width = `${realWidth}px`;
-            func();
-            clearInterval(slideTimer2);
-        } else {
-            element.style.width = `${w}px`;
-        }
-    }, speed);
+	clearInterval(slideTimer2);
+	var w = 0;
+	slideTimer2 = setInterval(function () {
+		// 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
+		var step = (realWidth - w) / 10;
+		step = Math.ceil(step);
+		w += step;
+		if (Math.abs(realWidth - w) <= Math.abs(step)) {
+			w = realWidth;
+			element.style.width = `${realWidth}px`;
+			func();
+			clearInterval(slideTimer2);
+		} else {
+			element.style.width = `${w}px`;
+		}
+	}, speed);
 }
 function slideLeft(element, speed, func) {
-    clearInterval(slideTimer2);
-    slideTimer2 = setInterval(function () {
-        var step = (0 - element.clientWidth) / 10;
-        step = Math.floor(step);
-        element.style.width = `${element.clientWidth + step}px`;
-        if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
-            element.style.width = "0px";
-            func();
-            clearInterval(slideTimer2);
-        }
-    })
+	clearInterval(slideTimer2);
+	slideTimer2 = setInterval(function () {
+		var step = (0 - element.clientWidth) / 10;
+		step = Math.floor(step);
+		element.style.width = `${element.clientWidth + step}px`;
+		if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
+			element.style.width = "0px";
+			func();
+			clearInterval(slideTimer2);
+		}
+	})
 }
 
 
 // 页面样式注入
 function styleInject(css, ref) {
-    if (ref === void 0) ref = {};
-    var insertAt = ref.insertAt;
+	if (ref === void 0) ref = {};
+	var insertAt = ref.insertAt;
 
-    if (!css || typeof document === 'undefined') { return; }
+	if (!css || typeof document === 'undefined') { return; }
 
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var style = document.createElement('style');
-    style.type = 'text/css';
+	var head = document.head || document.getElementsByTagName('head')[0];
+	var style = document.createElement('style');
+	style.type = 'text/css';
 
-    if (insertAt === 'top') {
-        if (head.firstChild) {
-            head.insertBefore(style, head.firstChild);
-        } else {
-            head.appendChild(style);
-        }
-    } else {
-        head.appendChild(style);
-    }
+	if (insertAt === 'top') {
+		if (head.firstChild) {
+			head.insertBefore(style, head.firstChild);
+		} else {
+			head.appendChild(style);
+		}
+	} else {
+		head.appendChild(style);
+	}
 
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
+	if (style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		style.appendChild(document.createTextNode(css));
+	}
 }
 
 // UrlEncode
 function urlEncode(str) {
-    str = (str + '').toString();
+	str = (str + '').toString();
 
-    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+		replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 // 跨域
 function crossDomain() {
-    var meta = document.createElement("meta");
-    meta.httpEquiv = "Content-Security-Policy";
-    meta.content = "upgrade-insecure-requests";
-    document.getElementsByTagName("head")[0].appendChild(meta);
+	var meta = document.createElement("meta");
+	meta.httpEquiv = "Content-Security-Policy";
+	meta.content = "upgrade-insecure-requests";
+	document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
 //#endregion
@@ -3672,7 +3672,7 @@ function tableBookPages() {
 }
 
 // page -> 页
-function innerTextPageToYe(element){
+function innerTextPageToYe(element) {
 	if (!element.innerText) return;
 	if (element.innerText.indexOf(" pages") != -1) {
 		element.innerText = element.innerText.replace(" pages", " 页");
@@ -3994,127 +3994,127 @@ function frontPageHtml() {
 
 // 头部添加词库更新提示
 function detailDataUpdate() {
-    var dataUpdateDiv = document.createElement("div");
-    dataUpdateDiv.id = "data_update_tip";
-    var dataUpdateText = document.createTextNode("词库升级中...");
-    dataUpdateDiv.appendChild(dataUpdateText);
-    var gd2Div = document.getElementById("gd2");
-    gd2Div.appendChild(dataUpdateDiv);
+	var dataUpdateDiv = document.createElement("div");
+	dataUpdateDiv.id = "data_update_tip";
+	var dataUpdateText = document.createTextNode("词库升级中...");
+	dataUpdateDiv.appendChild(dataUpdateText);
+	var gd2Div = document.getElementById("gd2");
+	gd2Div.appendChild(dataUpdateDiv);
 }
 
 // 详情页翻译
 function detailPageTranslate() {
 
-    // 跨域
+	// 跨域
 	crossDomain();
 
-    //#region 左侧作品详情
+	//#region 左侧作品详情
 
-    // 类型
-    var bookType = document.getElementsByClassName("cs");
-    if (bookType.length > 0) {
-        bookType[0].innerText = bookTypeData[bookType[0].innerText] ?? bookType[0].innerText;
-    }
+	// 类型
+	var bookType = document.getElementsByClassName("cs");
+	if (bookType.length > 0) {
+		bookType[0].innerText = bookTypeData[bookType[0].innerText] ?? bookType[0].innerText;
+	}
 
-    // 上传人员
-    var uploder = document.getElementById("gdn");
-    if (uploder) {
-        var up = uploder.innerHTML;
-        var newInnerHtml = `由 ${up} 上传`;
-        uploder.innerHTML = newInnerHtml;
-    }
-
-
-    var gddDiv = document.getElementById("gdd");
-    var trList = gddDiv.querySelectorAll("tr");
-
-    // 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
-    var spanElement = document.createElement("span");
-    spanElement.style.display = "none";
-    var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
-    spanElement.appendChild(spanTxt);
-    gddDiv.appendChild(spanElement);
-
-    // 上传时间
-    trList[0].firstChild.innerText = "上传:";
-
-    // 父级
-    trList[1].firstChild.innerText = "父级:";
-
-    // 是否可见
-    trList[2].firstChild.innerText = "可见:";
-    trList[2].lastChild.innerText = trList[2].lastChild.innerText == "Yes" ? "是" : "否";
-
-    // 语言
-    trList[3].firstChild.innerText = "语言:";
-
-    // 文件大小
-    trList[4].firstChild.innerText = "大小:";
-
-    // 篇幅
-    trList[5].firstChild.innerText = "篇幅:";
-    trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
-
-    // 收藏
-    trList[6].firstChild.innerText = "收藏:";
-    var favoriteText = trList[6].lastChild.innerText;
-    if (favoriteText == "None") {
-        trList[6].lastChild.innerText = "0 次";
-    }
-    else if (favoriteText == "Once") {
-        trList[6].lastChild.innerText = "1 次";
-    }
-    else {
-        trList[6].lastChild.innerText = favoriteText.replace("times", "次");
-    }
-
-    // 评分
-    var trRateList = document.getElementById("gdr").querySelectorAll("tr");
-    trRateList[0].firstChild.innerText = "评分:";
-    trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
-
-    // 添加到收藏(Ex 账号)
-    document.getElementById("favoritelink").innerText = "收藏到 (Ex 账号)";
+	// 上传人员
+	var uploder = document.getElementById("gdn");
+	if (uploder) {
+		var up = uploder.innerHTML;
+		var newInnerHtml = `由 ${up} 上传`;
+		uploder.innerHTML = newInnerHtml;
+	}
 
 
+	var gddDiv = document.getElementById("gdd");
+	var trList = gddDiv.querySelectorAll("tr");
+
+	// 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
+	var spanElement = document.createElement("span");
+	spanElement.style.display = "none";
+	var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
+	spanElement.appendChild(spanTxt);
+	gddDiv.appendChild(spanElement);
+
+	// 上传时间
+	trList[0].firstChild.innerText = "上传:";
+
+	// 父级
+	trList[1].firstChild.innerText = "父级:";
+
+	// 是否可见
+	trList[2].firstChild.innerText = "可见:";
+	trList[2].lastChild.innerText = trList[2].lastChild.innerText == "Yes" ? "是" : "否";
+
+	// 语言
+	trList[3].firstChild.innerText = "语言:";
+
+	// 文件大小
+	trList[4].firstChild.innerText = "大小:";
+
+	// 篇幅
+	trList[5].firstChild.innerText = "篇幅:";
+	trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
+
+	// 收藏
+	trList[6].firstChild.innerText = "收藏:";
+	var favoriteText = trList[6].lastChild.innerText;
+	if (favoriteText == "None") {
+		trList[6].lastChild.innerText = "0 次";
+	}
+	else if (favoriteText == "Once") {
+		trList[6].lastChild.innerText = "1 次";
+	}
+	else {
+		trList[6].lastChild.innerText = favoriteText.replace("times", "次");
+	}
+
+	// 评分
+	var trRateList = document.getElementById("gdr").querySelectorAll("tr");
+	trRateList[0].firstChild.innerText = "评分:";
+	trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
+
+	// 添加到收藏(Ex 账号)
+	document.getElementById("favoritelink").innerText = "收藏到 (Ex 账号)";
 
 
-    //#endregion
 
-    // 文本框提示
-    document.getElementById("newtagfield").placeholder = "添加新标签，用逗号分隔";
-    document.getElementById("newtagbutton").value = "添加";
 
-    // 右侧五个菜单
-    var gd5a = document.getElementById("gd5").querySelectorAll("a");
-    for (const i in gd5a) {
-        if (Object.hasOwnProperty.call(gd5a, i)) {
-            const a = gd5a[i];
-            if (a.innerText.indexOf("Torrent Download") != -1) {
-                a.innerText = a.innerText.replace("Torrent Download", "种子下载");
-            } else {
-                a.innerText = gd5aDict[a.innerText] ?? a.innerText;
-            }
-        }
-    }
+	//#endregion
 
-    // 展示数量
-    var gpc = document.getElementsByClassName("gpc")[0];
-    gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
+	// 文本框提示
+	document.getElementById("newtagfield").placeholder = "添加新标签，用逗号分隔";
+	document.getElementById("newtagbutton").value = "添加";
 
-    // 展示行数
-    var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
-    for (const i in gdo2) {
-        if (Object.hasOwnProperty.call(gdo2, i)) {
-            const div = gdo2[i];
-            div.innerText = div.innerText.replace("rows", "行");
-        }
-    }
+	// 右侧五个菜单
+	var gd5a = document.getElementById("gd5").querySelectorAll("a");
+	for (const i in gd5a) {
+		if (Object.hasOwnProperty.call(gd5a, i)) {
+			const a = gd5a[i];
+			if (a.innerText.indexOf("Torrent Download") != -1) {
+				a.innerText = a.innerText.replace("Torrent Download", "种子下载");
+			} else {
+				a.innerText = gd5aDict[a.innerText] ?? a.innerText;
+			}
+		}
+	}
 
-    // 图片尺寸
-    var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
-    gdo4[0].innerText = "小图";
-    gdo4[1].innerText = "大图";
+	// 展示数量
+	var gpc = document.getElementsByClassName("gpc")[0];
+	gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
+
+	// 展示行数
+	var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
+	for (const i in gdo2) {
+		if (Object.hasOwnProperty.call(gdo2, i)) {
+			const div = gdo2[i];
+			div.innerText = div.innerText.replace("rows", "行");
+		}
+	}
+
+	// 图片尺寸
+	var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
+	gdo4[0].innerText = "小图";
+	gdo4[1].innerText = "大图";
 
 }
 
@@ -4128,629 +4128,629 @@ var detailCheckedDict = {};
 
 // 谷歌机翻
 function translateDetailPageTitle() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-    // 更新存储
-    var settings_translateDetailPageTitles = {
-        item: table_Settings_key_TranslateDetailPageTitles,
-        value: isChecked
-    };
-    update(table_Settings, settings_translateDetailPageTitles, () => {
-        setDbSyncMessage(sync_googleTranslate_detailPage_title);
-        translateDetailPageTitleDisplay();
-    }, () => { });
+	// 更新存储
+	var settings_translateDetailPageTitles = {
+		item: table_Settings_key_TranslateDetailPageTitles,
+		value: isChecked
+	};
+	update(table_Settings, settings_translateDetailPageTitles, () => {
+		setDbSyncMessage(sync_googleTranslate_detailPage_title);
+		translateDetailPageTitleDisplay();
+	}, () => { });
 }
 
 function translateDetailPageTitleDisplay() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-    var h1 = document.getElementById("h1Origin_copy");
-    if (!h1.innerText) {
-        h1 = document.getElementById("h1Title_copy");;
-    }
+	var h1 = document.getElementById("h1Origin_copy");
+	if (!h1.innerText) {
+		h1 = document.getElementById("h1Title_copy");;
+	}
 
-    var signDictArray = [];
-    var txtArray = [];
-    var translateDict = {};
-    var specialChars = [
-        '(', ')', '（', '）',
-        '[', ']', '【', '】',
-        '{', '}', '｛', '｝',
-        '<', '>', '《', '》',
-        '|', '&', '!', '@', '#', '$', '￥', '%', '^', '*', '`', '~', ' '
-    ];
+	var signDictArray = [];
+	var txtArray = [];
+	var translateDict = {};
+	var specialChars = [
+		'(', ')', '（', '）',
+		'[', ']', '【', '】',
+		'{', '}', '｛', '｝',
+		'<', '>', '《', '》',
+		'|', '&', '!', '@', '#', '$', '￥', '%', '^', '*', '`', '~', ' '
+	];
 
-    if (isChecked) {
-        // 翻译标题
-        if (h1.dataset.translate) {
-            // 已经翻译过
-            h1.innerText = h1.dataset.translate;
-        } else {
-            // 需要翻译
-            h1.title = h1.innerText;
+	if (isChecked) {
+		// 翻译标题
+		if (h1.dataset.translate) {
+			// 已经翻译过
+			h1.innerText = h1.dataset.translate;
+		} else {
+			// 需要翻译
+			h1.title = h1.innerText;
 
-            var cstr = '';
-            for (let i = 0; i < h1.title.length; i++) {
-                const c = h1.title[i];
+			var cstr = '';
+			for (let i = 0; i < h1.title.length; i++) {
+				const c = h1.title[i];
 
-                if (specialChars.indexOf(c) != -1) {
-                    signDictArray.push({ i, c });
-                    if (cstr != '') {
-                        txtArray.push(cstr);
-                        cstr = '';
-                    }
-                } else {
-                    cstr += c;
-                }
-            }
+				if (specialChars.indexOf(c) != -1) {
+					signDictArray.push({ i, c });
+					if (cstr != '') {
+						txtArray.push(cstr);
+						cstr = '';
+					}
+				} else {
+					cstr += c;
+				}
+			}
 
-            if (cstr != '') {
-                txtArray.push(cstr);
-            }
+			if (cstr != '') {
+				txtArray.push(cstr);
+			}
 
-            console.log(txtArray);
-            console.log(signDictArray);
+			console.log(txtArray);
+			console.log(signDictArray);
 
-            var totalCount = txtArray.length;
-            var indexCount = 0;
-            for (const i in txtArray) {
-                if (Object.hasOwnProperty.call(txtArray, i)) {
-                    const text = txtArray[i];
-                    getTranslate(text, i);
-                }
-            }
+			var totalCount = txtArray.length;
+			var indexCount = 0;
+			for (const i in txtArray) {
+				if (Object.hasOwnProperty.call(txtArray, i)) {
+					const text = txtArray[i];
+					getTranslate(text, i);
+				}
+			}
 
-            function getTranslate(text, i) {
-                getGoogleTranslate(text, function (data) {
-                    var sentences = data.sentences;
-                    var longtext = '';
-                    for (const i in sentences) {
-                        if (Object.hasOwnProperty.call(sentences, i)) {
-                            const sentence = sentences[i];
-                            longtext += sentence.trans;
-                        }
-                    }
-                    translateDict[i] = longtext;
-                    indexCount++;
-                });
-            }
+			function getTranslate(text, i) {
+				getGoogleTranslate(text, function (data) {
+					var sentences = data.sentences;
+					var longtext = '';
+					for (const i in sentences) {
+						if (Object.hasOwnProperty.call(sentences, i)) {
+							const sentence = sentences[i];
+							longtext += sentence.trans;
+						}
+					}
+					translateDict[i] = longtext;
+					indexCount++;
+				});
+			}
 
-            var t = setInterval(() => {
-                if (totalCount == indexCount) {
-                    t && clearInterval(t);
-                    translateCompelete();
-                }
-            }, 50);
+			var t = setInterval(() => {
+				if (totalCount == indexCount) {
+					t && clearInterval(t);
+					translateCompelete();
+				}
+			}, 50);
 
-            function translateCompelete() {
-                console.log(translateDict);
-                if (signDictArray.length == 0 && txtArray.length > 0) {
-                    // 纯文字
-                    var str = '';
-                    for (const i in translateDict) {
-                        if (Object.hasOwnProperty.call(translateDict, i)) {
-                            str += translateDict[i];
-                        }
-                    }
-                    h1.innerText = str;
-                    h1.dataset.translate = h1.innerText;
+			function translateCompelete() {
+				console.log(translateDict);
+				if (signDictArray.length == 0 && txtArray.length > 0) {
+					// 纯文字
+					var str = '';
+					for (const i in translateDict) {
+						if (Object.hasOwnProperty.call(translateDict, i)) {
+							str += translateDict[i];
+						}
+					}
+					h1.innerText = str;
+					h1.dataset.translate = h1.innerText;
 
-                } else if (signDictArray.length > 0 && txtArray.length == 0) {
-                    // 纯符号
-                    var str = '';
-                    for (const i in signDictArray) {
-                        if (Object.hasOwnProperty.call(signDictArray, i)) {
-                            const item = signDictArray[i];
-                            str += item.c;
-                        }
-                    }
-                    h1.innerText = str;
-                    h1.dataset.translate = h1.innerText;
+				} else if (signDictArray.length > 0 && txtArray.length == 0) {
+					// 纯符号
+					var str = '';
+					for (const i in signDictArray) {
+						if (Object.hasOwnProperty.call(signDictArray, i)) {
+							const item = signDictArray[i];
+							str += item.c;
+						}
+					}
+					h1.innerText = str;
+					h1.dataset.translate = h1.innerText;
 
-                } else if (signDictArray.length > 0 || txtArray.length > 0) {
-                    // 文字 + 符号
-                    var signIndex = 0;
-                    var translateIndex = 0;
-                    var str = '';
-                    var lastSignIndex = -2;
-                    if (signDictArray[0].i == 0) {
-                        // 符号在前
-                        while (signIndex < signDictArray.length ||
-                            translateIndex < txtArray.length) {
-                            // 符号索引间隔是否为1
-                            if (signIndex < signDictArray.length) {
-                                str += signDictArray[signIndex].c;
-                                lastSignIndex = signDictArray[signIndex].i;
-                                signIndex++;
-                            }
+				} else if (signDictArray.length > 0 || txtArray.length > 0) {
+					// 文字 + 符号
+					var signIndex = 0;
+					var translateIndex = 0;
+					var str = '';
+					var lastSignIndex = -2;
+					if (signDictArray[0].i == 0) {
+						// 符号在前
+						while (signIndex < signDictArray.length ||
+							translateIndex < txtArray.length) {
+							// 符号索引间隔是否为1
+							if (signIndex < signDictArray.length) {
+								str += signDictArray[signIndex].c;
+								lastSignIndex = signDictArray[signIndex].i;
+								signIndex++;
+							}
 
-                            if (signDictArray[signIndex] && signDictArray[signIndex].i == lastSignIndex + 1) {
-                                // 符号连续
-                                continue;
-                            }
+							if (signDictArray[signIndex] && signDictArray[signIndex].i == lastSignIndex + 1) {
+								// 符号连续
+								continue;
+							}
 
-                            if (translateIndex < txtArray.length) {
-                                str += translateDict[translateIndex];
-                                translateIndex++;
-                            }
-                        }
-                    } else {
-                        // 文字在前 
-                        while (signIndex < signDictArray.length ||
-                            translateIndex < txtArray.length) {
-                            // 符号索引间隔是否为1
-                            if (signDictArray[signIndex] && signDictArray[signIndex].i == lastSignIndex + 1) {
-                                // 符号连续
-                                if (signIndex < signDictArray.length) {
-                                    str += signDictArray[signIndex].c;
-                                    lastSignIndex = signDictArray[signIndex].i;
-                                    signIndex++;
-                                }
-                                continue;
-                            }
+							if (translateIndex < txtArray.length) {
+								str += translateDict[translateIndex];
+								translateIndex++;
+							}
+						}
+					} else {
+						// 文字在前 
+						while (signIndex < signDictArray.length ||
+							translateIndex < txtArray.length) {
+							// 符号索引间隔是否为1
+							if (signDictArray[signIndex] && signDictArray[signIndex].i == lastSignIndex + 1) {
+								// 符号连续
+								if (signIndex < signDictArray.length) {
+									str += signDictArray[signIndex].c;
+									lastSignIndex = signDictArray[signIndex].i;
+									signIndex++;
+								}
+								continue;
+							}
 
-                            if (translateIndex < txtArray.length) {
-                                str += translateDict[translateIndex];
-                                translateIndex++;
-                            }
+							if (translateIndex < txtArray.length) {
+								str += translateDict[translateIndex];
+								translateIndex++;
+							}
 
-                            if (signIndex < signDictArray.length) {
-                                str += signDictArray[signIndex].c;
-                                lastSignIndex = signDictArray[signIndex].i;
-                                signIndex++;
-                            }
-                        }
-                    }
+							if (signIndex < signDictArray.length) {
+								str += signDictArray[signIndex].c;
+								lastSignIndex = signDictArray[signIndex].i;
+								signIndex++;
+							}
+						}
+					}
 
-                    h1.innerText = str;
-                    h1.dataset.translate = h1.innerText;
-                }
-            }
-        }
+					h1.innerText = str;
+					h1.dataset.translate = h1.innerText;
+				}
+			}
+		}
 
-    } else {
-        // 显示原文
-        if (h1.title) {
-            h1.innerText = h1.title;
-        }
-    }
+	} else {
+		// 显示原文
+		if (h1.title) {
+			h1.innerText = h1.title;
+		}
+	}
 }
 
 function detailPageTitleTranslate() {
-    // 右侧操作列
-    var rightDiv = document.getElementById("gd5");
+	// 右侧操作列
+	var rightDiv = document.getElementById("gd5");
 
-    // 标签谷歌机翻按钮
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    translateDiv.appendChild(translateCheckbox);
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻 : 标题";
+	// 标签谷歌机翻按钮
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	translateDiv.appendChild(translateCheckbox);
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻 : 标题";
 
-    translateDiv.appendChild(translateLabel);
-    rightDiv.appendChild(translateDiv);
-    translateCheckbox.addEventListener("click", translateDetailPageTitle);
+	translateDiv.appendChild(translateLabel);
+	rightDiv.appendChild(translateDiv);
+	translateCheckbox.addEventListener("click", translateDetailPageTitle);
 
-    // 读取是否选中
-    indexDbInit(() => {
-        read(table_Settings, table_Settings_key_TranslateDetailPageTitles, result => {
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                translateDetailPageTitleDisplay();
-            }
-        }, () => { });
-    });
+	// 读取是否选中
+	indexDbInit(() => {
+		read(table_Settings, table_Settings_key_TranslateDetailPageTitles, result => {
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				translateDetailPageTitleDisplay();
+			}
+		}, () => { });
+	});
 
 }
 
-function detailPageTitleCopy(){
-    var gd2 = document.getElementById("gd2");
-    
-    var h1Title = document.getElementById("gn");
-    h1Title.style.display = "none";
+function detailPageTitleCopy() {
+	var gd2 = document.getElementById("gd2");
 
-    var h1Title_copy = document.createElement("h1");
-    h1Title_copy.id = "h1Title_copy";
-    h1Title_copy.innerText = h1Title.innerText;
-    gd2.appendChild(h1Title_copy);
+	var h1Title = document.getElementById("gn");
+	h1Title.style.display = "none";
 
-    var h1Origin = document.getElementById("gj");
-    h1Origin.style.display = "none";
+	var h1Title_copy = document.createElement("h1");
+	h1Title_copy.id = "h1Title_copy";
+	h1Title_copy.innerText = h1Title.innerText;
+	gd2.appendChild(h1Title_copy);
 
-    var h1Origin_copy = document.createElement("h1");
-    h1Origin_copy.id = "h1Origin_copy";
-    h1Origin_copy.innerText = h1Origin.innerText;
-    gd2.appendChild(h1Origin_copy);
+	var h1Origin = document.getElementById("gj");
+	h1Origin.style.display = "none";
 
-   
+	var h1Origin_copy = document.createElement("h1");
+	h1Origin_copy.id = "h1Origin_copy";
+	h1Origin_copy.innerText = h1Origin.innerText;
+	gd2.appendChild(h1Origin_copy);
+
+
 }
 
 // 右侧按钮
 function detailPageRightButtons() {
-    // 右侧操作列
-    var rightDiv = document.getElementById("gd5");
+	// 右侧操作列
+	var rightDiv = document.getElementById("gd5");
 
-    // 清空选择按钮
-    var clearBtn = document.createElement("div");
-    clearBtn.id = "div_ee8413b2_detail_clearBtn";
-    var clearTxt = document.createTextNode("清空选择");
-    clearBtn.appendChild(clearTxt);
-    clearBtn.addEventListener("click", categoryCheckClear);
-    rightDiv.appendChild(clearBtn);
+	// 清空选择按钮
+	var clearBtn = document.createElement("div");
+	clearBtn.id = "div_ee8413b2_detail_clearBtn";
+	var clearTxt = document.createTextNode("清空选择");
+	clearBtn.appendChild(clearTxt);
+	clearBtn.addEventListener("click", categoryCheckClear);
+	rightDiv.appendChild(clearBtn);
 
-    // 加入收藏按钮
-    var addFavoriteBtn = document.createElement("div");
-    addFavoriteBtn.id = "div_ee8413b2_detail_addFavoriteBtn";
-    var addFavoriteTxt = document.createTextNode("加入收藏");
-    addFavoriteBtn.appendChild(addFavoriteTxt);
-    addFavoriteBtn.addEventListener("click", categoryAddFavorite);
-    rightDiv.appendChild(addFavoriteBtn);
+	// 加入收藏按钮
+	var addFavoriteBtn = document.createElement("div");
+	addFavoriteBtn.id = "div_ee8413b2_detail_addFavoriteBtn";
+	var addFavoriteTxt = document.createTextNode("加入收藏");
+	addFavoriteBtn.appendChild(addFavoriteTxt);
+	addFavoriteBtn.addEventListener("click", categoryAddFavorite);
+	rightDiv.appendChild(addFavoriteBtn);
 
-    // 查询按钮
-    var searchBtn = document.createElement("div");
-    searchBtn.id = "div_ee8413b2_detail_searchBtn";
-    var searchBtnTxt = document.createTextNode("搜索");
-    searchBtn.appendChild(searchBtnTxt);
-    searchBtn.addEventListener("click", categorySearch);
-    rightDiv.appendChild(searchBtn);
+	// 查询按钮
+	var searchBtn = document.createElement("div");
+	searchBtn.id = "div_ee8413b2_detail_searchBtn";
+	var searchBtnTxt = document.createTextNode("搜索");
+	searchBtn.appendChild(searchBtnTxt);
+	searchBtn.addEventListener("click", categorySearch);
+	rightDiv.appendChild(searchBtn);
 
-    // 详情页右侧标签样式修改
-    var rightP = rightDiv.querySelectorAll("p");
-    for (const i in rightP) {
-        if (Object.hasOwnProperty.call(rightP, i)) {
-            const p = rightP[i];
-            p.classList.remove("gsp");
-        }
-    }
+	// 详情页右侧标签样式修改
+	var rightP = rightDiv.querySelectorAll("p");
+	for (const i in rightP) {
+		if (Object.hasOwnProperty.call(rightP, i)) {
+			const p = rightP[i];
+			p.classList.remove("gsp");
+		}
+	}
 
-    // 清空选择
-    function categoryCheckClear() {
-        for (const ps_en in detailCheckedDict) {
-            if (Object.hasOwnProperty.call(detailCheckedDict, ps_en)) {
-                var parentDiv = document.getElementById(`td_${ps_en.replace(new RegExp(/( )/g), "_")}`);
-                parentDiv.classList.remove("div_ee8413b2_category_checked");
-            }
-        }
+	// 清空选择
+	function categoryCheckClear() {
+		for (const ps_en in detailCheckedDict) {
+			if (Object.hasOwnProperty.call(detailCheckedDict, ps_en)) {
+				var parentDiv = document.getElementById(`td_${ps_en.replace(new RegExp(/( )/g), "_")}`);
+				parentDiv.classList.remove("div_ee8413b2_category_checked");
+			}
+		}
 
-        detailCheckedDict = {};
-        hideDetailBtn();
-    }
+		detailCheckedDict = {};
+		hideDetailBtn();
+	}
 
-    // 隐藏按钮
-    function hideDetailBtn() {
-        clearBtn.style.display = "none";
-        addFavoriteBtn.style.display = "none";
-        searchBtn.style.display = "none";
-    }
+	// 隐藏按钮
+	function hideDetailBtn() {
+		clearBtn.style.display = "none";
+		addFavoriteBtn.style.display = "none";
+		searchBtn.style.display = "none";
+	}
 
-    // 加入收藏
-    function categoryAddFavorite() {
-        addFavoriteBtn.innerText = "收藏中...";
+	// 加入收藏
+	function categoryAddFavorite() {
+		addFavoriteBtn.innerText = "收藏中...";
 
-        var favoriteDict = {};
-        var favoriteCount = 0;
-        var checkDictCount = 0;
-        var indexCount = 0;
-        // 先从 收藏表中查询，是否存在，如果存在则不添加
-        // 再从 EhTag表中查询，看是否存在，如果不存则更新父级 + 子级同名
-        // 最后批量插入收藏表中，然后通知其他页面进行同步
-        for (const ps_en in detailCheckedDict) {
-            if (Object.hasOwnProperty.call(detailCheckedDict, ps_en)) {
-                const item = detailCheckedDict[ps_en];
-                read(table_favoriteSubItems, ps_en, favoriteResult => {
-                    if (!favoriteResult) {
-                        // 收藏表不存在
-                        read(table_EhTagSubItems, ps_en, ehTagResult => {
-                            if (ehTagResult) {
-                                // Ehtag表存在
-                                favoriteDict[ps_en] = {
-                                    parent_en: ehTagResult.parent_en,
-                                    parent_zh: ehTagResult.parent_zh,
-                                    sub_en: ehTagResult.sub_en,
-                                    sub_zh: ehTagResult.sub_zh,
-                                    sub_desc: ehTagResult.sub_desc
-                                };
-                                favoriteCount++;
-                                indexCount++;
-                            } else {
-                                // EhTag表不存在
-                                read(table_detailParentItems, item.parent_en, parentResult => {
-                                    if (parentResult) {
-                                        // 父级存在
-                                        favoriteDict[ps_en] = {
-                                            parent_en: parentResult.row,
-                                            parent_zh: parentResult.name,
-                                            sub_en: item.sub_en,
-                                            sub_zh: item.sub_en,
-                                            sub_desc: ''
-                                        };
-                                        favoriteCount++;
-                                        indexCount++;
-                                    } else {
-                                        // 父级不存在
-                                        var custom_parent_en = 'userCustom';
-                                        var custom_sub_en = item.parent_en;
-                                        var custom_ps_en = `${custom_parent_en}:${custom_sub_en}`;
-                                        // 再查收藏表是否存在
-                                        read(table_favoriteSubItems, custom_ps_en, customFavoriteResult => {
-                                            if (!customFavoriteResult) {
-                                                // 不存在
-                                                favoriteDict[custom_ps_en] = {
-                                                    parent_en: custom_parent_en,
-                                                    parent_zh: '自定义',
-                                                    sub_en: item.sub_en,
-                                                    sub_zh: item.sub_en,
-                                                    sub_desc: ''
-                                                };
-                                                favoriteCount++;
-                                            }
-                                            indexCount++;
-                                        }, () => { indexCount++; });
-                                    }
-                                }, () => { indexCount++; });
-                            }
-                        }, () => { indexCount++; });
-                    } else {
-                        indexCount++;
-                    }
-                }, () => { indexCount++; });
-                checkDictCount++;
-            }
-        }
+		var favoriteDict = {};
+		var favoriteCount = 0;
+		var checkDictCount = 0;
+		var indexCount = 0;
+		// 先从 收藏表中查询，是否存在，如果存在则不添加
+		// 再从 EhTag表中查询，看是否存在，如果不存则更新父级 + 子级同名
+		// 最后批量插入收藏表中，然后通知其他页面进行同步
+		for (const ps_en in detailCheckedDict) {
+			if (Object.hasOwnProperty.call(detailCheckedDict, ps_en)) {
+				const item = detailCheckedDict[ps_en];
+				read(table_favoriteSubItems, ps_en, favoriteResult => {
+					if (!favoriteResult) {
+						// 收藏表不存在
+						read(table_EhTagSubItems, ps_en, ehTagResult => {
+							if (ehTagResult) {
+								// Ehtag表存在
+								favoriteDict[ps_en] = {
+									parent_en: ehTagResult.parent_en,
+									parent_zh: ehTagResult.parent_zh,
+									sub_en: ehTagResult.sub_en,
+									sub_zh: ehTagResult.sub_zh,
+									sub_desc: ehTagResult.sub_desc
+								};
+								favoriteCount++;
+								indexCount++;
+							} else {
+								// EhTag表不存在
+								read(table_detailParentItems, item.parent_en, parentResult => {
+									if (parentResult) {
+										// 父级存在
+										favoriteDict[ps_en] = {
+											parent_en: parentResult.row,
+											parent_zh: parentResult.name,
+											sub_en: item.sub_en,
+											sub_zh: item.sub_en,
+											sub_desc: ''
+										};
+										favoriteCount++;
+										indexCount++;
+									} else {
+										// 父级不存在
+										var custom_parent_en = 'userCustom';
+										var custom_sub_en = item.parent_en;
+										var custom_ps_en = `${custom_parent_en}:${custom_sub_en}`;
+										// 再查收藏表是否存在
+										read(table_favoriteSubItems, custom_ps_en, customFavoriteResult => {
+											if (!customFavoriteResult) {
+												// 不存在
+												favoriteDict[custom_ps_en] = {
+													parent_en: custom_parent_en,
+													parent_zh: '自定义',
+													sub_en: item.sub_en,
+													sub_zh: item.sub_en,
+													sub_desc: ''
+												};
+												favoriteCount++;
+											}
+											indexCount++;
+										}, () => { indexCount++; });
+									}
+								}, () => { indexCount++; });
+							}
+						}, () => { indexCount++; });
+					} else {
+						indexCount++;
+					}
+				}, () => { indexCount++; });
+				checkDictCount++;
+			}
+		}
 
-        var t = setInterval(() => {
-            if (indexCount == checkDictCount) {
-                t && clearInterval(t);
-                // 批量插入新增收藏，完成后通知同步
-                batchAddFavoriteAndMessage();
-            }
-        }, 50);
+		var t = setInterval(() => {
+			if (indexCount == checkDictCount) {
+				t && clearInterval(t);
+				// 批量插入新增收藏，完成后通知同步
+				batchAddFavoriteAndMessage();
+			}
+		}, 50);
 
 
-        function batchAddFavoriteAndMessage() {
-            batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteDict, favoriteCount, () => {
-                // 读取收藏表，更新收藏列表html
-                var favoritesListHtml = ``;
-                var lastParentEn = ``;
-                readAll(table_favoriteSubItems, (k, v) => {
-                    if (v.parent_en != lastParentEn) {
-                        if (lastParentEn != '') {
-                            favoritesListHtml += `</div>`;
-                        }
-                        lastParentEn = v.parent_en;
-                        // 新建父级
-                        favoritesListHtml += `<h4 id="favorite_h4_${v.parent_en}">${v.parent_zh}<span data-category="${v.parent_en}"
+		function batchAddFavoriteAndMessage() {
+			batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteDict, favoriteCount, () => {
+				// 读取收藏表，更新收藏列表html
+				var favoritesListHtml = ``;
+				var lastParentEn = ``;
+				readAll(table_favoriteSubItems, (k, v) => {
+					if (v.parent_en != lastParentEn) {
+						if (lastParentEn != '') {
+							favoritesListHtml += `</div>`;
+						}
+						lastParentEn = v.parent_en;
+						// 新建父级
+						favoritesListHtml += `<h4 id="favorite_h4_${v.parent_en}">${v.parent_zh}<span data-category="${v.parent_en}"
                 class="favorite_extend">-</span></h4>`;
-                        favoritesListHtml += `<div id="favorite_div_${v.parent_en}" class="favorite_items_div">`;
-                    }
+						favoritesListHtml += `<div id="favorite_div_${v.parent_en}" class="favorite_items_div">`;
+					}
 
-                    // 添加子级
-                    favoritesListHtml += `<span class="c_item c_item_favorite" title="[${v.sub_en}] ${v.sub_desc}" data-item="${v.sub_en}" 
+					// 添加子级
+					favoritesListHtml += `<span class="c_item c_item_favorite" title="[${v.sub_en}] ${v.sub_desc}" data-item="${v.sub_en}" 
                     data-parent_en="${v.parent_en}" data-parent_zh="${v.parent_zh}">${v.sub_zh}</span>`;
-                }, () => {
-                    // 读完后操作
-                    if (favoritesListHtml != ``) {
-                        favoritesListHtml += `</div>`;
-                    }
+				}, () => {
+					// 读完后操作
+					if (favoritesListHtml != ``) {
+						favoritesListHtml += `</div>`;
+					}
 
-                    // 存储收藏 Html
-                    var settings_favoriteList_html = {
-                        item: table_Settings_key_FavoriteList_Html,
-                        value: favoritesListHtml
-                    };
-                    update(table_Settings, settings_favoriteList_html, () => {
-                        // localstroage 消息通知
-                        setDbSyncMessage(sync_favoriteList);
-                        // 显示完成
-                        setTimeout(function () {
-                            addFavoriteBtn.innerText = "完成 √";
-                        }, 250);
-                        setTimeout(function () {
-                            addFavoriteBtn.innerText = "加入收藏";
-                        }, 500);
-                    }, () => {
-                        setTimeout(function () {
-                            addFavoriteBtn.innerText = "完成 ×";
-                        }, 250);
-                        setTimeout(function () {
-                            addFavoriteBtn.innerText = "加入收藏";
-                        }, 500);
-                    });
-                });
-            });
-        }
+					// 存储收藏 Html
+					var settings_favoriteList_html = {
+						item: table_Settings_key_FavoriteList_Html,
+						value: favoritesListHtml
+					};
+					update(table_Settings, settings_favoriteList_html, () => {
+						// localstroage 消息通知
+						setDbSyncMessage(sync_favoriteList);
+						// 显示完成
+						setTimeout(function () {
+							addFavoriteBtn.innerText = "完成 √";
+						}, 250);
+						setTimeout(function () {
+							addFavoriteBtn.innerText = "加入收藏";
+						}, 500);
+					}, () => {
+						setTimeout(function () {
+							addFavoriteBtn.innerText = "完成 ×";
+						}, 250);
+						setTimeout(function () {
+							addFavoriteBtn.innerText = "加入收藏";
+						}, 500);
+					});
+				});
+			});
+		}
 
 
-    }
+	}
 
-    // 搜索
-    function categorySearch() {
-        var searchArray = [];
-        for (const ps_en in detailCheckedDict) {
-            if (Object.hasOwnProperty.call(detailCheckedDict, ps_en)) {
-                searchArray.push(`"${ps_en}"`);
-            }
-        }
+	// 搜索
+	function categorySearch() {
+		var searchArray = [];
+		for (const ps_en in detailCheckedDict) {
+			if (Object.hasOwnProperty.call(detailCheckedDict, ps_en)) {
+				searchArray.push(`"${ps_en}"`);
+			}
+		}
 
-        // 构建请求链接
-        var searchLink = `https://${webHost}/?f_search=${searchArray.join("+")}`;
-        window.location.href = searchLink;
-    }
+		// 构建请求链接
+		var searchLink = `https://${webHost}/?f_search=${searchArray.join("+")}`;
+		window.location.href = searchLink;
+	}
 }
 
 // 标签翻译
 function detailPageTagTranslate() {
 
-    // 左侧作品语种
-    var trList = document.getElementById("gdd").querySelectorAll("tr");
-    var language = trList[3].lastChild.innerText.toLowerCase().replace(/(\s*$)/g, "");
-    readByIndex(table_EhTagSubItems, table_EhTagSubItems_index_subEn, language, result => {
-        trList[3].lastChild.innerText = result.sub_zh;
-    }, () => { });
+	// 左侧作品语种
+	var trList = document.getElementById("gdd").querySelectorAll("tr");
+	var language = trList[3].lastChild.innerText.toLowerCase().replace(/(\s*$)/g, "");
+	readByIndex(table_EhTagSubItems, table_EhTagSubItems_index_subEn, language, result => {
+		trList[3].lastChild.innerText = result.sub_zh;
+	}, () => { });
 
-    // 翻译标签父级
-    var tcList = document.getElementsByClassName("tc");
-    for (const i in tcList) {
-        if (Object.hasOwnProperty.call(tcList, i)) {
-            const tc = tcList[i];
-            if (!tc.dataset.parent_en) {
-                tc.dataset.parent_en = tc.innerText.replace(":", "");
-            }
-            var parentEn = tc.dataset.parent_en;
-            read(table_detailParentItems, parentEn, result => {
-                if (result) {
-                    tc.innerText = `${result.name}:`;
-                }
-            }, () => { });
-        }
-    }
+	// 翻译标签父级
+	var tcList = document.getElementsByClassName("tc");
+	for (const i in tcList) {
+		if (Object.hasOwnProperty.call(tcList, i)) {
+			const tc = tcList[i];
+			if (!tc.dataset.parent_en) {
+				tc.dataset.parent_en = tc.innerText.replace(":", "");
+			}
+			var parentEn = tc.dataset.parent_en;
+			read(table_detailParentItems, parentEn, result => {
+				if (result) {
+					tc.innerText = `${result.name}:`;
+				}
+			}, () => { });
+		}
+	}
 
-    // 翻译标签子项
-    var aList = document.getElementById("taglist").querySelectorAll("a");
-    for (const i in aList) {
-        if (Object.hasOwnProperty.call(aList, i)) {
-            const a = aList[i];
+	// 翻译标签子项
+	var aList = document.getElementById("taglist").querySelectorAll("a");
+	for (const i in aList) {
+		if (Object.hasOwnProperty.call(aList, i)) {
+			const a = aList[i];
 
-            // 查询父级和子级
-            var splitStr = a.id.split("ta_")[1].split(":");
-            var parent_en = splitStr[0];
-            var sub_en;
-            var parentId;
+			// 查询父级和子级
+			var splitStr = a.id.split("ta_")[1].split(":");
+			var parent_en = splitStr[0];
+			var sub_en;
+			var parentId;
 
-            if (splitStr.length == 2) {
-                sub_en = splitStr[1].replace(new RegExp(/(_)/g), " ");
-                parentId = `td_${parent_en}:${sub_en}`;
-            } else {
-                sub_en = parent_en;
-                parent_en = "temp";
-                parentId = `td_${sub_en}`;
-            }
+			if (splitStr.length == 2) {
+				sub_en = splitStr[1].replace(new RegExp(/(_)/g), " ");
+				parentId = `td_${parent_en}:${sub_en}`;
+			} else {
+				sub_en = parent_en;
+				parent_en = "temp";
+				parentId = `td_${sub_en}`;
+			}
 
-            a.dataset.ps_en = `${parent_en}:${sub_en}`;
-            a.dataset.parent_en = parent_en;
-            a.dataset.sub_en = sub_en;
-            a.dataset.parent_id = parentId;
+			a.dataset.ps_en = `${parent_en}:${sub_en}`;
+			a.dataset.parent_en = parent_en;
+			a.dataset.sub_en = sub_en;
+			a.dataset.parent_id = parentId;
 
-            // 点击添加事件，附带颜色
-            a.addEventListener("click", detailCategoryClick);
-            // 翻译标签
-            read(table_EhTagSubItems, a.dataset.ps_en, result => {
-                if (result) {
-                    a.innerText = result.sub_zh;
-                    a.title = `${result.sub_en}\r\n${result.sub_desc}`;
-                }
-            }, () => { });
-        }
-    }
+			// 点击添加事件，附带颜色
+			a.addEventListener("click", detailCategoryClick);
+			// 翻译标签
+			read(table_EhTagSubItems, a.dataset.ps_en, result => {
+				if (result) {
+					a.innerText = result.sub_zh;
+					a.title = `${result.sub_en}\r\n${result.sub_desc}`;
+				}
+			}, () => { });
+		}
+	}
 
 }
 
 // 标签选中事件
 function detailCategoryClick(e) {
-    var dataset = e.target.dataset;
-    var parentId = dataset.parent_id;
-    var ps_en = dataset.ps_en;
-    var parent_en = dataset.parent_en;
-    var sub_en = dataset.sub_en;
+	var dataset = e.target.dataset;
+	var parentId = dataset.parent_id;
+	var ps_en = dataset.ps_en;
+	var parent_en = dataset.parent_en;
+	var sub_en = dataset.sub_en;
 
-    var parentDiv = document.getElementById(`${parentId.replace(new RegExp(/( )/g), "_")}`);
-    // 标签颜色改为黄色
-    var alink = parentDiv.querySelectorAll("a")[0];
-    if (alink.style.color == "blue") {
-        func_eh_ex(() => {
-            alink.style.color = "darkorange";
-        }, () => {
-            alink.style.color = "yellow";
-        })
-    }
-    else {
-        alink.style.color = "";
-    }
+	var parentDiv = document.getElementById(`${parentId.replace(new RegExp(/( )/g), "_")}`);
+	// 标签颜色改为黄色
+	var alink = parentDiv.querySelectorAll("a")[0];
+	if (alink.style.color == "blue") {
+		func_eh_ex(() => {
+			alink.style.color = "darkorange";
+		}, () => {
+			alink.style.color = "yellow";
+		})
+	}
+	else {
+		alink.style.color = "";
+	}
 
-    if (!detailCheckedDict[ps_en]) {
-        // 添加选中
-        detailCheckedDict[ps_en] = { parent_en, sub_en };
-        parentDiv.classList.add("div_ee8413b2_category_checked");
-    } else {
-        // 移除选中
-        delete detailCheckedDict[ps_en];
-        parentDiv.classList.remove("div_ee8413b2_category_checked");
-    }
+	if (!detailCheckedDict[ps_en]) {
+		// 添加选中
+		detailCheckedDict[ps_en] = { parent_en, sub_en };
+		parentDiv.classList.add("div_ee8413b2_category_checked");
+	} else {
+		// 移除选中
+		delete detailCheckedDict[ps_en];
+		parentDiv.classList.remove("div_ee8413b2_category_checked");
+	}
 
-    var clearBtn = document.getElementById("div_ee8413b2_detail_clearBtn");
-    var addFavoriteBtn = document.getElementById("div_ee8413b2_detail_addFavoriteBtn");
-    var searchBtn = document.getElementById("div_ee8413b2_detail_searchBtn");
+	var clearBtn = document.getElementById("div_ee8413b2_detail_clearBtn");
+	var addFavoriteBtn = document.getElementById("div_ee8413b2_detail_addFavoriteBtn");
+	var searchBtn = document.getElementById("div_ee8413b2_detail_searchBtn");
 
-    // 检查如果没有一个选中的，隐藏操作按钮
-    if (checkDictNull(detailCheckedDict)) {
-        clearBtn.style.display = "none";
-        addFavoriteBtn.style.display = "none";
-        searchBtn.style.display = "none";
-    }
-    else {
-        clearBtn.style.display = "block";
-        addFavoriteBtn.style.display = "block";
-        searchBtn.style.display = "block";
-    }
+	// 检查如果没有一个选中的，隐藏操作按钮
+	if (checkDictNull(detailCheckedDict)) {
+		clearBtn.style.display = "none";
+		addFavoriteBtn.style.display = "none";
+		searchBtn.style.display = "none";
+	}
+	else {
+		clearBtn.style.display = "block";
+		addFavoriteBtn.style.display = "block";
+		searchBtn.style.display = "block";
+	}
 }
 
 // 尝试使用旧版的词库，然后检查更新
 function detailTryUseOldData() {
-    indexDbInit(() => {
-        // 验证数据完整性
-        checkDataIntact(() => {
-            // 判断是否存在旧数据
-            var fetishHasValue = false;
-            var ehTagHasValue = false;
-            var complete1 = false;
-            var complete2 = false;
+	indexDbInit(() => {
+		// 验证数据完整性
+		checkDataIntact(() => {
+			// 判断是否存在旧数据
+			var fetishHasValue = false;
+			var ehTagHasValue = false;
+			var complete1 = false;
+			var complete2 = false;
 
-            checkTableEmpty(table_fetishListSubItems, () => {
-                // 数据为空
-                complete1 = true;
-            }, () => {
-                // 存在数据
-                fetishHasValue = true;
-                complete1 = true;
-            });
+			checkTableEmpty(table_fetishListSubItems, () => {
+				// 数据为空
+				complete1 = true;
+			}, () => {
+				// 存在数据
+				fetishHasValue = true;
+				complete1 = true;
+			});
 
-            checkTableEmpty(table_EhTagSubItems, () => {
-                // 数据为空
-                complete2 = true;
-            }, () => {
-                // 存在数据
-                ehTagHasValue = true;
-                complete2 = true;
-            });
+			checkTableEmpty(table_EhTagSubItems, () => {
+				// 数据为空
+				complete2 = true;
+			}, () => {
+				// 存在数据
+				ehTagHasValue = true;
+				complete2 = true;
+			});
 
-            var t = setInterval(() => {
-                if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
-                    t && clearInterval(t);
-                    // 存在数据
-                    detailPageTagTranslate();
-                    // 检查更新
-                    checkUpdateData(() => {
-                        // 存在更新
-                        detailPageTagTranslate();
-                    }, () => { });
-                } else if (complete1 && complete2) {
-                    t && clearInterval(t);
-                    // 不存在数据
-                    checkUpdateData(() => {
-                        // 存在更新
-                        detailPageTagTranslate();
-                    }, () => {
-                        detailPageTagTranslate();
-                    });
-                }
-            }, 10);
-        });
-    })
+			var t = setInterval(() => {
+				if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+					t && clearInterval(t);
+					// 存在数据
+					detailPageTagTranslate();
+					// 检查更新
+					checkUpdateData(() => {
+						// 存在更新
+						detailPageTagTranslate();
+					}, () => { });
+				} else if (complete1 && complete2) {
+					t && clearInterval(t);
+					// 不存在数据
+					checkUpdateData(() => {
+						// 存在更新
+						detailPageTagTranslate();
+					}, () => {
+						detailPageTagTranslate();
+					});
+				}
+			}, 10);
+		});
+	})
 }
 
 //#endregion
@@ -4795,126 +4795,126 @@ function DataSyncCommonTranslateTitle() {
 
 function popularPage() {
 
-    // 跨域
+	// 跨域
 	crossDomain();
 
-    // 头部标题改成中文
-    var ihTitle = document.getElementsByClassName("ih");
-    if (ihTitle.length > 0) {
-        ihTitle[0].innerText = "近期热门作品";
-    }
+	// 头部标题改成中文
+	var ihTitle = document.getElementsByClassName("ih");
+	if (ihTitle.length > 0) {
+		ihTitle[0].innerText = "近期热门作品";
+	}
 
-    var toppane = document.getElementById("toppane");
-    toppane.classList.add("t_popular_toppane"); // 添加样式避免干扰其他页面
+	var toppane = document.getElementById("toppane");
+	toppane.classList.add("t_popular_toppane"); // 添加样式避免干扰其他页面
 
-    // 标题机翻
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    translateDiv.appendChild(translateCheckbox);
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻 : 标题";
+	// 标题机翻
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	translateDiv.appendChild(translateCheckbox);
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻 : 标题";
 
-    translateDiv.appendChild(translateLabel);
-    translateCheckbox.addEventListener("click", translateMainPageTitle);
-    toppane.insertBefore(translateDiv, toppane.lastChild);
+	translateDiv.appendChild(translateLabel);
+	translateCheckbox.addEventListener("click", translateMainPageTitle);
+	toppane.insertBefore(translateDiv, toppane.lastChild);
 
-    // 头部添加词库升级提示
-    var dataUpdateDiv = document.createElement("div");
-    dataUpdateDiv.id = "data_update_tip";
-    var dataUpdateText = document.createTextNode("词库升级中...");
-    dataUpdateDiv.appendChild(dataUpdateText);
-    toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
+	// 头部添加词库升级提示
+	var dataUpdateDiv = document.createElement("div");
+	dataUpdateDiv.id = "data_update_tip";
+	var dataUpdateText = document.createTextNode("词库升级中...");
+	dataUpdateDiv.appendChild(dataUpdateText);
+	toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
 
 
-    // 翻译下拉折叠菜单
-    var dms = document.getElementById("dms");
-    dms.classList.add("t_popular_dms"); // 添加样式避免干扰其他页面
-    dropDownlistTranslate();
+	// 翻译下拉折叠菜单
+	var dms = document.getElementById("dms");
+	dms.classList.add("t_popular_dms"); // 添加样式避免干扰其他页面
+	dropDownlistTranslate();
 
-    // 表头翻译
-    tableHeadTranslate();
+	// 表头翻译
+	tableHeadTranslate();
 
-    // 作品类型翻译
-    bookTypeTranslate();
+	// 作品类型翻译
+	bookTypeTranslate();
 
-    // 作品篇幅
-    tableBookPages();
+	// 作品篇幅
+	tableBookPages();
 
-    indexDbInit(() => {
-        // 谷歌机翻标题
-        read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                translateMainPageTitleDisplay();
-            }
-        }, () => { });
+	indexDbInit(() => {
+		// 谷歌机翻标题
+		read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				translateMainPageTitleDisplay();
+			}
+		}, () => { });
 
-        // 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
-        // 表格标签翻译
-        popularTryUseOldData();
-    });
+		// 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
+		// 表格标签翻译
+		popularTryUseOldData();
+	});
 
-    // 同步谷歌机翻标题
-    DataSyncCommonTranslateTitle();
+	// 同步谷歌机翻标题
+	DataSyncCommonTranslateTitle();
 
 
 
 }
 
 function popularTryUseOldData() {
-    // 验证数据完整性
-    checkDataIntact(() => {
-        // 判断是否存在旧数据
-        var fetishHasValue = false;
-        var ehTagHasValue = false;
-        var complete1 = false;
-        var complete2 = false;
+	// 验证数据完整性
+	checkDataIntact(() => {
+		// 判断是否存在旧数据
+		var fetishHasValue = false;
+		var ehTagHasValue = false;
+		var complete1 = false;
+		var complete2 = false;
 
-        checkTableEmpty(table_fetishListSubItems, () => {
-            // 数据为空
-            complete1 = true;
-        }, () => {
-            // 存在数据
-            fetishHasValue = true;
-            complete1 = true;
-        });
+		checkTableEmpty(table_fetishListSubItems, () => {
+			// 数据为空
+			complete1 = true;
+		}, () => {
+			// 存在数据
+			fetishHasValue = true;
+			complete1 = true;
+		});
 
-        checkTableEmpty(table_EhTagSubItems, () => {
-            // 数据为空
-            complete2 = true;
-        }, () => {
-            // 存在数据
-            ehTagHasValue = true;
-            complete2 = true;
-        });
+		checkTableEmpty(table_EhTagSubItems, () => {
+			// 数据为空
+			complete2 = true;
+		}, () => {
+			// 存在数据
+			ehTagHasValue = true;
+			complete2 = true;
+		});
 
-        var t = setInterval(() => {
-            if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
-                t && clearInterval(t);
-                // 存在数据
-                tableTagTranslate();
-                // 检查更新
-                checkUpdateData(() => {
-                    // 存在更新
-                    tableTagTranslate();
-                }, () => { });
-            } else if (complete1 && complete2) {
-                t && clearInterval(t);
-                // 不存在数据
-                checkUpdateData(() => {
-                    // 存在更新
-                    tableTagTranslate();
-                }, () => {
-                    tableTagTranslate();
-                });
-            }
-        }, 10);
-    });
+		var t = setInterval(() => {
+			if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+				t && clearInterval(t);
+				// 存在数据
+				tableTagTranslate();
+				// 检查更新
+				checkUpdateData(() => {
+					// 存在更新
+					tableTagTranslate();
+				}, () => { });
+			} else if (complete1 && complete2) {
+				t && clearInterval(t);
+				// 不存在数据
+				checkUpdateData(() => {
+					// 存在更新
+					tableTagTranslate();
+				}, () => {
+					tableTagTranslate();
+				});
+			}
+		}, 10);
+	});
 }
 
 
@@ -4969,113 +4969,113 @@ function favoritePage() {
 
 function toplistPage() {
 
-    var ido = document.getElementsByClassName("ido");
-    if (ido.length > 0) {
-        var parentDiv = ido[0];
+	var ido = document.getElementsByClassName("ido");
+	if (ido.length > 0) {
+		var parentDiv = ido[0];
 
-        // 添加样式防止覆盖
-        parentDiv.classList.add("t_toplist_ido");
+		// 添加样式防止覆盖
+		parentDiv.classList.add("t_toplist_ido");
 
-        // 头部面包屑导航翻译
-        var headLinks = parentDiv.firstElementChild.querySelectorAll("a");
-        for (const i in headLinks) {
-            if (Object.hasOwnProperty.call(headLinks, i)) {
-                const link = headLinks[i];
-                link.innerText = toplie_subtitle_dict[link.innerText];
-            }
-        }
+		// 头部面包屑导航翻译
+		var headLinks = parentDiv.firstElementChild.querySelectorAll("a");
+		for (const i in headLinks) {
+			if (Object.hasOwnProperty.call(headLinks, i)) {
+				const link = headLinks[i];
+				link.innerText = toplie_subtitle_dict[link.innerText];
+			}
+		}
 
-        // 排行页 或 作品/上传者排名页
-        var dcDiv = document.getElementsByClassName("dc");
-        if (dcDiv.length > 0) {
-            var dc = dcDiv[0];
+		// 排行页 或 作品/上传者排名页
+		var dcDiv = document.getElementsByClassName("dc");
+		if (dcDiv.length > 0) {
+			var dc = dcDiv[0];
 
-            // 各项父级翻译
-            var h2list = parentDiv.querySelectorAll("h2");
-            for (const i in h2list) {
-                if (Object.hasOwnProperty.call(h2list, i)) {
-                    const h2 = h2list[i];
-                    h2.innerText = toplist_parent_dict[h2.innerText];
-                }
-            }
+			// 各项父级翻译
+			var h2list = parentDiv.querySelectorAll("h2");
+			for (const i in h2list) {
+				if (Object.hasOwnProperty.call(h2list, i)) {
+					const h2 = h2list[i];
+					h2.innerText = toplist_parent_dict[h2.innerText];
+				}
+			}
 
-            // 各项排行翻译
-            var plist = parentDiv.querySelectorAll("p");
-            for (const i in plist) {
-                if (Object.hasOwnProperty.call(plist, i)) {
-                    const p = plist[i];
-                    if (p.innerText.indexOf("All-Time") != -1) {
-                        p.lastChild.innerText = "总排行";
-                    } else if (p.innerText.indexOf("Past Year") != -1) {
-                        p.lastChild.innerText = "年排行";
-                    } else if (p.innerText.indexOf("Past Month") != -1) {
-                        p.lastChild.innerText = "月排行";
-                    } else if (p.innerText.indexOf("Yesterday") != -1) {
-                        p.lastChild.innerText = "日排行";
-                    }
-                }
-            }
+			// 各项排行翻译
+			var plist = parentDiv.querySelectorAll("p");
+			for (const i in plist) {
+				if (Object.hasOwnProperty.call(plist, i)) {
+					const p = plist[i];
+					if (p.innerText.indexOf("All-Time") != -1) {
+						p.lastChild.innerText = "总排行";
+					} else if (p.innerText.indexOf("Past Year") != -1) {
+						p.lastChild.innerText = "年排行";
+					} else if (p.innerText.indexOf("Past Month") != -1) {
+						p.lastChild.innerText = "月排行";
+					} else if (p.innerText.indexOf("Yesterday") != -1) {
+						p.lastChild.innerText = "日排行";
+					}
+				}
+			}
 
-            // 删除全部分割线
-            var hrlist = parentDiv.querySelectorAll("hr");
-            for (const i in hrlist) {
-                if (Object.hasOwnProperty.call(hrlist, i)) {
-                    const hr = hrlist[i];
-                    hr.parentNode.removeChild(hr);
-                }
-            }
+			// 删除全部分割线
+			var hrlist = parentDiv.querySelectorAll("hr");
+			for (const i in hrlist) {
+				if (Object.hasOwnProperty.call(hrlist, i)) {
+					const hr = hrlist[i];
+					hr.parentNode.removeChild(hr);
+				}
+			}
 
-            // 跨域
-            crossDomain();
+			// 跨域
+			crossDomain();
 
-            // 作品标题翻译
-            var translateDiv = document.createElement("div");
-            translateDiv.id = "googleTranslateDiv";
-            var translateCheckbox = document.createElement("input");
-            translateCheckbox.setAttribute("type", "checkbox");
-            translateCheckbox.id = "googleTranslateCheckbox";
-            translateDiv.appendChild(translateCheckbox);
-            var translateLabel = document.createElement("label");
-            translateLabel.setAttribute("for", translateCheckbox.id);
-            translateLabel.id = "translateLabel";
-            translateLabel.innerText = "谷歌机翻 : 标题";
+			// 作品标题翻译
+			var translateDiv = document.createElement("div");
+			translateDiv.id = "googleTranslateDiv";
+			var translateCheckbox = document.createElement("input");
+			translateCheckbox.setAttribute("type", "checkbox");
+			translateCheckbox.id = "googleTranslateCheckbox";
+			translateDiv.appendChild(translateCheckbox);
+			var translateLabel = document.createElement("label");
+			translateLabel.setAttribute("for", translateCheckbox.id);
+			translateLabel.id = "translateLabel";
+			translateLabel.innerText = "谷歌机翻 : 标题";
 
-            translateDiv.appendChild(translateLabel);
-            translateCheckbox.addEventListener("click", translateToplistPageTitle);
-            var h2 = dc.firstElementChild;
-            h2.appendChild(translateDiv);
+			translateDiv.appendChild(translateLabel);
+			translateCheckbox.addEventListener("click", translateToplistPageTitle);
+			var h2 = dc.firstElementChild;
+			h2.appendChild(translateDiv);
 
-            indexDbInit(() => {
-                read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-                    if (result && result.value) {
-                        translateCheckbox.setAttribute("checked", true);
-                        translateToplistTitleDisplay();
-                    }
-                }, () => { });
-            });
+			indexDbInit(() => {
+				read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+					if (result && result.value) {
+						translateCheckbox.setAttribute("checked", true);
+						translateToplistTitleDisplay();
+					}
+				}, () => { });
+			});
 
-        } else {
+		} else {
 
-            // 点击页面链接跳转
-            // 1. 跳转到页面详情不管，detail.js 实现功能
-            // 2. 跳转到上传页面不管，upload.js 实现功能
-            // 3. 跳转到上传者排行页面，需要翻译
-            // 4. 跳转到作品排行页面，需要翻译
+			// 点击页面链接跳转
+			// 1. 跳转到页面详情不管，detail.js 实现功能
+			// 2. 跳转到上传页面不管，upload.js 实现功能
+			// 3. 跳转到上传者排行页面，需要翻译
+			// 4. 跳转到作品排行页面，需要翻译
 
-            var search = window.location.search;
-            if (search.indexOf("?tl=") != -1) {
-                var pageNo = search.replace("?tl=", "");
-                var bookRateArrayNo = ["11", "12", "13", "15"];
-                if (bookRateArrayNo.indexOf(pageNo) != -1) {
-                    // 作品排行页面
-                    toplistBookRank();
-                } else {
-                    // 上传者排行页面
-                    toplistUploaderRank();
-                }
-            }
-        }
-    }
+			var search = window.location.search;
+			if (search.indexOf("?tl=") != -1) {
+				var pageNo = search.replace("?tl=", "");
+				var bookRateArrayNo = ["11", "12", "13", "15"];
+				if (bookRateArrayNo.indexOf(pageNo) != -1) {
+					// 作品排行页面
+					toplistBookRank();
+				} else {
+					// 上传者排行页面
+					toplistUploaderRank();
+				}
+			}
+		}
+	}
 
 
 
@@ -5085,154 +5085,154 @@ function toplistPage() {
 
 // 翻译排行榜作品名称
 function translateToplistPageTitle() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-    // 更新存储
-    var settings_translateFrontPageTitles = {
-        item: table_Settings_key_TranslateFrontPageTitles,
-        value: isChecked
-    };
+	// 更新存储
+	var settings_translateFrontPageTitles = {
+		item: table_Settings_key_TranslateFrontPageTitles,
+		value: isChecked
+	};
 
-    indexDbInit(() => {
-        update(table_Settings, settings_translateFrontPageTitles, () => {
-            // 通知通知，翻译标题
-            setDbSyncMessage(sync_googleTranslate_frontPage_title);
-            translateToplistTitleDisplay();
-        }, () => { });
-    })
+	indexDbInit(() => {
+		update(table_Settings, settings_translateFrontPageTitles, () => {
+			// 通知通知，翻译标题
+			setDbSyncMessage(sync_googleTranslate_frontPage_title);
+			translateToplistTitleDisplay();
+		}, () => { });
+	})
 }
 
 
 function translateToplistTitleDisplay() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-    var titleDivs = document.getElementsByClassName("dc")[0].querySelectorAll("div.tun");
-    if (isChecked) {
-        // 翻译标题
-        for (const i in titleDivs) {
-            if (Object.hasOwnProperty.call(titleDivs, i)) {
-                const a = titleDivs[i].firstElementChild;
-                if (a.dataset.translate) {
-                    // 已经翻译过
-                    a.innerText = a.dataset.translate;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var titleDivs = document.getElementsByClassName("dc")[0].querySelectorAll("div.tun");
+	if (isChecked) {
+		// 翻译标题
+		for (const i in titleDivs) {
+			if (Object.hasOwnProperty.call(titleDivs, i)) {
+				const a = titleDivs[i].firstElementChild;
+				if (a.dataset.translate) {
+					// 已经翻译过
+					a.innerText = a.dataset.translate;
 
-                } else {
-                    // 需要翻译
-                    a.title = a.innerText;
+				} else {
+					// 需要翻译
+					a.title = a.innerText;
 
-                    var encodeText = urlEncode(a.innerText);
-                    // 单条翻译
-                    getGoogleTranslate(encodeText, function (data) {
-                        var sentences = data.sentences;
-                        var longtext = '';
-                        for (const i in sentences) {
-                            if (Object.hasOwnProperty.call(sentences, i)) {
-                                const sentence = sentences[i];
-                                longtext += sentence.trans;
-                            }
-                        }
+					var encodeText = urlEncode(a.innerText);
+					// 单条翻译
+					getGoogleTranslate(encodeText, function (data) {
+						var sentences = data.sentences;
+						var longtext = '';
+						for (const i in sentences) {
+							if (Object.hasOwnProperty.call(sentences, i)) {
+								const sentence = sentences[i];
+								longtext += sentence.trans;
+							}
+						}
 
-                        a.innerText = longtext;
-                        a.dataset.translate = longtext;
-                    });
-                }
-            }
-        }
+						a.innerText = longtext;
+						a.dataset.translate = longtext;
+					});
+				}
+			}
+		}
 
-    } else {
-        // 显示原文
-        for (const i in titleDivs) {
-            if (Object.hasOwnProperty.call(titleDivs, i)) {
-                const a = titleDivs[i].firstElementChild;
-                if (a.title) {
-                    a.innerText = a.title;
-                }
-            }
-        }
-    }
+	} else {
+		// 显示原文
+		for (const i in titleDivs) {
+			if (Object.hasOwnProperty.call(titleDivs, i)) {
+				const a = titleDivs[i].firstElementChild;
+				if (a.title) {
+					a.innerText = a.title;
+				}
+			}
+		}
+	}
 }
 
 
 
 // 上传者排行页面
 function toplistUploaderRank() {
-    var itg = document.getElementsByClassName("itg");
-    if (itg.length > 0) {
-        var rankTable = itg[0];
-        var tableThs = rankTable.querySelectorAll("th");
-        for (const i in tableThs) {
-            if (Object.hasOwnProperty.call(tableThs, i)) {
-                const th = tableThs[i];
-                if (th.classList.contains("hr")) {
-                    th.innerText = "排名";
-                } else if (th.classList.contains("hs")) {
-                    th.innerText = "分数";
-                } else if (th.classList.contains("hn")) {
-                    th.innerText = "上传者";
-                }
-            }
-        }
-    }
+	var itg = document.getElementsByClassName("itg");
+	if (itg.length > 0) {
+		var rankTable = itg[0];
+		var tableThs = rankTable.querySelectorAll("th");
+		for (const i in tableThs) {
+			if (Object.hasOwnProperty.call(tableThs, i)) {
+				const th = tableThs[i];
+				if (th.classList.contains("hr")) {
+					th.innerText = "排名";
+				} else if (th.classList.contains("hs")) {
+					th.innerText = "分数";
+				} else if (th.classList.contains("hn")) {
+					th.innerText = "上传者";
+				}
+			}
+		}
+	}
 }
 
 // 作品排行页面
 function toplistBookRank() {
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    var ido = document.getElementsByClassName("ido");
-    if (ido.length > 0) {
-        var toppane = ido[0];
-        toppane.classList.add("t_toplist_bookrage");
+	var ido = document.getElementsByClassName("ido");
+	if (ido.length > 0) {
+		var toppane = ido[0];
+		toppane.classList.add("t_toplist_bookrage");
 
-        // 标题机翻
-        var translateDiv = document.createElement("div");
-        translateDiv.id = "googleTranslateDiv";
-        var translateCheckbox = document.createElement("input");
-        translateCheckbox.setAttribute("type", "checkbox");
-        translateCheckbox.id = "googleTranslateCheckbox";
-        translateDiv.appendChild(translateCheckbox);
-        var translateLabel = document.createElement("label");
-        translateLabel.setAttribute("for", translateCheckbox.id);
-        translateLabel.id = "translateLabel";
-        translateLabel.innerText = "谷歌机翻 : 标题";
+		// 标题机翻
+		var translateDiv = document.createElement("div");
+		translateDiv.id = "googleTranslateDiv";
+		var translateCheckbox = document.createElement("input");
+		translateCheckbox.setAttribute("type", "checkbox");
+		translateCheckbox.id = "googleTranslateCheckbox";
+		translateDiv.appendChild(translateCheckbox);
+		var translateLabel = document.createElement("label");
+		translateLabel.setAttribute("for", translateCheckbox.id);
+		translateLabel.id = "translateLabel";
+		translateLabel.innerText = "谷歌机翻 : 标题";
 
-        translateDiv.appendChild(translateLabel);
-        translateCheckbox.addEventListener("click", translateMainPageTitle);
-        toppane.insertBefore(translateDiv, toppane.lastChild);
+		translateDiv.appendChild(translateLabel);
+		translateCheckbox.addEventListener("click", translateMainPageTitle);
+		toppane.insertBefore(translateDiv, toppane.lastChild);
 
-        // 头部添加词库升级提示
-        var dataUpdateDiv = document.createElement("div");
-        dataUpdateDiv.id = "data_update_tip";
-        var dataUpdateText = document.createTextNode("词库升级中...");
-        dataUpdateDiv.appendChild(dataUpdateText);
-        toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
+		// 头部添加词库升级提示
+		var dataUpdateDiv = document.createElement("div");
+		dataUpdateDiv.id = "data_update_tip";
+		var dataUpdateText = document.createTextNode("词库升级中...");
+		dataUpdateDiv.appendChild(dataUpdateText);
+		toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
 
-        // 表头翻译
-        toplistBookRateTableHeadTranslate();
+		// 表头翻译
+		toplistBookRateTableHeadTranslate();
 
-        // 作品类型翻译
-        bookTypeTranslate();
+		// 作品类型翻译
+		bookTypeTranslate();
 
-        // 作品篇幅
-        toplistBookpages();
+		// 作品篇幅
+		toplistBookpages();
 
-        indexDbInit(() => {
-            // 谷歌机翻标题
-            read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-                if (result && result.value) {
-                    translateCheckbox.setAttribute("checked", true);
-                    translateMainPageTitleDisplay();
-                }
-            }, () => { });
+		indexDbInit(() => {
+			// 谷歌机翻标题
+			read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+				if (result && result.value) {
+					translateCheckbox.setAttribute("checked", true);
+					translateMainPageTitleDisplay();
+				}
+			}, () => { });
 
-            // 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
-            // 表格标签翻译
-            toplistBookRateTryUseOldData();
-        });
+			// 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
+			// 表格标签翻译
+			toplistBookRateTryUseOldData();
+		});
 
-        // 同步谷歌机翻标题
-        DataSyncCommonTranslateTitle();
-    }
+		// 同步谷歌机翻标题
+		DataSyncCommonTranslateTitle();
+	}
 
 
 
@@ -5240,132 +5240,132 @@ function toplistBookRank() {
 
 // 作品排行页面，翻译表头
 function toplistBookRateTableHeadTranslate() {
-    var table = document.getElementsByClassName("itg");
-    if (table.length > 0) {
-        var theads = table[0].querySelectorAll("th");
+	var table = document.getElementsByClassName("itg");
+	if (table.length > 0) {
+		var theads = table[0].querySelectorAll("th");
 
-        for (const i in theads) {
-            if (Object.hasOwnProperty.call(theads, i)) {
-                const th = theads[i];
-                th.innerText = thData[th.innerText] ?? th.innerText;
-            }
-        }
+		for (const i in theads) {
+			if (Object.hasOwnProperty.call(theads, i)) {
+				const th = theads[i];
+				th.innerText = thData[th.innerText] ?? th.innerText;
+			}
+		}
 
-        // 删除第一个表头的跨列属性，然后追加表头
-        var firstTh = theads[0];
-        firstTh.removeAttribute("colspan");
-        firstTh.innerText = "排名";
+		// 删除第一个表头的跨列属性，然后追加表头
+		var firstTh = theads[0];
+		firstTh.removeAttribute("colspan");
+		firstTh.innerText = "排名";
 
-        var bookTypeTh = document.createElement("th");
-        bookTypeTh.innerText = "作品类型";
-        firstTh.parentNode.insertBefore(bookTypeTh, firstTh.nextElementSibling);
-    }
+		var bookTypeTh = document.createElement("th");
+		bookTypeTh.innerText = "作品类型";
+		firstTh.parentNode.insertBefore(bookTypeTh, firstTh.nextElementSibling);
+	}
 }
 
 //  作品排行页面，获取词库数据
 function toplistBookRateTryUseOldData() {
-    // 验证数据完整性
-    checkDataIntact(() => {
-        // 判断是否存在旧数据
-        var fetishHasValue = false;
-        var ehTagHasValue = false;
-        var complete1 = false;
-        var complete2 = false;
+	// 验证数据完整性
+	checkDataIntact(() => {
+		// 判断是否存在旧数据
+		var fetishHasValue = false;
+		var ehTagHasValue = false;
+		var complete1 = false;
+		var complete2 = false;
 
-        checkTableEmpty(table_fetishListSubItems, () => {
-            // 数据为空
-            complete1 = true;
-        }, () => {
-            // 存在数据
-            fetishHasValue = true;
-            complete1 = true;
-        });
+		checkTableEmpty(table_fetishListSubItems, () => {
+			// 数据为空
+			complete1 = true;
+		}, () => {
+			// 存在数据
+			fetishHasValue = true;
+			complete1 = true;
+		});
 
-        checkTableEmpty(table_EhTagSubItems, () => {
-            // 数据为空
-            complete2 = true;
-        }, () => {
-            // 存在数据
-            ehTagHasValue = true;
-            complete2 = true;
-        });
+		checkTableEmpty(table_EhTagSubItems, () => {
+			// 数据为空
+			complete2 = true;
+		}, () => {
+			// 存在数据
+			ehTagHasValue = true;
+			complete2 = true;
+		});
 
-        var t = setInterval(() => {
-            if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
-                t && clearInterval(t);
-                // 存在数据
-                toplistTableTagTranslate();
-                // 检查更新
-                checkUpdateData(() => {
-                    // 存在更新
-                    toplistTableTagTranslate();
-                }, () => { });
-            } else if (complete1 && complete2) {
-                t && clearInterval(t);
-                // 不存在数据
-                checkUpdateData(() => {
-                    // 存在更新
-                    toplistTableTagTranslate();
-                }, () => {
-                    toplistTableTagTranslate();
-                });
-            }
-        }, 10);
-    });
+		var t = setInterval(() => {
+			if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+				t && clearInterval(t);
+				// 存在数据
+				toplistTableTagTranslate();
+				// 检查更新
+				checkUpdateData(() => {
+					// 存在更新
+					toplistTableTagTranslate();
+				}, () => { });
+			} else if (complete1 && complete2) {
+				t && clearInterval(t);
+				// 不存在数据
+				checkUpdateData(() => {
+					// 存在更新
+					toplistTableTagTranslate();
+				}, () => {
+					toplistTableTagTranslate();
+				});
+			}
+		}, 10);
+	});
 }
 
 // 表格标签翻译
 function toplistTableTagTranslate() {
-    // 父项:子项，偶尔出现单个子项
-    var gt = document.getElementsByClassName("gt");
-    function translate(gt, i) {
-        const item = gt[i];
-        if (!item.dataset.title) {
-            item.dataset.title = item.title;
-        }
-        var ps_en = item.dataset.title;
-        read(table_EhTagSubItems, ps_en, result => {
-            if (result) {
-                // 父子项
-                item.innerText = `${result.parent_zh}:${result.sub_zh}`;
-                if (result.sub_desc) {
-                    item.title = `${item.title}\r\n${result.sub_desc}`;
-                }
-            } else {
-                // 没有找到，翻译父项，子项保留
-                var array = ps_en.split(":");
-                if (array.length == 2) {
-                    var parent_en = array[0];
-                    var sub_en = array[1];
-                    read(table_detailParentItems, parent_en, result => {
-                        if (result) {
-                            item.innerText = `${result.name}:${sub_en}`;
-                            if (result.sub_desc) {
-                                item.title = `${item.title}\r\n${result.sub_desc}`;
-                            }
-                        }
-                    }, () => { });
-                }
-            }
-        }, () => { });
-    }
-    for (const i in gt) {
-        if (Object.hasOwnProperty.call(gt, i)) {
-            translate(gt, i);
-        }
-    }
+	// 父项:子项，偶尔出现单个子项
+	var gt = document.getElementsByClassName("gt");
+	function translate(gt, i) {
+		const item = gt[i];
+		if (!item.dataset.title) {
+			item.dataset.title = item.title;
+		}
+		var ps_en = item.dataset.title;
+		read(table_EhTagSubItems, ps_en, result => {
+			if (result) {
+				// 父子项
+				item.innerText = `${result.parent_zh}:${result.sub_zh}`;
+				if (result.sub_desc) {
+					item.title = `${item.title}\r\n${result.sub_desc}`;
+				}
+			} else {
+				// 没有找到，翻译父项，子项保留
+				var array = ps_en.split(":");
+				if (array.length == 2) {
+					var parent_en = array[0];
+					var sub_en = array[1];
+					read(table_detailParentItems, parent_en, result => {
+						if (result) {
+							item.innerText = `${result.name}:${sub_en}`;
+							if (result.sub_desc) {
+								item.title = `${item.title}\r\n${result.sub_desc}`;
+							}
+						}
+					}, () => { });
+				}
+			}
+		}, () => { });
+	}
+	for (const i in gt) {
+		if (Object.hasOwnProperty.call(gt, i)) {
+			translate(gt, i);
+		}
+	}
 }
 
 // 作品篇幅
 function toplistBookpages() {
-    // 标题 + 悬浮图 + 标签
-    var tdPages = document.getElementsByClassName("glhide");
-    for (const i in tdPages) {
-        if (Object.hasOwnProperty.call(tdPages, i)) {
-            const td = tdPages[i];
-            innerTextPageToYe(td.lastChild);
-        }
-    }
+	// 标题 + 悬浮图 + 标签
+	var tdPages = document.getElementsByClassName("glhide");
+	for (const i in tdPages) {
+		if (Object.hasOwnProperty.call(tdPages, i)) {
+			const td = tdPages[i];
+			innerTextPageToYe(td.lastChild);
+		}
+	}
 }
 
 //#endregion
@@ -5380,7 +5380,7 @@ function toplistBookpages() {
 //TODO 种子页面
 //TODO 我的标签和本地标签的导入、导出，我的标签翻译 (EX)
 //TODO 样式细化
-//TODO 搜索不区分大小写
+//TODO 悬浮显示预览图
 
 
 //#region main.js 主方法
@@ -6481,6 +6481,7 @@ function mainPageCategory() {
 
 		// 词库数据
 		tryUseOldDataFirst(() => {
+
 			//#region step3.7.search.js 搜索框功能
 
 			// 进入页面，根据地址栏信息生成搜索栏标签
@@ -6541,7 +6542,24 @@ function mainPageCategory() {
 				}
 			}
 
+			// 删除搜索框子项
+			function removeSearchItem(e) {
+				var id = e.path[0].id;
+				var item = document.getElementById(id);
+				var cateItem = item.dataset.item;
+				delete searchItemDict[cateItem];
+				console.log(cateItem);
+				console.log(searchItemDict);
 
+				if (checkDictNull(searchItemDict)) {
+					inputClearBtn.style.display = "none";
+					searchBtn.innerText = "首页";
+					addFavoritesBtn.style.display = "none";
+					addFavoritesDisabledBtn.style.display = "block";
+				}
+
+				item.parentNode.removeChild(item);
+			}
 
 			// 清空选择
 			inputClearBtn.onclick = function () {
@@ -6640,7 +6658,7 @@ function mainPageCategory() {
 
 			// 输入框输入时候选
 			userInput.oninput = function () {
-				var inputValue = userInput.value;
+				var inputValue = userInput.value.toLowerCase();
 				userInputOnInputEvent(inputValue);
 			}
 
@@ -6779,6 +6797,7 @@ function mainPageCategory() {
 			}
 
 			//#endregion
+
 
 			//#region step3.8.favorite.js 收藏功能
 

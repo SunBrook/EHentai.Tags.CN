@@ -174,7 +174,7 @@ searchInput.onmouseout = function () {
 
 // 输入框输入时候选
 userInput.oninput = function () {
-    var inputValue = userInput.value;
+    var inputValue = userInput.value.toLowerCase();
     userInputOnInputEvent(inputValue);
 }
 
