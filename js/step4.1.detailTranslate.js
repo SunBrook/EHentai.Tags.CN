@@ -14,7 +14,7 @@ function detailDataUpdate() {
 function detailPageTranslate() {
 
     // 跨域
-	crossDomain();
+    crossDomain();
 
     //#region 左侧作品详情
 
@@ -48,6 +48,9 @@ function detailPageTranslate() {
 
     // 父级
     trList[1].firstChild.innerText = "父级:";
+    if (trList[1].lastChild.innerText == "None") {
+        trList[1].lastChild.innerText = "无";
+    }
 
     // 是否可见
     trList[2].firstChild.innerText = "可见:";

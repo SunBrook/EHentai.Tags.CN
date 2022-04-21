@@ -193,9 +193,9 @@ function translateDetailPageTitleDisplay() {
     }
 }
 
-function detailPageTitleCopy(){
+function detailPageTitleCopy() {
     var gd2 = document.getElementById("gd2");
-    
+
     var h1Title = document.getElementById("gn");
     h1Title.style.display = "none";
 
@@ -212,7 +212,7 @@ function detailPageTitleCopy(){
     h1Origin_copy.innerText = h1Origin.innerText;
     gd2.appendChild(h1Origin_copy);
 
-   
+
 }
 
 // 右侧按钮
