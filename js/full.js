@@ -3676,7 +3676,7 @@ function tableBookPages() {
 }
 
 // page -> 页
-function innerTextPageToYe(element) {
+function innerTextPageToYe(element){
 	if (!element.innerText) return;
 	if (element.innerText.indexOf(" pages") != -1) {
 		element.innerText = element.innerText.replace(" pages", " 页");
@@ -3688,6 +3688,9 @@ function innerTextPageToYe(element) {
 function mainPageTranslate() {
 	// 跨域
 	crossDomain();
+
+	// 作品类型翻译
+	bookTypeTranslate();
 
 	// 展示总数量
 	var ip = document.getElementsByClassName("ip");
@@ -3771,8 +3774,7 @@ function mainPageTranslate() {
 	// 表头翻译
 	tableHeadTranslate();
 
-	// 作品类型翻译
-	bookTypeTranslate();
+	
 
 	// 表格标签翻译
 	tableTagTranslate();
@@ -6504,67 +6506,70 @@ function mainPageCategory() {
 			}
 
 			var searchParam = GetQueryString("f_search");
-			if (searchParam.indexOf("%20") != -1) {
-				// 需要转义
-				searchParam = urlDecode(searchParam);
-			} else {
-				searchParam = searchParam.replace(/\%3A/g, ':');
-				searchParam = searchParam.replace(/\"\+\"/g, '"$"');
-				searchParam = searchParam.replace(/\+/g, " ");
-				searchParam = searchParam.replace(/\"\$\"/g, '"+"');
-			}
+			if (searchParam) {
+				if (searchParam.indexOf("%20") != -1) {
+					// 需要转义
+					searchParam = urlDecode(searchParam);
+				} else {
+					searchParam = searchParam.replace(/\%3A/g, ':');
+					searchParam = searchParam.replace(/\"\+\"/g, '"$"');
+					searchParam = searchParam.replace(/\+/g, " ");
+					searchParam = searchParam.replace(/\"\$\"/g, '"+"');
+				}
 
-			var f_searchs = searchParam;
-			if (f_searchs && f_searchs != "null") {
-				var searchArray = f_searchs.split("+");
-				for (const i in searchArray) {
-					if (Object.hasOwnProperty.call(searchArray, i)) {
+				var f_searchs = searchParam;
+				if (f_searchs && f_searchs != "null") {
+					var searchArray = f_searchs.split("+");
+					for (const i in searchArray) {
+						if (Object.hasOwnProperty.call(searchArray, i)) {
 
-						var items = searchArray[i].replace(/\+/g, " ").replace(/\"/g, "");
-						var itemArray = items.split(":");
-						searchItem(itemArray);
+							var items = searchArray[i].replace(/\+/g, " ").replace(/\"/g, "");
+							var itemArray = items.split(":");
+							searchItem(itemArray);
 
-						function searchItem(itemArray) {
-							if (itemArray.length == 2) {
-								var parentEn = itemArray[0];
-								var subEn = itemArray[1];
+							function searchItem(itemArray) {
+								if (itemArray.length == 2) {
+									var parentEn = itemArray[0];
+									var subEn = itemArray[1];
 
-								// 判断是否是上传者
-								if (parentEn == "uploader") {
-									addItemToInput("uploader", "上传者", subEn, subEn, '');
-								} else {
-									// 从EhTag中查询，看是否存在
-									read(table_EhTagSubItems, items, ehTagData => {
-										if (ehTagData) {
-											addItemToInput(ehTagData.parent_en, ehTagData.parent_zh, ehTagData.sub_en, ehTagData.sub_zh, ehTagData.sub_desc);
-										} else {
+									// 判断是否是上传者
+									if (parentEn == "uploader") {
+										addItemToInput("uploader", "上传者", subEn, subEn, '');
+									} else {
+										// 从EhTag中查询，看是否存在
+										read(table_EhTagSubItems, items, ehTagData => {
+											if (ehTagData) {
+												addItemToInput(ehTagData.parent_en, ehTagData.parent_zh, ehTagData.sub_en, ehTagData.sub_zh, ehTagData.sub_desc);
+											} else {
+												// 尝试翻译父级
+												readSearchParentAndInput(parentEn, subEn);
+											}
+										}, () => {
 											// 尝试翻译父级
 											readSearchParentAndInput(parentEn, subEn);
+										});
+									}
+								}
+								else {
+									console.log(itemArray);
+									// 从恋物列表中查询，看是否存在
+									readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
+										if (fetishData) {
+											addItemToInput(fetishData.parent_en, fetishData.parent_zh, fetishData.sub_en, fetishData.sub_zh, fetishData.sub_desc);
+										} else {
+											addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
 										}
 									}, () => {
-										// 尝试翻译父级
-										readSearchParentAndInput(parentEn, subEn);
+										// 用户自定义搜索关键字
+										addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
 									});
 								}
-							}
-							else {
-								console.log(itemArray);
-								// 从恋物列表中查询，看是否存在
-								readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
-									if (fetishData) {
-										addItemToInput(fetishData.parent_en, fetishData.parent_zh, fetishData.sub_en, fetishData.sub_zh, fetishData.sub_desc);
-									} else {
-										addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
-									}
-								}, () => {
-									// 用户自定义搜索关键字
-									addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
-								});
 							}
 						}
 					}
 				}
 			}
+
 
 			// 删除搜索框子项
 			function removeSearchItem(e) {
@@ -6842,8 +6847,6 @@ function mainPageCategory() {
 			}
 
 			//#endregion
-
-
 
 			//#region step3.8.favorite.js 收藏功能
 
@@ -7969,6 +7972,8 @@ function mainPageCategory() {
 			//#endregion
 
 		});
+
+		
 
 	});
 

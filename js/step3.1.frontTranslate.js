@@ -265,6 +265,9 @@ function mainPageTranslate() {
 	// 跨域
 	crossDomain();
 
+	// 作品类型翻译
+	bookTypeTranslate();
+
 	// 展示总数量
 	var ip = document.getElementsByClassName("ip");
 	if (ip.length > 0) {
@@ -346,9 +349,6 @@ function mainPageTranslate() {
 
 	// 表头翻译
 	tableHeadTranslate();
-
-	// 作品类型翻译
-	bookTypeTranslate();
 
 	// 表格标签翻译
 	tableTagTranslate();
