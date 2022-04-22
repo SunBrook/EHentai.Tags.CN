@@ -72,7 +72,8 @@ const thData = {
 	"Published": "上传日期",
 	"Title": "作品名称",
 	"Uploader": "上传人员",
-	"Name": "作品名称"
+	"Name": "作品名称",
+	"Favorited": "收藏日期"
 };
 
 //#endregion

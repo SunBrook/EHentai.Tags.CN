@@ -85,10 +85,7 @@ function detailPageTranslate() {
     trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
 
     // 添加到收藏(Ex 账号)
-    document.getElementById("favoritelink").innerText = "收藏到 (Ex 账号)";
-
-
-
+    document.getElementById("favoritelink").innerText = "收藏此作品";
 
     //#endregion
 

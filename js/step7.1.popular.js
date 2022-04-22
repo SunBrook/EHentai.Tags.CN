@@ -63,7 +63,7 @@ function popularPage() {
 
         // 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
         // 表格标签翻译
-        popularTryUseOldData();
+        otherPageTryUseOldDataAndTranslateTag();
     });
 
     // 同步谷歌机翻标题
@@ -73,7 +73,7 @@ function popularPage() {
 
 }
 
-function popularTryUseOldData() {
+function otherPageTryUseOldDataAndTranslateTag() {
     // 验证数据完整性
     checkDataIntact(() => {
         // 判断是否存在旧数据
