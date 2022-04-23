@@ -1,4 +1,4 @@
-//#region step7.4.torrentsPage.js 种子
+//#region step7.4.1.torrentsPage.js 种子
 function torrentsPage() {
 
     // 跨域
@@ -62,6 +62,9 @@ function torrentsPage() {
     // 表头翻译
     torrentsTableHeadTranslate();
 
+    // 为表格中标题添加 glink，用于翻译
+    torrentsTableTitleGlink();
+
     // 谷歌机翻标题
     // 表格头部左侧添加勾选 谷歌机翻
     var translateDiv = document.createElement("div");
@@ -92,8 +95,6 @@ function torrentsPage() {
     // 同步谷歌机翻标题
     DataSyncCommonTranslateTitle();
 
-
-    //TODO 标题翻译需要实现
 }
 
 function torrentsTableHeadTranslate() {
@@ -106,7 +107,17 @@ function torrentsTableHeadTranslate() {
             const th = theads[i];
             th.innerText = thData[th.innerText] ?? th.innerText;
         }
+    }
+}
 
+function torrentsTableTitleGlink() {
+    var table = document.getElementsByClassName("itg");
+    if (table.length > 0) {
+        var trs = table[0].querySelectorAll("tr");
+        for (let i = 1; i < trs.length; i++) {
+            const tr = trs[i];
+            tr.children[1].children[0].children[0].classList.add("glink");
+        }
     }
 }
 

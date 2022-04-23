@@ -27,232 +27,232 @@
 
 // 检查字典是否为空
 function checkDictNull(dict) {
-    for (const n in dict) {
-        return false;
-    }
-    return true;
+	for (const n in dict) {
+		return false;
+	}
+	return true;
 }
 
 // 获取地址参数
 function GetQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substring(1).match(reg);
-    if (r != null) return decodeURI(r[2]); return null;
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substring(1).match(reg);
+	if (r != null) return decodeURI(r[2]); return null;
 }
 
 // 数组删除元素
 Array.prototype.remove = function (val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-        this.splice(index, 1);
-    }
+	var index = this.indexOf(val);
+	if (index > -1) {
+		this.splice(index, 1);
+	}
 };
 
 // 数组差集
 function getDiffSet(array1, array2) {
-    return array1.filter(item => !new Set(array2).has(item));
+	return array1.filter(item => !new Set(array2).has(item));
 }
 
 // 导出json文件
 function saveJSON(data, filename) {
-    if (!data) return;
-    if (!filename) filename = "json.json";
-    if (typeof data === "object") {
-        data = JSON.stringify(data, undefined, 4);
-    }
-    // 要创建一个 blob 数据
-    let blob = new Blob([data], { type: "text/json" }),
-        a = document.createElement("a");
-    a.download = filename;
+	if (!data) return;
+	if (!filename) filename = "json.json";
+	if (typeof data === "object") {
+		data = JSON.stringify(data, undefined, 4);
+	}
+	// 要创建一个 blob 数据
+	let blob = new Blob([data], { type: "text/json" }),
+		a = document.createElement("a");
+	a.download = filename;
 
-    // 将blob转换为地址
-    // 创建 URL 的 Blob 对象
-    a.href = window.URL.createObjectURL(blob);
+	// 将blob转换为地址
+	// 创建 URL 的 Blob 对象
+	a.href = window.URL.createObjectURL(blob);
 
-    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
-    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+	// 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+	a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-    // 添加鼠标事件
-    let event = new MouseEvent("click", {});
+	// 添加鼠标事件
+	let event = new MouseEvent("click", {});
 
-    // 向一个指定的事件目标派发一个事件
-    a.dispatchEvent(event);
+	// 向一个指定的事件目标派发一个事件
+	a.dispatchEvent(event);
 }
 
 // 获取当前时间
 function getCurrentDate(format) {
-    var now = new Date();
-    var year = now.getFullYear(); //年份
-    var month = now.getMonth();//月份
-    var date = now.getDate();//日期
-    var day = now.getDay();//周几
-    var hour = now.getHours();//小时
-    var minu = now.getMinutes();//分钟
-    var sec = now.getSeconds();//秒
-    month = month + 1;
-    if (month < 10) month = "0" + month;
-    if (date < 10) date = "0" + date;
-    if (hour < 10) hour = "0" + hour;
-    if (minu < 10) minu = "0" + minu;
-    if (sec < 10) sec = "0" + sec;
-    var time = "";
-    //精确到天
-    if (format == 1) {
-        time = year + "-" + month + "-" + date;
-    }
-    //精确到分
-    else if (format == 2) {
-        time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
-    }
-    return time;
+	var now = new Date();
+	var year = now.getFullYear(); //年份
+	var month = now.getMonth();//月份
+	var date = now.getDate();//日期
+	var day = now.getDay();//周几
+	var hour = now.getHours();//小时
+	var minu = now.getMinutes();//分钟
+	var sec = now.getSeconds();//秒
+	month = month + 1;
+	if (month < 10) month = "0" + month;
+	if (date < 10) date = "0" + date;
+	if (hour < 10) hour = "0" + hour;
+	if (minu < 10) minu = "0" + minu;
+	if (sec < 10) sec = "0" + sec;
+	var time = "";
+	//精确到天
+	if (format == 1) {
+		time = year + "-" + month + "-" + date;
+	}
+	//精确到分
+	else if (format == 2) {
+		time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
+	}
+	return time;
 }
 
 // 调用谷歌翻译接口
 function getGoogleTranslate(text, func) {
-    var httpRequest = new XMLHttpRequest();
-    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
-    httpRequest.open("GET", url, true);
-    httpRequest.send();
+	var httpRequest = new XMLHttpRequest();
+	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
+	httpRequest.open("GET", url, true);
+	httpRequest.send();
 
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var json = JSON.parse(httpRequest.responseText);
-            func(json);
-        }
-    }
+	httpRequest.onreadystatechange = function () {
+		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+			var json = JSON.parse(httpRequest.responseText);
+			func(json);
+		}
+	}
 }
 
 // 借助谷歌翻译设置翻译后的值
-function translatePageElement(element){
-    getGoogleTranslate(element.innerText, function (data) {
-        var sentences = data.sentences;
-        var longtext = '';
-        for (const i in sentences) {
-            if (Object.hasOwnProperty.call(sentences, i)) {
-                const sentence = sentences[i];
-                longtext += sentence.trans;
-            }
-        }
-        element.innerText = longtext;
-    });
+function translatePageElement(element) {
+	getGoogleTranslate(element.innerText, function (data) {
+		var sentences = data.sentences;
+		var longtext = '';
+		for (const i in sentences) {
+			if (Object.hasOwnProperty.call(sentences, i)) {
+				const sentence = sentences[i];
+				longtext += sentence.trans;
+			}
+		}
+		element.innerText = longtext;
+	});
 }
 
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {
-    clearInterval(slideTimer);
-    var h = 0;
-    slideTimer = setInterval(function () {
-        // 当目标高度与实际高度小于10px时，以1px的速度步进
-        var step = (realHeight - h) / 10;
-        step = Math.ceil(step);
-        h += step;
-        if (Math.abs(realHeight - h) <= Math.abs(step)) {
-            h = realHeight;
-            element.style.height = `${realHeight}px`;
-            func();
-            clearInterval(slideTimer);
-        } else {
-            element.style.height = `${h}px`;
-        }
-    }, speed);
+	clearInterval(slideTimer);
+	var h = 0;
+	slideTimer = setInterval(function () {
+		// 当目标高度与实际高度小于10px时，以1px的速度步进
+		var step = (realHeight - h) / 10;
+		step = Math.ceil(step);
+		h += step;
+		if (Math.abs(realHeight - h) <= Math.abs(step)) {
+			h = realHeight;
+			element.style.height = `${realHeight}px`;
+			func();
+			clearInterval(slideTimer);
+		} else {
+			element.style.height = `${h}px`;
+		}
+	}, speed);
 }
 function slideUp(element, speed, func) {
-    clearInterval(slideTimer);
-    slideTimer = setInterval(function () {
-        var step = (0 - element.clientHeight) / 10;
-        step = Math.floor(step);
-        element.style.height = `${element.clientHeight + step}px`;
-        if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
-            element.style.height = "0px";
-            func();
-            clearInterval(slideTimer);
-        }
-    }, speed);
+	clearInterval(slideTimer);
+	slideTimer = setInterval(function () {
+		var step = (0 - element.clientHeight) / 10;
+		step = Math.floor(step);
+		element.style.height = `${element.clientHeight + step}px`;
+		if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
+			element.style.height = "0px";
+			func();
+			clearInterval(slideTimer);
+		}
+	}, speed);
 }
 
 // 展开折叠动画 (右左)
 var slideTimer2 = null;
 function slideRight(element, realWidth, speed, func) {
-    clearInterval(slideTimer2);
-    var w = 0;
-    slideTimer2 = setInterval(function () {
-        // 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
-        var step = (realWidth - w) / 10;
-        step = Math.ceil(step);
-        w += step;
-        if (Math.abs(realWidth - w) <= Math.abs(step)) {
-            w = realWidth;
-            element.style.width = `${realWidth}px`;
-            func();
-            clearInterval(slideTimer2);
-        } else {
-            element.style.width = `${w}px`;
-        }
-    }, speed);
+	clearInterval(slideTimer2);
+	var w = 0;
+	slideTimer2 = setInterval(function () {
+		// 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
+		var step = (realWidth - w) / 10;
+		step = Math.ceil(step);
+		w += step;
+		if (Math.abs(realWidth - w) <= Math.abs(step)) {
+			w = realWidth;
+			element.style.width = `${realWidth}px`;
+			func();
+			clearInterval(slideTimer2);
+		} else {
+			element.style.width = `${w}px`;
+		}
+	}, speed);
 }
 function slideLeft(element, speed, func) {
-    clearInterval(slideTimer2);
-    slideTimer2 = setInterval(function () {
-        var step = (0 - element.clientWidth) / 10;
-        step = Math.floor(step);
-        element.style.width = `${element.clientWidth + step}px`;
-        if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
-            element.style.width = "0px";
-            func();
-            clearInterval(slideTimer2);
-        }
-    })
+	clearInterval(slideTimer2);
+	slideTimer2 = setInterval(function () {
+		var step = (0 - element.clientWidth) / 10;
+		step = Math.floor(step);
+		element.style.width = `${element.clientWidth + step}px`;
+		if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
+			element.style.width = "0px";
+			func();
+			clearInterval(slideTimer2);
+		}
+	})
 }
 
 
 // 页面样式注入
 function styleInject(css, ref) {
-    if (ref === void 0) ref = {};
-    var insertAt = ref.insertAt;
+	if (ref === void 0) ref = {};
+	var insertAt = ref.insertAt;
 
-    if (!css || typeof document === 'undefined') { return; }
+	if (!css || typeof document === 'undefined') { return; }
 
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var style = document.createElement('style');
-    style.type = 'text/css';
+	var head = document.head || document.getElementsByTagName('head')[0];
+	var style = document.createElement('style');
+	style.type = 'text/css';
 
-    if (insertAt === 'top') {
-        if (head.firstChild) {
-            head.insertBefore(style, head.firstChild);
-        } else {
-            head.appendChild(style);
-        }
-    } else {
-        head.appendChild(style);
-    }
+	if (insertAt === 'top') {
+		if (head.firstChild) {
+			head.insertBefore(style, head.firstChild);
+		} else {
+			head.appendChild(style);
+		}
+	} else {
+		head.appendChild(style);
+	}
 
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
+	if (style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		style.appendChild(document.createTextNode(css));
+	}
 }
 
 // UrlEncode
 function urlEncode(str) {
-    str = (str + '').toString();
+	str = (str + '').toString();
 
-    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+		replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 // UrlDecode
 function urlDecode(str) {
-    return decodeURIComponent(str);
+	return decodeURIComponent(str);
 }
 
 // 跨域
 function crossDomain() {
-    var meta = document.createElement("meta");
-    meta.httpEquiv = "Content-Security-Policy";
-    meta.content = "upgrade-insecure-requests";
-    document.getElementsByTagName("head")[0].appendChild(meta);
+	var meta = document.createElement("meta");
+	meta.httpEquiv = "Content-Security-Policy";
+	meta.content = "upgrade-insecure-requests";
+	document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
 //#endregion
@@ -1390,7 +1390,8 @@ func_eh_ex(() => {
 	
 	#dms #googleTranslateDiv,
 	.t_popular_toppane #googleTranslateDiv,
-	.t_toplist_ido #googleTranslateDiv {
+	.t_toplist_ido #googleTranslateDiv,
+	.t_torrentsPage_ido #googleTranslateDiv {
 		float: left;
 		background-color: #edebdf;
 		padding: 2px 3px 6px 7px;
@@ -1424,6 +1425,10 @@ func_eh_ex(() => {
 		left: 5px;
 	}
 	
+	.t_torrentsPage_ido #googleTranslateDiv {
+		top: 105px;
+	}
+	
 	#dms #translateLabel,
 	.t_popular_toppane #translateLabel,
 	.t_toplist_ido #translateLabel {
@@ -1439,7 +1444,9 @@ func_eh_ex(() => {
 	.t_popular_toppane #googleTranslateDiv,
 	.t_popular_toppane #translateLabel,
 	.t_toplist_ido #googleTranslateDiv,
-	.t_toplist_ido #translateLabel {
+	.t_toplist_ido #translateLabel,
+	.t_torrentsPage_ido #googleTranslateDiv,
+	.t_torrentsPage_ido #translateLabel {
 		cursor: pointer;
 	}
 	
@@ -1501,7 +1508,8 @@ func_eh_ex(() => {
 	#div_ee8413b2_detail_addFavoriteBtn:hover,
 	#div_ee8413b2_detail_searchBtn:hover,
 	.t_popular_toppane #googleTranslateDiv:hover,
-	.t_toplist_ido #googleTranslateDiv:hover {
+	.t_toplist_ido #googleTranslateDiv:hover,
+	.t_torrentsPage_ido #googleTranslateDiv:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
 	
@@ -2703,37 +2711,43 @@ func_eh_ex(() => {
 
 //#endregion
 
+
+
 //#region step1.2.translateTopMenu.js 头部菜单翻译
 
 function topMenuTranslateZh() {
-	var menus = document.getElementById("nb").querySelectorAll("a");
-	var pathname = window.location.pathname;
-	var isFoundCheck = false;
-	for (const i in menus) {
-		if (Object.hasOwnProperty.call(menus, i)) {
-			const a = menus[i];
-			if ((!isFoundCheck) &&
-				(
-					(pathname == '/' && a.innerText == 'Front Page') ||
-					(pathname == '/watched' && a.innerText == 'Watched') ||
-					(pathname == '/popular' && a.innerText == 'Popular') ||
-					(pathname == '/torrents.php' && a.innerText == 'Torrents') ||
-					(pathname == '/favorites.php' && a.innerText == 'Favorites') ||
-					(pathname == '/home.php' && a.innerText == 'My Home') ||
-					(pathname == '/toplist.php' && a.innerText == 'Toplists') ||
-					(pathname == '/bounty.php' && a.innerText == 'Bounties') ||
-					(pathname == '/news.php' && a.innerText == 'News') ||
-					(pathname == '/uconfig.php' && a.innerText == 'Settings') ||
-					(pathname == '/upld/manage' && a.innerText == 'My Uploads') ||
-					(pathname == '/mytags' && a.innerText == 'My Tags')
-				)) {
-				a.parentNode.classList.add('headMenu_check');
-				isFoundCheck = true;
-			}
+	var nb = document.getElementById("nb");
+	if (nb) {
+		var menus = nb.querySelectorAll("a");
+		var pathname = window.location.pathname;
+		var isFoundCheck = false;
+		for (const i in menus) {
+			if (Object.hasOwnProperty.call(menus, i)) {
+				const a = menus[i];
+				if ((!isFoundCheck) &&
+					(
+						(pathname == '/' && a.innerText == 'Front Page') ||
+						(pathname == '/watched' && a.innerText == 'Watched') ||
+						(pathname == '/popular' && a.innerText == 'Popular') ||
+						(pathname == '/torrents.php' && a.innerText == 'Torrents') ||
+						(pathname == '/favorites.php' && a.innerText == 'Favorites') ||
+						(pathname == '/home.php' && a.innerText == 'My Home') ||
+						(pathname == '/toplist.php' && a.innerText == 'Toplists') ||
+						(pathname == '/bounty.php' && a.innerText == 'Bounties') ||
+						(pathname == '/news.php' && a.innerText == 'News') ||
+						(pathname == '/uconfig.php' && a.innerText == 'Settings') ||
+						(pathname == '/upld/manage' && a.innerText == 'My Uploads') ||
+						(pathname == '/mytags' && a.innerText == 'My Tags')
+					)) {
+					a.parentNode.classList.add('headMenu_check');
+					isFoundCheck = true;
+				}
 
-			a.innerText = fontMenusData[a.innerText] ?? a.innerText;
+				a.innerText = fontMenusData[a.innerText] ?? a.innerText;
+			}
 		}
 	}
+
 }
 
 //#endregion
@@ -5159,340 +5173,340 @@ function otherPageTryUseOldDataAndTranslateTag() {
 
 function favoritePage() {
 
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 标题添加类 t_favorite_ido，方便添加样式
-    var ido = document.getElementsByClassName("ido");
-    if (ido.length > 0) {
-        ido[0].classList.add("t_favorite_ido");
-    }
+	// 标题添加类 t_favorite_ido，方便添加样式
+	var ido = document.getElementsByClassName("ido");
+	if (ido.length > 0) {
+		ido[0].classList.add("t_favorite_ido");
+	}
 
-    // 标题直接删除
-    var h1 = document.getElementsByTagName("h1");
-    if (h1.length > 0) {
-        var pageTitle = h1[0];
-        pageTitle.parentNode.removeChild(pageTitle);
-    }
+	// 标题直接删除
+	var h1 = document.getElementsByTagName("h1");
+	if (h1.length > 0) {
+		var pageTitle = h1[0];
+		pageTitle.parentNode.removeChild(pageTitle);
+	}
 
-    // 显示全部按钮改名
-    var favoriteBtns = document.getElementsByClassName("fp");
-    if (favoriteBtns.length > 0) {
-        var showAllFavorites = favoriteBtns[favoriteBtns.length - 1];
-        showAllFavorites.innerText = "点我显示：全部收藏";
+	// 显示全部按钮改名
+	var favoriteBtns = document.getElementsByClassName("fp");
+	if (favoriteBtns.length > 0) {
+		var showAllFavorites = favoriteBtns[favoriteBtns.length - 1];
+		showAllFavorites.innerText = "点我显示：全部收藏";
 
-        // 没有收藏的列表字体颜色稍微暗一点
-        for (let i = 0; i < favoriteBtns.length - 1; i++) {
-            const favoriteBtn = favoriteBtns[i];
-            var favoriteCount = favoriteBtn.children[0].innerText;
-            if (favoriteCount == "0") {
-                favoriteBtn.classList.add("favorite_null");
-            }
-        }
+		// 没有收藏的列表字体颜色稍微暗一点
+		for (let i = 0; i < favoriteBtns.length - 1; i++) {
+			const favoriteBtn = favoriteBtns[i];
+			var favoriteCount = favoriteBtn.children[0].innerText;
+			if (favoriteCount == "0") {
+				favoriteBtn.classList.add("favorite_null");
+			}
+		}
 
-    }
+	}
 
-    // 搜索按钮清空按钮翻译，筛选文本框排成一行
-    var searchDiv = ido[0].children[1];
-    searchDiv.classList.add("searchDiv");
-    var form = searchDiv.children[0];
-    var searchInputDiv = form.children[1];
-    searchInputDiv.classList.add("searchInputDiv");
-    var searchFilterDiv = form.children[2];
-    searchFilterDiv.classList.add("searchFilterDiv");
+	// 搜索按钮清空按钮翻译，筛选文本框排成一行
+	var searchDiv = ido[0].children[1];
+	searchDiv.classList.add("searchDiv");
+	var form = searchDiv.children[0];
+	var searchInputDiv = form.children[1];
+	searchInputDiv.classList.add("searchInputDiv");
+	var searchFilterDiv = form.children[2];
+	searchFilterDiv.classList.add("searchFilterDiv");
 
-    // 输入候选
-    var inputRecommendDiv = document.createElement("div");
-    inputRecommendDiv.id = "category_user_input_recommend";
-    var searchForm = document.getElementsByTagName("form")[0];
-    searchForm.insertBefore(inputRecommendDiv, searchForm.lastChild);
+	// 输入候选
+	var inputRecommendDiv = document.createElement("div");
+	inputRecommendDiv.id = "category_user_input_recommend";
+	var searchForm = document.getElementsByTagName("form")[0];
+	searchForm.insertBefore(inputRecommendDiv, searchForm.lastChild);
 
-    // 搜索框、搜索按钮、搜索选项翻译
-    var searchInput = searchInputDiv.children[0];
-    searchInput.setAttribute("placeholder", "搜索关键字");
-    searchInput.oninput = function () {
-        var inputValue = searchInput.value.toLowerCase();
-        favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput);
-    }
+	// 搜索框、搜索按钮、搜索选项翻译
+	var searchInput = searchInputDiv.children[0];
+	searchInput.setAttribute("placeholder", "搜索关键字");
+	searchInput.oninput = function () {
+		var inputValue = searchInput.value.toLowerCase();
+		favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput);
+	}
 
-    var searchBtn = searchInputDiv.children[1];
-    searchBtn.value = " 搜索收藏 ";
+	var searchBtn = searchInputDiv.children[1];
+	searchBtn.value = " 搜索收藏 ";
 
-    var clearBtn = searchInputDiv.children[2];
-    clearBtn.value = " 清空 ";
+	var clearBtn = searchInputDiv.children[2];
+	clearBtn.value = " 清空 ";
 
-    var filterTds = searchFilterDiv.querySelectorAll("td");
-    var filterHead = filterTds[0];
-    filterHead.innerText = "搜索包含：";
+	var filterTds = searchFilterDiv.querySelectorAll("td");
+	var filterHead = filterTds[0];
+	filterHead.innerText = "搜索包含：";
 
-    var filterName = filterTds[1];
-    filterName.children[0].lastChild.textContent = "作品名称";
+	var filterName = filterTds[1];
+	filterName.children[0].lastChild.textContent = "作品名称";
 
-    var filterTag = filterTds[2];
-    filterTag.children[0].lastChild.textContent = "标签";
+	var filterTag = filterTds[2];
+	filterTag.children[0].lastChild.textContent = "标签";
 
-    var filterNote = filterTds[3];
-    filterNote.children[0].lastChild.textContent = "备注";
+	var filterNote = filterTds[3];
+	filterNote.children[0].lastChild.textContent = "备注";
 
-    // 展示总数量
-    var ip = document.getElementsByClassName("ip");
-    if (ip.length > 0) {
-        var ipElement = ip[0];
-        var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
-        ipElement.innerText = `共 ${totalCount} 条记录`;
-    }
+	// 展示总数量
+	var ip = document.getElementsByClassName("ip");
+	if (ip.length > 0) {
+		var ipElement = ip[0];
+		var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
+		ipElement.innerText = `共 ${totalCount} 条记录`;
+	}
 
-    // 头部添加词库升级提示
-    var dataUpdateDiv = document.createElement("div");
-    dataUpdateDiv.id = "data_update_tip";
-    var dataUpdateText = document.createTextNode("词库升级中...");
-    dataUpdateDiv.appendChild(dataUpdateText);
-    ido[0].insertBefore(dataUpdateDiv, ido[0].lastChild);
+	// 头部添加词库升级提示
+	var dataUpdateDiv = document.createElement("div");
+	dataUpdateDiv.id = "data_update_tip";
+	var dataUpdateText = document.createTextNode("词库升级中...");
+	dataUpdateDiv.appendChild(dataUpdateText);
+	ido[0].insertBefore(dataUpdateDiv, ido[0].lastChild);
 
-    // 预览下拉框
-    var dms = document.getElementById("dms");
-    if (!dms) {
+	// 预览下拉框
+	var dms = document.getElementById("dms");
+	if (!dms) {
 
-        // 隐藏排序和底部操作框
-        var orderDiv = ido[0].children[2].children[0];
-        orderDiv.style.display = "none";
-        var nullBottomDiv = ido[0].children[3].children[1];
-        nullBottomDiv.style.display = "none";
+		// 隐藏排序和底部操作框
+		var orderDiv = ido[0].children[2].children[0];
+		orderDiv.style.display = "none";
+		var nullBottomDiv = ido[0].children[3].children[1];
+		nullBottomDiv.style.display = "none";
 
-        // 没有搜索到记录
-        var nullInfo = ido[0].children[3].children[0];
-        if (nullInfo) {
-            translatePageElement(nullInfo);
-        }
+		// 没有搜索到记录
+		var nullInfo = ido[0].children[3].children[0];
+		if (nullInfo) {
+			translatePageElement(nullInfo);
+		}
 
-        indexDbInit(() => {
-            // 没搜索到也要保留搜索候选功能
-            otherPageTryUseOldDataAndTranslateTag();
-        });
+		indexDbInit(() => {
+			// 没搜索到也要保留搜索候选功能
+			otherPageTryUseOldDataAndTranslateTag();
+		});
 
-        return;
-    }
+		return;
+	}
 
-    // 翻译下拉菜单
-    dropDownlistTranslate();
+	// 翻译下拉菜单
+	dropDownlistTranslate();
 
-    // 底部删除选中、移动作品下拉框，确认按钮
-    var ddact = document.getElementById("ddact");
-    if (ddact) {
-        var options = ddact.querySelectorAll("option");
-        if (options.length > 0) {
-            if (options[0].innerText == "Delete Selected") {
-                options[0].innerText = "删除选中的作品";
-            }
-        }
+	// 底部删除选中、移动作品下拉框，确认按钮
+	var ddact = document.getElementById("ddact");
+	if (ddact) {
+		var options = ddact.querySelectorAll("option");
+		if (options.length > 0) {
+			if (options[0].innerText == "Delete Selected") {
+				options[0].innerText = "删除选中的作品";
+			}
+		}
 
-        var optgroup = ddact.children[1];
-        if (optgroup.getAttribute("label") == "Change Category") {
-            optgroup.setAttribute("label", "作品迁移到以下收藏夹");
-        }
-    }
+		var optgroup = ddact.children[1];
+		if (optgroup.getAttribute("label") == "Change Category") {
+			optgroup.setAttribute("label", "作品迁移到以下收藏夹");
+		}
+	}
 
-    var bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
-    if (bottomConfirmBtn.value == "Confirm") {
-        bottomConfirmBtn.value = "确 认";
-        bottomConfirmBtn.style.width = "60px";
-    }
+	var bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
+	if (bottomConfirmBtn.value == "Confirm") {
+		bottomConfirmBtn.value = "确 认";
+		bottomConfirmBtn.style.width = "60px";
+	}
 
-    // 排序翻译、搜索行数翻译（包含没有搜索结果）
-    var orderDiv = ido[0].children[2].children[0];
-    orderDiv.firstChild.textContent = "作品排序：";
-    switch (orderDiv.children[0].innerText) {
-        case "Favorited":
-            orderDiv.children[0].innerText = "收藏时间";
-            break;
-        case "Posted":
-            orderDiv.children[0].innerText = "发布时间";
-            break;
-    }
+	// 排序翻译、搜索行数翻译（包含没有搜索结果）
+	var orderDiv = ido[0].children[2].children[0];
+	orderDiv.firstChild.textContent = "作品排序：";
+	switch (orderDiv.children[0].innerText) {
+		case "Favorited":
+			orderDiv.children[0].innerText = "收藏时间";
+			break;
+		case "Posted":
+			orderDiv.children[0].innerText = "发布时间";
+			break;
+	}
 
-    switch (orderDiv.children[1].innerText) {
-        case "Use Favorited":
-            orderDiv.children[1].innerText = " 按收藏时间排序 ";
-            break;
-        case "Use Posted":
-            orderDiv.children[1].innerText = " 按发布时间排序 ";
-            break;
-    }
+	switch (orderDiv.children[1].innerText) {
+		case "Use Favorited":
+			orderDiv.children[1].innerText = " 按收藏时间排序 ";
+			break;
+		case "Use Posted":
+			orderDiv.children[1].innerText = " 按发布时间排序 ";
+			break;
+	}
 
-    // 作品类型翻译
-    bookTypeTranslate();
+	// 作品类型翻译
+	bookTypeTranslate();
 
-    // 表头翻译
-    tableHeadTranslate();
+	// 表头翻译
+	tableHeadTranslate();
 
-    // 表格页数翻译
-    favoritePageTableBookPages();
-
-
+	// 表格页数翻译
+	favoritePageTableBookPages();
 
 
-    // 谷歌机翻标题
-    // 表格头部左侧添加勾选 谷歌机翻
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    translateDiv.appendChild(translateCheckbox);
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻 : 标题";
 
-    translateDiv.appendChild(translateLabel);
-    translateCheckbox.addEventListener("click", translateMainPageTitle);
-    var dms = document.getElementById("dms");
-    dms.insertBefore(translateDiv, dms.lastChild);
 
-    indexDbInit(() => {
-        // 读取是否选中
-        read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                translateMainPageTitleDisplay();
-            }
-        }, () => { });
+	// 谷歌机翻标题
+	// 表格头部左侧添加勾选 谷歌机翻
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	translateDiv.appendChild(translateCheckbox);
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻 : 标题";
 
-        // 表格标签翻译
-        otherPageTryUseOldDataAndTranslateTag();
-    });
+	translateDiv.appendChild(translateLabel);
+	translateCheckbox.addEventListener("click", translateMainPageTitle);
+	var dms = document.getElementById("dms");
+	dms.insertBefore(translateDiv, dms.lastChild);
 
-    // 同步谷歌机翻标题
-    DataSyncCommonTranslateTitle();
+	indexDbInit(() => {
+		// 读取是否选中
+		read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				translateMainPageTitleDisplay();
+			}
+		}, () => { });
+
+		// 表格标签翻译
+		otherPageTryUseOldDataAndTranslateTag();
+	});
+
+	// 同步谷歌机翻标题
+	DataSyncCommonTranslateTitle();
 }
 
 function favoritePageTableBookPages() {
-    var select = dms.querySelectorAll("select");
-    var rightSelect = select[0];
-    if (rightSelect.value == "e") {
-        // 标题 + 图片 + 标签
-        var gl3eDivs = document.getElementsByClassName("gl3e");
-        for (const i in gl3eDivs) {
-            if (Object.hasOwnProperty.call(gl3eDivs, i)) {
-                const gl3e = gl3eDivs[i];
-                var childLength = gl3e.children.length;
-                var pageDiv = gl3e.children[childLength - 3];
-                innerTextPageToYe(pageDiv);
-            }
-        }
-    }
+	var select = dms.querySelectorAll("select");
+	var rightSelect = select[0];
+	if (rightSelect.value == "e") {
+		// 标题 + 图片 + 标签
+		var gl3eDivs = document.getElementsByClassName("gl3e");
+		for (const i in gl3eDivs) {
+			if (Object.hasOwnProperty.call(gl3eDivs, i)) {
+				const gl3e = gl3eDivs[i];
+				var childLength = gl3e.children.length;
+				var pageDiv = gl3e.children[childLength - 3];
+				innerTextPageToYe(pageDiv);
+			}
+		}
+	}
 }
 
 function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput) {
-    // 清空候选项
-    inputRecommendDiv.innerHTML = "";
-    inputRecommendDiv.style.display = "none";
-    var tempDiv = document.createElement("div");
-    inputRecommendDiv.appendChild(tempDiv);
+	// 清空候选项
+	inputRecommendDiv.innerHTML = "";
+	inputRecommendDiv.style.display = "none";
+	var tempDiv = document.createElement("div");
+	inputRecommendDiv.appendChild(tempDiv);
 
-    if (inputValue == "") {
-        return;
-    }
+	if (inputValue == "") {
+		return;
+	}
 
-    // 根据空格分隔，取最后一个
-    var inputArray = inputValue.split(" ");
-    var oldInputArray = inputArray.slice(0, inputArray.length - 1);
-    var oldInputValue = oldInputArray.join(" ");
-    if (oldInputValue != "") {
-        oldInputValue += " ";
-    }
-    var searchValue = inputArray[inputArray.length - 1];
+	// 根据空格分隔，取最后一个
+	var inputArray = inputValue.split(" ");
+	var oldInputArray = inputArray.slice(0, inputArray.length - 1);
+	var oldInputValue = oldInputArray.join(" ");
+	if (oldInputValue != "") {
+		oldInputValue += " ";
+	}
+	var searchValue = inputArray[inputArray.length - 1];
 
-    if (searchValue == "") {
-        inputRecommendDiv.style.display = "none";
-        return;
-    }
+	if (searchValue == "") {
+		inputRecommendDiv.style.display = "none";
+		return;
+	}
 
-    // 添加搜索候选
-    function addInputSearchItems(foundArrays) {
-        if (foundArrays.length > 0) {
-            inputRecommendDiv.style.display = "block";
-        }
-        for (const i in foundArrays) {
-            if (Object.hasOwnProperty.call(foundArrays, i)) {
-                const item = foundArrays[i];
-                var commendDiv = document.createElement("div");
-                commendDiv.classList.add("category_user_input_recommend_items");
-                commendDiv.title = item.sub_desc;
+	// 添加搜索候选
+	function addInputSearchItems(foundArrays) {
+		if (foundArrays.length > 0) {
+			inputRecommendDiv.style.display = "block";
+		}
+		for (const i in foundArrays) {
+			if (Object.hasOwnProperty.call(foundArrays, i)) {
+				const item = foundArrays[i];
+				var commendDiv = document.createElement("div");
+				commendDiv.classList.add("category_user_input_recommend_items");
+				commendDiv.title = item.sub_desc;
 
-                var chTextDiv = document.createElement("div");
-                chTextDiv.style.float = "left";
-                var chTextNode = document.createTextNode(`${item.parent_zh} : ${item.sub_zh}`);
-                chTextDiv.appendChild(chTextNode);
+				var chTextDiv = document.createElement("div");
+				chTextDiv.style.float = "left";
+				var chTextNode = document.createTextNode(`${item.parent_zh} : ${item.sub_zh}`);
+				chTextDiv.appendChild(chTextNode);
 
-                var enTextDiv = document.createElement("div");
-                enTextDiv.style.float = "right";
-                var enTextNode = document.createTextNode(`${item.parent_en} : ${item.sub_en}`);
-                enTextDiv.appendChild(enTextNode);
+				var enTextDiv = document.createElement("div");
+				enTextDiv.style.float = "right";
+				var enTextNode = document.createTextNode(`${item.parent_en} : ${item.sub_en}`);
+				enTextDiv.appendChild(enTextNode);
 
-                commendDiv.appendChild(chTextDiv);
-                commendDiv.appendChild(enTextDiv);
+				commendDiv.appendChild(chTextDiv);
+				commendDiv.appendChild(enTextDiv);
 
-                commendDiv.addEventListener("click", function () {
-                    var addNewItem = item.parent_en == "userCustom" ? `"${item.sub_en}"` : `"${item.parent_en}:${item.sub_en}" `;
-                    searchInput.value = `${oldInputValue}${addNewItem}`;
-                    searchInput.focus();
-                    inputRecommendDiv.innerHTML = "";
-                    inputRecommendDiv.style.display = "none";
-                });
-                tempDiv.appendChild(commendDiv);
-            }
-        }
+				commendDiv.addEventListener("click", function () {
+					var addNewItem = item.parent_en == "userCustom" ? `"${item.sub_en}"` : `"${item.parent_en}:${item.sub_en}" `;
+					searchInput.value = `${oldInputValue}${addNewItem}`;
+					searchInput.focus();
+					inputRecommendDiv.innerHTML = "";
+					inputRecommendDiv.style.display = "none";
+				});
+				tempDiv.appendChild(commendDiv);
+			}
+		}
 
-        if (tempDiv.innerHTML == "") {
-            inputRecommendDiv.style.display = "none";
-        }
-    }
+		if (tempDiv.innerHTML == "") {
+			inputRecommendDiv.style.display = "none";
+		}
+	}
 
-    // 从EhTag中模糊搜索，绑定数据
-    readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, searchValue, foundArrays => {
-        addInputSearchItems(foundArrays);
-    });
+	// 从EhTag中模糊搜索，绑定数据
+	readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, searchValue, foundArrays => {
+		addInputSearchItems(foundArrays);
+	});
 
-    // 从收藏中的用户自定义中模糊搜索，绑定数据
-    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "userCustom", customArray => {
-        if (customArray.length > 0) {
-            var foundArrays = [];
-            for (const i in customArray) {
-                if (Object.hasOwnProperty.call(customArray, i)) {
-                    const item = customArray[i];
-                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
-                    if (searchKey.indexOf(searchValue) != -1) {
-                        foundArrays.push(item);
-                    }
-                }
-            }
+	// 从收藏中的用户自定义中模糊搜索，绑定数据
+	readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "userCustom", customArray => {
+		if (customArray.length > 0) {
+			var foundArrays = [];
+			for (const i in customArray) {
+				if (Object.hasOwnProperty.call(customArray, i)) {
+					const item = customArray[i];
+					var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
+					if (searchKey.indexOf(searchValue) != -1) {
+						foundArrays.push(item);
+					}
+				}
+			}
 
-            if (foundArrays.length > 0) {
-                addInputSearchItems(foundArrays);
-            }
-        }
-    });
+			if (foundArrays.length > 0) {
+				addInputSearchItems(foundArrays);
+			}
+		}
+	});
 
-    // 从收藏中的上传者自定义中模糊搜索，绑定数据
-    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray => {
-        if (uploaderArray.length > 0) {
-            var foundArrays = [];
-            for (const i in uploaderArray) {
-                if (Object.hasOwnProperty.call(uploaderArray, i)) {
-                    const item = uploaderArray[i];
-                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
-                    if (searchKey.indexOf(searchValue) != -1) {
-                        foundArrays.push(item);
-                    }
-                }
-            }
+	// 从收藏中的上传者自定义中模糊搜索，绑定数据
+	readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray => {
+		if (uploaderArray.length > 0) {
+			var foundArrays = [];
+			for (const i in uploaderArray) {
+				if (Object.hasOwnProperty.call(uploaderArray, i)) {
+					const item = uploaderArray[i];
+					var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
+					if (searchKey.indexOf(searchValue) != -1) {
+						foundArrays.push(item);
+					}
+				}
+			}
 
-            if (foundArrays.length > 0) {
-                addInputSearchItems(foundArrays);
-            }
-        }
-    });
+			if (foundArrays.length > 0) {
+				addInputSearchItems(foundArrays);
+			}
+		}
+	});
 }
 
 //#endregion
@@ -5504,116 +5518,146 @@ function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInpu
 
 //#endregion
 
-//#region step7.4.torrentsPage.js 种子
+//#region step7.4.1.torrentsPage.js 种子
 function torrentsPage() {
 
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 标题添加类 t_torrentsPage_ido，方便添加样式
-    var ido = document.getElementsByClassName("ido");
-    if (ido.length > 0) {
-        ido[0].classList.add("t_torrentsPage_ido");
-    }
+	// 标题添加类 t_torrentsPage_ido，方便添加样式
+	var ido = document.getElementsByClassName("ido");
+	if (ido.length > 0) {
+		ido[0].classList.add("t_torrentsPage_ido");
+	}
 
-    // 标题直接删除
-    var h1 = document.getElementsByTagName("h1");
-    if (h1.length > 0) {
-        var pageTitle = h1[0];
-        pageTitle.parentNode.removeChild(pageTitle);
-    }
+	// 标题直接删除
+	var h1 = document.getElementsByTagName("h1");
+	if (h1.length > 0) {
+		var pageTitle = h1[0];
+		pageTitle.parentNode.removeChild(pageTitle);
+	}
 
-    // 删除 br 换行
-    var brs = ido[0].querySelectorAll("br");
-    if (brs.length > 0) {
-        brs[0].parentNode.removeChild(brs[0]);
-    }
+	// 删除 br 换行
+	var brs = ido[0].querySelectorAll("br");
+	if (brs.length > 0) {
+		brs[0].parentNode.removeChild(brs[0]);
+	}
 
-    // 搜索框翻译，搜索按钮翻译，筛选过滤翻译
-    var searchInput = document.getElementById("focusme");
-    searchInput.setAttribute("placeholder", "搜索关键字");
+	// 搜索框翻译，搜索按钮翻译，筛选过滤翻译
+	var searchInput = document.getElementById("focusme");
+	searchInput.setAttribute("placeholder", "搜索关键字");
 
-    var searchForm = document.getElementById("torrentform");
-    var searchBtn = searchForm.children[4];
-    searchBtn.value = " 搜索种子 ";
-    var clearBtn = searchForm.children[5];
-    clearBtn.value = " 清空 ";
+	var searchForm = document.getElementById("torrentform");
+	var searchBtn = searchForm.children[4];
+	searchBtn.value = " 搜索种子 ";
+	var clearBtn = searchForm.children[5];
+	clearBtn.value = " 清空 ";
 
-    var formP = searchForm.querySelectorAll("p")[0];
-    formP.firstChild.textContent = "状态：";
-    formP.children[0].textContent = "全部";
-    formP.children[1].textContent = "有种";
-    formP.children[2].textContent = "无种";
-    formP.children[2].nextSibling.textContent = "\xa0 \xa0 \xa0 \xa0 \xa0 \xa0 显示：";
-    formP.children[3].textContent = "全部种子";
-    formP.children[4].textContent = "仅显示我的种子";
+	var formP = searchForm.querySelectorAll("p")[0];
+	formP.firstChild.textContent = "状态：";
+	formP.children[0].textContent = "全部";
+	formP.children[1].textContent = "有种";
+	formP.children[2].textContent = "无种";
+	formP.children[2].nextSibling.textContent = "\xa0 \xa0 \xa0 \xa0 \xa0 \xa0 显示：";
+	formP.children[3].textContent = "全部种子";
+	formP.children[4].textContent = "仅显示我的种子";
 
 
-    var idoP = ido[0].querySelectorAll("p");
+	var idoP = ido[0].querySelectorAll("p");
 
-    // 翻译底部说明
-    var lastP = idoP[idoP.length - 1];
-    translatePageElement(lastP);
+	// 翻译底部说明
+	var lastP = idoP[idoP.length - 1];
+	translatePageElement(lastP);
 
-    // 翻译显示数量（包括没有数量）
-    var countP = idoP[idoP.length - 2];
-    if (!countP.classList.contains("ip")) {
-        // 没有数量
-        translatePageElement(countP);
-        return;
-    }
+	// 翻译显示数量（包括没有数量）
+	var countP = idoP[idoP.length - 2];
+	if (!countP.classList.contains("ip")) {
+		// 没有数量
+		translatePageElement(countP);
+		return;
+	}
 
-    countP.innerText = `${countP.innerText.replace("Showing", "展示").replace("-", " - ").replace("of", "共计")} 条记录`;
+	countP.innerText = `${countP.innerText.replace("Showing", "展示").replace("-", " - ").replace("of", "共计")} 条记录`;
 
-    // 表头翻译
-    torrentsTableHeadTranslate();
+	// 表头翻译
+	torrentsTableHeadTranslate();
 
-    // 谷歌机翻标题
-    // 表格头部左侧添加勾选 谷歌机翻
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    translateDiv.appendChild(translateCheckbox);
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻 : 标题";
+	// 为表格中标题添加 glink，用于翻译
+	torrentsTableTitleGlink();
 
-    translateDiv.appendChild(translateLabel);
-    translateCheckbox.addEventListener("click", translateMainPageTitle);
-    ido[0].insertBefore(translateDiv, ido[0].lastChild);
+	// 谷歌机翻标题
+	// 表格头部左侧添加勾选 谷歌机翻
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	translateDiv.appendChild(translateCheckbox);
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻 : 标题";
 
-    indexDbInit(() => {
-        // 读取是否选中
-        read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                translateMainPageTitleDisplay();
-            }
-        }, () => { });
-    });
+	translateDiv.appendChild(translateLabel);
+	translateCheckbox.addEventListener("click", translateMainPageTitle);
+	ido[0].insertBefore(translateDiv, ido[0].lastChild);
 
-    // 同步谷歌机翻标题
-    DataSyncCommonTranslateTitle();
+	indexDbInit(() => {
+		// 读取是否选中
+		read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				translateMainPageTitleDisplay();
+			}
+		}, () => { });
+	});
+
+	// 同步谷歌机翻标题
+	DataSyncCommonTranslateTitle();
+
 }
 
 function torrentsTableHeadTranslate() {
-    var table = document.getElementsByClassName("itg");
-    if (table.length > 0) {
-        var theads = table[0].querySelectorAll("th");
-        var addTime = theads[0].children[0];
-        addTime.innerText = thData[addTime.innerText] ?? addTime.innerText;
-        for (let i = 1; i < theads.length; i++) {
-            const th = theads[i];
-            th.innerText = thData[th.innerText] ?? th.innerText;
-        }
+	var table = document.getElementsByClassName("itg");
+	if (table.length > 0) {
+		var theads = table[0].querySelectorAll("th");
+		var addTime = theads[0].children[0];
+		addTime.innerText = thData[addTime.innerText] ?? addTime.innerText;
+		for (let i = 1; i < theads.length; i++) {
+			const th = theads[i];
+			th.innerText = thData[th.innerText] ?? th.innerText;
+		}
+	}
+}
 
-    }
+function torrentsTableTitleGlink() {
+	var table = document.getElementsByClassName("itg");
+	if (table.length > 0) {
+		var trs = table[0].querySelectorAll("tr");
+		for (let i = 1; i < trs.length; i++) {
+			const tr = trs[i];
+			tr.children[1].children[0].children[0].classList.add("glink");
+		}
+	}
 }
 
 //#endregion
+
+//#region 7.4.2.torrentsDetailPages.js 种子详情页
+
+function torrentsDetailPages() {
+	// 判断是哪个页面
+
+	// 修改难看的滚动条
+
+	// 翻译页面固定元素
+
+	// 谷歌机翻：上传者留言，这个按钮设置从存储中读取，包括同步该事件
+
+}
+
+//#endregion
+
 
 
 
@@ -6024,6 +6068,8 @@ function toplistBookpages() {
 
 
 //DONE 偏好页面，显示统计偏好标签数量
+//DONE 头部菜单在种子详情页面的报错
+//DONE 种子页面完成
 //TODO 我的首页
 //TODO 悬赏页面 (EH)
 //TODO 设置页面
@@ -6067,6 +6113,9 @@ else {
 				break;
 			case '/torrents.php':	// 种子
 				torrentsPage();
+				break;
+			case '/gallerytorrents.php': // 种子详情页
+				torrentsDetailPages();
 				break;
 			case '/favorites.php':	// 收藏
 				favoritePage();

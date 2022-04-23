@@ -770,7 +770,8 @@ func_eh_ex(() => {
 	
 	#dms #googleTranslateDiv,
 	.t_popular_toppane #googleTranslateDiv,
-	.t_toplist_ido #googleTranslateDiv {
+	.t_toplist_ido #googleTranslateDiv,
+	.t_torrentsPage_ido #googleTranslateDiv {
 		float: left;
 		background-color: #edebdf;
 		padding: 2px 3px 6px 7px;
@@ -804,6 +805,10 @@ func_eh_ex(() => {
 		left: 5px;
 	}
 	
+	.t_torrentsPage_ido #googleTranslateDiv {
+		top: 105px;
+	}
+	
 	#dms #translateLabel,
 	.t_popular_toppane #translateLabel,
 	.t_toplist_ido #translateLabel {
@@ -819,7 +824,9 @@ func_eh_ex(() => {
 	.t_popular_toppane #googleTranslateDiv,
 	.t_popular_toppane #translateLabel,
 	.t_toplist_ido #googleTranslateDiv,
-	.t_toplist_ido #translateLabel {
+	.t_toplist_ido #translateLabel,
+	.t_torrentsPage_ido #googleTranslateDiv,
+	.t_torrentsPage_ido #translateLabel {
 		cursor: pointer;
 	}
 	
@@ -881,7 +888,8 @@ func_eh_ex(() => {
 	#div_ee8413b2_detail_addFavoriteBtn:hover,
 	#div_ee8413b2_detail_searchBtn:hover,
 	.t_popular_toppane #googleTranslateDiv:hover,
-	.t_toplist_ido #googleTranslateDiv:hover {
+	.t_toplist_ido #googleTranslateDiv:hover,
+	.t_torrentsPage_ido #googleTranslateDiv:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
 	
