@@ -59,10 +59,10 @@ function favoritePage() {
     }
 
     var searchBtn = searchInputDiv.children[1];
-    searchBtn.value = "收藏中搜索";
+    searchBtn.value = " 搜索收藏 ";
 
     var clearBtn = searchInputDiv.children[2];
-    clearBtn.value = "清空";
+    clearBtn.value = " 清空 ";
 
     var filterTds = searchFilterDiv.querySelectorAll("td");
     var filterHead = filterTds[0];
@@ -105,17 +105,7 @@ function favoritePage() {
         // 没有搜索到记录
         var nullInfo = ido[0].children[3].children[0];
         if (nullInfo) {
-            getGoogleTranslate(nullInfo.innerText, function (data) {
-                var sentences = data.sentences;
-                var longtext = '';
-                for (const i in sentences) {
-                    if (Object.hasOwnProperty.call(sentences, i)) {
-                        const sentence = sentences[i];
-                        longtext += sentence.trans;
-                    }
-                }
-                nullInfo.innerText = longtext;
-            });
+            translatePageElement(nullInfo);
         }
 
         indexDbInit(() => {

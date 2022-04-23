@@ -275,9 +275,30 @@ function mainPageTranslate() {
 	// 展示总数量
 	var ip = document.getElementsByClassName("ip");
 	if (ip.length > 0) {
-		var ipElement = ip[0];
-		var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
-		ipElement.innerText = `共 ${totalCount} 条记录`;
+		if (webHost == "exhentai.org") {
+			var ipElement = ip[ip.length - 1];
+			var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
+			ipElement.innerText = `共 ${totalCount} 条记录`;
+
+			if (ip.length > 1) {
+				var ipTagElement = ip[ip.length - 2];
+				var strongText = ipTagElement.children[0];
+				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+				ipTagElement.children[1].innerText = "我的标签";
+			}
+		} else if (webHost == "e-hentai.org") {
+			var ipElement = ip[ip.length - 2];
+			var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
+			ipElement.innerText = `共 ${totalCount} 条记录`;
+
+			if (ip.length > 2) {
+				var ipTagElement = ip[ip.length - 3];
+				var strongText = ipTagElement.children[0];
+				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+				ipTagElement.children[1].innerText = "我的标签";
+			}
+		}
+
 	}
 
 	// 预览下拉框
@@ -287,7 +308,6 @@ function mainPageTranslate() {
 		var iw = document.getElementById("iw");
 		if (iw) {
 			getGoogleTranslate(iw.innerText, function (data) {
-
 				var sentences = data.sentences;
 				var longtext = '';
 				for (const i in sentences) {
@@ -296,8 +316,12 @@ function mainPageTranslate() {
 						longtext += sentence.trans;
 					}
 				}
-
 				iw.innerText = longtext;
+				var myTag = document.createElement("a");
+				myTag.href = "https://exhentai.org/mytags";
+				myTag.style.marginLeft = "10px";
+				myTag.innerText = "我的标签";
+				iw.appendChild(myTag);
 			});
 		}
 
@@ -305,18 +329,7 @@ function mainPageTranslate() {
 		if (ido.length > 0) {
 			var nullInfo = ido[0].lastChild.lastChild;
 			if (nullInfo) {
-				getGoogleTranslate(nullInfo.innerText, function (data) {
-
-					var sentences = data.sentences;
-					var longtext = '';
-					for (const i in sentences) {
-						if (Object.hasOwnProperty.call(sentences, i)) {
-							const sentence = sentences[i];
-							longtext += sentence.trans;
-						}
-					}
-					nullInfo.innerText = longtext;
-				});
+				translatePageElement(nullInfo);
 			}
 		}
 

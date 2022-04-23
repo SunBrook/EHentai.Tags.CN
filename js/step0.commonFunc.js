@@ -97,6 +97,21 @@ function getGoogleTranslate(text, func) {
     }
 }
 
+// 借助谷歌翻译设置翻译后的值
+function translatePageElement(element){
+    getGoogleTranslate(element.innerText, function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+    });
+}
+
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {

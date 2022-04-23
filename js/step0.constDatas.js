@@ -73,7 +73,15 @@ const thData = {
 	"Title": "作品名称",
 	"Uploader": "上传人员",
 	"Name": "作品名称",
-	"Favorited": "收藏日期"
+	"Favorited": "收藏日期",
+	"Added": "添加时间",
+	"Torrent Name": "种子名称",
+	"Gallery": "作品 ID",
+	"Size": "文件大小",
+	"Seeds": "做种",
+	"Peers": "下载",
+	"DLs": "完成",
+	"Uploader": "上传者"
 };
 
 //#endregion

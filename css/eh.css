@@ -1041,3 +1041,18 @@ table .gtw {
     padding: 0 0 2px;
     margin: 3px 15px;
 }
+
+.t_torrentsPage_ido #torrentform {
+    width: 660px;
+    margin: 20px auto;
+    height: 50px;
+}
+
+.t_torrentsPage_ido #focusme {
+    float: left;
+}
+
+.t_torrentsPage_ido #torrentform p {
+    float: left;
+    margin-top: 5px;
+}
