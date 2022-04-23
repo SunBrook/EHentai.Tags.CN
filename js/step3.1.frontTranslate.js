@@ -155,52 +155,56 @@ function tableTagTranslate() {
 	}
 
 	// 父项:子项，偶尔出现单个子项
-	var select = dms.querySelectorAll("select");
-	var rightSelect = select[0];
-	var gt = document.getElementsByClassName("gt");
-	function translate(gt, i) {
-		const item = gt[i];
-		if (!item.dataset.title) {
-			item.dataset.title = item.title;
-		}
-		var ps_en = item.dataset.title;
-		read(table_EhTagSubItems, ps_en, result => {
-			if (result) {
-				if (rightSelect.value == "e") {
-					// 标题 + 图片 + 标签，单个子项
-					item.innerText = result.sub_zh;
+	var dms = document.getElementById("dms");
+	if (dms) {
+		var select = dms.querySelectorAll("select");
+		var rightSelect = select[0];
+		var gt = document.getElementsByClassName("gt");
+		function translate(gt, i) {
+			const item = gt[i];
+			if (!item.dataset.title) {
+				item.dataset.title = item.title;
+			}
+			var ps_en = item.dataset.title;
+			read(table_EhTagSubItems, ps_en, result => {
+				if (result) {
+					if (rightSelect.value == "e") {
+						// 标题 + 图片 + 标签，单个子项
+						item.innerText = result.sub_zh;
+					} else {
+						// 父子项
+						item.innerText = `${result.parent_zh}:${result.sub_zh}`;
+					}
+					if (result.sub_desc) {
+						item.title = `${item.title}\r\n${result.sub_desc}`;
+					}
 				} else {
-					// 父子项
-					item.innerText = `${result.parent_zh}:${result.sub_zh}`;
-				}
-				if (result.sub_desc) {
-					item.title = `${item.title}\r\n${result.sub_desc}`;
-				}
-			} else {
-				// 没有找到，翻译父项，子项保留
-				if (rightSelect.value != "e") {
-					var array = ps_en.split(":");
-					if (array.length == 2) {
-						var parent_en = array[0];
-						var sub_en = array[1];
-						read(table_detailParentItems, parent_en, result => {
-							if (result) {
-								item.innerText = `${result.name}:${sub_en}`;
-								if (result.sub_desc) {
-									item.title = `${item.title}\r\n${result.sub_desc}`;
+					// 没有找到，翻译父项，子项保留
+					if (rightSelect.value != "e") {
+						var array = ps_en.split(":");
+						if (array.length == 2) {
+							var parent_en = array[0];
+							var sub_en = array[1];
+							read(table_detailParentItems, parent_en, result => {
+								if (result) {
+									item.innerText = `${result.name}:${sub_en}`;
+									if (result.sub_desc) {
+										item.title = `${item.title}\r\n${result.sub_desc}`;
+									}
 								}
-							}
-						}, () => { });
+							}, () => { });
+						}
 					}
 				}
+			}, () => { });
+		}
+		for (const i in gt) {
+			if (Object.hasOwnProperty.call(gt, i)) {
+				translate(gt, i);
 			}
-		}, () => { });
-	}
-	for (const i in gt) {
-		if (Object.hasOwnProperty.call(gt, i)) {
-			translate(gt, i);
 		}
 	}
+
 
 	// 子项
 	var gtl = document.getElementsByClassName("gtl");
@@ -252,7 +256,7 @@ function tableBookPages() {
 }
 
 // page -> 页
-function innerTextPageToYe(element){
+function innerTextPageToYe(element) {
 	if (!element.innerText) return;
 	if (element.innerText.indexOf(" pages") != -1) {
 		element.innerText = element.innerText.replace(" pages", " 页");

@@ -3,7 +3,8 @@ func_eh_ex(() => {
 	// e-hentai 样式 eh.css
 	const category_style = `#searchbox #data_update_tip,
 	#gd2 #data_update_tip,
-	.t_popular_toppane #data_update_tip {
+	.t_popular_toppane #data_update_tip,
+	.t_favorite_ido #data_update_tip {
 		position: absolute;
 		width: 100px;
 		height: 20px;
@@ -27,7 +28,8 @@ func_eh_ex(() => {
 		left: 0;
 	}
 	
-	#gd2 #data_update_tip {
+	#gd2 #data_update_tip,
+	.t_favorite_ido #data_update_tip {
 		top: 2px;
 		right: 15px;
 	}
@@ -603,11 +605,25 @@ func_eh_ex(() => {
 		border-top: 0;
 		background-color: #e3e0d1;
 		max-height: 500px;
-		overflow-y: scroll;
+		overflow-y: auto;
 		position: relative;
 	}
 	
-	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items {
+	.t_favorite_ido #category_user_input_recommend {
+		border: 1px solid #5c0d12;
+		border-top: 0;
+		background-color: #e3e0d1;
+		max-height: 500px;
+		position: relative;
+		top: -10px;
+		z-index: 99;
+		display: none;
+		width: 100%;
+		overflow-y: auto;
+	}
+	
+	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items,
+	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items {
 		font-size: 15px;
 		padding: 5px;
 		font-weight: bold;
@@ -617,15 +633,21 @@ func_eh_ex(() => {
 		overflow: auto;
 	}
 	
+	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:first-child {
+		border-top: 1px solid #5c0d12;
+	}
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:first-child {
 		border-top: 1px solid #5c0d12;
 	}
 	
-	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:not(:first-child) {
+	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:not(:first-child),
+	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:not(:first-child) {
 		border-top: 1px dashed #85868b;
 	}
 	
-	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:hover {
+	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:hover,
+	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:hover {
 		background-color: #c5c3b8;
 	}
 	
@@ -663,6 +685,7 @@ func_eh_ex(() => {
 	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar,
+	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar,
 	#div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar,
 	#div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar {
@@ -674,12 +697,14 @@ func_eh_ex(() => {
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar-track,
 	#div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar-track,
 	#div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar-track,
-	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-track {
+	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-track,
+	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-track {
 		border-radius: 10px;
 	}
 	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar-thumb,
+	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-thumb {
@@ -758,6 +783,11 @@ func_eh_ex(() => {
 	
 	#dms #googleTranslateDiv {
 		margin-top: -13px;
+	}
+	
+	.t_favorite_ido #dms #googleTranslateDiv {
+		margin-top: -42px;
+		right: 16px;
 	}
 	
 	.t_popular_toppane #googleTranslateDiv {
@@ -937,6 +967,68 @@ func_eh_ex(() => {
 		padding: 20px 0 10px 0;
 		border-bottom: 1px dashed #5c0d12;
 		font-size: 1.5em;
+	}
+	
+	.t_favorite_ido .nosel {
+		border-radius: 10px;
+		margin-top: 20px !important;
+		padding-top: 20px;
+		padding-left: 30px;
+		height: 65px;
+		border: 1px solid #C2C1C1;
+		background-color: #e3e0d1;
+	}
+	
+	.t_favorite_ido .nosel .fp:last-child {
+		background-color: #e3e0d1;
+		top: -87px;
+	}
+	
+	.t_favorite_ido .nosel .fp:last-child:hover,
+	.t_favorite_ido .nosel .fps {
+		background-color: #edebdf !important;
+	}
+	
+	.t_favorite_ido .favorite_null {
+		color: #c3bfbf;
+	}
+	
+	.t_favorite_ido .searchDiv {
+		width: 855px !important;
+		height: 30px;
+		margin: 0 auto !important;
+		padding: 10px 0 30px 0;
+	}
+	
+	.t_favorite_ido .searchDiv .searchInputDiv {
+		float: left;
+	}
+	
+	.t_favorite_ido .searchDiv .searchFilterDiv {
+		float: right;
+		width: 310px !important;
+		padding-right: 0 !important;
+	}
+	
+	.t_favorite_ido .searchDiv .searchFilterDiv td {
+		width: auto !important;
+		height: 30px;
+		display: inline-block;
+		line-height: 30px;
+		text-align: left;
+	}
+	
+	.t_favorite_ido .searchDiv .searchFilterDiv td label {
+		height: 30px;
+		line-height: 30px;
+	}
+	
+	.gm #h1Origin_copy {
+		font-size: 10pt;
+		padding: 0 0 2px;
+		margin: 3px 15px;
+		color: #b8b8b8;
+		border-bottom: 1px solid #000000;
 	}
 	
 	.gm #h1Origin_copy {
@@ -1549,7 +1641,7 @@ func_eh_ex(() => {
 		border-top: 0;
 		background-color: #40454B;
 		max-height: 500px;
-		overflow-y: scroll;
+		overflow-y: auto;
 		position: relative;
 	}
 	
@@ -1888,10 +1980,11 @@ func_eh_ex(() => {
 		padding-left: 30px;
 		height: 65px;
 		border: 1px solid #C2C1C1;
+		background-color: #34353b;
 	}
 	
 	.t_favorite_ido .nosel .fp:last-child {
-		background-color: #4f535b;
+		background-color: #34353b;
 		top: -87px;
 	}
 	

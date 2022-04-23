@@ -1,4 +1,4 @@
-//#region step7.2.favorite.js 收藏列表
+//#region step7.2.favoritePage.js 收藏列表
 
 function favoritePage() {
 
@@ -85,6 +85,13 @@ function favoritePage() {
         ipElement.innerText = `共 ${totalCount} 条记录`;
     }
 
+    // 头部添加词库升级提示
+    var dataUpdateDiv = document.createElement("div");
+    dataUpdateDiv.id = "data_update_tip";
+    var dataUpdateText = document.createTextNode("词库升级中...");
+    dataUpdateDiv.appendChild(dataUpdateText);
+    ido[0].insertBefore(dataUpdateDiv, ido[0].lastChild);
+
     // 预览下拉框
     var dms = document.getElementById("dms");
     if (!dms) {
@@ -110,6 +117,11 @@ function favoritePage() {
                 nullInfo.innerText = longtext;
             });
         }
+
+        indexDbInit(() => {
+            // 没搜索到也要保留搜索候选功能
+            otherPageTryUseOldDataAndTranslateTag();
+        });
 
         return;
     }
@@ -169,12 +181,7 @@ function favoritePage() {
     // 表格页数翻译
     favoritePageTableBookPages();
 
-    // 头部添加词库升级提示
-    var dataUpdateDiv = document.createElement("div");
-    dataUpdateDiv.id = "data_update_tip";
-    var dataUpdateText = document.createTextNode("词库升级中...");
-    dataUpdateDiv.appendChild(dataUpdateText);
-    ido[0].insertBefore(dataUpdateDiv, ido[0].lastChild);
+
 
 
     // 谷歌机翻标题
@@ -195,7 +202,6 @@ function favoritePage() {
     var dms = document.getElementById("dms");
     dms.insertBefore(translateDiv, dms.lastChild);
 
-
     indexDbInit(() => {
         // 读取是否选中
         read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
@@ -209,6 +215,8 @@ function favoritePage() {
         otherPageTryUseOldDataAndTranslateTag();
     });
 
+    // 同步谷歌机翻标题
+    DataSyncCommonTranslateTitle();
 }
 
 function favoritePageTableBookPages() {
@@ -231,17 +239,33 @@ function favoritePageTableBookPages() {
 function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput) {
     // 清空候选项
     inputRecommendDiv.innerHTML = "";
-    inputRecommendDiv.style.display = "block";
+    inputRecommendDiv.style.display = "none";
     var tempDiv = document.createElement("div");
     inputRecommendDiv.appendChild(tempDiv);
 
-    if (!inputValue) {
+    if (inputValue == "") {
+        return;
+    }
+
+    // 根据空格分隔，取最后一个
+    var inputArray = inputValue.split(" ");
+    var oldInputArray = inputArray.slice(0, inputArray.length - 1);
+    var oldInputValue = oldInputArray.join(" ");
+    if (oldInputValue != "") {
+        oldInputValue += " ";
+    }
+    var searchValue = inputArray[inputArray.length - 1];
+
+    if (searchValue == "") {
         inputRecommendDiv.style.display = "none";
         return;
     }
 
     // 添加搜索候选
     function addInputSearchItems(foundArrays) {
+        if (foundArrays.length > 0) {
+            inputRecommendDiv.style.display = "block";
+        }
         for (const i in foundArrays) {
             if (Object.hasOwnProperty.call(foundArrays, i)) {
                 const item = foundArrays[i];
@@ -263,23 +287,23 @@ function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInpu
                 commendDiv.appendChild(enTextDiv);
 
                 commendDiv.addEventListener("click", function () {
-                    var addNewItem = `"${item.parent_en}:${item.sub_en}" `;
-                    searchInput.value = `${searchInput.value}${addNewItem}`;
+                    var addNewItem = item.parent_en == "userCustom" ? `"${item.sub_en}"` : `"${item.parent_en}:${item.sub_en}" `;
+                    searchInput.value = `${oldInputValue}${addNewItem}`;
                     searchInput.focus();
                     inputRecommendDiv.innerHTML = "";
+                    inputRecommendDiv.style.display = "none";
                 });
                 tempDiv.appendChild(commendDiv);
             }
         }
+
+        if (tempDiv.innerHTML == "") {
+            inputRecommendDiv.style.display = "none";
+        }
     }
 
-    // 从恋物表中模糊搜索，绑定数据
-    readByCursorIndexFuzzy(table_fetishListSubItems, table_fetishListSubItems_index_searchKey, inputValue, foundArrays => {
-        addInputSearchItems(foundArrays);
-    });
-
     // 从EhTag中模糊搜索，绑定数据
-    readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, inputValue, foundArrays => {
+    readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, searchValue, foundArrays => {
         addInputSearchItems(foundArrays);
     });
 
@@ -290,8 +314,8 @@ function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInpu
             for (const i in customArray) {
                 if (Object.hasOwnProperty.call(customArray, i)) {
                     const item = customArray[i];
-                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en}`;
-                    if (searchKey.indexOf(inputValue) != -1) {
+                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
+                    if (searchKey.indexOf(searchValue) != -1) {
                         foundArrays.push(item);
                     }
                 }
@@ -310,8 +334,8 @@ function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInpu
             for (const i in uploaderArray) {
                 if (Object.hasOwnProperty.call(uploaderArray, i)) {
                     const item = uploaderArray[i];
-                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en}`;
-                    if (searchKey.indexOf(inputValue) != -1) {
+                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
+                    if (searchKey.indexOf(searchValue) != -1) {
                         foundArrays.push(item);
                     }
                 }

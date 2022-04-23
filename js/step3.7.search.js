@@ -65,6 +65,7 @@ if (searchParam) {
                             if (fetishData) {
                                 addItemToInput(fetishData.parent_en, fetishData.parent_zh, fetishData.sub_en, fetishData.sub_zh, fetishData.sub_desc);
                             } else {
+                                // 用户自定义搜索关键字
                                 addItemToInput("userCustom", "自定义", itemArray[0], itemArray[0], '');
                             }
                         }, () => {
@@ -263,7 +264,7 @@ function userInputOnInputEvent(inputValue) {
             for (const i in customArray) {
                 if (Object.hasOwnProperty.call(customArray, i)) {
                     const item = customArray[i];
-                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en}`;
+                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
                     if (searchKey.indexOf(inputValue) != -1) {
                         foundArrays.push(item);
                     }
@@ -283,7 +284,7 @@ function userInputOnInputEvent(inputValue) {
             for (const i in uploaderArray) {
                 if (Object.hasOwnProperty.call(uploaderArray, i)) {
                     const item = uploaderArray[i];
-                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en}`;
+                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
                     if (searchKey.indexOf(inputValue) != -1) {
                         foundArrays.push(item);
                     }

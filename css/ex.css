@@ -592,7 +592,7 @@
     border-top: 0;
     background-color: #40454B;
     max-height: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: relative;
 }
 
@@ -931,10 +931,11 @@ table .gtw {
     padding-left: 30px;
     height: 65px;
     border: 1px solid #C2C1C1;
+    background-color: #34353b;
 }
 
 .t_favorite_ido .nosel .fp:last-child {
-    background-color: #4f535b;
+    background-color: #34353b;
     top: -87px;
 }
 
