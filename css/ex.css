@@ -1003,6 +1003,12 @@ table .gtw {
     margin: 3px 15px;
 }
 
+.torrents_detail_info,
+.torrents_detail_index {
+    min-height: 535px;
+    height: auto !important;
+}
+
 .t_torrentsPage_ido #torrentform {
     width: 660px;
     margin: 20px auto;
@@ -1039,4 +1045,9 @@ table .gtw {
     padding: 0 10px 3px 10px;
     margin-top: 2px;
     cursor: pointer;
+}
+
+.torrents_detail_index form table tr td:nth-child(4),
+.torrents_detail_index form table tr td:nth-child(5) {
+    text-align: center;
 }

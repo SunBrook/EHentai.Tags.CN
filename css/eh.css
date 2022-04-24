@@ -685,7 +685,8 @@
 .t_favorite_ido #category_user_input_recommend::-webkit-scrollbar,
 #div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar,
 #div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar,
-#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar {
+#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar,
+.torrents_detail_info #etd p::-webkit-scrollbar {
     width: 10px;
     height: 1px;
 }
@@ -695,7 +696,8 @@
 #div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar-track,
 #div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar-track,
 #div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-track,
-.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-track {
+.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-track,
+.torrents_detail_info #etd p::-webkit-scrollbar-track {
     border-radius: 10px;
 }
 
@@ -704,7 +706,8 @@
 .t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-thumb,
 #div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar-thumb,
 #div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar-thumb,
-#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-thumb {
+#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-thumb,
+.torrents_detail_info #etd p::-webkit-scrollbar-thumb {
     background-color: #b5a297;
     border-radius: 10px;
 }
@@ -1050,6 +1053,12 @@ table .gtw {
     margin: 3px 15px;
 }
 
+.torrents_detail_info,
+.torrents_detail_index {
+    min-height: 535px;
+    height: auto !important;
+}
+
 .t_torrentsPage_ido #torrentform {
     width: 660px;
     margin: 20px auto;
@@ -1063,4 +1072,32 @@ table .gtw {
 .t_torrentsPage_ido #torrentform p {
     float: left;
     margin-top: 5px;
+}
+
+.torrents_detail_info table:nth-child(3) {
+    margin-left: 15% !important;
+}
+
+.torrents_detail_info a {
+    text-decoration: underline !important;
+}
+
+.torrents_detail_info #etd p {
+    height: 214px;
+    padding: 0 1px;
+    overflow-y: auto;
+}
+
+.torrents_detail_info #etd #googleTranslateDiv {
+    background-color: #dbd3a8;
+    display: inline-block;
+    margin-left: -1px;
+    padding: 0 10px 3px 10px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.torrents_detail_index form table tr td:nth-child(4),
+.torrents_detail_index form table tr td:nth-child(5) {
+    text-align: center;
 }
