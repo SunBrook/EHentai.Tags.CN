@@ -145,6 +145,7 @@ const table_settings_key_TranslateFrontPageTags = "f_translateFrontPageTags";
 const table_Settings_key_TranslateDetailPageTags = "f_translateDetailPageTags";
 const table_Settings_key_TranslateFrontPageTitles = "f_translateFrontPageTitles";
 const table_Settings_key_TranslateDetailPageTitles = "f_translateDetailPageTitles";
+const table_Settings_key_TranslateTorrentDetailInfoCommand = "f_translateTorrentDetailInfoCommand";
 const table_Settings_key_FavoriteList = "f_favoriteList";
 const table_Settings_key_FavoriteList_Html = "f_favoriteListHtml";
 const table_Settings_Key_FavoriteList_Extend = "f_favoriteListExtend";
@@ -189,6 +190,7 @@ const sync_googleTranslate_frontPage_title = 'syncGoogleTranslateFrontPageTitle'
 const sync_googleTranslate_detailPage_title = 'syncGoogleTranslateDetailPageTitle';
 const sync_setting_backgroundImage = 'syncSettingBackgroundImage';
 const sync_setting_frontPageFontColor = 'syncSettingFrontPageFontColor';
+const sync_googleTranslate_torrentDetailInfo_command = "syncGoogleTranslateTorrentDetailInfoCommand";
 
 //#endregion
 

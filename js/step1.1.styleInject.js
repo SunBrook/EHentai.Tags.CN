@@ -1747,14 +1747,16 @@ func_eh_ex(() => {
 	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar,
 	#div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar,
 	#div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar,
-	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar {
+	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar,
+	.torrents_detail_info #etd p::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
 	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar-track,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar-track,
-	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-track {
+	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-track,
+	.torrents_detail_info #etd p::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
@@ -1764,7 +1766,8 @@ func_eh_ex(() => {
 	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar-thumb,
-	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-thumb {
+	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-thumb,
+	.torrents_detail_info #etd p::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
 	}
@@ -2085,6 +2088,29 @@ func_eh_ex(() => {
 	.t_torrentsPage_ido #torrentform p {
 		float: left;
 		margin-top: 5px;
+	}
+	
+	.torrents_detail_info table:nth-child(3) {
+		margin-left: 15% !important;
+	}
+	
+	.torrents_detail_info a {
+		text-decoration: underline !important;
+	}
+	
+	.torrents_detail_info #etd p {
+		height: 214px;
+		padding: 0 1px;
+		overflow-y: auto;
+	}
+	
+	.torrents_detail_info #etd #googleTranslateDiv {
+		background-color: #4f535b;
+		display: inline-block;
+		margin-left: -1px;
+		padding: 0 10px 3px 10px;
+		margin-top: 2px;
+		cursor: pointer;
 	}`;
 	styleInject(category_style);
 });
