@@ -226,6 +226,8 @@ function tryUseOldDataFirst(func_compelete) {
                     checkUpdateData(() => {
                         // 存在更新
                         categoryInit();
+                        // 表格标签翻译
+                        tableTagTranslate();
                         func_compelete();
                     }, () => {
                         func_compelete();
@@ -236,6 +238,8 @@ function tryUseOldDataFirst(func_compelete) {
                     checkUpdateData(() => {
                         // 存在更新
                         categoryInit();
+                        // 表格标签翻译
+                        tableTagTranslate();
                         func_compelete();
                     }, () => {
                         func_compelete();
