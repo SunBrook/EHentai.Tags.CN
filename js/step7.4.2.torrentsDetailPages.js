@@ -1,6 +1,7 @@
 //#region 7.4.2.torrentsDetailPages.js 种子详情页
 
 function torrentsDetailPages() {
+    
     // 判断是哪个页面
 
     // 修改难看的滚动条
