@@ -5947,9 +5947,6 @@ function toplistBookpages() {
 //#endregion
 
 
-//DONE 偏好页面，显示统计偏好标签数量
-//DONE 头部菜单在种子详情页面的报错
-//DONE 种子页面完成
 //TODO 我的首页
 //TODO 悬赏页面 (EH)
 //TODO 设置页面
@@ -5966,6 +5963,7 @@ function toplistBookpages() {
 //TODO 首页显示已收藏的标签
 //TODO 简洁模式，适合轻量使用用户，就是使用原始的文本框输入，参照收藏页面
 //TODO 首页背景
+//TODO 插件背景图片，有损压缩，保存快速替换
 
 //#region main.js 主方法
 

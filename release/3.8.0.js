@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         ExHentai 中文标签助手_测试版_beta
-// @namespace    ExHentai 中文标签助手_DYZYFTS_beta
+// @name         ExHentai 中文标签助手
+// @namespace    ExHentai 中文标签助手_DYZYFTS
 // @license		 MIT
 // @compatible  firefox >= 60
 // @compatible  edge >= 16
