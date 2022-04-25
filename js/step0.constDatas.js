@@ -155,6 +155,8 @@ const table_Settings_Key_Bg_Mask = "f_bgMask";
 const table_Settings_key_FrontPageFontParentColor = "f_frontPageFontParentColor";
 const table_Settings_key_FrontPageFontSubColor = "f_frontPageFontSubColor";
 const table_Settings_Key_FrontPageFontSubHoverColor = "f_frontPageFontSubHoverColor";
+const table_Settings_key_NewsPageTopImageVisible = "f_newsPageTopImageVisible";
+const table_Settings_key_NewsPageTranslate = "f_newsPageTranslate";
 
 // fetishList 全部类别 - 父子信息表
 const table_fetishListSubItems = "t_fetishListSubItems";
@@ -191,6 +193,8 @@ const sync_googleTranslate_detailPage_title = 'syncGoogleTranslateDetailPageTitl
 const sync_setting_backgroundImage = 'syncSettingBackgroundImage';
 const sync_setting_frontPageFontColor = 'syncSettingFrontPageFontColor';
 const sync_googleTranslate_torrentDetailInfo_command = "syncGoogleTranslateTorrentDetailInfoCommand";
+const sync_newsPage_topImage_visible = "syncNewsPageTopImageVisible";
+const sync_googleTranslate_newsPage_news = "syncGoogleTranslateNewsPageNews";
 
 //#endregion
 
@@ -259,6 +263,41 @@ const toplie_subtitle_dict = {
 	"Rating & Reviewing Past Year": "评分 & 评论年排行",
 	"Rating & Reviewing Past Month": "评分 & 评论月排行",
 	"Rating & Reviewing Yesterday": "评分 & 评论日排行"
+}
+
+//#endregion
+
+//#region 我的主页第二菜单栏
+
+const myHomeMenu2 = {
+	"Overview": "总览",
+	"My Stats": "我的统计",
+	"My Settings": "我的设置",
+	"My Tags": "我的标签",
+	"Hentai@Home": "Hentai@Home",
+	"Donations": "捐赠",
+	"Hath Perks": "权限解锁",
+	"Hath Exchange": "权限积分交易",
+	"GP Exchange": "GP交易",
+	"Credit Log": "Credit 记录",
+	"Karma Log": "Karma 记录"
+};
+
+//#endregion
+
+//#region 新闻页面分栏标题
+
+const newPagesTitles = {
+	"Latest Site Status Updates": "最新网站状态",
+	"Site Update Log": "网站更新日志",
+	"The Fourteenth Annual E-Hentai Galleries Award Show for Outstanding Achievements in the Field of Excellence": "第十四届年度 E-Hentai Galleries 卓越领域杰出成就奖颁奖典礼",
+	"The Fourteenth Annual E-Hentai Yuletide Lottery": "第十四届年度电子无尽圣诞彩票",
+	"Tag namespacing changes": "标记命名空间更改",
+	"New Upload Servers": "新的上传服务器",
+	"New Feature: H@H Monitoring/Alerts": "新功能：H@H 监控/警报",
+	"New Feature: Country selector for choosing which H@H network country/region to use for image loads": "新功能：国家选择器，用于选择用于图像加载的 H@H 网络国家/地区",
+	"Core server/database migration": "核心服务器/数据库迁移",
+	"The Thirteenth Annual E-Hentai Award Show for Outstanding Achievements in the Field of Excellence": "第十三届 E-Hentai 年度卓越成就奖颁奖典礼"
 }
 
 //#endregion

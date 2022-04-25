@@ -1103,6 +1103,58 @@ func_eh_ex(() => {
 	.torrents_detail_index form table tr td:nth-child(4),
 	.torrents_detail_index form table tr td:nth-child(5) {
 		text-align: center;
+	}
+	
+	.t_newspage_souter #nb {
+		min-height: 29px;
+		max-height: 29px;
+	}
+	
+	.t_newspage_souter #nb a {
+		font-size: 17px;
+	}
+	
+	.t_newspage_souter #imgHiddenBtn {
+		background-color: #cebb9a;
+		width: 100px;
+		margin-bottom: -30px;
+		height: 25px;
+		line-height: 26px;
+		text-align: center;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	
+	/* 新闻头部图片边框 */
+	.t_newspage_souter .hiddenTopImgBorder {
+		height: 0;
+	}
+	
+	.t_newspage_souter #googleTranslateDiv {
+		background-color: #cebb9a;
+		width: 120px;
+		margin-bottom: -30px;
+		margin-left: 105px;
+		height: 25px;
+		line-height: 26px;
+		text-align: center;
+		cursor: pointer;
+		margin-top: 5px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	
+	.t_newspage_souter #googleTranslateDiv #translateLabel {
+		cursor: pointer;
+	}
+	
+	.t_newspage_souter #botm {
+		overflow: hidden;
 	}`;
 	styleInject(category_style);
 }, () => {

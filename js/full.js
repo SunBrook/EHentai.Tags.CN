@@ -27,232 +27,260 @@
 
 // 检查字典是否为空
 function checkDictNull(dict) {
-	for (const n in dict) {
-		return false;
-	}
-	return true;
+    for (const n in dict) {
+        return false;
+    }
+    return true;
 }
 
 // 获取地址参数
 function GetQueryString(name) {
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-	var r = window.location.search.substring(1).match(reg);
-	if (r != null) return decodeURI(r[2]); return null;
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substring(1).match(reg);
+    if (r != null) return decodeURI(r[2]); return null;
 }
 
 // 数组删除元素
 Array.prototype.remove = function (val) {
-	var index = this.indexOf(val);
-	if (index > -1) {
-		this.splice(index, 1);
-	}
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
 };
 
 // 数组差集
 function getDiffSet(array1, array2) {
-	return array1.filter(item => !new Set(array2).has(item));
+    return array1.filter(item => !new Set(array2).has(item));
 }
 
 // 导出json文件
 function saveJSON(data, filename) {
-	if (!data) return;
-	if (!filename) filename = "json.json";
-	if (typeof data === "object") {
-		data = JSON.stringify(data, undefined, 4);
-	}
-	// 要创建一个 blob 数据
-	let blob = new Blob([data], { type: "text/json" }),
-		a = document.createElement("a");
-	a.download = filename;
+    if (!data) return;
+    if (!filename) filename = "json.json";
+    if (typeof data === "object") {
+        data = JSON.stringify(data, undefined, 4);
+    }
+    // 要创建一个 blob 数据
+    let blob = new Blob([data], { type: "text/json" }),
+        a = document.createElement("a");
+    a.download = filename;
 
-	// 将blob转换为地址
-	// 创建 URL 的 Blob 对象
-	a.href = window.URL.createObjectURL(blob);
+    // 将blob转换为地址
+    // 创建 URL 的 Blob 对象
+    a.href = window.URL.createObjectURL(blob);
 
-	// 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
-	a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-	// 添加鼠标事件
-	let event = new MouseEvent("click", {});
+    // 添加鼠标事件
+    let event = new MouseEvent("click", {});
 
-	// 向一个指定的事件目标派发一个事件
-	a.dispatchEvent(event);
+    // 向一个指定的事件目标派发一个事件
+    a.dispatchEvent(event);
 }
 
 // 获取当前时间
 function getCurrentDate(format) {
-	var now = new Date();
-	var year = now.getFullYear(); //年份
-	var month = now.getMonth();//月份
-	var date = now.getDate();//日期
-	var day = now.getDay();//周几
-	var hour = now.getHours();//小时
-	var minu = now.getMinutes();//分钟
-	var sec = now.getSeconds();//秒
-	month = month + 1;
-	if (month < 10) month = "0" + month;
-	if (date < 10) date = "0" + date;
-	if (hour < 10) hour = "0" + hour;
-	if (minu < 10) minu = "0" + minu;
-	if (sec < 10) sec = "0" + sec;
-	var time = "";
-	//精确到天
-	if (format == 1) {
-		time = year + "-" + month + "-" + date;
-	}
-	//精确到分
-	else if (format == 2) {
-		time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
-	}
-	return time;
+    var now = new Date();
+    var year = now.getFullYear(); //年份
+    var month = now.getMonth();//月份
+    var date = now.getDate();//日期
+    var day = now.getDay();//周几
+    var hour = now.getHours();//小时
+    var minu = now.getMinutes();//分钟
+    var sec = now.getSeconds();//秒
+    month = month + 1;
+    if (month < 10) month = "0" + month;
+    if (date < 10) date = "0" + date;
+    if (hour < 10) hour = "0" + hour;
+    if (minu < 10) minu = "0" + minu;
+    if (sec < 10) sec = "0" + sec;
+    var time = "";
+    //精确到天
+    if (format == 1) {
+        time = year + "-" + month + "-" + date;
+    }
+    //精确到分
+    else if (format == 2) {
+        time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
+    }
+    return time;
 }
 
 // 调用谷歌翻译接口
 function getGoogleTranslate(text, func) {
-	var httpRequest = new XMLHttpRequest();
-	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
-	httpRequest.open("GET", url, true);
-	httpRequest.send();
+    var httpRequest = new XMLHttpRequest();
+    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
+    httpRequest.open("GET", url, true);
+    httpRequest.send();
 
-	httpRequest.onreadystatechange = function () {
-		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-			var json = JSON.parse(httpRequest.responseText);
-			func(json);
-		}
-	}
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var json = JSON.parse(httpRequest.responseText);
+            func(json);
+        }
+    }
 }
 
 // 借助谷歌翻译设置翻译后的值
-function translatePageElement(element) {
-	getGoogleTranslate(element.innerText, function (data) {
-		var sentences = data.sentences;
-		var longtext = '';
-		for (const i in sentences) {
-			if (Object.hasOwnProperty.call(sentences, i)) {
-				const sentence = sentences[i];
-				longtext += sentence.trans;
-			}
-		}
-		element.innerText = longtext;
-	});
+function translatePageElement(element){
+    getGoogleTranslate(element.innerText, function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+    });
+}
+
+function getGoogleTranslateEN(text, func) {
+    var httpRequest = new XMLHttpRequest();
+    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
+    httpRequest.open("GET", url, true);
+    httpRequest.send();
+
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var json = JSON.parse(httpRequest.responseText);
+            func(json);
+        }
+    }
+}
+
+function translatePageElementEN(element){
+    getGoogleTranslateEN(element.innerText, function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+    });
 }
 
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {
-	clearInterval(slideTimer);
-	var h = 0;
-	slideTimer = setInterval(function () {
-		// 当目标高度与实际高度小于10px时，以1px的速度步进
-		var step = (realHeight - h) / 10;
-		step = Math.ceil(step);
-		h += step;
-		if (Math.abs(realHeight - h) <= Math.abs(step)) {
-			h = realHeight;
-			element.style.height = `${realHeight}px`;
-			func();
-			clearInterval(slideTimer);
-		} else {
-			element.style.height = `${h}px`;
-		}
-	}, speed);
+    clearInterval(slideTimer);
+    var h = 0;
+    slideTimer = setInterval(function () {
+        // 当目标高度与实际高度小于10px时，以1px的速度步进
+        var step = (realHeight - h) / 10;
+        step = Math.ceil(step);
+        h += step;
+        if (Math.abs(realHeight - h) <= Math.abs(step)) {
+            h = realHeight;
+            element.style.height = `${realHeight}px`;
+            func();
+            clearInterval(slideTimer);
+        } else {
+            element.style.height = `${h}px`;
+        }
+    }, speed);
 }
 function slideUp(element, speed, func) {
-	clearInterval(slideTimer);
-	slideTimer = setInterval(function () {
-		var step = (0 - element.clientHeight) / 10;
-		step = Math.floor(step);
-		element.style.height = `${element.clientHeight + step}px`;
-		if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
-			element.style.height = "0px";
-			func();
-			clearInterval(slideTimer);
-		}
-	}, speed);
+    clearInterval(slideTimer);
+    slideTimer = setInterval(function () {
+        var step = (0 - element.clientHeight) / 10;
+        step = Math.floor(step);
+        element.style.height = `${element.clientHeight + step}px`;
+        if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
+            element.style.height = "0px";
+            func();
+            clearInterval(slideTimer);
+        }
+    }, speed);
 }
 
 // 展开折叠动画 (右左)
 var slideTimer2 = null;
 function slideRight(element, realWidth, speed, func) {
-	clearInterval(slideTimer2);
-	var w = 0;
-	slideTimer2 = setInterval(function () {
-		// 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
-		var step = (realWidth - w) / 10;
-		step = Math.ceil(step);
-		w += step;
-		if (Math.abs(realWidth - w) <= Math.abs(step)) {
-			w = realWidth;
-			element.style.width = `${realWidth}px`;
-			func();
-			clearInterval(slideTimer2);
-		} else {
-			element.style.width = `${w}px`;
-		}
-	}, speed);
+    clearInterval(slideTimer2);
+    var w = 0;
+    slideTimer2 = setInterval(function () {
+        // 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
+        var step = (realWidth - w) / 10;
+        step = Math.ceil(step);
+        w += step;
+        if (Math.abs(realWidth - w) <= Math.abs(step)) {
+            w = realWidth;
+            element.style.width = `${realWidth}px`;
+            func();
+            clearInterval(slideTimer2);
+        } else {
+            element.style.width = `${w}px`;
+        }
+    }, speed);
 }
 function slideLeft(element, speed, func) {
-	clearInterval(slideTimer2);
-	slideTimer2 = setInterval(function () {
-		var step = (0 - element.clientWidth) / 10;
-		step = Math.floor(step);
-		element.style.width = `${element.clientWidth + step}px`;
-		if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
-			element.style.width = "0px";
-			func();
-			clearInterval(slideTimer2);
-		}
-	})
+    clearInterval(slideTimer2);
+    slideTimer2 = setInterval(function () {
+        var step = (0 - element.clientWidth) / 10;
+        step = Math.floor(step);
+        element.style.width = `${element.clientWidth + step}px`;
+        if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
+            element.style.width = "0px";
+            func();
+            clearInterval(slideTimer2);
+        }
+    })
 }
 
 
 // 页面样式注入
 function styleInject(css, ref) {
-	if (ref === void 0) ref = {};
-	var insertAt = ref.insertAt;
+    if (ref === void 0) ref = {};
+    var insertAt = ref.insertAt;
 
-	if (!css || typeof document === 'undefined') { return; }
+    if (!css || typeof document === 'undefined') { return; }
 
-	var head = document.head || document.getElementsByTagName('head')[0];
-	var style = document.createElement('style');
-	style.type = 'text/css';
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.type = 'text/css';
 
-	if (insertAt === 'top') {
-		if (head.firstChild) {
-			head.insertBefore(style, head.firstChild);
-		} else {
-			head.appendChild(style);
-		}
-	} else {
-		head.appendChild(style);
-	}
+    if (insertAt === 'top') {
+        if (head.firstChild) {
+            head.insertBefore(style, head.firstChild);
+        } else {
+            head.appendChild(style);
+        }
+    } else {
+        head.appendChild(style);
+    }
 
-	if (style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		style.appendChild(document.createTextNode(css));
-	}
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
 }
 
 // UrlEncode
 function urlEncode(str) {
-	str = (str + '').toString();
+    str = (str + '').toString();
 
-	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-		replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 // UrlDecode
 function urlDecode(str) {
-	return decodeURIComponent(str);
+    return decodeURIComponent(str);
 }
 
 // 跨域
 function crossDomain() {
-	var meta = document.createElement("meta");
-	meta.httpEquiv = "Content-Security-Policy";
-	meta.content = "upgrade-insecure-requests";
-	document.getElementsByTagName("head")[0].appendChild(meta);
+    var meta = document.createElement("meta");
+    meta.httpEquiv = "Content-Security-Policy";
+    meta.content = "upgrade-insecure-requests";
+    document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
 //#endregion
@@ -414,6 +442,8 @@ const table_Settings_Key_Bg_Mask = "f_bgMask";
 const table_Settings_key_FrontPageFontParentColor = "f_frontPageFontParentColor";
 const table_Settings_key_FrontPageFontSubColor = "f_frontPageFontSubColor";
 const table_Settings_Key_FrontPageFontSubHoverColor = "f_frontPageFontSubHoverColor";
+const table_Settings_key_NewsPageTopImageVisible = "f_newsPageTopImageVisible";
+const table_Settings_key_NewsPageTranslate = "f_newsPageTranslate";
 
 // fetishList 全部类别 - 父子信息表
 const table_fetishListSubItems = "t_fetishListSubItems";
@@ -450,6 +480,8 @@ const sync_googleTranslate_detailPage_title = 'syncGoogleTranslateDetailPageTitl
 const sync_setting_backgroundImage = 'syncSettingBackgroundImage';
 const sync_setting_frontPageFontColor = 'syncSettingFrontPageFontColor';
 const sync_googleTranslate_torrentDetailInfo_command = "syncGoogleTranslateTorrentDetailInfoCommand";
+const sync_newsPage_topImage_visible = "syncNewsPageTopImageVisible";
+const sync_googleTranslate_newsPage_news = "syncGoogleTranslateNewsPageNews";
 
 //#endregion
 
@@ -522,7 +554,44 @@ const toplie_subtitle_dict = {
 
 //#endregion
 
+//#region 我的主页第二菜单栏
+
+const myHomeMenu2 = {
+	"Overview": "总览",
+	"My Stats": "我的统计",
+	"My Settings": "我的设置",
+	"My Tags": "我的标签",
+	"Hentai@Home": "Hentai@Home",
+	"Donations": "捐赠",
+	"Hath Perks": "权限解锁",
+	"Hath Exchange": "权限积分交易",
+	"GP Exchange": "GP交易",
+	"Credit Log": "Credit 记录",
+	"Karma Log": "Karma 记录"
+};
+
 //#endregion
+
+//#region 新闻页面分栏标题
+
+const newPagesTitles = {
+	"Latest Site Status Updates": "最新网站状态",
+	"Site Update Log": "网站更新日志",
+	"The Fourteenth Annual E-Hentai Galleries Award Show for Outstanding Achievements in the Field of Excellence": "第十四届年度 E-Hentai Galleries 卓越领域杰出成就奖颁奖典礼",
+	"The Fourteenth Annual E-Hentai Yuletide Lottery": "第十四届年度电子无尽圣诞彩票",
+	"Tag namespacing changes": "标记命名空间更改",
+	"New Upload Servers": "新的上传服务器",
+	"New Feature: H@H Monitoring/Alerts": "新功能：H@H 监控/警报",
+	"New Feature: Country selector for choosing which H@H network country/region to use for image loads": "新功能：国家选择器，用于选择用于图像加载的 H@H 网络国家/地区",
+	"Core server/database migration": "核心服务器/数据库迁移",
+	"The Thirteenth Annual E-Hentai Award Show for Outstanding Achievements in the Field of Excellence": "第十三届 E-Hentai 年度卓越成就奖颁奖典礼"
+}
+
+//#endregion
+
+//#endregion
+
+
 
 //#region step0.localstorage.js localstorage 数据方法，迁入 indexdb，如无特殊需要，删除之前存储的数据
 
@@ -1724,6 +1793,58 @@ func_eh_ex(() => {
 	.torrents_detail_index form table tr td:nth-child(4),
 	.torrents_detail_index form table tr td:nth-child(5) {
 		text-align: center;
+	}
+	
+	.t_newspage_souter #nb {
+		min-height: 29px;
+		max-height: 29px;
+	}
+	
+	.t_newspage_souter #nb a {
+		font-size: 17px;
+	}
+	
+	.t_newspage_souter #imgHiddenBtn {
+		background-color: #cebb9a;
+		width: 100px;
+		margin-bottom: -30px;
+		height: 25px;
+		line-height: 26px;
+		text-align: center;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	
+	/* 新闻头部图片边框 */
+	.t_newspage_souter .hiddenTopImgBorder {
+		height: 0;
+	}
+	
+	.t_newspage_souter #googleTranslateDiv {
+		background-color: #cebb9a;
+		width: 120px;
+		margin-bottom: -30px;
+		margin-left: 105px;
+		height: 25px;
+		line-height: 26px;
+		text-align: center;
+		cursor: pointer;
+		margin-top: 5px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	
+	.t_newspage_souter #googleTranslateDiv #translateLabel {
+		cursor: pointer;
+	}
+	
+	.t_newspage_souter #botm {
+		overflow: hidden;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -2785,6 +2906,7 @@ func_eh_ex(() => {
 });
 
 //#endregion
+
 
 
 //#region step1.2.translateTopMenu.js 头部菜单翻译
@@ -6166,8 +6288,6 @@ function closeWindow() {
 
 //#endregion
 
-
-
 //#region step7.5.toplistPage.js 排行榜
 
 function toplistPage() {
@@ -6573,13 +6693,264 @@ function toplistBookpages() {
 
 //#endregion
 
+//#region step7.6.myHomePage.js 我的主页 - 总览
 
-//TODO 我的首页
-//TODO 悬赏页面 (EH)
-//TODO 设置页面
-//TODO 种子页面
-//TODO 我的上传页面
-//TODO 新闻页面
+function myHomePage() {
+    // 跨域
+    crossDomain();
+
+    // 添加样式防止覆盖
+    
+
+    // 图片限制
+
+    // 种子服务器
+
+    // 获取GP
+
+    // 排行榜
+
+    // 原力
+
+}
+
+//#endregion
+
+
+
+//#region step7.7.newsPage.js
+
+function newsPage() {
+    // 跨域
+    crossDomain();
+
+    // 添加样式方便调整页面样式
+    var newsouter = document.getElementById("newsouter");
+    newsouter.classList.add("t_newspage_souter");
+
+    var newsinner = document.getElementById("newsinner");
+
+    // 头部图片隐藏折叠按钮
+    var baredge = document.getElementsByClassName("baredge")[0];
+    var bartop = document.getElementsByClassName("bartop")[0];
+    var botm = document.getElementById("botm");
+    var botmHeight = botm.clientHeight;
+
+    var imgHiddenBtn = document.createElement("div");
+    imgHiddenBtn.id = "imgHiddenBtn";
+    imgHiddenBtn.innerText = "头部图片隐藏";
+    newsinner.insertBefore(imgHiddenBtn, newsinner.firstChild);
+    imgHiddenBtn.onclick = function () {
+        var visible = imgHiddenBtn.innerText == "头部图片显示";
+        // 显示和隐藏
+        newsPageTopImageDisplay(visible);
+        // 更改设置并更新
+        setNewsPageTopImageVisisble(visible);
+    };
+
+    function newsPageTopImageDisplay(visible) {
+        // 改为动画效果
+        var imgHiddenBtn = document.getElementById("imgHiddenBtn");
+        if (visible) {
+            if (imgHiddenBtn.innerText == "头部图片显示") {
+                // 需要显示
+                slideDown(botm, botmHeight, 10, function () {
+                    baredge.classList.remove("hiddenTopImgBorder");
+                    bartop.classList.remove("hiddenTopImgBorder");
+                    imgHiddenBtn.innerText = "头部图片隐藏";
+                });
+            }
+        } else {
+            if (imgHiddenBtn.innerText == "头部图片隐藏") {
+                // 需要隐藏
+                slideUp(botm, 10, function () {
+                    baredge.classList.add("hiddenTopImgBorder");
+                    bartop.classList.add("hiddenTopImgBorder");
+                    imgHiddenBtn.innerText = "头部图片显示";
+                });
+            }
+        }
+    }
+
+    function setNewsPageTopImageVisisble(visible) {
+        indexDbInit(() => {
+            // 保存存储信息
+            var setting_newsPageTopImageVisible = {
+                item: table_Settings_key_NewsPageTopImageVisible,
+                value: visible
+            }
+            update(table_Settings, setting_newsPageTopImageVisible, () => {
+                // 通知头部图片隐藏显示
+                setDbSyncMessage(sync_newsPage_topImage_visible);
+            }, () => { });
+        })
+
+
+    }
+
+    // 读取并设置头部图片是否隐藏
+    indexDbInit(() => {
+        read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
+            var visible = result && result.value;
+            document.documentElement.scrollTop = 0;
+            setTimeout(function () {
+                newsPageTopImageDisplay(visible);
+                // 滚动条设置在头部
+            }, 1000);
+        }, () => { });
+    });
+
+
+    // 谷歌机翻
+    var translateDiv = document.createElement("div");
+    translateDiv.id = "googleTranslateDiv";
+    var translateCheckbox = document.createElement("input");
+    translateCheckbox.setAttribute("type", "checkbox");
+    translateCheckbox.id = "googleTranslateCheckbox";
+    var translateLabel = document.createElement("label");
+    translateLabel.setAttribute("for", translateCheckbox.id);
+    translateLabel.id = "translateLabel";
+    translateLabel.innerText = "谷歌机翻 : 新闻";
+
+    translateDiv.appendChild(translateLabel);
+    translateDiv.appendChild(translateCheckbox);
+
+    translateCheckbox.addEventListener("click", newPageNewsTranslate);
+    newsinner.insertBefore(translateDiv, imgHiddenBtn.nextElementSibling);
+
+    // 新闻分栏，标题重命名
+    var nd = document.getElementsByClassName("nd");
+    var h2s = nd[0].querySelectorAll("h2");
+    for (const i in h2s) {
+        if (Object.hasOwnProperty.call(h2s, i)) {
+            const h2 = h2s[i];
+            var a = h2.children[0];
+            if (newPagesTitles[a.innerText]) {
+                a.innerText = newPagesTitles[a.innerText];
+            } else {
+                translatePageElementEN(a);
+            }
+        }
+    }
+
+    var newstitles = document.getElementsByClassName("newstitle");
+    for (const i in newstitles) {
+        if (Object.hasOwnProperty.call(newstitles, i)) {
+            const newstitle = newstitles[i];
+            var a = newstitle.children[0];
+            if (newPagesTitles[a.innerText]) {
+                a.innerText = newPagesTitles[a.innerText];
+            } else {
+                translatePageElementEN(a);
+            }
+        }
+    }
+
+    // 新闻分栏，隐藏折叠按钮
+
+
+    // 文本字体大小调整
+
+    // 翻译标题
+
+
+
+}
+
+function newPageNewsTranslate() {
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+
+    // 更新存储
+    var settings_newsPageTranslate = {
+        item: table_Settings_key_NewsPageTranslate,
+        value: isChecked
+    };
+    update(table_Settings, settings_newsPageTranslate, () => {
+        // 通知通知，翻译标题
+        setDbSyncMessage(sync_googleTranslate_newsPage_news);
+        newPageNewsTranslateDisplay();
+    }, () => { });
+}
+
+function newPageNewsTranslateDisplay() {
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+    newPageTranslateSiteStatus(isChecked);
+    newPageSiteUpdateLog(isChecked);
+}
+
+// 最新网站状态
+function newPageTranslateSiteStatus(isChecked) {
+    var nwo = document.getElementsByClassName("nwo")[0];
+    var nwis = nwo.querySelectorAll("div.nwi");
+    var nwf = document.getElementsByClassName("nwf")[0];
+    if (isChecked) {
+        for (const i in nwis) {
+            if (Object.hasOwnProperty.call(nwis, i)) {
+                const nwi = nwis[i];
+                var tds = nwi.querySelectorAll("td");
+                for (const t in tds) {
+                    if (Object.hasOwnProperty.call(tds, t)) {
+                        const td = tds[t];
+                        if (td.innerText) {
+                            if (td.dataset.translate) {
+                                td.innerText = td.dataset.translate;
+                            } else {
+                                td.classList.add("googleTranslate_01");
+                                td.title = td.innerText;
+                                translatePageElementEN(td);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        var zh_html = `你可以在 <a href="https://twitter.com/ehentai">推特上关注我们</a> 以便在网站不可用时获取网站状态信息。 `;
+        nwf.innerHTML = zh_html;
+    } else {
+        var googleTranslates = document.getElementsByClassName("googleTranslate_01");
+        for (const i in googleTranslates) {
+            if (Object.hasOwnProperty.call(googleTranslates, i)) {
+                const trans = googleTranslates[i];
+                if (!trans.dataset.translate) {
+                    trans.dataset.translate = trans.innerText;
+                }
+                trans.innerText = trans.title;
+            }
+        }
+        var en_html = `You can follow <a href="https://twitter.com/ehentai">follow us on Twitter</a> to receive these site status updates if the site is ever unavailable. `;
+        nwf.innerHTML = en_html;
+    }
+}
+
+// 网站更新日志
+function newPageSiteUpdateLog(isChecked) {
+    var nwo = document.getElementsByClassName("nwo")[1];
+    var nwi = nwo.querySelectorAll("div.nwi")[0];
+    var nwu = nwo.querySelectorAll("div.nwu")[0];
+    if (isChecked) {
+        var nwiChildNodes = nwi.childNodes;
+        for (const i in nwiChildNodes) {
+            if (Object.hasOwnProperty.call(nwiChildNodes, i)) {
+                const childNode = nwiChildNodes[i];
+                if (childNode.nodeName == "#text") {
+                    var p = document.createElement("p");
+                    p.innerText = childNode.data;
+                    p.classList.add("googleTranslate_02");
+                    nwi.insertBefore(p,childNode.nextElementSibling);
+                    childNode.parentNode.removeChild(childNode);
+                }
+            }
+        }
+    }
+}
+
+//#endregion
+
+
+
+
+
+
 //TODO 我的标签和本地标签的导入、导出，我的标签翻译 (EX)
 //TODO 样式细化
 //TODO 悬浮显示预览图
@@ -6591,7 +6962,6 @@ function toplistBookpages() {
 //TODO 简洁模式，适合轻量使用用户，就是使用原始的文本框输入，参照收藏页面
 //TODO 首页背景
 //TODO 插件背景图片，有损压缩，保存快速替换
-//TODO 首页数据更新完毕后，页面翻译没有刷新的bug
 
 //#region main.js 主方法
 
@@ -6610,26 +6980,56 @@ else {
 		mainPageCategory();
 	} else {
 		switch (window.location.pathname) {
-			case '/':				// 首页
-			case '/watched':		// 偏好
+			case '/':						// 首页
+			case '/watched':				// 偏好
 				mainPageCategory();
 				break;
-			case '/popular':		// 热门
+			case '/popular':				// 热门
 				popularPage();
 				break;
-			case '/torrents.php':	// 种子
+			case '/torrents.php':			// 种子
 				torrentsPage();
 				break;
-			case '/gallerytorrents.php': // 种子详情页
+			case '/gallerytorrents.php':	// 种子详情页
 				torrentsDetailPages();
 				break;
-			case '/favorites.php':	// 收藏
+			case '/favorites.php':			// 收藏
 				favoritePage();
 				break;
-			case '/toplist.php': // 排行榜
+			case '/toplist.php': 			// 排行榜
 				toplistPage();
 				break;
-			// 设置、我的标签、悬赏
+			case '/home.php':				// 我的主页 - 总览
+				//myHomePage();
+				break;
+			case '/stats.php':				// 我的统计
+				break;
+			case '/hentaiathome.php':		// Hentai@Home
+				break;
+			case '/bitcoin.php':			// 捐赠
+				break;
+			case '/hathperks.php':			// 权限解锁
+				break;
+			case '/exchange.php':			// 交易
+				//?t=hath 权限积分交易
+				//?t=gp GP交易
+				break;
+			case '/logs.php':				// 记录
+				//?t=credits 信用卡记录
+				//?t=karma karma记录
+				break;
+			case '/uconfig.php':			// 设置
+				break;
+			case '/bounty.php':				// 悬赏
+				break;
+			case '/news.php':				// 新闻
+				newsPage();
+				break;
+			case '/manage':					// 我的上传 EH
+			case '/upld/manage':			// 我的上传 EX
+				break;
+			case '/mytags':					// 我的标签
+				break;
 		}
 	}
 }
