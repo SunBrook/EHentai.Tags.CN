@@ -66,9 +66,7 @@ function newsPage() {
                 // 通知头部图片隐藏显示
                 setDbSyncMessage(sync_newsPage_topImage_visible);
             }, () => { });
-        })
-
-
+        });
     }
 
 
@@ -87,7 +85,7 @@ function newsPage() {
     translateDiv.appendChild(translateLabel);
     translateDiv.appendChild(translateCheckbox);
 
-    translateCheckbox.addEventListener("click", newPageNewsTranslate);
+    translateCheckbox.addEventListener("click", newsPageNewsTranslate);
     nb.parentNode.insertBefore(translateDiv, nb);
 
     indexDbInit(() => {
@@ -105,7 +103,7 @@ function newsPage() {
             translateDiv.style.display = "block";
             if (result && result.value) {
                 translateCheckbox.setAttribute("checked", true);
-                newPageNewsTranslateDisplay();
+                newsPageNewsTranslateDisplay();
             }
         }, () => {
             translateDiv.style.display = "block";
@@ -138,10 +136,77 @@ function newsPage() {
     }
 
     // 为每个折叠按钮添加事件
+    var titleExpends = document.getElementsByClassName("title_extend");
+    for (const i in titleExpends) {
+        if (Object.hasOwnProperty.call(titleExpends, i)) {
+            const titleExpend = titleExpends[i];
+            titleExpend.onclick = function () {
+                var parentChildNodes = titleExpend.parentNode.parentNode.children;
+                if (titleExpend.innerText == "-") {
+                    // 折叠
+                    for (const k in parentChildNodes) {
+                        if (Object.hasOwnProperty.call(parentChildNodes, k)) {
+                            const childNode = parentChildNodes[k];
+                            if (childNode.nodeName == "H2") continue;
+                            if (childNode.classList.contains("newstitle")) continue;
+                            childNode.style.display = "none";
+                        }
+                    }
+                    titleExpend.innerText = "+";
+                } else {
+                    // 展开
+                    for (const k in parentChildNodes) {
+                        if (Object.hasOwnProperty.call(parentChildNodes, k)) {
+                            const childNode = parentChildNodes[k];
+                            if (childNode.nodeName == "H2") continue;
+                            if (childNode.classList.contains("newstitle")) continue;
+                            childNode.style.display = "block";
+                        }
+                    }
+                    titleExpend.innerText = "-";
+                }
+            }
+        }
+    }
 
+    // 数据同步
+    window.onstorage = function (e) {
+        try {
+            console.log(e);
+            switch (e.newValue) {
+                case sync_newsPage_topImage_visible:
+                    newsPageSyncTopImageVisible();
+                    break;
+                case sync_googleTranslate_newsPage_news:
+                    newsPageSyncTranslate();
+                    break;
+            }
+        } catch (error) {
+            removeDbSyncMessage();
+        }
+    }
+
+    function newsPageSyncTopImageVisible() {
+        indexDbInit(() => {
+            read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
+                newsPageTopImageDisplay(result && result.value);
+            }, () => { });
+        });
+    }
+
+    function newsPageSyncTranslate() {
+        indexDbInit(() => {
+            read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
+                translateCheckbox.checked = result && result.value;
+                newsPageNewsTranslateDisplay();
+            }, () => { });
+        });
+    }
 }
 
-function newPageNewsTranslate() {
+
+
+function newsPageNewsTranslate() {
     var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
     // 更新存储
@@ -152,11 +217,11 @@ function newPageNewsTranslate() {
     update(table_Settings, settings_newsPageTranslate, () => {
         // 通知通知，翻译标题
         setDbSyncMessage(sync_googleTranslate_newsPage_news);
-        newPageNewsTranslateDisplay();
+        newsPageNewsTranslateDisplay();
     }, () => { });
 }
 
-function newPageNewsTranslateDisplay() {
+function newsPageNewsTranslateDisplay() {
     // 准备
     if (!newsPageTranslateIsReady) {
         newsPageTranslatePrepare();
