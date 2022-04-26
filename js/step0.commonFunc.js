@@ -98,7 +98,7 @@ function getGoogleTranslate(text, func) {
 }
 
 // 借助谷歌翻译设置翻译后的值
-function translatePageElement(element){
+function translatePageElement(element) {
     getGoogleTranslate(element.innerText, function (data) {
         var sentences = data.sentences;
         var longtext = '';
@@ -126,8 +126,8 @@ function getGoogleTranslateEN(text, func) {
     }
 }
 
-function translatePageElementEN(element){
-    getGoogleTranslateEN(element.innerText, function (data) {
+function translatePageElementEN(element) {
+    getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
         var sentences = data.sentences;
         var longtext = '';
         for (const i in sentences) {
