@@ -2245,6 +2245,24 @@ func_eh_ex(() => {
 	.torrents_detail_index form table tr td:nth-child(4),
 	.torrents_detail_index form table tr td:nth-child(5) {
 		text-align: center;
+	}
+	
+	.t_uconfigPage_outer #profile_outer div#profile_select {
+		display: inline-block;
+	}
+	
+	.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(1),
+	.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(3) {
+		width: auto;
+	}
+	
+	.t_uconfigPage_outer #profile_outer div#profile_action {
+		float: right;
+		padding-top: 3px;
+	}
+	
+	.t_uconfigPage_outer #msg {
+		color: yellow;
 	}`;
 	styleInject(category_style);
 });
