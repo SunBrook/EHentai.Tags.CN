@@ -2261,8 +2261,36 @@ func_eh_ex(() => {
 		padding-top: 3px;
 	}
 	
-	.t_uconfigPage_outer #msg {
-		color: yellow;
+	.t_uconfigPage_outer .span_pixel {
+		position: relative;
+		top: 2px;
+	}
+	
+	.t_uconfigPage_outer form h2 {
+		font-size: 18px;
+		margin-top: 30px;
+	}
+	
+	.t_uconfigPage_outer form #contentForm_wrapper {
+		height: calc(100vh - 145px);
+		overflow: auto;
+		margin: 5px 0;
+		padding: 0 10px;
+	}
+	
+	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar {
+		width: 10px;
+		height: 1px;
+	}
+	
+	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-track {
+		background-color: #2d2e32;
+		border-radius: 10px;
+	}
+	
+	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
+		background-color: #a5a5a5;
+		border-radius: 10px;
 	}`;
 	styleInject(category_style);
 });
