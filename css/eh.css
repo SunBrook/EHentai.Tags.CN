@@ -1187,3 +1187,48 @@ table .gtw {
 .t_newspage_souter .nwo h2 div {
     margin-bottom: 6px;
 }
+
+.t_uconfigPage_outer #profile_outer div#profile_select {
+    display: inline-block;
+}
+
+.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(1),
+.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(3) {
+    width: auto;
+}
+
+.t_uconfigPage_outer #profile_outer div#profile_action {
+    float: right;
+    padding-top: 3px;
+}
+
+.t_uconfigPage_outer .span_pixel {
+    position: relative;
+    top: 2px;
+}
+
+.t_uconfigPage_outer form h2 {
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+.t_uconfigPage_outer form #contentForm_wrapper {
+    height: calc(100vh - 168px);
+    overflow: auto;
+    margin: 5px 0;
+    padding: 0 10px;
+}
+
+.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+}
+
+.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
+    background-color: #b5a297;
+    border-radius: 10px;
+}

@@ -8,12 +8,12 @@ function uconfigPage() {
     var outer = document.getElementById("outer");
     outer.classList.add("t_uconfigPage_outer");
 
+    // eh 二级菜单翻译
+    func_eh_ex(() => {
+        var menu2 = document.getElementById("lb").children[2];
+        menu2.innerText = " 我的设置 ";
+    }, () => { });
 
-    // 样式：字体大小、标题大小、每块间隔调整
-
-    // 头部是否添加滚动定位条，用于联动
-
-    // 头部和定位固定在头部
 
     // 头部翻译
     uconfigPageTopDiv();
@@ -165,15 +165,28 @@ function uconfigPageTopDiv() {
         switch (msgText) {
             case "Name must be less than 20 characters.":
                 msgDiv.innerText = "操作失败：字符长度不能超过20。";
-                msgDiv.style.color = "yellow";
+                func_eh_ex(() => {
+                    msgDiv.style.color = "red";
+                }, () => {
+                    msgDiv.style.color = "yellow";
+                });
                 break;
             case "Name contains invalid characters.":
                 msgDiv.innerText = "操作失败：输入中存在非法字符。"
-                msgDiv.style.color = "yellow";
+                func_eh_ex(() => {
+                    msgDiv.style.color = "red";
+                }, () => {
+                    msgDiv.style.color = "yellow";
+                });
                 break;
             case "Settings were updated":
                 msgDiv.innerText = "操作成功：设置已更新。"
                 msgDiv.style.color = "lightgreen";
+                func_eh_ex(() => {
+                    msgDiv.style.color = "black";
+                }, () => {
+                    msgDiv.style.color = "lightgreen";
+                });
                 break;
             default:
                 msgDiv.innerText = `${msgDiv.innerText}`;
@@ -195,6 +208,16 @@ function uconfigPageImageLoadSettings(titleH2) {
     inputItems[1].children[0].childNodes[2].data = " 仅使用默认端口的客户端（可能会更慢，请在防火墙或代理阻止非标准接口的流量时选择此项。）";
     inputItems[2].children[0].childNodes[2].data = " 否 [ 现代 / HTTPS ]（仅限捐赠者，你将无法浏览尽可能多的页面，请在出现严重的问题时选择此项。）";
     inputItems[3].children[0].childNodes[2].data = " 否 [ 传统 / HTTP ]（仅限捐赠者，默认情况下无法在新版浏览器中使用，建议在使用过时的浏览器时选择此项。）";
+
+    if (inputItems[2].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
+        inputItems[2].children[0].children[1].style.cursor = "not-allowed";
+        inputItems[2].children[0].style.cursor = "not-allowed";
+    }
+
+    if (inputItems[3].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
+        inputItems[3].children[0].children[1].style.cursor = "not-allowed";
+        inputItems[3].children[0].style.cursor = "not-allowed";
+    }
 
     var countryDiv = loadSelectDiv.nextElementSibling;
     var countryP = countryDiv.children[0];

@@ -7,7 +7,7 @@
 // @compatible  chrome >= 61
 // @compatible  safari >= 11
 // @compatible  opera >= 48
-// @version      3.10.0
+// @version      3.11.0
 // @icon         http://exhentai.org/favicon.ico
 // @description  E-hentai + ExHentai 丰富的本地中文标签库 + 自定义管理收藏库，搜索时支持点击选择标签或者手动输入，页面翻译英文标签时支持本地标签库匹配和谷歌机翻。
 // @author       地狱天使
@@ -2136,6 +2136,51 @@ func_eh_ex(() => {
 	
 	.t_newspage_souter .nwo h2 div {
 		margin-bottom: 6px;
+	}
+	
+	.t_uconfigPage_outer #profile_outer div#profile_select {
+		display: inline-block;
+	}
+	
+	.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(1),
+	.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(3) {
+		width: auto;
+	}
+	
+	.t_uconfigPage_outer #profile_outer div#profile_action {
+		float: right;
+		padding-top: 3px;
+	}
+	
+	.t_uconfigPage_outer .span_pixel {
+		position: relative;
+		top: 2px;
+	}
+	
+	.t_uconfigPage_outer form h2 {
+		font-size: 18px;
+		margin-top: 30px;
+	}
+	
+	.t_uconfigPage_outer form #contentForm_wrapper {
+		height: calc(100vh - 168px);
+		overflow: auto;
+		margin: 5px 0;
+		padding: 0 10px;
+	}
+	
+	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar {
+		width: 10px;
+		height: 1px;
+	}
+	
+	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-track {
+		border-radius: 10px;
+	}
+	
+	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
+		background-color: #b5a297;
+		border-radius: 10px;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -7544,12 +7589,12 @@ function uconfigPage() {
     var outer = document.getElementById("outer");
     outer.classList.add("t_uconfigPage_outer");
 
+    // eh 二级菜单翻译
+    func_eh_ex(() => {
+        var menu2 = document.getElementById("lb").children[2];
+        menu2.innerText = " 我的设置 ";
+    }, () => { });
 
-    // 样式：字体大小、标题大小、每块间隔调整
-
-    // 头部是否添加滚动定位条，用于联动
-
-    // 头部和定位固定在头部
 
     // 头部翻译
     uconfigPageTopDiv();
@@ -7701,15 +7746,28 @@ function uconfigPageTopDiv() {
         switch (msgText) {
             case "Name must be less than 20 characters.":
                 msgDiv.innerText = "操作失败：字符长度不能超过20。";
-                msgDiv.style.color = "yellow";
+                func_eh_ex(() => {
+                    msgDiv.style.color = "red";
+                }, () => {
+                    msgDiv.style.color = "yellow";
+                });
                 break;
             case "Name contains invalid characters.":
                 msgDiv.innerText = "操作失败：输入中存在非法字符。"
-                msgDiv.style.color = "yellow";
+                func_eh_ex(() => {
+                    msgDiv.style.color = "red";
+                }, () => {
+                    msgDiv.style.color = "yellow";
+                });
                 break;
             case "Settings were updated":
                 msgDiv.innerText = "操作成功：设置已更新。"
                 msgDiv.style.color = "lightgreen";
+                func_eh_ex(() => {
+                    msgDiv.style.color = "black";
+                }, () => {
+                    msgDiv.style.color = "lightgreen";
+                });
                 break;
             default:
                 msgDiv.innerText = `${msgDiv.innerText}`;
@@ -7731,6 +7789,16 @@ function uconfigPageImageLoadSettings(titleH2) {
     inputItems[1].children[0].childNodes[2].data = " 仅使用默认端口的客户端（可能会更慢，请在防火墙或代理阻止非标准接口的流量时选择此项。）";
     inputItems[2].children[0].childNodes[2].data = " 否 [ 现代 / HTTPS ]（仅限捐赠者，你将无法浏览尽可能多的页面，请在出现严重的问题时选择此项。）";
     inputItems[3].children[0].childNodes[2].data = " 否 [ 传统 / HTTP ]（仅限捐赠者，默认情况下无法在新版浏览器中使用，建议在使用过时的浏览器时选择此项。）";
+
+    if (inputItems[2].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
+        inputItems[2].children[0].children[1].style.cursor = "not-allowed";
+        inputItems[2].children[0].style.cursor = "not-allowed";
+    }
+
+    if (inputItems[3].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
+        inputItems[3].children[0].children[1].style.cursor = "not-allowed";
+        inputItems[3].children[0].style.cursor = "not-allowed";
+    }
 
     var countryDiv = loadSelectDiv.nextElementSibling;
     var countryP = countryDiv.children[0];
@@ -8102,9 +8170,6 @@ function uconfigPageReWrapperForm(contentForm) {
 }
 
 //#endregion
-
-
-
 
 
 
