@@ -28,6 +28,9 @@ window.onstorage = function (e) {
             case sync_setting_frontPageFontColor:
                 updateSettingFrontPageFontColor();
                 break;
+            case sync_frontPageSearchMode:
+                updateFrontPageSearchMode();
+                break;
         }
     } catch (error) {
         removeDbSyncMessage();
@@ -74,7 +77,7 @@ function updatePageFavoriteList() {
         editToFavorite();
 
         read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
-            console.log('r',result);
+            console.log('r', result);
             if (result && result.value) {
                 // 存在收藏 html
                 // 页面附加Html
@@ -177,6 +180,46 @@ function updateSettingFrontPageFontColor() {
                 var frontDiv = document.getElementById("div_fontColor_btn");
                 frontDiv.style.display = "none";
             }
+        });
+    });
+}
+
+// 首页搜索模式更新
+function updateFrontPageSearchMode() {
+    indexDbInit(() => {
+        read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
+            var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
+            var searchModeDiv = document.getElementById("div_searchMode_btn");
+            var tagDiv = document.getElementById("div_ee8413b2");
+            var topVisibleDiv = document.getElementById("div_top_visible_btn");
+            var searchBoxDiv = document.getElementById("searchbox");
+
+            if (result && result.value == 1) {
+                // 纯搜索模式
+                normalModeWrapperDiv.style.display = "none";
+                searchBoxDiv.children[0].style.display = "block";
+                tagDiv.style.display = "none";
+                searchModeDiv.innerText = "标签模式";
+
+            } else {
+                // 标签模式
+                normalModeWrapperDiv.style.display = "block";
+                tagDiv.style.display = "block";
+                searchModeDiv.innerText = "纯搜索模式";
+
+                // 判断头部是否需要显示
+                var oldSearchDivVisible = getOldSearchDivVisible();
+                if (oldSearchDivVisible == 0) {
+                    topVisibleDiv.innerText = "头部显示";
+                    searchBoxDiv.children[0].style.display = "none";
+                } else {
+                    topVisibleDiv.innerText = "头部隐藏";
+                }
+            }
+
+            removeDbSyncMessage();
+        }, () => {
+            removeDbSyncMessage();
         });
     });
 }

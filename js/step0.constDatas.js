@@ -127,6 +127,9 @@ const dbGoogleTranslateCategoryDetail = "googleTranslateCategoryDetail";
 // 消息通知页面同步
 const dbSyncMessageKey = "dbSyncMessage";
 
+// 搜索模式
+const dbFrontPageSearchMode = "dbfrontPageSearchMode";
+
 //#endregion
 
 //#region indexedDB 数据表、索引、键
@@ -157,6 +160,7 @@ const table_Settings_key_FrontPageFontSubColor = "f_frontPageFontSubColor";
 const table_Settings_Key_FrontPageFontSubHoverColor = "f_frontPageFontSubHoverColor";
 const table_Settings_key_NewsPageTopImageVisible = "f_newsPageTopImageVisible";
 const table_Settings_key_NewsPageTranslate = "f_newsPageTranslate";
+const table_Settings_key_FrontPageSearchMode = "f_frontPageSearchMode";
 
 // fetishList 全部类别 - 父子信息表
 const table_fetishListSubItems = "t_fetishListSubItems";
@@ -195,6 +199,7 @@ const sync_setting_frontPageFontColor = 'syncSettingFrontPageFontColor';
 const sync_googleTranslate_torrentDetailInfo_command = "syncGoogleTranslateTorrentDetailInfoCommand";
 const sync_newsPage_topImage_visible = "syncNewsPageTopImageVisible";
 const sync_googleTranslate_newsPage_news = "syncGoogleTranslateNewsPageNews";
+const sync_frontPageSearchMode = "syncFrontPageSearchMode";
 
 //#endregion
 

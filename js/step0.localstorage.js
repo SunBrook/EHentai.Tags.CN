@@ -78,4 +78,13 @@ function setDbSyncMessage(msg) {
 function removeDbSyncMessage() {
     localStorage.removeItem(dbSyncMessageKey);
 }
+
+// 搜索模式
+function getSearchMode() {
+    return localStorage.getItem(dbFrontPageSearchMode);
+}
+function setSearchMode(mode) {
+    return localStorage.setItem(dbFrontPageSearchMode, mode);
+}
+
 //#endregion

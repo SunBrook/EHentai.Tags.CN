@@ -266,8 +266,6 @@ function innerTextPageToYe(element) {
 }
 
 function mainPageTranslate() {
-	// 跨域
-	crossDomain();
 
 	// 作品类型翻译
 	bookTypeTranslate();
@@ -372,6 +370,26 @@ function mainPageTranslate() {
 
 	// 表格页数翻译
 	tableBookPages();
+}
+
+// 标题翻译
+function frontPageTitleTranslate() {
+	var pathname = window.location.pathname;
+	var h1 = document.getElementById("toppane").querySelector("h1");
+	if (pathname == "/") {
+		// 首页
+		func_eh_ex(() => {
+			// EH
+			h1.innerText = "E-Hentai.org：一个免费的绅士同人志、漫画和图片集的网站";
+		}, () => {
+			// EX
+			h1.children[0].innerText = "深网站点";
+			h1.children[1].innerText = "[ 使用 Tor 访问 ]";
+		});
+	} else if (pathname == "/watched") {
+		// 偏好
+		h1.innerText = "作品列表 - 偏好标签";
+	}
 }
 
 //#endregion

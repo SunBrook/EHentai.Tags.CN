@@ -50,7 +50,8 @@ func_eh_ex(() => {
 	
 	#searchbox #div_fontColor_btn,
 	#searchbox #div_background_btn,
-	#searchbox #div_top_visible_btn {
+	#searchbox #div_top_visible_btn,
+	#searchbox #div_searchMode_btn {
 		position: absolute;
 		top: 0;
 		width: 70px;
@@ -67,20 +68,25 @@ func_eh_ex(() => {
 	}
 	
 	#searchbox #div_fontColor_btn {
-		right: 140px;
+		right: 210px;
 	}
 	
 	#searchbox #div_background_btn {
-		right: 70px;
+		right: 140px;
 	}
 	
 	#searchbox #div_top_visible_btn {
+		right: 70px;
+	}
+	
+	#searchbox #div_searchMode_btn {
 		right: 0;
 	}
 	
 	#searchbox #div_fontColor_btn:hover,
 	#searchbox #div_background_btn:hover,
-	#searchbox #div_top_visible_btn:hover {
+	#searchbox #div_top_visible_btn:hover,
+	#searchbox #div_searchMode_btn:hover {
 		background-color: #5c0d12a1;
 		color: #e3e0d1;
 	}
@@ -1283,7 +1289,8 @@ func_eh_ex(() => {
 	
 	#searchbox #div_fontColor_btn,
 	#searchbox #div_background_btn,
-	#searchbox #div_top_visible_btn {
+	#searchbox #div_top_visible_btn,
+	#searchbox #div_searchMode_btn {
 		position: absolute;
 		top: 0;
 		width: 70px;
@@ -1297,20 +1304,25 @@ func_eh_ex(() => {
 	}
 	
 	#searchbox #div_fontColor_btn {
-		right: 140px;
+		right: 210px;
 	}
 	
 	#searchbox #div_background_btn {
-		right: 70px;
+		right: 140px;
 	}
 	
 	#searchbox #div_top_visible_btn {
+		right: 70px;
+	}
+	
+	#searchbox #div_searchMode_btn {
 		right: 0;
 	}
 	
 	#searchbox #div_fontColor_btn:hover,
 	#searchbox #div_background_btn:hover,
-	#searchbox #div_top_visible_btn:hover {
+	#searchbox #div_top_visible_btn:hover,
+	#searchbox #div_searchMode_btn:hover {
 		background-color: #43464e;
 	}
 	

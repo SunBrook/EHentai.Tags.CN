@@ -107,6 +107,12 @@ function frontPageHtml() {
     var searchBoxDiv = document.getElementById("searchbox");
     searchBoxDiv.appendChild(webdiv);
     //searchBoxDiv.insertBefore(webdiv, searchBoxDiv.children[0]);
+
+	// 判断是否需要隐藏
+	var oldSearchMode = getSearchMode();
+	if (oldSearchMode == 1){
+		webdiv.style.display = "none";
+	}
     webdiv.innerHTML = category_html;
 }
 
