@@ -383,7 +383,7 @@ function frontPageTitleTranslate() {
 			h1.innerText = "E-Hentai.org：一个免费的绅士同人志、漫画和图片集的网站";
 		}, () => {
 			// EX
-			h1.children[0].innerText = "深网站点";
+			h1.children[0].innerText = "洋葱站点";
 			h1.children[1].innerText = "[ 使用 Tor 访问 ]";
 		});
 	} else if (pathname == "/watched") {

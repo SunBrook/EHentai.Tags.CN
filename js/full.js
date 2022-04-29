@@ -3312,12 +3312,31 @@ func_eh_ex(() => {
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
+	}
+	
+	.t_frontpage_ido #searchbox .nopm {
+		margin-top: 10px;
+	}
+	
+	.t_frontpage_ido #searchbox .nopm:first-child input:not(:first-child) {
+		width: 70px;
+	}
+	
+	.t_frontpage_ido #advdiv {
+		width: 598px;
+		margin: auto;
+		border: 2px ridge #3c3c3c;
+		margin-top: 11px;
+	}
+	
+	.t_frontpage_ido #advdiv,
+	.t_frontpage_ido #fsdiv {
+		padding: 10px 0;
 	}`;
 	styleInject(category_style);
 });
 
 //#endregion
-
 
 
 //#region step1.2.translateTopMenu.js 头部菜单翻译
@@ -4264,6 +4283,123 @@ function initUserSettings(func_compelete) {
 
 //#endregion
 
+//#region step3.0.frontTopTranslate.js 首页头部翻译
+
+function frontTopOldSearchTranslate() {
+    var nopms = document.getElementsByClassName("nopm");
+
+    // 搜索框 和 按钮翻译
+    var searchDiv = nopms[0];
+    var fSerach = document.getElementById("f_search");
+    fSerach.setAttribute("placeholder", "搜索关键字");
+    var searchSubmitBtn = searchDiv.children[1];
+    searchSubmitBtn.value = "搜索";
+    var searchClearBtn = searchDiv.children[2];
+    searchClearBtn.value = "清空";
+
+    // 显示高级选项、图片搜索
+    var advancedDiv = nopms[1];
+    var advanceLink = advancedDiv.children[0];
+    advanceLink.innerText = "显示高级选项";
+    advanceLink.onclick = function () {
+        this.innerText == "隐藏高级选项" ? copyModify_hide_advsearch_pane(this) : copyModify_show_advsearch_pane(this)
+    }
+
+    if (advancedDiv.children.length > 1) {
+        var fileSearchLink = advancedDiv.children[1];
+        fileSearchLink.innerText = "显示图片搜索";
+        fileSearchLink.onclick = function () {
+            this.innerText == "隐藏图片搜索" ? copyModify_hide_filesearch_pane(this) : copyModify_show_filesearch_pane(this);
+        }
+    }
+}
+
+
+function copyModify_show_advsearch_pane(b) {
+    var c = document.getElementById("advdiv");
+    b.innerHTML = "隐藏高级选项";
+    c.style.display = "";
+    c.innerHTML = `<input type="hidden" id="advsearch" name="advsearch" value="1" />
+    <table class="itss">
+        <tr>
+            <td class="ic4">
+                <input id="adv11" type="checkbox" name="f_sname" checked="checked" />
+                <label for="adv11">搜索作品名称</label>
+            </td>
+            <td class="ic4"><input id="adv12" type="checkbox" name="f_stags" checked="checked" />
+                <label for="adv12">搜索标签</label>
+            </td>
+            <td class="ic2"><input id="adv13" type="checkbox" name="f_sdesc" colspan="2" />
+                <label for="adv13">搜索描述</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="ic2" colspan="2"><input id="adv31" type="checkbox" name="f_sh" />
+                <label for="adv31">搜索已经删除的作品</label>
+            </td>
+            <td class="ic2" colspan="2"><input id="adv16" type="checkbox" name="f_sto" />
+                <label for="adv16">只显示有种子的作品</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="ic2" colspan="2">
+                <input id="adv21" type="checkbox" name="f_sdt1" />
+                <label for="adv21">搜索低权重的标签</label>
+            </td>
+            <td class="ic2" colspan="2">
+                <input id="adv22" type="checkbox" name="f_sdt2" />
+                <label for="adv22">搜索被否决的标签</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="ic2" colspan="2">搜索
+                <input type="text" id="f_spf" name="f_spf" value="" size="4" maxlength="4" style="width:30px" /> 至
+                <input type="text" id="f_spt" name="f_spt" value="" size="4" maxlength="4" style="width:30px" />
+                页
+            </td>
+            <td class="ic2" colspan="2"><input id="adv32" type="checkbox" name="f_sr" />
+                <label for="adv32">评分不低于:</label> <select id="adv42" class="imr" name="f_srdd">
+                    <option value="2">2 星</option>
+                    <option value="3">3 星</option>
+                    <option value="4">4 星</option>
+                    <option value="5">5 星</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="ic1" colspan="4">默认禁用筛选：
+                <input id="adv51" type="checkbox" name="f_sfl" />
+                <label for="adv51">语言</label>
+                <input id="adv52" type="checkbox" name="f_sfu" />
+                <label for="adv52">上传者</label>
+                <input id="adv53" type="checkbox" name="f_sft" />
+                <label for="adv53">标签</label>
+            </td>
+        </tr>
+    </table>`;
+}
+
+function copyModify_hide_advsearch_pane(b) {
+    var c = document.getElementById("advdiv");
+    b.innerHTML = "显示高级选项";
+    c.style.display = "none";
+    c.innerHTML = "";
+}
+
+function copyModify_show_filesearch_pane(b) {
+    var c = document.getElementById("fsdiv");
+    b.innerHTML = "隐藏图片搜索";
+    c.style.display = "";
+    c.innerHTML = '<form action="' + ulhost + 'image_lookup.php" method="post" enctype="multipart/form-data"><div><p style="font-weight:bold">If you want to combine a file search with a category/keyword search, upload the file first.</p><p>Select a file to upload, then hit File Search. All public galleries containing this exact file will be displayed.</p><div><input type="file" name="sfile" size="40" /> <input type="submit" name="f_sfile" value="File Search" /></div><p>For color images, the system can also perform a similarity lookup to find resampled images.</p><table class="itsf">	<tr>		<td class="ic3"><input id="fs_similar" type="checkbox" name="fs_similar" checked="checked" /> <label for="fs_similar">Use Similarity Scan</label></td>		<td class="ic3"><input id="fs_covers" type="checkbox" name="fs_covers" /> <label for="fs_covers">Only Search Covers</label></td>		<td class="ic3"><input id="fs_exp" type="checkbox" name="fs_exp" /> <label for="fs_exp">Show Expunged</label></td>	</tr></table></div></form>'
+}
+
+function copyModify_hide_filesearch_pane(b) {
+    hide_filesearch_pane(b);
+    b.innerText = "显示图片搜索";
+}
+
+//#endregion
+
 
 
 //#region step3.1.frontTranslate.js 首页谷歌翻译
@@ -4651,7 +4787,7 @@ function frontPageTitleTranslate() {
 			h1.innerText = "E-Hentai.org：一个免费的绅士同人志、漫画和图片集的网站";
 		}, () => {
 			// EX
-			h1.children[0].innerText = "深网站点";
+			h1.children[0].innerText = "洋葱站点";
 			h1.children[1].innerText = "[ 使用 Tor 访问 ]";
 		});
 	} else if (pathname == "/watched") {
@@ -4663,179 +4799,178 @@ function frontPageTitleTranslate() {
 //#endregion
 
 
-
 //#region step3.2.frontPageTopStyle 首页头部搜索显示隐藏
 
 // 添加样式和逻辑，从 localstroage 中读取显示隐藏
 function frontPageTopStyleStep01() {
-    // 调整头部样式
-    var searchBoxDiv = document.getElementById("searchbox");
-    searchBoxDiv.style.width = "auto";
-    searchBoxDiv.style.border = "0";
+	// 调整头部样式
+	var searchBoxDiv = document.getElementById("searchbox");
+	searchBoxDiv.style.width = "auto";
+	searchBoxDiv.style.border = "0";
 
-    // 头部添加词库更新提示
-    var dataUpdateDiv = document.createElement("div");
-    dataUpdateDiv.id = "data_update_tip";
-    var dataUpdateText = document.createTextNode("词库升级中...");
-    dataUpdateDiv.appendChild(dataUpdateText);
-    searchBoxDiv.appendChild(dataUpdateDiv);
+	// 头部添加词库更新提示
+	var dataUpdateDiv = document.createElement("div");
+	dataUpdateDiv.id = "data_update_tip";
+	var dataUpdateText = document.createTextNode("词库升级中...");
+	dataUpdateDiv.appendChild(dataUpdateText);
+	searchBoxDiv.appendChild(dataUpdateDiv);
 
-    // 纯搜索模式、标签模式（默认）按钮
-    var searchModeDiv = document.createElement("div");
-    searchModeDiv.id = "div_searchMode_btn";
-    searchModeDiv.addEventListener("click", searchModeChange);
-    searchBoxDiv.appendChild(searchModeDiv);
+	// 纯搜索模式、标签模式（默认）按钮
+	var searchModeDiv = document.createElement("div");
+	searchModeDiv.id = "div_searchMode_btn";
+	searchModeDiv.addEventListener("click", searchModeChange);
+	searchBoxDiv.appendChild(searchModeDiv);
 
-    function searchModeChange() {
-        var tagDiv = document.getElementById("div_ee8413b2");
-        if (searchModeDiv.innerText == "纯搜索模式") {
-            normalModeWrapperDiv.style.display = "none";
-            tagDiv.style.display = "none";
-            searchBoxDiv.children[0].style.display = "block";
-            searchModeDiv.innerText = "标签模式";
-            setSearchMode(1);
+	function searchModeChange() {
+		var tagDiv = document.getElementById("div_ee8413b2");
+		if (searchModeDiv.innerText == "纯搜索模式") {
+			normalModeWrapperDiv.style.display = "none";
+			tagDiv.style.display = "none";
+			searchBoxDiv.children[0].style.display = "block";
+			searchModeDiv.innerText = "标签模式";
+			setSearchMode(1);
 
-        } else {
-            normalModeWrapperDiv.style.display = "block";
-            tagDiv.style.display = "block";
-            searchModeDiv.innerText = "纯搜索模式";
-            setSearchMode(0);
+		} else {
+			normalModeWrapperDiv.style.display = "block";
+			tagDiv.style.display = "block";
+			searchModeDiv.innerText = "纯搜索模式";
+			setSearchMode(0);
 
-            // 判断头部是否需要显示
-            var oldSearchDivVisible = getOldSearchDivVisible();
-            if (oldSearchDivVisible == 0) {
-                topVisibleDiv.innerText = "头部显示";
-                searchBoxDiv.children[0].style.display = "none";
-            } else {
-                topVisibleDiv.innerText = "头部隐藏";
-            }
-        }
-    }
+			// 判断头部是否需要显示
+			var oldSearchDivVisible = getOldSearchDivVisible();
+			if (oldSearchDivVisible == 0) {
+				topVisibleDiv.innerText = "头部显示";
+				searchBoxDiv.children[0].style.display = "none";
+			} else {
+				topVisibleDiv.innerText = "头部隐藏";
+			}
+		}
+	}
 
-    // 头部按钮包裹层，包裹标准模式下的按钮
-    var normalModeWrapperDiv = document.createElement("div");
-    normalModeWrapperDiv.id = "div_normalMode_wrapper";
-    searchBoxDiv.appendChild(normalModeWrapperDiv);
+	// 头部按钮包裹层，包裹标准模式下的按钮
+	var normalModeWrapperDiv = document.createElement("div");
+	normalModeWrapperDiv.id = "div_normalMode_wrapper";
+	searchBoxDiv.appendChild(normalModeWrapperDiv);
 
-    // 头部添加字体颜色按钮
-    var fontColorDiv = document.createElement("div");
-    fontColorDiv.id = "div_fontColor_btn";
-    var fontColorText = document.createTextNode("字体颜色");
-    fontColorDiv.appendChild(fontColorText);
-    normalModeWrapperDiv.appendChild(fontColorDiv);
+	// 头部添加字体颜色按钮
+	var fontColorDiv = document.createElement("div");
+	fontColorDiv.id = "div_fontColor_btn";
+	var fontColorText = document.createTextNode("字体颜色");
+	fontColorDiv.appendChild(fontColorText);
+	normalModeWrapperDiv.appendChild(fontColorDiv);
 
-    // 头部添加背景图片按钮
-    var bgDiv = document.createElement("div");
-    bgDiv.id = "div_background_btn";
-    var bgText = document.createTextNode("背景图片");
-    bgDiv.appendChild(bgText);
-    normalModeWrapperDiv.appendChild(bgDiv);
+	// 头部添加背景图片按钮
+	var bgDiv = document.createElement("div");
+	bgDiv.id = "div_background_btn";
+	var bgText = document.createTextNode("背景图片");
+	bgDiv.appendChild(bgText);
+	normalModeWrapperDiv.appendChild(bgDiv);
 
-    // 头部显示隐藏按钮
-    var topVisibleDiv = document.createElement("div");
-    topVisibleDiv.id = "div_top_visible_btn";
-    topVisibleDiv.addEventListener("click", topVisibleChange);
-    normalModeWrapperDiv.appendChild(topVisibleDiv);
+	// 头部显示隐藏按钮
+	var topVisibleDiv = document.createElement("div");
+	topVisibleDiv.id = "div_top_visible_btn";
+	topVisibleDiv.addEventListener("click", topVisibleChange);
+	normalModeWrapperDiv.appendChild(topVisibleDiv);
 
-    function topVisibleChange() {
-        if (topVisibleDiv.innerText == "头部显示") {
-            // 头部显示
-            searchBoxDiv.children[0].style.display = "block";
-            topVisibleDiv.innerText = "头部隐藏";
-            setOldSearchDivVisible(1);
+	function topVisibleChange() {
+		if (topVisibleDiv.innerText == "头部显示") {
+			// 头部显示
+			searchBoxDiv.children[0].style.display = "block";
+			topVisibleDiv.innerText = "头部隐藏";
+			setOldSearchDivVisible(1);
 
-        } else {
-            // 头部隐藏
-            searchBoxDiv.children[0].style.display = "none";
-            topVisibleDiv.innerText = "头部显示";
-            setOldSearchDivVisible(0);
-        }
-    }
+		} else {
+			// 头部隐藏
+			searchBoxDiv.children[0].style.display = "none";
+			topVisibleDiv.innerText = "头部显示";
+			setOldSearchDivVisible(0);
+		}
+	}
 
-    // 读取头部是否隐藏，并应用到页面中
-    var oldSearchDivVisible = getOldSearchDivVisible();
-    if (oldSearchDivVisible == 0) {
-        topVisibleDiv.innerText = "头部显示";
-        searchBoxDiv.children[0].style.display = "none";
-    } else {
-        topVisibleDiv.innerText = "头部隐藏";
-    }
+	// 读取头部是否隐藏，并应用到页面中
+	var oldSearchDivVisible = getOldSearchDivVisible();
+	if (oldSearchDivVisible == 0) {
+		topVisibleDiv.innerText = "头部显示";
+		searchBoxDiv.children[0].style.display = "none";
+	} else {
+		topVisibleDiv.innerText = "头部隐藏";
+	}
 
-    // 优先级高于头部隐藏
-    // 读取模式数据，应用到页面中
-    var oldSearchMode = getSearchMode();
-    if (oldSearchMode == 1) {
-        normalModeWrapperDiv.style.display = "none";
-        searchBoxDiv.children[0].style.display = "block";
-        searchModeDiv.innerText = "标签模式";
-    } else {
-        searchModeDiv.innerText = "纯搜索模式";
-    }
+	// 优先级高于头部隐藏
+	// 读取模式数据，应用到页面中
+	var oldSearchMode = getSearchMode();
+	if (oldSearchMode == 1) {
+		normalModeWrapperDiv.style.display = "none";
+		searchBoxDiv.children[0].style.display = "block";
+		searchModeDiv.innerText = "标签模式";
+	} else {
+		searchModeDiv.innerText = "纯搜索模式";
+	}
 }
 
 // 从indexedDB 中读取隐藏折叠
 function frontPageTopStyleStep02() {
-    var searchBoxDiv = document.getElementById("searchbox");
-    var topVisibleDiv = document.getElementById("div_top_visible_btn");
-    var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
-    var searchModeDiv = document.getElementById("div_searchMode_btn");
-    var tagDiv = document.getElementById("div_ee8413b2");
+	var searchBoxDiv = document.getElementById("searchbox");
+	var topVisibleDiv = document.getElementById("div_top_visible_btn");
+	var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
+	var searchModeDiv = document.getElementById("div_searchMode_btn");
+	var tagDiv = document.getElementById("div_ee8413b2");
 
-    var oldSearchDivVisible = getOldSearchDivVisible();
-    if (oldSearchDivVisible == null) {
-        // 尝试从 indexedDB 中读取配置，如果存在则说明 localstroage 配置丢失，需要补充，页面对应隐藏折叠
-        read(table_Settings, table_Settings_key_OldSearchDiv_Visible, result => {
-            if (result) {
-                if (!result.value) {
-                    topVisibleDiv.innerText = "头部显示";
-                    searchBoxDiv.children[0].style.display = "none";
-                } else {
-                    topVisibleDiv.innerText = "头部隐藏";
-                }
-                setOldSearchDivVisible(result.value ? 1 : 0);
-            }
-        }, () => { });
+	var oldSearchDivVisible = getOldSearchDivVisible();
+	if (oldSearchDivVisible == null) {
+		// 尝试从 indexedDB 中读取配置，如果存在则说明 localstroage 配置丢失，需要补充，页面对应隐藏折叠
+		read(table_Settings, table_Settings_key_OldSearchDiv_Visible, result => {
+			if (result) {
+				if (!result.value) {
+					topVisibleDiv.innerText = "头部显示";
+					searchBoxDiv.children[0].style.display = "none";
+				} else {
+					topVisibleDiv.innerText = "头部隐藏";
+				}
+				setOldSearchDivVisible(result.value ? 1 : 0);
+			}
+		}, () => { });
 
-    }
+	}
 
-    // 添加按钮点击事件，用于将配置存储到 indexDB 中
-    topVisibleDiv.addEventListener("click", () => {
-        var settings_oldSearchDivVisible = {
-            item: table_Settings_key_OldSearchDiv_Visible,
-            value: topVisibleDiv.innerText == "头部隐藏"
-        };
-        update(table_Settings, settings_oldSearchDivVisible, () => {
-            setDbSyncMessage(sync_oldSearchTopVisible);
-        }, () => { });
-    });
+	// 添加按钮点击事件，用于将配置存储到 indexDB 中
+	topVisibleDiv.addEventListener("click", () => {
+		var settings_oldSearchDivVisible = {
+			item: table_Settings_key_OldSearchDiv_Visible,
+			value: topVisibleDiv.innerText == "头部隐藏"
+		};
+		update(table_Settings, settings_oldSearchDivVisible, () => {
+			setDbSyncMessage(sync_oldSearchTopVisible);
+		}, () => { });
+	});
 
 
-    var oldSearchMode = getSearchMode();
-    if (oldSearchMode == null) {
-        read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
-            if (result) {
-                if (result.value == 1) {
-                    normalModeWrapperDiv.style.display = "none";
-                    searchBoxDiv.children[0].style.display = "block";
-                    tagDiv.style.display = "none";
-                    searchModeDiv.innerText = "标签模式";
-                } else {
-                    searchModeDiv.innerText = "纯搜索模式";
-                }
-                setSearchMode(result.value);
-            }
-        }, () => { });
-    }
+	var oldSearchMode = getSearchMode();
+	if (oldSearchMode == null) {
+		read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
+			if (result) {
+				if (result.value == 1) {
+					normalModeWrapperDiv.style.display = "none";
+					searchBoxDiv.children[0].style.display = "block";
+					tagDiv.style.display = "none";
+					searchModeDiv.innerText = "标签模式";
+				} else {
+					searchModeDiv.innerText = "纯搜索模式";
+				}
+				setSearchMode(result.value);
+			}
+		}, () => { });
+	}
 
-    searchModeDiv.addEventListener("click", () => {
-        var settings_keyfrontPageSearchMode = {
-            item: table_Settings_key_FrontPageSearchMode,
-            value: searchModeDiv.innerText == "标签模式" ? 1 : 0
-        };
-        update(table_Settings, settings_keyfrontPageSearchMode, () => {
-            setDbSyncMessage(sync_frontPageSearchMode);
-        }, () => { });
-    });
+	searchModeDiv.addEventListener("click", () => {
+		var settings_keyfrontPageSearchMode = {
+			item: table_Settings_key_FrontPageSearchMode,
+			value: searchModeDiv.innerText == "标签模式" ? 1 : 0
+		};
+		update(table_Settings, settings_keyfrontPageSearchMode, () => {
+			setDbSyncMessage(sync_frontPageSearchMode);
+		}, () => { });
+	});
 }
 
 //#endregion
@@ -8327,6 +8462,7 @@ function uconfigPageReWrapperForm(contentForm) {
 //TODO EH 打怪兽弹窗无法直接关闭，添加关闭按钮
 
 //TODO 首页和偏好页面头部翻译
+//TODO 首页输入搜索功能
 //DONE 首页和偏好页面纯搜索模式、标签模式切换
 //DONE 首页和偏好页面的翻译标题
 
@@ -8419,8 +8555,17 @@ function mainPageCategory() {
 	// 跨域
 	crossDomain();
 
+	// 最外层添加样式方便调整
+	var ido = document.getElementsByClassName("ido");
+	if (ido.length > 0) {
+		ido[0].classList.add("t_frontpage_ido");
+	}
+
 	// 头部标题翻译
 	frontPageTitleTranslate();
+
+	// 头部原始搜索翻译
+	frontTopOldSearchTranslate();
 
 	// 从localstroge 读取，头部隐藏折叠
 	frontPageTopStyleStep01();
@@ -10792,231 +10937,231 @@ function mainPageCategory() {
 
 			//#region step5.1.dataSync.frontPage.js 首页数据同步
 
-window.onstorage = function (e) {
-    try {
-        console.log(e);
-        switch (e.newValue) {
-            case sync_oldSearchTopVisible:
-                updatePageTopVisible();
-                break;
-            case sync_categoryList:
-                updatePageCategoryList();
-                break;
-            case sync_favoriteList:
-                updatePageFavoriteList();
-                break;
-            case sync_categoryList_Extend:
-                updatePageCategoryListExtend();
-                break;
-            case sync_favoriteList_Extend:
-                updatePageFavoriteListExtend();
-                break;
-            case sync_googleTranslate_frontPage_title:
-                updateGoogleTranslateFrontPageTitle();
-                break;
-            case sync_setting_backgroundImage:
-                updateSettingBackgroundImage();
-                break;
-            case sync_setting_frontPageFontColor:
-                updateSettingFrontPageFontColor();
-                break;
-            case sync_frontPageSearchMode:
-                updateFrontPageSearchMode();
-                break;
-        }
-    } catch (error) {
-        removeDbSyncMessage();
-    }
-}
+			window.onstorage = function (e) {
+				try {
+					console.log(e);
+					switch (e.newValue) {
+						case sync_oldSearchTopVisible:
+							updatePageTopVisible();
+							break;
+						case sync_categoryList:
+							updatePageCategoryList();
+							break;
+						case sync_favoriteList:
+							updatePageFavoriteList();
+							break;
+						case sync_categoryList_Extend:
+							updatePageCategoryListExtend();
+							break;
+						case sync_favoriteList_Extend:
+							updatePageFavoriteListExtend();
+							break;
+						case sync_googleTranslate_frontPage_title:
+							updateGoogleTranslateFrontPageTitle();
+							break;
+						case sync_setting_backgroundImage:
+							updateSettingBackgroundImage();
+							break;
+						case sync_setting_frontPageFontColor:
+							updateSettingFrontPageFontColor();
+							break;
+						case sync_frontPageSearchMode:
+							updateFrontPageSearchMode();
+							break;
+					}
+				} catch (error) {
+					removeDbSyncMessage();
+				}
+			}
 
-// 头部搜索折叠隐藏
-function updatePageTopVisible() {
-    indexDbInit(() => {
-        read(table_Settings, table_Settings_key_OldSearchDiv_Visible, result => {
-            var searchBoxDiv = document.getElementById("searchbox");
-            var topVisibleDiv = document.getElementById("div_top_visible_btn");
-            if (result && result.value) {
-                // 显示
-                searchBoxDiv.children[0].style.display = "block";
-                topVisibleDiv.innerText = "头部隐藏";
-            } else {
-                // 隐藏
-                searchBoxDiv.children[0].style.display = "none";
-                topVisibleDiv.innerText = "头部显示";
-            }
-            removeDbSyncMessage();
-        }, () => {
-            removeDbSyncMessage();
-        });
-    });
-}
+			// 头部搜索折叠隐藏
+			function updatePageTopVisible() {
+				indexDbInit(() => {
+					read(table_Settings, table_Settings_key_OldSearchDiv_Visible, result => {
+						var searchBoxDiv = document.getElementById("searchbox");
+						var topVisibleDiv = document.getElementById("div_top_visible_btn");
+						if (result && result.value) {
+							// 显示
+							searchBoxDiv.children[0].style.display = "block";
+							topVisibleDiv.innerText = "头部隐藏";
+						} else {
+							// 隐藏
+							searchBoxDiv.children[0].style.display = "none";
+							topVisibleDiv.innerText = "头部显示";
+						}
+						removeDbSyncMessage();
+					}, () => {
+						removeDbSyncMessage();
+					});
+				});
+			}
 
-// 本地列表更新
-function updatePageCategoryList() {
-    indexDbInit(() => {
-        categoryInit();
-        removeDbSyncMessage();
-    });
-}
+			// 本地列表更新
+			function updatePageCategoryList() {
+				indexDbInit(() => {
+					categoryInit();
+					removeDbSyncMessage();
+				});
+			}
 
-// 本地收藏更新
-function updatePageFavoriteList() {
-    // 读取收藏 html 应用到页面，如果为空，直接清空收藏页面即可
-    // 读取收藏折叠并应用，每个收藏项的点击事件
-    indexDbInit(() => {
-        var favoriteListDiv = document.getElementById("favorites_list");
-        // 退出编辑模式
-        editToFavorite();
+			// 本地收藏更新
+			function updatePageFavoriteList() {
+				// 读取收藏 html 应用到页面，如果为空，直接清空收藏页面即可
+				// 读取收藏折叠并应用，每个收藏项的点击事件
+				indexDbInit(() => {
+					var favoriteListDiv = document.getElementById("favorites_list");
+					// 退出编辑模式
+					editToFavorite();
 
-        read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
-            console.log('r', result);
-            if (result && result.value) {
-                // 存在收藏 html
-                // 页面附加Html
-                favoriteListDiv.innerHTML = result.value;
-                // 小项添加点击事件
-                favoriteItemsClick();
-                // 折叠菜单添加点击事件
-                favoriteExtendClick();
-                // 设置收藏折叠
-                setFavoriteExpend();
-                // 更新按钮状态
-                updateFavoriteListBtnStatus();
-            } else {
-                // 不存在收藏 html
-                // 清理收藏页面
-                favoriteListDiv.innerHTML = '';
-                // 更新按钮状态
-                updateFavoriteListBtnStatus();
-            }
-            // 清理通知
-            removeDbSyncMessage();
-        }, () => {
-            // 清理通知
-            removeDbSyncMessage();
-        });
-    });
+					read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
+						console.log('r', result);
+						if (result && result.value) {
+							// 存在收藏 html
+							// 页面附加Html
+							favoriteListDiv.innerHTML = result.value;
+							// 小项添加点击事件
+							favoriteItemsClick();
+							// 折叠菜单添加点击事件
+							favoriteExtendClick();
+							// 设置收藏折叠
+							setFavoriteExpend();
+							// 更新按钮状态
+							updateFavoriteListBtnStatus();
+						} else {
+							// 不存在收藏 html
+							// 清理收藏页面
+							favoriteListDiv.innerHTML = '';
+							// 更新按钮状态
+							updateFavoriteListBtnStatus();
+						}
+						// 清理通知
+						removeDbSyncMessage();
+					}, () => {
+						// 清理通知
+						removeDbSyncMessage();
+					});
+				});
 
-}
+			}
 
-// 本地列表折叠更新
-function updatePageCategoryListExtend() {
-    indexDbInit(() => {
-        var ehTagExtendSpans = document.getElementsByClassName("category_extend_ehTag");
-        read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
-            if (extendResult) {
-                extendDiv(ehTagExtendSpans, extendResult.value);
-            } else {
-                extendDiv(ehTagExtendSpans, []);
-            };
-        }, () => {
-        });
+			// 本地列表折叠更新
+			function updatePageCategoryListExtend() {
+				indexDbInit(() => {
+					var ehTagExtendSpans = document.getElementsByClassName("category_extend_ehTag");
+					read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
+						if (extendResult) {
+							extendDiv(ehTagExtendSpans, extendResult.value);
+						} else {
+							extendDiv(ehTagExtendSpans, []);
+						};
+					}, () => {
+					});
 
-        var fetishExtendSpans = document.getElementsByClassName("category_extend_fetish");
-        read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
-            if (extendResult) {
-                extendDiv(fetishExtendSpans, extendResult.value);
-            } else {
-                extendDiv(fetishExtendSpans, []);
-            }
-        }, () => { });
+					var fetishExtendSpans = document.getElementsByClassName("category_extend_fetish");
+					read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
+						if (extendResult) {
+							extendDiv(fetishExtendSpans, extendResult.value);
+						} else {
+							extendDiv(fetishExtendSpans, []);
+						}
+					}, () => { });
 
-        // 清理通知
-        removeDbSyncMessage();
-    });
-}
+					// 清理通知
+					removeDbSyncMessage();
+				});
+			}
 
-// 本地收藏折叠更新
-function updatePageFavoriteListExtend() {
-    indexDbInit(() => {
-        // 退出编辑模式
-        editToFavorite();
-        // 设置收藏折叠
-        setFavoriteExpend();
-        // 更新按钮状态
-        updateFavoriteListBtnStatus();
-        // 清理通知
-        removeDbSyncMessage();
-    });
-}
+			// 本地收藏折叠更新
+			function updatePageFavoriteListExtend() {
+				indexDbInit(() => {
+					// 退出编辑模式
+					editToFavorite();
+					// 设置收藏折叠
+					setFavoriteExpend();
+					// 更新按钮状态
+					updateFavoriteListBtnStatus();
+					// 清理通知
+					removeDbSyncMessage();
+				});
+			}
 
-// 首页谷歌翻译标题
-function updateGoogleTranslateFrontPageTitle() {
-    indexDbInit(() => {
-        read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-            var translateCheckbox = document.getElementById("googleTranslateCheckbox");
-            translateCheckbox.checked = result && result.value;
-            translateMainPageTitleDisplay();
-            removeDbSyncMessage();
-        }, () => { removeDbSyncMessage(); });
-    })
-}
+			// 首页谷歌翻译标题
+			function updateGoogleTranslateFrontPageTitle() {
+				indexDbInit(() => {
+					read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+						var translateCheckbox = document.getElementById("googleTranslateCheckbox");
+						translateCheckbox.checked = result && result.value;
+						translateMainPageTitleDisplay();
+						removeDbSyncMessage();
+					}, () => { removeDbSyncMessage(); });
+				})
+			}
 
-// 首页背景图片更新
-function updateSettingBackgroundImage() {
-    indexDbInit(() => {
-        initBackground(() => {
-            if (backgroundFormDiv.style.display == "block") {
-                var bgDiv = document.getElementById("div_background_btn");
-                bgDiv.style.display = "none";
-            }
-        });
-    });
-}
+			// 首页背景图片更新
+			function updateSettingBackgroundImage() {
+				indexDbInit(() => {
+					initBackground(() => {
+						if (backgroundFormDiv.style.display == "block") {
+							var bgDiv = document.getElementById("div_background_btn");
+							bgDiv.style.display = "none";
+						}
+					});
+				});
+			}
 
-// 首页列表字体颜色
-function updateSettingFrontPageFontColor() {
-    indexDbInit(() => {
-        initFontColor(() => {
-            if (listFontColorDiv.style.display == "block") {
-                var frontDiv = document.getElementById("div_fontColor_btn");
-                frontDiv.style.display = "none";
-            }
-        });
-    });
-}
+			// 首页列表字体颜色
+			function updateSettingFrontPageFontColor() {
+				indexDbInit(() => {
+					initFontColor(() => {
+						if (listFontColorDiv.style.display == "block") {
+							var frontDiv = document.getElementById("div_fontColor_btn");
+							frontDiv.style.display = "none";
+						}
+					});
+				});
+			}
 
-// 首页搜索模式更新
-function updateFrontPageSearchMode() {
-    indexDbInit(() => {
-        read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
-            var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
-            var searchModeDiv = document.getElementById("div_searchMode_btn");
-            var tagDiv = document.getElementById("div_ee8413b2");
-            var topVisibleDiv = document.getElementById("div_top_visible_btn");
-            var searchBoxDiv = document.getElementById("searchbox");
+			// 首页搜索模式更新
+			function updateFrontPageSearchMode() {
+				indexDbInit(() => {
+					read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
+						var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
+						var searchModeDiv = document.getElementById("div_searchMode_btn");
+						var tagDiv = document.getElementById("div_ee8413b2");
+						var topVisibleDiv = document.getElementById("div_top_visible_btn");
+						var searchBoxDiv = document.getElementById("searchbox");
 
-            if (result && result.value == 1) {
-                // 纯搜索模式
-                normalModeWrapperDiv.style.display = "none";
-                searchBoxDiv.children[0].style.display = "block";
-                tagDiv.style.display = "none";
-                searchModeDiv.innerText = "标签模式";
+						if (result && result.value == 1) {
+							// 纯搜索模式
+							normalModeWrapperDiv.style.display = "none";
+							searchBoxDiv.children[0].style.display = "block";
+							tagDiv.style.display = "none";
+							searchModeDiv.innerText = "标签模式";
 
-            } else {
-                // 标签模式
-                normalModeWrapperDiv.style.display = "block";
-                tagDiv.style.display = "block";
-                searchModeDiv.innerText = "纯搜索模式";
+						} else {
+							// 标签模式
+							normalModeWrapperDiv.style.display = "block";
+							tagDiv.style.display = "block";
+							searchModeDiv.innerText = "纯搜索模式";
 
-                // 判断头部是否需要显示
-                var oldSearchDivVisible = getOldSearchDivVisible();
-                if (oldSearchDivVisible == 0) {
-                    topVisibleDiv.innerText = "头部显示";
-                    searchBoxDiv.children[0].style.display = "none";
-                } else {
-                    topVisibleDiv.innerText = "头部隐藏";
-                }
-            }
+							// 判断头部是否需要显示
+							var oldSearchDivVisible = getOldSearchDivVisible();
+							if (oldSearchDivVisible == 0) {
+								topVisibleDiv.innerText = "头部显示";
+								searchBoxDiv.children[0].style.display = "none";
+							} else {
+								topVisibleDiv.innerText = "头部隐藏";
+							}
+						}
 
-            removeDbSyncMessage();
-        }, () => {
-            removeDbSyncMessage();
-        });
-    });
-}
+						removeDbSyncMessage();
+					}, () => {
+						removeDbSyncMessage();
+					});
+				});
+			}
 
-//#endregion
+			//#endregion
 
 
 

@@ -2348,6 +2348,26 @@ func_eh_ex(() => {
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
+	}
+	
+	.t_frontpage_ido #searchbox .nopm {
+		margin-top: 10px;
+	}
+	
+	.t_frontpage_ido #searchbox .nopm:first-child input:not(:first-child) {
+		width: 70px;
+	}
+	
+	.t_frontpage_ido #advdiv {
+		width: 598px;
+		margin: auto;
+		border: 2px ridge #3c3c3c;
+		margin-top: 11px;
+	}
+	
+	.t_frontpage_ido #advdiv,
+	.t_frontpage_ido #fsdiv {
+		padding: 10px 0;
 	}`;
 	styleInject(category_style);
 });
