@@ -22,6 +22,24 @@ const fontMenusData = {
 
 //#endregion
 
+//#region 底部菜单
+
+const bottomMenusData = {
+	"Front Page": "首页",
+	"Onion": "洋葱网站",
+	"Terms of Service": "服务条款",
+	"Advertise": "申请广告位"
+};
+
+const bottom2MenusDataForEH = {
+	"Visit the E-Hentai Forums": "前往 E-Hentai 论坛",
+	"E-Hentai @ Twitter": "Twitter主页",
+	"Play the HentaiVerse Minigame": "玩 變態之道 (游戏)",
+	"Lo-Fi Version": "低保真网站 (适合移动设备浏览)"
+};
+
+//#endregion
+
 //#region 作品分类
 
 // 作品分类 01

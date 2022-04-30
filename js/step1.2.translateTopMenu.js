@@ -1,4 +1,4 @@
-//#region step1.2.translateTopMenu.js 头部菜单翻译
+//#region step1.2.translateTopBottomMenu.js 头部菜单、底部菜单翻译
 
 function topMenuTranslateZh() {
 	var nb = document.getElementById("nb");
@@ -32,7 +32,21 @@ function topMenuTranslateZh() {
 			}
 		}
 	}
+}
 
+function bottomMenuTranslateZh() {
+	var dp = document.getElementsByClassName("dp");
+	if (dp.length > 0) {
+		var alinks = dp[0].children;
+		for (const i in alinks) {
+			if (Object.hasOwnProperty.call(alinks, i)) {
+				const alink = alinks[i];
+				if (bottomMenusData[alink.innerText]){
+					alink.innerText = bottomMenusData[alink.innerText];
+				}
+			}
+		}
+	}
 }
 
 //#endregion

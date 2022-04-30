@@ -267,6 +267,23 @@ function innerTextPageToYe(element) {
 
 function mainPageTranslate() {
 
+	// 如果是EH，翻译底部倒数第二排的链接
+	func_eh_ex(() => {
+		var ips = document.getElementsByClassName("ip");
+		if (ips.length > 0) {
+			var lastIp = ips[ips.length - 1];
+			var alinks = lastIp.querySelectorAll("a");
+			for (const i in alinks) {
+				if (Object.hasOwnProperty.call(alinks, i)) {
+					const alink = alinks[i];
+					if (bottom2MenusDataForEH[alink.innerText]) {
+						alink.innerText = bottom2MenusDataForEH[alink.innerText];
+					}
+				}
+			}
+		}
+	}, () => { });
+
 	// 作品类型翻译
 	bookTypeTranslate();
 
@@ -274,9 +291,13 @@ function mainPageTranslate() {
 	var ip = document.getElementsByClassName("ip");
 	if (ip.length > 0) {
 		if (webHost == "exhentai.org") {
-			var ipElement = ip[ip.length - 1];
-			var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
-			ipElement.innerText = `共 ${totalCount} 条记录`;
+			if (ip.length > 0) {
+				var ipElement = ip[ip.length - 1];
+				ipElement.innerText = ipElement.innerText.replace("Showing", "共")
+					.replace("results", "条记录").replace("result", "条记录")
+					.replace(". Your filters excluded", "，本页面你的过滤排除了")
+					.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
+			}
 
 			if (ip.length > 1) {
 				var ipTagElement = ip[ip.length - 2];
@@ -285,17 +306,19 @@ function mainPageTranslate() {
 				ipTagElement.children[1].innerText = "我的标签";
 			}
 		} else if (webHost == "e-hentai.org") {
-			if (ip.innerText) {
+			if (ip.length > 1) {
 				var ipElement = ip[ip.length - 2];
-				var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
-				ipElement.innerText = `共 ${totalCount} 条记录`;
+				ipElement.innerText = ipElement.innerText.replace("Showing", "共")
+					.replace("results", "条记录").replace("result", "条记录")
+					.replace(". Your filters excluded", "，本页面你的过滤排除了")
+					.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
+			}
 
-				if (ip.length > 2) {
-					var ipTagElement = ip[ip.length - 3];
-					var strongText = ipTagElement.children[0];
-					strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
-					ipTagElement.children[1].innerText = "我的标签";
-				}
+			if (ip.length > 2) {
+				var ipTagElement = ip[ip.length - 3];
+				var strongText = ipTagElement.children[0];
+				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+				ipTagElement.children[1].innerText = "我的标签";
 			}
 		}
 
@@ -330,13 +353,23 @@ function mainPageTranslate() {
 			translatePageElement(otherP);
 		}
 
-		// var ido = document.getElementsByClassName("ido");
-		// if (ido.length > 0) {
-		// 	var nullInfo = ido[0].lastChild.lastChild;
-		// 	if (nullInfo) {
-		// 		translatePageElement(nullInfo);
-		// 	}
-		// }
+		var ido = document.getElementsByClassName("ido");
+		if (ido.length > 0) {
+			func_eh_ex(() => {
+				var ips = document.getElementsByClassName("ip");
+				if (ips.length == 1) {
+					var toppane = document.getElementById("toppane");
+					var nullInfo = toppane.nextElementSibling.children[0];
+					translatePageElement(nullInfo);
+				}
+
+			}, () => {
+				var nullInfo = ido[0].lastChild.lastChild;
+				if (nullInfo) {
+					translatePageElement(nullInfo);
+				}
+			});
+		}
 
 		return;
 	}
