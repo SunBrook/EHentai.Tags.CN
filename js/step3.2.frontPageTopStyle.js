@@ -26,6 +26,7 @@ function frontPageTopStyleStep01() {
             normalModeWrapperDiv.style.display = "none";
             tagDiv.style.display = "none";
             searchBoxDiv.children[0].style.display = "block";
+            fsdivShow();
             searchModeDiv.innerText = "标签模式";
             setSearchMode(1);
 
@@ -40,6 +41,7 @@ function frontPageTopStyleStep01() {
             if (oldSearchDivVisible == 0) {
                 topVisibleDiv.innerText = "头部显示";
                 searchBoxDiv.children[0].style.display = "none";
+                fsdivHide();
             } else {
                 topVisibleDiv.innerText = "头部隐藏";
             }
@@ -75,12 +77,14 @@ function frontPageTopStyleStep01() {
         if (topVisibleDiv.innerText == "头部显示") {
             // 头部显示
             searchBoxDiv.children[0].style.display = "block";
+            fsdivShow();
             topVisibleDiv.innerText = "头部隐藏";
             setOldSearchDivVisible(1);
 
         } else {
             // 头部隐藏
             searchBoxDiv.children[0].style.display = "none";
+            fsdivHide();
             topVisibleDiv.innerText = "头部显示";
             setOldSearchDivVisible(0);
         }
@@ -91,6 +95,7 @@ function frontPageTopStyleStep01() {
     if (oldSearchDivVisible == 0) {
         topVisibleDiv.innerText = "头部显示";
         searchBoxDiv.children[0].style.display = "none";
+        fsdivHide();
     } else {
         topVisibleDiv.innerText = "头部隐藏";
     }
@@ -101,6 +106,7 @@ function frontPageTopStyleStep01() {
     if (oldSearchMode == 1) {
         normalModeWrapperDiv.style.display = "none";
         searchBoxDiv.children[0].style.display = "block";
+        fsdivShow();
         searchModeDiv.innerText = "标签模式";
     } else {
         searchModeDiv.innerText = "纯搜索模式";
@@ -123,6 +129,7 @@ function frontPageTopStyleStep02() {
                 if (!result.value) {
                     topVisibleDiv.innerText = "头部显示";
                     searchBoxDiv.children[0].style.display = "none";
+                    fsdivHide();
                 } else {
                     topVisibleDiv.innerText = "头部隐藏";
                 }
@@ -151,6 +158,7 @@ function frontPageTopStyleStep02() {
                 if (result.value == 1) {
                     normalModeWrapperDiv.style.display = "none";
                     searchBoxDiv.children[0].style.display = "block";
+                    fsdivShow();
                     tagDiv.style.display = "none";
                     searchModeDiv.innerText = "标签模式";
                 } else {
@@ -170,6 +178,36 @@ function frontPageTopStyleStep02() {
             setDbSyncMessage(sync_frontPageSearchMode);
         }, () => { });
     });
+}
+
+
+function fsdivHide() {
+    var fsdiv = document.getElementById("fsdiv");
+    if (fsdiv) {
+        fsdiv.style.display = "none";
+    }
+    var iw = document.getElementById("iw");
+    if (iw) {
+        iw.style.display = "none";
+    }
+}
+
+function fsdivShow() {
+    var labels = document.getElementsByClassName("nopm")[1].children;
+    if (labels.length > 1) {
+        var fsdiv = document.getElementById("fsdiv");
+        if (fsdiv) {
+            var txt = labels[1].innerText;
+            if (txt == "隐藏文件搜索") {
+                fsdiv.style.display = "block";
+            }
+        }
+    }
+
+    var iw = document.getElementById("iw");
+    if (iw) {
+        iw.style.display = "block";
+    }
 }
 
 //#endregion

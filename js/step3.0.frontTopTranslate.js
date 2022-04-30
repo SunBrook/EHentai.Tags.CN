@@ -28,6 +28,14 @@ function frontTopOldSearchTranslate() {
 
         // 文件搜索
         if (advancedDiv.children.length > 1) {
+            // 将 fsdiv 挪到 searchbox 最后一位
+            var fsdiv = document.getElementById("fsdiv");
+            fsdiv.parentNode.removeChild(fsdiv);
+
+            var searchbox = document.getElementById("searchbox");
+            searchbox.appendChild(fsdiv);
+
+
             var fileSearchLink = advancedDiv.children[1];
             fileSearchLink.innerText = "显示文件搜索";
             fileSearchLink.onclick = function () {

@@ -4341,57 +4341,65 @@ function initUserSettings(func_compelete) {
 //#region step3.0.frontTopTranslate.js 首页头部翻译
 
 function frontTopOldSearchTranslate() {
-	var nopms = document.getElementsByClassName("nopm");
+    var nopms = document.getElementsByClassName("nopm");
 
-	// 搜索框 和 按钮翻译
-	var searchDiv = nopms[0];
-	var fSerach = document.getElementById("f_search");
-	fSerach.setAttribute("placeholder", "搜索关键字");
-	var searchSubmitBtn = searchDiv.children[1];
-	searchSubmitBtn.value = "搜索";
-	var searchClearBtn = searchDiv.children[2];
-	searchClearBtn.value = "清空";
+    // 搜索框 和 按钮翻译
+    var searchDiv = nopms[0];
+    var fSerach = document.getElementById("f_search");
+    fSerach.setAttribute("placeholder", "搜索关键字");
+    var searchSubmitBtn = searchDiv.children[1];
+    searchSubmitBtn.value = "搜索";
+    var searchClearBtn = searchDiv.children[2];
+    searchClearBtn.value = "清空";
 
-	// 显示高级选项
-	if (nopms.length > 1) {
-		var advancedDiv = nopms[1];
-		if (advancedDiv.children.length > 0) {
-			var advanceLink = advancedDiv.children[0];
-			advanceLink.innerText = "显示高级选项";
-			advanceLink.onclick = function () {
-				this.innerText == "隐藏高级选项" ? copyModify_hide_advsearch_pane(this) : copyModify_show_advsearch_pane(this)
-			}
+    // 显示高级选项
+    if (nopms.length > 1) {
+        var advancedDiv = nopms[1];
+        if (advancedDiv.children.length > 0) {
+            var advanceLink = advancedDiv.children[0];
+            advanceLink.innerText = "显示高级选项";
+            advanceLink.onclick = function () {
+                this.innerText == "隐藏高级选项" ? copyModify_hide_advsearch_pane(this) : copyModify_show_advsearch_pane(this)
+            }
 
-			// 如果高级选项存在，则直接翻译
-			checkAdvSearchDiv(advanceLink);
-		}
+            // 如果高级选项存在，则直接翻译
+            checkAdvSearchDiv(advanceLink);
+        }
 
-		// 文件搜索
-		if (advancedDiv.children.length > 1) {
-			var fileSearchLink = advancedDiv.children[1];
-			fileSearchLink.innerText = "显示文件搜索";
-			fileSearchLink.onclick = function () {
-				this.innerText == "隐藏文件搜索" ? copyModify_hide_filesearch_pane(this) : copyModify_show_filesearch_pane(this);
-			}
+        // 文件搜索
+        if (advancedDiv.children.length > 1) {
+            // 将 fsdiv 挪到 searchbox 最后一位
+            var fsdiv = document.getElementById("fsdiv");
+            fsdiv.parentNode.removeChild(fsdiv);
 
-			// 如果文件搜索存在，则直接翻译
-			checkFsDiv(fileSearchLink);
-		}
-	} else {
-		// 搜索图片结果
-		var fileSearchResultDiv = nopms[0].nextElementSibling;
-		frontPageTranslateFileSearchResult(fileSearchResultDiv);
-	}
+            var searchbox = document.getElementById("searchbox");
+            searchbox.appendChild(fsdiv);
+
+
+            var fileSearchLink = advancedDiv.children[1];
+            fileSearchLink.innerText = "显示文件搜索";
+            fileSearchLink.onclick = function () {
+                this.innerText == "隐藏文件搜索" ? copyModify_hide_filesearch_pane(this) : copyModify_show_filesearch_pane(this);
+            }
+
+            // 如果文件搜索存在，则直接翻译
+            checkFsDiv(fileSearchLink);
+        }
+    } else {
+        // 搜索图片结果
+        var fileSearchResultDiv = nopms[0].nextElementSibling;
+        frontPageTranslateFileSearchResult(fileSearchResultDiv);
+    }
 
 
 }
 
 
 function copyModify_show_advsearch_pane(b) {
-	var c = document.getElementById("advdiv");
-	b.innerHTML = "隐藏高级选项";
-	c.style.display = "";
-	c.innerHTML = `<input type="hidden" id="advsearch" name="advsearch" value="1" />
+    var c = document.getElementById("advdiv");
+    b.innerHTML = "隐藏高级选项";
+    c.style.display = "";
+    c.innerHTML = `<input type="hidden" id="advsearch" name="advsearch" value="1" />
     <table class="itss">
         <tr>
             <td class="ic4">
@@ -4452,17 +4460,17 @@ function copyModify_show_advsearch_pane(b) {
 }
 
 function copyModify_hide_advsearch_pane(b) {
-	var c = document.getElementById("advdiv");
-	b.innerHTML = "显示高级选项";
-	c.style.display = "none";
-	c.innerHTML = "";
+    var c = document.getElementById("advdiv");
+    b.innerHTML = "显示高级选项";
+    c.style.display = "none";
+    c.innerHTML = "";
 }
 
 function copyModify_show_filesearch_pane(b) {
-	var c = document.getElementById("fsdiv");
-	b.innerHTML = "隐藏文件搜索";
-	c.style.display = "";
-	c.innerHTML = `<form action="${ulhost}image_lookup.php" method="post" enctype="multipart/form-data">
+    var c = document.getElementById("fsdiv");
+    b.innerHTML = "隐藏文件搜索";
+    c.style.display = "";
+    c.innerHTML = `<form action="${ulhost}image_lookup.php" method="post" enctype="multipart/form-data">
     <div>
         <p style="font-weight:bold">如果要将 文件 和 类别或关键词 结合起来搜索，请先上传文件。</p>
         <p>选择要搜索的图片文件，然后点击文件搜索按钮。搜索结果将显示包含此文件的所有公开作品。</p>
@@ -4490,75 +4498,77 @@ function copyModify_show_filesearch_pane(b) {
 }
 
 function copyModify_hide_filesearch_pane(b) {
-	var c = document.getElementById("fsdiv");
-	b.innerHTML = "显示文件搜索";
-	c.style.display = "none"; c.innerHTML = ""
+    var c = document.getElementById("fsdiv");
+    b.innerHTML = "显示文件搜索";
+    c.style.display = "none"; c.innerHTML = ""
 }
 
 function checkAdvSearchDiv(advanceLink) {
-	var advdiv = document.getElementById("advdiv");
-	if (advdiv.innerHTML) {
-		var trs = advdiv.querySelectorAll("tr");
-		trs[0].children[0].children[1].innerText = "搜索作品名称";
-		trs[0].children[1].children[1].innerText = "搜索标签";
-		trs[0].children[2].children[1].innerText = "搜索描述";
-		trs[1].children[0].children[1].innerText = "搜索已经删除的作品";
-		trs[1].children[1].children[1].innerText = "只显示有种子的作品";
-		trs[2].children[0].children[1].innerText = "搜索低权重的标签";
-		trs[2].children[1].children[1].innerText = "搜索被否决的标签";
+    var advdiv = document.getElementById("advdiv");
+    if (advdiv.innerHTML) {
+        var trs = advdiv.querySelectorAll("tr");
+        trs[0].children[0].children[1].innerText = "搜索作品名称";
+        trs[0].children[1].children[1].innerText = "搜索标签";
+        trs[0].children[2].children[1].innerText = "搜索描述";
+        trs[1].children[0].children[1].innerText = "搜索已经删除的作品";
+        trs[1].children[1].children[1].innerText = "只显示有种子的作品";
+        trs[2].children[0].children[1].innerText = "搜索低权重的标签";
+        trs[2].children[1].children[1].innerText = "搜索被否决的标签";
 
-		var tdPages = trs[3].children[0].childNodes;
-		tdPages[0].data = "搜索 ";
-		tdPages[2].data = " 至 ";
-		tdPages[4].data = " 页";
+        var tdPages = trs[3].children[0].childNodes;
+        tdPages[0].data = "搜索 ";
+        tdPages[2].data = " 至 ";
+        tdPages[4].data = " 页";
 
-		trs[3].children[1].children[1].innerText = "评分不低于：";
-		var tdOptions = trs[3].children[1].children[2].querySelectorAll("option");
-		for (const i in tdOptions) {
-			if (Object.hasOwnProperty.call(tdOptions, i)) {
-				const option = tdOptions[i];
-				option.innerText = option.innerText.replace("stars", "星");
-			}
-		}
+        trs[3].children[1].children[1].innerText = "评分不低于：";
+        var tdOptions = trs[3].children[1].children[2].querySelectorAll("option");
+        for (const i in tdOptions) {
+            if (Object.hasOwnProperty.call(tdOptions, i)) {
+                const option = tdOptions[i];
+                option.innerText = option.innerText.replace("stars", "星");
+            }
+        }
 
-		trs[4].children[0].childNodes[0].data = "默认禁用筛选： ";
-		trs[4].children[0].children[1].innerText = "语言";
-		trs[4].children[0].children[3].innerText = "上传者";
-		trs[4].children[0].children[5].innerText = "标签";
+        trs[4].children[0].childNodes[0].data = "默认禁用筛选： ";
+        trs[4].children[0].children[1].innerText = "语言";
+        trs[4].children[0].children[3].innerText = "上传者";
+        trs[4].children[0].children[5].innerText = "标签";
 
-		advanceLink.innerText = "隐藏高级选项";
-	}
+        advanceLink.innerText = "隐藏高级选项";
+    }
 }
 
 function checkFsDiv(fileSearchLink) {
-	var fsDiv = document.getElementById("fsdiv");
-	if (fsDiv.innerHTML) {
-		var ps = fsDiv.querySelectorAll("p");
-		ps[0].innerText = "如果要将 文件 和 类别或关键词 结合起来搜索，请先上传文件。";
-		ps[1].innerText = "选择要搜索的图片文件，然后点击文件搜索按钮。搜索结果将显示包含此文件的所有公开作品。";
-		ps[2].innerText = "对于彩色图片，系统还可以执行相似性查找以查找重新采样的图片。";
-		fsDiv.querySelectorAll("input")[1].value = "文件搜索";
-		var tds = fsDiv.querySelectorAll("td");
-		tds[0].children[1].innerText = "使用相似度搜索";
-		tds[1].children[1].innerText = "仅搜索封面";
-		tds[2].children[1].innerText = "显示已删除的作品";
+    var fsDiv = document.getElementById("fsdiv");
+    if (fsDiv.innerHTML) {
+        var ps = fsDiv.querySelectorAll("p");
+        ps[0].innerText = "如果要将 文件 和 类别或关键词 结合起来搜索，请先上传文件。";
+        ps[1].innerText = "选择要搜索的图片文件，然后点击文件搜索按钮。搜索结果将显示包含此文件的所有公开作品。";
+        ps[2].innerText = "对于彩色图片，系统还可以执行相似性查找以查找重新采样的图片。";
+        fsDiv.querySelectorAll("input")[1].value = "文件搜索";
+        var tds = fsDiv.querySelectorAll("td");
+        tds[0].children[1].innerText = "使用相似度搜索";
+        tds[1].children[1].innerText = "仅搜索封面";
+        tds[2].children[1].innerText = "显示已删除的作品";
 
-		fileSearchLink.innerText = "隐藏文件搜索";
-	}
+        fileSearchLink.innerText = "隐藏文件搜索";
+    }
 }
 
 function frontPageTranslateFileSearchResult(fileSearchResultDiv) {
-	fileSearchResultDiv.children[3].innerText = "搜索的文件：";
-	var tip = fileSearchResultDiv.children[5];
-	var isEnableSimilarSearch = tip.children[0].innerText == "enabled";
-	tip.innerHTML = `在本次搜索中，相似性查询 <strong>${isEnableSimilarSearch ? "已启用" : "已禁用"}</strong>。若要更改相似性查询的设置，你必须重新搜索。`;
-	var options = fileSearchResultDiv.children[6].querySelectorAll("td");
-	options[0].children[1].innerText = "仅搜索封面";
-	options[1].children[1].innerText = "显示已删除的作品";
-	fileSearchResultDiv.children[7].children[0].innerText = "搜索新文件";
+    fileSearchResultDiv.children[3].innerText = "搜索的文件：";
+    var tip = fileSearchResultDiv.children[5];
+    var isEnableSimilarSearch = tip.children[0].innerText == "enabled";
+    tip.innerHTML = `在本次搜索中，相似性查询 <strong>${isEnableSimilarSearch ? "已启用" : "已禁用"}</strong>。若要更改相似性查询的设置，你必须重新搜索。`;
+    var options = fileSearchResultDiv.children[6].querySelectorAll("td");
+    options[0].children[1].innerText = "仅搜索封面";
+    options[1].children[1].innerText = "显示已删除的作品";
+    fileSearchResultDiv.children[7].children[0].innerText = "搜索新文件";
 }
 
 //#endregion
+
+
 
 
 //#region step3.1.frontTranslate.js 首页谷歌翻译
@@ -5006,178 +5016,215 @@ function frontPageTitleTranslate() {
 
 // 添加样式和逻辑，从 localstroage 中读取显示隐藏
 function frontPageTopStyleStep01() {
-	// 调整头部样式
-	var searchBoxDiv = document.getElementById("searchbox");
-	searchBoxDiv.style.width = "auto";
-	searchBoxDiv.style.border = "0";
+    // 调整头部样式
+    var searchBoxDiv = document.getElementById("searchbox");
+    searchBoxDiv.style.width = "auto";
+    searchBoxDiv.style.border = "0";
 
-	// 头部添加词库更新提示
-	var dataUpdateDiv = document.createElement("div");
-	dataUpdateDiv.id = "data_update_tip";
-	var dataUpdateText = document.createTextNode("词库升级中...");
-	dataUpdateDiv.appendChild(dataUpdateText);
-	searchBoxDiv.appendChild(dataUpdateDiv);
+    // 头部添加词库更新提示
+    var dataUpdateDiv = document.createElement("div");
+    dataUpdateDiv.id = "data_update_tip";
+    var dataUpdateText = document.createTextNode("词库升级中...");
+    dataUpdateDiv.appendChild(dataUpdateText);
+    searchBoxDiv.appendChild(dataUpdateDiv);
 
-	// 纯搜索模式、标签模式（默认）按钮
-	var searchModeDiv = document.createElement("div");
-	searchModeDiv.id = "div_searchMode_btn";
-	searchModeDiv.addEventListener("click", searchModeChange);
-	searchBoxDiv.appendChild(searchModeDiv);
+    // 纯搜索模式、标签模式（默认）按钮
+    var searchModeDiv = document.createElement("div");
+    searchModeDiv.id = "div_searchMode_btn";
+    searchModeDiv.addEventListener("click", searchModeChange);
+    searchBoxDiv.appendChild(searchModeDiv);
 
-	function searchModeChange() {
-		var tagDiv = document.getElementById("div_ee8413b2");
-		if (searchModeDiv.innerText == "纯搜索模式") {
-			normalModeWrapperDiv.style.display = "none";
-			tagDiv.style.display = "none";
-			searchBoxDiv.children[0].style.display = "block";
-			searchModeDiv.innerText = "标签模式";
-			setSearchMode(1);
+    function searchModeChange() {
+        var tagDiv = document.getElementById("div_ee8413b2");
+        if (searchModeDiv.innerText == "纯搜索模式") {
+            normalModeWrapperDiv.style.display = "none";
+            tagDiv.style.display = "none";
+            searchBoxDiv.children[0].style.display = "block";
+            fsdivShow();
+            searchModeDiv.innerText = "标签模式";
+            setSearchMode(1);
 
-		} else {
-			normalModeWrapperDiv.style.display = "block";
-			tagDiv.style.display = "block";
-			searchModeDiv.innerText = "纯搜索模式";
-			setSearchMode(0);
+        } else {
+            normalModeWrapperDiv.style.display = "block";
+            tagDiv.style.display = "block";
+            searchModeDiv.innerText = "纯搜索模式";
+            setSearchMode(0);
 
-			// 判断头部是否需要显示
-			var oldSearchDivVisible = getOldSearchDivVisible();
-			if (oldSearchDivVisible == 0) {
-				topVisibleDiv.innerText = "头部显示";
-				searchBoxDiv.children[0].style.display = "none";
-			} else {
-				topVisibleDiv.innerText = "头部隐藏";
-			}
-		}
-	}
+            // 判断头部是否需要显示
+            var oldSearchDivVisible = getOldSearchDivVisible();
+            if (oldSearchDivVisible == 0) {
+                topVisibleDiv.innerText = "头部显示";
+                searchBoxDiv.children[0].style.display = "none";
+                fsdivHide();
+            } else {
+                topVisibleDiv.innerText = "头部隐藏";
+            }
+        }
+    }
 
-	// 头部按钮包裹层，包裹标准模式下的按钮
-	var normalModeWrapperDiv = document.createElement("div");
-	normalModeWrapperDiv.id = "div_normalMode_wrapper";
-	searchBoxDiv.appendChild(normalModeWrapperDiv);
+    // 头部按钮包裹层，包裹标准模式下的按钮
+    var normalModeWrapperDiv = document.createElement("div");
+    normalModeWrapperDiv.id = "div_normalMode_wrapper";
+    searchBoxDiv.appendChild(normalModeWrapperDiv);
 
-	// 头部添加字体颜色按钮
-	var fontColorDiv = document.createElement("div");
-	fontColorDiv.id = "div_fontColor_btn";
-	var fontColorText = document.createTextNode("字体颜色");
-	fontColorDiv.appendChild(fontColorText);
-	normalModeWrapperDiv.appendChild(fontColorDiv);
+    // 头部添加字体颜色按钮
+    var fontColorDiv = document.createElement("div");
+    fontColorDiv.id = "div_fontColor_btn";
+    var fontColorText = document.createTextNode("字体颜色");
+    fontColorDiv.appendChild(fontColorText);
+    normalModeWrapperDiv.appendChild(fontColorDiv);
 
-	// 头部添加背景图片按钮
-	var bgDiv = document.createElement("div");
-	bgDiv.id = "div_background_btn";
-	var bgText = document.createTextNode("背景图片");
-	bgDiv.appendChild(bgText);
-	normalModeWrapperDiv.appendChild(bgDiv);
+    // 头部添加背景图片按钮
+    var bgDiv = document.createElement("div");
+    bgDiv.id = "div_background_btn";
+    var bgText = document.createTextNode("背景图片");
+    bgDiv.appendChild(bgText);
+    normalModeWrapperDiv.appendChild(bgDiv);
 
-	// 头部显示隐藏按钮
-	var topVisibleDiv = document.createElement("div");
-	topVisibleDiv.id = "div_top_visible_btn";
-	topVisibleDiv.addEventListener("click", topVisibleChange);
-	normalModeWrapperDiv.appendChild(topVisibleDiv);
+    // 头部显示隐藏按钮
+    var topVisibleDiv = document.createElement("div");
+    topVisibleDiv.id = "div_top_visible_btn";
+    topVisibleDiv.addEventListener("click", topVisibleChange);
+    normalModeWrapperDiv.appendChild(topVisibleDiv);
 
-	function topVisibleChange() {
-		if (topVisibleDiv.innerText == "头部显示") {
-			// 头部显示
-			searchBoxDiv.children[0].style.display = "block";
-			topVisibleDiv.innerText = "头部隐藏";
-			setOldSearchDivVisible(1);
+    function topVisibleChange() {
+        if (topVisibleDiv.innerText == "头部显示") {
+            // 头部显示
+            searchBoxDiv.children[0].style.display = "block";
+            fsdivShow();
+            topVisibleDiv.innerText = "头部隐藏";
+            setOldSearchDivVisible(1);
 
-		} else {
-			// 头部隐藏
-			searchBoxDiv.children[0].style.display = "none";
-			topVisibleDiv.innerText = "头部显示";
-			setOldSearchDivVisible(0);
-		}
-	}
+        } else {
+            // 头部隐藏
+            searchBoxDiv.children[0].style.display = "none";
+            fsdivHide();
+            topVisibleDiv.innerText = "头部显示";
+            setOldSearchDivVisible(0);
+        }
+    }
 
-	// 读取头部是否隐藏，并应用到页面中
-	var oldSearchDivVisible = getOldSearchDivVisible();
-	if (oldSearchDivVisible == 0) {
-		topVisibleDiv.innerText = "头部显示";
-		searchBoxDiv.children[0].style.display = "none";
-	} else {
-		topVisibleDiv.innerText = "头部隐藏";
-	}
+    // 读取头部是否隐藏，并应用到页面中
+    var oldSearchDivVisible = getOldSearchDivVisible();
+    if (oldSearchDivVisible == 0) {
+        topVisibleDiv.innerText = "头部显示";
+        searchBoxDiv.children[0].style.display = "none";
+        fsdivHide();
+    } else {
+        topVisibleDiv.innerText = "头部隐藏";
+    }
 
-	// 优先级高于头部隐藏
-	// 读取模式数据，应用到页面中
-	var oldSearchMode = getSearchMode();
-	if (oldSearchMode == 1) {
-		normalModeWrapperDiv.style.display = "none";
-		searchBoxDiv.children[0].style.display = "block";
-		searchModeDiv.innerText = "标签模式";
-	} else {
-		searchModeDiv.innerText = "纯搜索模式";
-	}
+    // 优先级高于头部隐藏
+    // 读取模式数据，应用到页面中
+    var oldSearchMode = getSearchMode();
+    if (oldSearchMode == 1) {
+        normalModeWrapperDiv.style.display = "none";
+        searchBoxDiv.children[0].style.display = "block";
+        fsdivShow();
+        searchModeDiv.innerText = "标签模式";
+    } else {
+        searchModeDiv.innerText = "纯搜索模式";
+    }
 }
 
 // 从indexedDB 中读取隐藏折叠
 function frontPageTopStyleStep02() {
-	var searchBoxDiv = document.getElementById("searchbox");
-	var topVisibleDiv = document.getElementById("div_top_visible_btn");
-	var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
-	var searchModeDiv = document.getElementById("div_searchMode_btn");
-	var tagDiv = document.getElementById("div_ee8413b2");
+    var searchBoxDiv = document.getElementById("searchbox");
+    var topVisibleDiv = document.getElementById("div_top_visible_btn");
+    var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
+    var searchModeDiv = document.getElementById("div_searchMode_btn");
+    var tagDiv = document.getElementById("div_ee8413b2");
 
-	var oldSearchDivVisible = getOldSearchDivVisible();
-	if (oldSearchDivVisible == null) {
-		// 尝试从 indexedDB 中读取配置，如果存在则说明 localstroage 配置丢失，需要补充，页面对应隐藏折叠
-		read(table_Settings, table_Settings_key_OldSearchDiv_Visible, result => {
-			if (result) {
-				if (!result.value) {
-					topVisibleDiv.innerText = "头部显示";
-					searchBoxDiv.children[0].style.display = "none";
-				} else {
-					topVisibleDiv.innerText = "头部隐藏";
-				}
-				setOldSearchDivVisible(result.value ? 1 : 0);
-			}
-		}, () => { });
+    var oldSearchDivVisible = getOldSearchDivVisible();
+    if (oldSearchDivVisible == null) {
+        // 尝试从 indexedDB 中读取配置，如果存在则说明 localstroage 配置丢失，需要补充，页面对应隐藏折叠
+        read(table_Settings, table_Settings_key_OldSearchDiv_Visible, result => {
+            if (result) {
+                if (!result.value) {
+                    topVisibleDiv.innerText = "头部显示";
+                    searchBoxDiv.children[0].style.display = "none";
+                    fsdivHide();
+                } else {
+                    topVisibleDiv.innerText = "头部隐藏";
+                }
+                setOldSearchDivVisible(result.value ? 1 : 0);
+            }
+        }, () => { });
 
-	}
+    }
 
-	// 添加按钮点击事件，用于将配置存储到 indexDB 中
-	topVisibleDiv.addEventListener("click", () => {
-		var settings_oldSearchDivVisible = {
-			item: table_Settings_key_OldSearchDiv_Visible,
-			value: topVisibleDiv.innerText == "头部隐藏"
-		};
-		update(table_Settings, settings_oldSearchDivVisible, () => {
-			setDbSyncMessage(sync_oldSearchTopVisible);
-		}, () => { });
-	});
+    // 添加按钮点击事件，用于将配置存储到 indexDB 中
+    topVisibleDiv.addEventListener("click", () => {
+        var settings_oldSearchDivVisible = {
+            item: table_Settings_key_OldSearchDiv_Visible,
+            value: topVisibleDiv.innerText == "头部隐藏"
+        };
+        update(table_Settings, settings_oldSearchDivVisible, () => {
+            setDbSyncMessage(sync_oldSearchTopVisible);
+        }, () => { });
+    });
 
 
-	var oldSearchMode = getSearchMode();
-	if (oldSearchMode == null) {
-		read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
-			if (result) {
-				if (result.value == 1) {
-					normalModeWrapperDiv.style.display = "none";
-					searchBoxDiv.children[0].style.display = "block";
-					tagDiv.style.display = "none";
-					searchModeDiv.innerText = "标签模式";
-				} else {
-					searchModeDiv.innerText = "纯搜索模式";
-				}
-				setSearchMode(result.value);
-			}
-		}, () => { });
-	}
+    var oldSearchMode = getSearchMode();
+    if (oldSearchMode == null) {
+        read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
+            if (result) {
+                if (result.value == 1) {
+                    normalModeWrapperDiv.style.display = "none";
+                    searchBoxDiv.children[0].style.display = "block";
+                    fsdivShow();
+                    tagDiv.style.display = "none";
+                    searchModeDiv.innerText = "标签模式";
+                } else {
+                    searchModeDiv.innerText = "纯搜索模式";
+                }
+                setSearchMode(result.value);
+            }
+        }, () => { });
+    }
 
-	searchModeDiv.addEventListener("click", () => {
-		var settings_keyfrontPageSearchMode = {
-			item: table_Settings_key_FrontPageSearchMode,
-			value: searchModeDiv.innerText == "标签模式" ? 1 : 0
-		};
-		update(table_Settings, settings_keyfrontPageSearchMode, () => {
-			setDbSyncMessage(sync_frontPageSearchMode);
-		}, () => { });
-	});
+    searchModeDiv.addEventListener("click", () => {
+        var settings_keyfrontPageSearchMode = {
+            item: table_Settings_key_FrontPageSearchMode,
+            value: searchModeDiv.innerText == "标签模式" ? 1 : 0
+        };
+        update(table_Settings, settings_keyfrontPageSearchMode, () => {
+            setDbSyncMessage(sync_frontPageSearchMode);
+        }, () => { });
+    });
+}
+
+
+function fsdivHide() {
+    var fsdiv = document.getElementById("fsdiv");
+    if (fsdiv) {
+        fsdiv.style.display = "none";
+    }
+    var iw = document.getElementById("iw");
+    if (iw) {
+        iw.style.display = "none";
+    }
+}
+
+function fsdivShow() {
+    var labels = document.getElementsByClassName("nopm")[1].children;
+    if (labels.length > 1) {
+        var fsdiv = document.getElementById("fsdiv");
+        if (fsdiv) {
+            var txt = labels[1].innerText;
+            if (txt == "隐藏文件搜索") {
+                fsdiv.style.display = "block";
+            }
+        }
+    }
+
+    var iw = document.getElementById("iw");
+    if (iw) {
+        iw.style.display = "block";
+    }
 }
 
 //#endregion
-
 
 
 //#region step3.3.frontPageHtml.js 首页HTML 
