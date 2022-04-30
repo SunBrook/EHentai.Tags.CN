@@ -284,6 +284,17 @@ function mainPageTranslate() {
 		}
 	}, () => { });
 
+	// 输入候选
+	var searchDiv = document.getElementsByClassName("nopm")[0];
+	var inputRecommendDiv = document.createElement("div");
+	inputRecommendDiv.id = "category_user_input_recommend";
+	searchDiv.appendChild(inputRecommendDiv);
+	var searchInput = searchDiv.children[0];
+	searchInput.oninput = function () {
+		var inputValue = searchInput.value.toLowerCase();
+		favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput);
+	}
+
 	// 作品类型翻译
 	bookTypeTranslate();
 

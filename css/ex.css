@@ -1124,3 +1124,52 @@ table .gtw {
 .t_frontpage_ido #fsdiv {
     padding: 10px 0;
 }
+
+.t_frontpage_ido .nopm #category_user_input_recommend {
+    border: 1px solid #C2C1C1;
+    border-top: 0;
+    background-color: #40454B;
+    max-height: 500px;
+    position: relative;
+    z-index: 99;
+    display: none;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items {
+    font-size: 15px;
+    padding: 5px;
+    cursor: pointer;
+    color: #ffde74;
+    min-height: 20px;
+    line-height: 20px;
+    overflow: auto;
+}
+
+.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:first-child {
+    border-top: 1px solid #C2C1C1;
+}
+
+.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:not(:first-child) {
+    border-top: 1px dashed #85868b;
+}
+
+.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:hover {
+    background-color: #7b7e85c2;
+}
+
+.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar{
+    width: 10px;
+    height: 1px;
+}
+
+.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-track  {
+    background-color: #2d2e32;
+    border-radius: 10px;
+}
+
+.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-thumb  {
+    background-color: #a5a5a5;
+    border-radius: 10px;
+}

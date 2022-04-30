@@ -7,6 +7,12 @@ function frontTopOldSearchTranslate() {
     var searchDiv = nopms[0];
     var fSerach = document.getElementById("f_search");
     fSerach.setAttribute("placeholder", "搜索关键字");
+    if (fSerach.value) {
+        var searchValue = fSerach.value;
+        if (searchValue.charAt(searchValue.length - 1) != " "){
+            fSerach.value += " ";
+        }
+    }
     var searchSubmitBtn = searchDiv.children[1];
     searchSubmitBtn.value = "搜索";
     var searchClearBtn = searchDiv.children[2];

@@ -15,6 +15,12 @@ function readSearchParentAndInput(parentEn, subEn) {
 
 var searchParam = GetQueryString("f_search");
 if (searchParam) {
+    // 如果最后一位是加号，则把加号去掉
+    if (searchParam.charAt(searchParam.length - 1) == "+") {
+        searchParam = searchParam.slice(0, searchParam.length - 1);
+    }
+}
+if (searchParam) {
     if (searchParam.indexOf("%20") != -1) {
         // 需要转义
         searchParam = urlDecode(searchParam);
