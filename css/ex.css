@@ -1108,7 +1108,8 @@ table .gtw {
     margin-top: 10px;
 }
 
-.t_frontpage_ido #searchbox .nopm:first-child input:not(:first-child) {
+.t_frontpage_ido #searchbox .nopm input[type="button"], 
+.t_frontpage_ido #searchbox .nopm input[type="submit"] {
     width: 70px;
 }
 

@@ -1240,6 +1240,27 @@ func_eh_ex(() => {
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
 		background-color: #b5a297;
 		border-radius: 10px;
+	}
+	
+	.t_frontpage_ido #searchbox .nopm {
+		margin-top: 10px;
+	}
+	
+	.t_frontpage_ido #searchbox .nopm input[type="button"], 
+	.t_frontpage_ido #searchbox .nopm input[type="submit"] {
+		width: 70px;
+	}
+	
+	.t_frontpage_ido #advdiv {
+		width: 598px;
+		margin: auto;
+		margin-top: 11px;
+	}
+	
+	.t_frontpage_ido #advdiv,
+	.t_frontpage_ido #fsdiv {
+		padding: 10px 0;
+		border: 1px ridge #5c0d12;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -2354,7 +2375,8 @@ func_eh_ex(() => {
 		margin-top: 10px;
 	}
 	
-	.t_frontpage_ido #searchbox .nopm:first-child input:not(:first-child) {
+	.t_frontpage_ido #searchbox .nopm input[type="button"], 
+	.t_frontpage_ido #searchbox .nopm input[type="submit"] {
 		width: 70px;
 	}
 	

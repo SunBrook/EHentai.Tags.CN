@@ -2204,6 +2204,27 @@ func_eh_ex(() => {
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
 		background-color: #b5a297;
 		border-radius: 10px;
+	}
+	
+	.t_frontpage_ido #searchbox .nopm {
+		margin-top: 10px;
+	}
+	
+	.t_frontpage_ido #searchbox .nopm input[type="button"], 
+	.t_frontpage_ido #searchbox .nopm input[type="submit"] {
+		width: 70px;
+	}
+	
+	.t_frontpage_ido #advdiv {
+		width: 598px;
+		margin: auto;
+		margin-top: 11px;
+	}
+	
+	.t_frontpage_ido #advdiv,
+	.t_frontpage_ido #fsdiv {
+		padding: 10px 0;
+		border: 1px ridge #5c0d12;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -3318,7 +3339,8 @@ func_eh_ex(() => {
 		margin-top: 10px;
 	}
 	
-	.t_frontpage_ido #searchbox .nopm:first-child input:not(:first-child) {
+	.t_frontpage_ido #searchbox .nopm input[type="button"], 
+	.t_frontpage_ido #searchbox .nopm input[type="submit"] {
 		width: 70px;
 	}
 	
@@ -3337,6 +3359,7 @@ func_eh_ex(() => {
 });
 
 //#endregion
+
 
 
 //#region step1.2.translateTopMenu.js 头部菜单翻译
@@ -4297,21 +4320,38 @@ function frontTopOldSearchTranslate() {
     var searchClearBtn = searchDiv.children[2];
     searchClearBtn.value = "清空";
 
-    // 显示高级选项、图片搜索
-    var advancedDiv = nopms[1];
-    var advanceLink = advancedDiv.children[0];
-    advanceLink.innerText = "显示高级选项";
-    advanceLink.onclick = function () {
-        this.innerText == "隐藏高级选项" ? copyModify_hide_advsearch_pane(this) : copyModify_show_advsearch_pane(this)
+    // 显示高级选项
+    if (nopms.length > 1) {
+        var advancedDiv = nopms[1];
+        if (advancedDiv.children.length > 0) {
+            var advanceLink = advancedDiv.children[0];
+            advanceLink.innerText = "显示高级选项";
+            advanceLink.onclick = function () {
+                this.innerText == "隐藏高级选项" ? copyModify_hide_advsearch_pane(this) : copyModify_show_advsearch_pane(this)
+            }
+
+            // 如果高级选项存在，则直接翻译
+            checkAdvSearchDiv(advanceLink);
+        }
+
+        // 文件搜索
+        if (advancedDiv.children.length > 1) {
+            var fileSearchLink = advancedDiv.children[1];
+            fileSearchLink.innerText = "显示文件搜索";
+            fileSearchLink.onclick = function () {
+                this.innerText == "隐藏文件搜索" ? copyModify_hide_filesearch_pane(this) : copyModify_show_filesearch_pane(this);
+            }
+
+            // 如果文件搜索存在，则直接翻译
+            checkFsDiv(fileSearchLink);
+        }
+    } else {
+        // 搜索图片结果
+        var fileSearchResultDiv = nopms[0].nextElementSibling;
+        frontPageTranslateFileSearchResult(fileSearchResultDiv);
     }
 
-    if (advancedDiv.children.length > 1) {
-        var fileSearchLink = advancedDiv.children[1];
-        fileSearchLink.innerText = "显示图片搜索";
-        fileSearchLink.onclick = function () {
-            this.innerText == "隐藏图片搜索" ? copyModify_hide_filesearch_pane(this) : copyModify_show_filesearch_pane(this);
-        }
-    }
+
 }
 
 
@@ -4358,7 +4398,7 @@ function copyModify_show_advsearch_pane(b) {
                 页
             </td>
             <td class="ic2" colspan="2"><input id="adv32" type="checkbox" name="f_sr" />
-                <label for="adv32">评分不低于:</label> <select id="adv42" class="imr" name="f_srdd">
+                <label for="adv32">评分不低于：</label> <select id="adv42" class="imr" name="f_srdd">
                     <option value="2">2 星</option>
                     <option value="3">3 星</option>
                     <option value="4">4 星</option>
@@ -4388,18 +4428,105 @@ function copyModify_hide_advsearch_pane(b) {
 
 function copyModify_show_filesearch_pane(b) {
     var c = document.getElementById("fsdiv");
-    b.innerHTML = "隐藏图片搜索";
+    b.innerHTML = "隐藏文件搜索";
     c.style.display = "";
-    c.innerHTML = '<form action="' + ulhost + 'image_lookup.php" method="post" enctype="multipart/form-data"><div><p style="font-weight:bold">If you want to combine a file search with a category/keyword search, upload the file first.</p><p>Select a file to upload, then hit File Search. All public galleries containing this exact file will be displayed.</p><div><input type="file" name="sfile" size="40" /> <input type="submit" name="f_sfile" value="File Search" /></div><p>For color images, the system can also perform a similarity lookup to find resampled images.</p><table class="itsf">	<tr>		<td class="ic3"><input id="fs_similar" type="checkbox" name="fs_similar" checked="checked" /> <label for="fs_similar">Use Similarity Scan</label></td>		<td class="ic3"><input id="fs_covers" type="checkbox" name="fs_covers" /> <label for="fs_covers">Only Search Covers</label></td>		<td class="ic3"><input id="fs_exp" type="checkbox" name="fs_exp" /> <label for="fs_exp">Show Expunged</label></td>	</tr></table></div></form>'
+    c.innerHTML = `<form action="${ulhost}image_lookup.php" method="post" enctype="multipart/form-data">
+    <div>
+        <p style="font-weight:bold">如果要将 文件 和 类别或关键词 结合起来搜索，请先上传文件。</p>
+        <p>选择要搜索的图片文件，然后点击文件搜索按钮。搜索结果将显示包含此文件的所有公开作品。</p>
+        <div><input type="file" name="sfile" size="40" />
+            <input type="submit" name="f_sfile" value="文件搜索" />
+        </div>
+        <p>对于彩色图片，系统还可以执行相似性查找以查找重新采样的图片。</p>
+        <table class="itsf">
+            <tr>
+                <td class="ic3">
+                    <input id="fs_similar" type="checkbox" name="fs_similar" checked="checked" />
+                    <label for="fs_similar">使用相似度搜索</label>
+                </td>
+                <td class="ic3"><input id="fs_covers" type="checkbox" name="fs_covers" />
+                    <label for="fs_covers">仅搜索封面</label>
+                </td>
+                <td class="ic3">
+                    <input id="fs_exp" type="checkbox" name="fs_exp" />
+                    <label for="fs_exp">显示已删除的作品</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>`
 }
 
 function copyModify_hide_filesearch_pane(b) {
-    hide_filesearch_pane(b);
-    b.innerText = "显示图片搜索";
+    var c = document.getElementById("fsdiv");
+    b.innerHTML = "显示文件搜索";
+    c.style.display = "none"; c.innerHTML = ""
+}
+
+function checkAdvSearchDiv(advanceLink) {
+    var advdiv = document.getElementById("advdiv");
+    if (advdiv.innerHTML) {
+        var trs = advdiv.querySelectorAll("tr");
+        trs[0].children[0].children[1].innerText = "搜索作品名称";
+        trs[0].children[1].children[1].innerText = "搜索标签";
+        trs[0].children[2].children[1].innerText = "搜索描述";
+        trs[1].children[0].children[1].innerText = "搜索已经删除的作品";
+        trs[1].children[1].children[1].innerText = "只显示有种子的作品";
+        trs[2].children[0].children[1].innerText = "搜索低权重的标签";
+        trs[2].children[1].children[1].innerText = "搜索被否决的标签";
+
+        var tdPages = trs[3].children[0].childNodes;
+        tdPages[0].data = "搜索 ";
+        tdPages[2].data = " 至 ";
+        tdPages[4].data = " 页";
+
+        trs[3].children[1].children[1].innerText = "评分不低于：";
+        var tdOptions = trs[3].children[1].children[2].querySelectorAll("option");
+        for (const i in tdOptions) {
+            if (Object.hasOwnProperty.call(tdOptions, i)) {
+                const option = tdOptions[i];
+                option.innerText = option.innerText.replace("stars", "星");
+            }
+        }
+
+        trs[4].children[0].childNodes[0].data = "默认禁用筛选： ";
+        trs[4].children[0].children[1].innerText = "语言";
+        trs[4].children[0].children[3].innerText = "上传者";
+        trs[4].children[0].children[5].innerText = "标签";
+
+        advanceLink.innerText = "隐藏高级选项";
+    }
+}
+
+function checkFsDiv(fileSearchLink) {
+    var fsDiv = document.getElementById("fsdiv");
+    if (fsDiv.innerHTML) {
+        var ps = fsDiv.querySelectorAll("p");
+        ps[0].innerText = "如果要将 文件 和 类别或关键词 结合起来搜索，请先上传文件。";
+        ps[1].innerText = "选择要搜索的图片文件，然后点击文件搜索按钮。搜索结果将显示包含此文件的所有公开作品。";
+        ps[2].innerText = "对于彩色图片，系统还可以执行相似性查找以查找重新采样的图片。";
+        fsDiv.querySelectorAll("input")[1].value = "文件搜索";
+        var tds = fsDiv.querySelectorAll("td");
+        tds[0].children[1].innerText = "使用相似度搜索";
+        tds[1].children[1].innerText = "仅搜索封面";
+        tds[2].children[1].innerText = "显示已删除的作品";
+
+        fileSearchLink.innerText = "隐藏文件搜索";
+    }
+}
+
+function frontPageTranslateFileSearchResult(fileSearchResultDiv) {
+    fileSearchResultDiv.children[3].innerText = "搜索的文件：";
+    var tip = fileSearchResultDiv.children[5];
+    var isEnableSimilarSearch = tip.children[0].innerText == "enabled";
+    tip.innerHTML = `在本次搜索中，相似性查询 <strong>${isEnableSimilarSearch ? "已启用" : "已禁用"}</strong>。若要更改相似性查询的设置，你必须重新搜索。`;
+    var options = fileSearchResultDiv.children[6].querySelectorAll("td");
+    options[0].children[1].innerText = "仅搜索封面";
+    options[1].children[1].innerText = "显示已删除的作品";
+    fileSearchResultDiv.children[7].children[0].innerText = "搜索新文件";
 }
 
 //#endregion
-
 
 
 //#region step3.1.frontTranslate.js 首页谷歌翻译
@@ -4689,15 +4816,17 @@ function mainPageTranslate() {
 				ipTagElement.children[1].innerText = "我的标签";
 			}
 		} else if (webHost == "e-hentai.org") {
-			var ipElement = ip[ip.length - 2];
-			var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
-			ipElement.innerText = `共 ${totalCount} 条记录`;
+			if (ip.innerText) {
+				var ipElement = ip[ip.length - 2];
+				var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
+				ipElement.innerText = `共 ${totalCount} 条记录`;
 
-			if (ip.length > 2) {
-				var ipTagElement = ip[ip.length - 3];
-				var strongText = ipTagElement.children[0];
-				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
-				ipTagElement.children[1].innerText = "我的标签";
+				if (ip.length > 2) {
+					var ipTagElement = ip[ip.length - 3];
+					var strongText = ipTagElement.children[0];
+					strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+					ipTagElement.children[1].innerText = "我的标签";
+				}
 			}
 		}
 
@@ -4719,21 +4848,26 @@ function mainPageTranslate() {
 					}
 				}
 				iw.innerText = longtext;
-				var myTag = document.createElement("a");
-				myTag.href = "https://exhentai.org/mytags";
-				myTag.style.marginLeft = "10px";
-				myTag.innerText = "我的标签";
-				iw.appendChild(myTag);
+				func_eh_ex(() => { }, () => {
+					var myTag = document.createElement("a");
+					myTag.href = "https://exhentai.org/mytags";
+					myTag.style.marginLeft = "10px";
+					myTag.innerText = "我的标签";
+					iw.appendChild(myTag);
+				});
 			});
+
+			var otherP = iw.nextElementSibling.children[0];
+			translatePageElement(otherP);
 		}
 
-		var ido = document.getElementsByClassName("ido");
-		if (ido.length > 0) {
-			var nullInfo = ido[0].lastChild.lastChild;
-			if (nullInfo) {
-				translatePageElement(nullInfo);
-			}
-		}
+		// var ido = document.getElementsByClassName("ido");
+		// if (ido.length > 0) {
+		// 	var nullInfo = ido[0].lastChild.lastChild;
+		// 	if (nullInfo) {
+		// 		translatePageElement(nullInfo);
+		// 	}
+		// }
 
 		return;
 	}
@@ -4797,6 +4931,7 @@ function frontPageTitleTranslate() {
 }
 
 //#endregion
+
 
 
 //#region step3.2.frontPageTopStyle 首页头部搜索显示隐藏
@@ -6249,340 +6384,340 @@ function otherPageTryUseOldDataAndTranslateTag() {
 
 function favoritePage() {
 
-	// 跨域
-	crossDomain();
+    // 跨域
+    crossDomain();
 
-	// 标题添加类 t_favorite_ido，方便添加样式
-	var ido = document.getElementsByClassName("ido");
-	if (ido.length > 0) {
-		ido[0].classList.add("t_favorite_ido");
-	}
+    // 标题添加类 t_favorite_ido，方便添加样式
+    var ido = document.getElementsByClassName("ido");
+    if (ido.length > 0) {
+        ido[0].classList.add("t_favorite_ido");
+    }
 
-	// 标题直接删除
-	var h1 = document.getElementsByTagName("h1");
-	if (h1.length > 0) {
-		var pageTitle = h1[0];
-		pageTitle.parentNode.removeChild(pageTitle);
-	}
+    // 标题直接删除
+    var h1 = document.getElementsByTagName("h1");
+    if (h1.length > 0) {
+        var pageTitle = h1[0];
+        pageTitle.parentNode.removeChild(pageTitle);
+    }
 
-	// 显示全部按钮改名
-	var favoriteBtns = document.getElementsByClassName("fp");
-	if (favoriteBtns.length > 0) {
-		var showAllFavorites = favoriteBtns[favoriteBtns.length - 1];
-		showAllFavorites.innerText = "点我显示：全部收藏";
+    // 显示全部按钮改名
+    var favoriteBtns = document.getElementsByClassName("fp");
+    if (favoriteBtns.length > 0) {
+        var showAllFavorites = favoriteBtns[favoriteBtns.length - 1];
+        showAllFavorites.innerText = "点我显示：全部收藏";
 
-		// 没有收藏的列表字体颜色稍微暗一点
-		for (let i = 0; i < favoriteBtns.length - 1; i++) {
-			const favoriteBtn = favoriteBtns[i];
-			var favoriteCount = favoriteBtn.children[0].innerText;
-			if (favoriteCount == "0") {
-				favoriteBtn.classList.add("favorite_null");
-			}
-		}
+        // 没有收藏的列表字体颜色稍微暗一点
+        for (let i = 0; i < favoriteBtns.length - 1; i++) {
+            const favoriteBtn = favoriteBtns[i];
+            var favoriteCount = favoriteBtn.children[0].innerText;
+            if (favoriteCount == "0") {
+                favoriteBtn.classList.add("favorite_null");
+            }
+        }
 
-	}
+    }
 
-	// 搜索按钮清空按钮翻译，筛选文本框排成一行
-	var searchDiv = ido[0].children[1];
-	searchDiv.classList.add("searchDiv");
-	var form = searchDiv.children[0];
-	var searchInputDiv = form.children[1];
-	searchInputDiv.classList.add("searchInputDiv");
-	var searchFilterDiv = form.children[2];
-	searchFilterDiv.classList.add("searchFilterDiv");
+    // 搜索按钮清空按钮翻译，筛选文本框排成一行
+    var searchDiv = ido[0].children[1];
+    searchDiv.classList.add("searchDiv");
+    var form = searchDiv.children[0];
+    var searchInputDiv = form.children[1];
+    searchInputDiv.classList.add("searchInputDiv");
+    var searchFilterDiv = form.children[2];
+    searchFilterDiv.classList.add("searchFilterDiv");
 
-	// 输入候选
-	var inputRecommendDiv = document.createElement("div");
-	inputRecommendDiv.id = "category_user_input_recommend";
-	var searchForm = document.getElementsByTagName("form")[0];
-	searchForm.insertBefore(inputRecommendDiv, searchForm.lastChild);
+    // 输入候选
+    var inputRecommendDiv = document.createElement("div");
+    inputRecommendDiv.id = "category_user_input_recommend";
+    var searchForm = document.getElementsByTagName("form")[0];
+    searchForm.insertBefore(inputRecommendDiv, searchForm.lastChild);
 
-	// 搜索框、搜索按钮、搜索选项翻译
-	var searchInput = searchInputDiv.children[0];
-	searchInput.setAttribute("placeholder", "搜索关键字");
-	searchInput.oninput = function () {
-		var inputValue = searchInput.value.toLowerCase();
-		favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput);
-	}
+    // 搜索框、搜索按钮、搜索选项翻译
+    var searchInput = searchInputDiv.children[0];
+    searchInput.setAttribute("placeholder", "搜索关键字");
+    searchInput.oninput = function () {
+        var inputValue = searchInput.value.toLowerCase();
+        favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput);
+    }
 
-	var searchBtn = searchInputDiv.children[1];
-	searchBtn.value = " 搜索收藏 ";
+    var searchBtn = searchInputDiv.children[1];
+    searchBtn.value = " 搜索收藏 ";
 
-	var clearBtn = searchInputDiv.children[2];
-	clearBtn.value = " 清空 ";
+    var clearBtn = searchInputDiv.children[2];
+    clearBtn.value = " 清空 ";
 
-	var filterTds = searchFilterDiv.querySelectorAll("td");
-	var filterHead = filterTds[0];
-	filterHead.innerText = "搜索包含：";
+    var filterTds = searchFilterDiv.querySelectorAll("td");
+    var filterHead = filterTds[0];
+    filterHead.innerText = "搜索包含：";
 
-	var filterName = filterTds[1];
-	filterName.children[0].lastChild.textContent = "作品名称";
+    var filterName = filterTds[1];
+    filterName.children[0].lastChild.textContent = "作品名称";
 
-	var filterTag = filterTds[2];
-	filterTag.children[0].lastChild.textContent = "标签";
+    var filterTag = filterTds[2];
+    filterTag.children[0].lastChild.textContent = "标签";
 
-	var filterNote = filterTds[3];
-	filterNote.children[0].lastChild.textContent = "备注";
+    var filterNote = filterTds[3];
+    filterNote.children[0].lastChild.textContent = "备注";
 
-	// 展示总数量
-	var ip = document.getElementsByClassName("ip");
-	if (ip.length > 0) {
-		var ipElement = ip[0];
-		var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
-		ipElement.innerText = `共 ${totalCount} 条记录`;
-	}
+    // 展示总数量
+    var ip = document.getElementsByClassName("ip");
+    if (ip.length > 0) {
+        var ipElement = ip[0];
+        var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
+        ipElement.innerText = `共 ${totalCount} 条记录`;
+    }
 
-	// 头部添加词库升级提示
-	var dataUpdateDiv = document.createElement("div");
-	dataUpdateDiv.id = "data_update_tip";
-	var dataUpdateText = document.createTextNode("词库升级中...");
-	dataUpdateDiv.appendChild(dataUpdateText);
-	ido[0].insertBefore(dataUpdateDiv, ido[0].lastChild);
+    // 头部添加词库升级提示
+    var dataUpdateDiv = document.createElement("div");
+    dataUpdateDiv.id = "data_update_tip";
+    var dataUpdateText = document.createTextNode("词库升级中...");
+    dataUpdateDiv.appendChild(dataUpdateText);
+    ido[0].insertBefore(dataUpdateDiv, ido[0].lastChild);
 
-	// 预览下拉框
-	var dms = document.getElementById("dms");
-	if (!dms) {
+    // 预览下拉框
+    var dms = document.getElementById("dms");
+    if (!dms) {
 
-		// 隐藏排序和底部操作框
-		var orderDiv = ido[0].children[2].children[0];
-		orderDiv.style.display = "none";
-		var nullBottomDiv = ido[0].children[3].children[1];
-		nullBottomDiv.style.display = "none";
+        // 隐藏排序和底部操作框
+        var orderDiv = ido[0].children[2].children[0];
+        orderDiv.style.display = "none";
+        var nullBottomDiv = ido[0].children[3].children[1];
+        nullBottomDiv.style.display = "none";
 
-		// 没有搜索到记录
-		var nullInfo = ido[0].children[3].children[0];
-		if (nullInfo) {
-			translatePageElement(nullInfo);
-		}
+        // 没有搜索到记录
+        var nullInfo = ido[0].children[3].children[0];
+        if (nullInfo) {
+            translatePageElement(nullInfo);
+        }
 
-		indexDbInit(() => {
-			// 没搜索到也要保留搜索候选功能
-			otherPageTryUseOldDataAndTranslateTag();
-		});
+        indexDbInit(() => {
+            // 没搜索到也要保留搜索候选功能
+            otherPageTryUseOldDataAndTranslateTag();
+        });
 
-		return;
-	}
+        return;
+    }
 
-	// 翻译下拉菜单
-	dropDownlistTranslate();
+    // 翻译下拉菜单
+    dropDownlistTranslate();
 
-	// 底部删除选中、移动作品下拉框，确认按钮
-	var ddact = document.getElementById("ddact");
-	if (ddact) {
-		var options = ddact.querySelectorAll("option");
-		if (options.length > 0) {
-			if (options[0].innerText == "Delete Selected") {
-				options[0].innerText = "删除选中的作品";
-			}
-		}
+    // 底部删除选中、移动作品下拉框，确认按钮
+    var ddact = document.getElementById("ddact");
+    if (ddact) {
+        var options = ddact.querySelectorAll("option");
+        if (options.length > 0) {
+            if (options[0].innerText == "Delete Selected") {
+                options[0].innerText = "删除选中的作品";
+            }
+        }
 
-		var optgroup = ddact.children[1];
-		if (optgroup.getAttribute("label") == "Change Category") {
-			optgroup.setAttribute("label", "作品迁移到以下收藏夹");
-		}
-	}
+        var optgroup = ddact.children[1];
+        if (optgroup.getAttribute("label") == "Change Category") {
+            optgroup.setAttribute("label", "作品迁移到以下收藏夹");
+        }
+    }
 
-	var bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
-	if (bottomConfirmBtn.value == "Confirm") {
-		bottomConfirmBtn.value = "确 认";
-		bottomConfirmBtn.style.width = "60px";
-	}
+    var bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
+    if (bottomConfirmBtn.value == "Confirm") {
+        bottomConfirmBtn.value = "确 认";
+        bottomConfirmBtn.style.width = "60px";
+    }
 
-	// 排序翻译、搜索行数翻译（包含没有搜索结果）
-	var orderDiv = ido[0].children[2].children[0];
-	orderDiv.firstChild.textContent = "作品排序：";
-	switch (orderDiv.children[0].innerText) {
-		case "Favorited":
-			orderDiv.children[0].innerText = "收藏时间";
-			break;
-		case "Posted":
-			orderDiv.children[0].innerText = "发布时间";
-			break;
-	}
+    // 排序翻译、搜索行数翻译（包含没有搜索结果）
+    var orderDiv = ido[0].children[2].children[0];
+    orderDiv.firstChild.textContent = "作品排序：";
+    switch (orderDiv.children[0].innerText) {
+        case "Favorited":
+            orderDiv.children[0].innerText = "收藏时间";
+            break;
+        case "Posted":
+            orderDiv.children[0].innerText = "发布时间";
+            break;
+    }
 
-	switch (orderDiv.children[1].innerText) {
-		case "Use Favorited":
-			orderDiv.children[1].innerText = " 按收藏时间排序 ";
-			break;
-		case "Use Posted":
-			orderDiv.children[1].innerText = " 按发布时间排序 ";
-			break;
-	}
+    switch (orderDiv.children[1].innerText) {
+        case "Use Favorited":
+            orderDiv.children[1].innerText = " 按收藏时间排序 ";
+            break;
+        case "Use Posted":
+            orderDiv.children[1].innerText = " 按发布时间排序 ";
+            break;
+    }
 
-	// 作品类型翻译
-	bookTypeTranslate();
+    // 作品类型翻译
+    bookTypeTranslate();
 
-	// 表头翻译
-	tableHeadTranslate();
+    // 表头翻译
+    tableHeadTranslate();
 
-	// 表格页数翻译
-	favoritePageTableBookPages();
-
-
+    // 表格页数翻译
+    favoritePageTableBookPages();
 
 
-	// 谷歌机翻标题
-	// 表格头部左侧添加勾选 谷歌机翻
-	var translateDiv = document.createElement("div");
-	translateDiv.id = "googleTranslateDiv";
-	var translateCheckbox = document.createElement("input");
-	translateCheckbox.setAttribute("type", "checkbox");
-	translateCheckbox.id = "googleTranslateCheckbox";
-	translateDiv.appendChild(translateCheckbox);
-	var translateLabel = document.createElement("label");
-	translateLabel.setAttribute("for", translateCheckbox.id);
-	translateLabel.id = "translateLabel";
-	translateLabel.innerText = "谷歌机翻 : 标题";
 
-	translateDiv.appendChild(translateLabel);
-	translateCheckbox.addEventListener("click", translateMainPageTitle);
-	var dms = document.getElementById("dms");
-	dms.insertBefore(translateDiv, dms.lastChild);
 
-	indexDbInit(() => {
-		// 读取是否选中
-		read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-			if (result && result.value) {
-				translateCheckbox.setAttribute("checked", true);
-				translateMainPageTitleDisplay();
-			}
-		}, () => { });
+    // 谷歌机翻标题
+    // 表格头部左侧添加勾选 谷歌机翻
+    var translateDiv = document.createElement("div");
+    translateDiv.id = "googleTranslateDiv";
+    var translateCheckbox = document.createElement("input");
+    translateCheckbox.setAttribute("type", "checkbox");
+    translateCheckbox.id = "googleTranslateCheckbox";
+    translateDiv.appendChild(translateCheckbox);
+    var translateLabel = document.createElement("label");
+    translateLabel.setAttribute("for", translateCheckbox.id);
+    translateLabel.id = "translateLabel";
+    translateLabel.innerText = "谷歌机翻 : 标题";
 
-		// 表格标签翻译
-		otherPageTryUseOldDataAndTranslateTag();
-	});
+    translateDiv.appendChild(translateLabel);
+    translateCheckbox.addEventListener("click", translateMainPageTitle);
+    var dms = document.getElementById("dms");
+    dms.insertBefore(translateDiv, dms.lastChild);
 
-	// 同步谷歌机翻标题
-	DataSyncCommonTranslateTitle();
+    indexDbInit(() => {
+        // 读取是否选中
+        read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+            if (result && result.value) {
+                translateCheckbox.setAttribute("checked", true);
+                translateMainPageTitleDisplay();
+            }
+        }, () => { });
+
+        // 表格标签翻译
+        otherPageTryUseOldDataAndTranslateTag();
+    });
+
+    // 同步谷歌机翻标题
+    DataSyncCommonTranslateTitle();
 }
 
 function favoritePageTableBookPages() {
-	var select = dms.querySelectorAll("select");
-	var rightSelect = select[0];
-	if (rightSelect.value == "e") {
-		// 标题 + 图片 + 标签
-		var gl3eDivs = document.getElementsByClassName("gl3e");
-		for (const i in gl3eDivs) {
-			if (Object.hasOwnProperty.call(gl3eDivs, i)) {
-				const gl3e = gl3eDivs[i];
-				var childLength = gl3e.children.length;
-				var pageDiv = gl3e.children[childLength - 3];
-				innerTextPageToYe(pageDiv);
-			}
-		}
-	}
+    var select = dms.querySelectorAll("select");
+    var rightSelect = select[0];
+    if (rightSelect.value == "e") {
+        // 标题 + 图片 + 标签
+        var gl3eDivs = document.getElementsByClassName("gl3e");
+        for (const i in gl3eDivs) {
+            if (Object.hasOwnProperty.call(gl3eDivs, i)) {
+                const gl3e = gl3eDivs[i];
+                var childLength = gl3e.children.length;
+                var pageDiv = gl3e.children[childLength - 3];
+                innerTextPageToYe(pageDiv);
+            }
+        }
+    }
 }
 
 function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput) {
-	// 清空候选项
-	inputRecommendDiv.innerHTML = "";
-	inputRecommendDiv.style.display = "none";
-	var tempDiv = document.createElement("div");
-	inputRecommendDiv.appendChild(tempDiv);
+    // 清空候选项
+    inputRecommendDiv.innerHTML = "";
+    inputRecommendDiv.style.display = "none";
+    var tempDiv = document.createElement("div");
+    inputRecommendDiv.appendChild(tempDiv);
 
-	if (inputValue == "") {
-		return;
-	}
+    if (inputValue == "") {
+        return;
+    }
 
-	// 根据空格分隔，取最后一个
-	var inputArray = inputValue.split(" ");
-	var oldInputArray = inputArray.slice(0, inputArray.length - 1);
-	var oldInputValue = oldInputArray.join(" ");
-	if (oldInputValue != "") {
-		oldInputValue += " ";
-	}
-	var searchValue = inputArray[inputArray.length - 1];
+    // 根据空格分隔，取最后一个
+    var inputArray = inputValue.split(" ");
+    var oldInputArray = inputArray.slice(0, inputArray.length - 1);
+    var oldInputValue = oldInputArray.join(" ");
+    if (oldInputValue != "") {
+        oldInputValue += " ";
+    }
+    var searchValue = inputArray[inputArray.length - 1];
 
-	if (searchValue == "") {
-		inputRecommendDiv.style.display = "none";
-		return;
-	}
+    if (searchValue == "") {
+        inputRecommendDiv.style.display = "none";
+        return;
+    }
 
-	// 添加搜索候选
-	function addInputSearchItems(foundArrays) {
-		if (foundArrays.length > 0) {
-			inputRecommendDiv.style.display = "block";
-		}
-		for (const i in foundArrays) {
-			if (Object.hasOwnProperty.call(foundArrays, i)) {
-				const item = foundArrays[i];
-				var commendDiv = document.createElement("div");
-				commendDiv.classList.add("category_user_input_recommend_items");
-				commendDiv.title = item.sub_desc;
+    // 添加搜索候选
+    function addInputSearchItems(foundArrays) {
+        if (foundArrays.length > 0) {
+            inputRecommendDiv.style.display = "block";
+        }
+        for (const i in foundArrays) {
+            if (Object.hasOwnProperty.call(foundArrays, i)) {
+                const item = foundArrays[i];
+                var commendDiv = document.createElement("div");
+                commendDiv.classList.add("category_user_input_recommend_items");
+                commendDiv.title = item.sub_desc;
 
-				var chTextDiv = document.createElement("div");
-				chTextDiv.style.float = "left";
-				var chTextNode = document.createTextNode(`${item.parent_zh} : ${item.sub_zh}`);
-				chTextDiv.appendChild(chTextNode);
+                var chTextDiv = document.createElement("div");
+                chTextDiv.style.float = "left";
+                var chTextNode = document.createTextNode(`${item.parent_zh} : ${item.sub_zh}`);
+                chTextDiv.appendChild(chTextNode);
 
-				var enTextDiv = document.createElement("div");
-				enTextDiv.style.float = "right";
-				var enTextNode = document.createTextNode(`${item.parent_en} : ${item.sub_en}`);
-				enTextDiv.appendChild(enTextNode);
+                var enTextDiv = document.createElement("div");
+                enTextDiv.style.float = "right";
+                var enTextNode = document.createTextNode(`${item.parent_en} : ${item.sub_en}`);
+                enTextDiv.appendChild(enTextNode);
 
-				commendDiv.appendChild(chTextDiv);
-				commendDiv.appendChild(enTextDiv);
+                commendDiv.appendChild(chTextDiv);
+                commendDiv.appendChild(enTextDiv);
 
-				commendDiv.addEventListener("click", function () {
-					var addNewItem = item.parent_en == "userCustom" ? `"${item.sub_en}"` : `"${item.parent_en}:${item.sub_en}" `;
-					searchInput.value = `${oldInputValue}${addNewItem}`;
-					searchInput.focus();
-					inputRecommendDiv.innerHTML = "";
-					inputRecommendDiv.style.display = "none";
-				});
-				tempDiv.appendChild(commendDiv);
-			}
-		}
+                commendDiv.addEventListener("click", function () {
+                    var addNewItem = item.parent_en == "userCustom" ? `"${item.sub_en}"` : `"${item.parent_en}:${item.sub_en}" `;
+                    searchInput.value = `${oldInputValue}${addNewItem}`;
+                    searchInput.focus();
+                    inputRecommendDiv.innerHTML = "";
+                    inputRecommendDiv.style.display = "none";
+                });
+                tempDiv.appendChild(commendDiv);
+            }
+        }
 
-		if (tempDiv.innerHTML == "") {
-			inputRecommendDiv.style.display = "none";
-		}
-	}
+        if (tempDiv.innerHTML == "") {
+            inputRecommendDiv.style.display = "none";
+        }
+    }
 
-	// 从EhTag中模糊搜索，绑定数据
-	readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, searchValue, foundArrays => {
-		addInputSearchItems(foundArrays);
-	});
+    // 从EhTag中模糊搜索，绑定数据
+    readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, searchValue, foundArrays => {
+        addInputSearchItems(foundArrays);
+    });
 
-	// 从收藏中的用户自定义中模糊搜索，绑定数据
-	readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "userCustom", customArray => {
-		if (customArray.length > 0) {
-			var foundArrays = [];
-			for (const i in customArray) {
-				if (Object.hasOwnProperty.call(customArray, i)) {
-					const item = customArray[i];
-					var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
-					if (searchKey.indexOf(searchValue) != -1) {
-						foundArrays.push(item);
-					}
-				}
-			}
+    // 从收藏中的用户自定义中模糊搜索，绑定数据
+    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "userCustom", customArray => {
+        if (customArray.length > 0) {
+            var foundArrays = [];
+            for (const i in customArray) {
+                if (Object.hasOwnProperty.call(customArray, i)) {
+                    const item = customArray[i];
+                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
+                    if (searchKey.indexOf(searchValue) != -1) {
+                        foundArrays.push(item);
+                    }
+                }
+            }
 
-			if (foundArrays.length > 0) {
-				addInputSearchItems(foundArrays);
-			}
-		}
-	});
+            if (foundArrays.length > 0) {
+                addInputSearchItems(foundArrays);
+            }
+        }
+    });
 
-	// 从收藏中的上传者自定义中模糊搜索，绑定数据
-	readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray => {
-		if (uploaderArray.length > 0) {
-			var foundArrays = [];
-			for (const i in uploaderArray) {
-				if (Object.hasOwnProperty.call(uploaderArray, i)) {
-					const item = uploaderArray[i];
-					var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
-					if (searchKey.indexOf(searchValue) != -1) {
-						foundArrays.push(item);
-					}
-				}
-			}
+    // 从收藏中的上传者自定义中模糊搜索，绑定数据
+    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray => {
+        if (uploaderArray.length > 0) {
+            var foundArrays = [];
+            for (const i in uploaderArray) {
+                if (Object.hasOwnProperty.call(uploaderArray, i)) {
+                    const item = uploaderArray[i];
+                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
+                    if (searchKey.indexOf(searchValue) != -1) {
+                        foundArrays.push(item);
+                    }
+                }
+            }
 
-			if (foundArrays.length > 0) {
-				addInputSearchItems(foundArrays);
-			}
-		}
-	});
+            if (foundArrays.length > 0) {
+                addInputSearchItems(foundArrays);
+            }
+        }
+    });
 }
 
 //#endregion
@@ -8461,10 +8596,12 @@ function uconfigPageReWrapperForm(contentForm) {
 //TODO 插件背景图片，有损压缩，保存快速替换
 //TODO EH 打怪兽弹窗无法直接关闭，添加关闭按钮
 
-//TODO 首页和偏好页面头部翻译
 //TODO 首页输入搜索功能
+//TODO 页面底部翻译
+//DONE 首页和偏好页面头部翻译
 //DONE 首页和偏好页面纯搜索模式、标签模式切换
 //DONE 首页和偏好页面的翻译标题
+//DONE 修复0条记录页面报错
 
 
 //#region main.js 主方法

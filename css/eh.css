@@ -1238,3 +1238,24 @@ table .gtw {
     background-color: #b5a297;
     border-radius: 10px;
 }
+
+.t_frontpage_ido #searchbox .nopm {
+    margin-top: 10px;
+}
+
+.t_frontpage_ido #searchbox .nopm input[type="button"], 
+.t_frontpage_ido #searchbox .nopm input[type="submit"] {
+    width: 70px;
+}
+
+.t_frontpage_ido #advdiv {
+    width: 598px;
+    margin: auto;
+    margin-top: 11px;
+}
+
+.t_frontpage_ido #advdiv,
+.t_frontpage_ido #fsdiv {
+    padding: 10px 0;
+    border: 1px ridge #5c0d12;
+}

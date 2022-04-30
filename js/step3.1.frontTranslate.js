@@ -285,15 +285,17 @@ function mainPageTranslate() {
 				ipTagElement.children[1].innerText = "我的标签";
 			}
 		} else if (webHost == "e-hentai.org") {
-			var ipElement = ip[ip.length - 2];
-			var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
-			ipElement.innerText = `共 ${totalCount} 条记录`;
+			if (ip.innerText) {
+				var ipElement = ip[ip.length - 2];
+				var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
+				ipElement.innerText = `共 ${totalCount} 条记录`;
 
-			if (ip.length > 2) {
-				var ipTagElement = ip[ip.length - 3];
-				var strongText = ipTagElement.children[0];
-				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
-				ipTagElement.children[1].innerText = "我的标签";
+				if (ip.length > 2) {
+					var ipTagElement = ip[ip.length - 3];
+					var strongText = ipTagElement.children[0];
+					strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+					ipTagElement.children[1].innerText = "我的标签";
+				}
 			}
 		}
 
@@ -315,21 +317,26 @@ function mainPageTranslate() {
 					}
 				}
 				iw.innerText = longtext;
-				var myTag = document.createElement("a");
-				myTag.href = "https://exhentai.org/mytags";
-				myTag.style.marginLeft = "10px";
-				myTag.innerText = "我的标签";
-				iw.appendChild(myTag);
+				func_eh_ex(() => { }, () => {
+					var myTag = document.createElement("a");
+					myTag.href = "https://exhentai.org/mytags";
+					myTag.style.marginLeft = "10px";
+					myTag.innerText = "我的标签";
+					iw.appendChild(myTag);
+				});
 			});
+
+			var otherP = iw.nextElementSibling.children[0];
+			translatePageElement(otherP);
 		}
 
-		var ido = document.getElementsByClassName("ido");
-		if (ido.length > 0) {
-			var nullInfo = ido[0].lastChild.lastChild;
-			if (nullInfo) {
-				translatePageElement(nullInfo);
-			}
-		}
+		// var ido = document.getElementsByClassName("ido");
+		// if (ido.length > 0) {
+		// 	var nullInfo = ido[0].lastChild.lastChild;
+		// 	if (nullInfo) {
+		// 		translatePageElement(nullInfo);
+		// 	}
+		// }
 
 		return;
 	}

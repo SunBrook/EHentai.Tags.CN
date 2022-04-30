@@ -110,6 +110,32 @@
         </div>
 
 
+        <form action="' + ulhost + 'image_lookup.php" method="post" enctype="multipart/form-data">
+            <div>
+                <p style="font-weight:bold">如果要将 文件 和 类别/关键词 结合起来搜索，请先上传文件。</p>
+                <p>选择要搜索的图片文件，点击文件搜索按钮。将显示包含此文件的所有公开作品。</p>
+                <div><input type="file" name="sfile" size="40" />
+                    <input type="submit" name="f_sfile" value="File Search" />
+                </div>
+                <p>对于彩色图片，系统还可以执行相似性查找以查找重新采样的图片。</p>
+                <table class="itsf">
+                    <tr>
+                        <td class="ic3">
+                            <input id="fs_similar" type="checkbox" name="fs_similar" checked="checked" />
+                            <label for="fs_similar">使用相似度搜索</label>
+                        </td>
+                        <td class="ic3"><input id="fs_covers" type="checkbox" name="fs_covers" />
+                            <label for="fs_covers">仅搜索封面</label>
+                        </td>
+                        <td class="ic3">
+                            <input id="fs_exp" type="checkbox" name="fs_exp" />
+                            <label for="fs_exp">显示已删除的作品</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+
     </div>
 </body>
 
