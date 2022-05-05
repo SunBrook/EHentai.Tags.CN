@@ -1307,3 +1307,14 @@ table .gtw {
     background-color: #b5a297;
     border-radius: 10px;
 }
+
+.t_detail_comment .comment_span {
+    margin-right: 10px;
+    float: left;
+}
+
+.t_detail_comment .comment_span,
+.t_detail_comment .comment_span input,
+.t_detail_comment .comment_span label {
+    cursor: pointer;
+}

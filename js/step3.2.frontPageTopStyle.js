@@ -193,16 +193,20 @@ function fsdivHide() {
 }
 
 function fsdivShow() {
-    var labels = document.getElementsByClassName("nopm")[1].children;
-    if (labels.length > 1) {
-        var fsdiv = document.getElementById("fsdiv");
-        if (fsdiv) {
-            var txt = labels[1].innerText;
-            if (txt == "隐藏文件搜索") {
-                fsdiv.style.display = "block";
+    var nopms = document.getElementsByClassName("nopm");
+    if (nopms.legnth > 1) {
+        var labels = nopms[1].children;
+        if (labels.length > 1) {
+            var fsdiv = document.getElementById("fsdiv");
+            if (fsdiv) {
+                var txt = labels[1].innerText;
+                if (txt == "隐藏文件搜索") {
+                    fsdiv.style.display = "block";
+                }
             }
         }
     }
+
 
     var iw = document.getElementById("iw");
     if (iw) {

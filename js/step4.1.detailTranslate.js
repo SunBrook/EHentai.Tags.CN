@@ -124,6 +124,242 @@ function detailPageTranslate() {
     gdo4[0].innerText = "小图";
     gdo4[1].innerText = "大图";
 
+
+    // 评论翻译
+    var cdiv = document.getElementById("cdiv");
+    var c1s = cdiv.querySelectorAll("div.c1");
+
+    // 添加样式类，方便修改样式
+    cdiv.classList.add("t_detail_comment");
+
+    for (const i in c1s) {
+        if (Object.hasOwnProperty.call(c1s, i)) {
+            const c1 = c1s[i];
+
+            var c2 = c1.children[0];
+
+            // Posted on 04 May 2022, 11:21 by:   
+            var c3 = c2.querySelector("div.c3");
+            var postTime = trimEnd(c3.childNodes[0].data.replace("Posted on ", "").replace("by:", ""));
+            var postTimeArray = postTime.split(",");
+            c3.childNodes[0].data = `评论时间：${transDate(postTimeArray[0])}${postTimeArray[1]} ， 评论者：`;
+
+            // EH 私信
+            if (webHost == "e-hentai.org") {
+                var pmImg = c3.children[1].children[0];
+                pmImg.title = "发私信";
+            }
+
+            // 根据 c6 添加翻译功能
+            var translateSpan = document.createElement("span");
+            translateSpan.classList.add("comment_span");
+            translateSpan.id = "googleTranslateSpan_" + i;
+            var translateCheckbox = document.createElement("input");
+            translateCheckbox.setAttribute("type", "checkbox");
+            translateCheckbox.id = "googleTranslateCheckbox_" + i;
+            translateCheckbox.dataset.translate_id = c1.querySelector("div.c6").id;
+            var translateLabel = document.createElement("label");
+            translateLabel.setAttribute("for", translateCheckbox.id);
+            translateLabel.id = "translateLabel" + i;
+            translateLabel.innerText = "翻译";
+
+            translateSpan.appendChild(translateCheckbox);
+            translateSpan.appendChild(translateLabel);
+            c3.parentNode.insertBefore(translateSpan, c3);
+
+            translateCheckbox.onclick = function (e) {
+                var c6 = document.getElementById(e.target.dataset.translate_id);
+                if (e.target.checked) {
+                    // 选中事件
+                    if (c6.dataset.trans_en) {
+                        // 翻译过，直接替换
+                        c6.innerText = c6.dataset.trans_en;
+                    } else {
+                        // 谷歌翻译
+                        c6.title = c6.innerText;
+                        c6.dataset.origin_html = c6.innerHTML;
+                        var c6ChildNodes = c6.childNodes;
+                        for (const i in c6ChildNodes) {
+                            if (Object.hasOwnProperty.call(c6ChildNodes, i)) {
+                                const item = c6ChildNodes[i];
+                                if (item.nodeName == "#text" && item.data) {
+                                    var span = document.createElement("span");
+                                    span.innerText = item.data;
+                                    item.parentNode.insertBefore(span, item);
+                                    item.parentNode.removeChild(item);
+                                    translatePageElement(span);
+                                } else if (item.innerText) {
+                                    translatePageElement(item);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // 取消选中事件
+                    if (c6.dataset.origin_html) {
+                        c6.innerHTML = c6.dataset.origin_html;
+                    }
+                }
+            }
+
+            // [Vote+] [Vote-]
+            var c4 = c2.querySelector("div.c4");
+            if (c4) {
+                if (c4.childNodes.length == 2 && c4.childNodes[1].data == "Uploader Comment") {
+                    c4.childNodes[1].data = "上传者的评论";
+                } else {
+
+                    if (c4.childNodes.length == 3) {
+                        // 编辑
+                        c4.children[0].innerText = " 编辑 ";
+                        var c6Id = c1.querySelector("div.c6").id.replace("comment_", "");
+                        c4.children[0].onclick = function () {
+                            edit_comment_copy(c6Id);
+                            return false;
+                        }
+                    } else {
+                        // 点赞
+                        var leftBracket = c4.childNodes[0];
+                        leftBracket.data = "\xa0";
+                        var middleBracket = c4.childNodes[2];
+                        middleBracket.data = "\xa0\xa0";
+                        var rightBracket = c4.childNodes[4];
+                        rightBracket.data = "\xa0";
+
+                        var like = c4.children[0];
+                        like.innerText = "[ 👍 ]";
+                        like.title = "点赞";
+                        var dislike = c4.children[1];
+                        dislike.innerText = "[ 👎 ]";
+                        dislike.title = "点踩";
+                    }
+                }
+            }
+
+            // Score +10
+            var c5 = c2.querySelector("div.c5");
+            if (c5) {
+                c5.childNodes[0].data = "得分 \xa0";
+            }
+
+            // Last edited on 04 May 2022, 16:41.
+            var c8 = c1.querySelector("div.c8");
+            if (c8) {
+                c8.childNodes[0].data = "最后编辑时间：";
+                var strong = c8.children[0];
+                var modifyTimeArray = strong.innerText.split(",");
+                strong.innerText = `${transDate(modifyTimeArray[0])}${modifyTimeArray[1]}`;
+            }
+
+            // You did not enter a valid comment.
+            var c6 = c1.querySelector("div.c6");
+            if (c6) {
+                var pbr = c6.querySelector("p.br");
+                if (pbr) {
+                    switch (pbr.innerText) {
+                        case "You did not enter a valid comment.":
+                            pbr.innerText = "您没有输入有效的评论";
+                            break;
+                        case "Your comment is too short.":
+                            pbr.innerText = "评论写的太短了";
+                            break;
+                        default:
+                            translatePageElement(pbr);
+                            break;
+                    }
+                }
+
+                var gce = c6.querySelector("div.gce");
+                if (gce) {
+                    var submitBtn = gce.querySelector("input:last-child");
+                    submitBtn.value = "发布评论";
+                }
+            }
+        }
+    }
+
+    var chd = document.getElementById("chd");
+    if (chd.children.length == 2) {
+        // 底部展开全部翻译
+        var p1 = chd.children[0];
+        p1.childNodes[0].data = p1.childNodes[0].data
+            .replace("There are", "还有")
+            .replace("more comments below the viewing threshold", "评论未显示");
+        // 点击显示全部
+        p1.children[0].innerText = "点击显示全部";
+    }
+
+    // 翻译评论功能
+    var postnewcomment = document.getElementById("postnewcomment");
+    postnewcomment.children[0].innerText = " 评 论 ";
+    var formDiv = document.getElementById("formdiv");
+    var mycommentInput = formDiv.querySelector("textarea");
+    mycommentInput.setAttribute("placeholder", "在此处输入您的评论，然后点击发表评论。如果最后发布的评论是您的，则此评论将附加到该帖子中。");
+    var mycommentSubmit = formDiv.querySelector("input");
+    mycommentSubmit.value = "发表评论";
+}
+
+function edit_comment_copy(b) {
+    if (comment_xhr != undefined) {
+        return
+    }
+    comment_xhr = new XMLHttpRequest();
+    var a = {
+        method: "geteditcomment",
+        apiuid: apiuid,
+        apikey: apikey,
+        gid: gid,
+        token: token,
+        comment_id: b
+    };
+    api_call(comment_xhr, a, make_comment_editable_copy);
+}
+function make_comment_editable_copy() {
+    var a = api_response(comment_xhr);
+    var formHtml = `${a.editable_comment}`;
+    formHtml = formHtml.replace('<input type="submit" value="Edit Comment" />', '<input type="submit" value="发布评论" />');
+
+    if (a != false) {
+        if (a.error != undefined) {
+            alert("Could not get editable comment: " + a.error)
+        }
+        if (a.comment_id != undefined) {
+            document.getElementById("comment_" + a.comment_id).innerHTML = formHtml
+        }
+        comment_xhr = undefined
+    }
+}
+
+// 作品查看页面
+function detailReadPage() {
+    var i6 = document.getElementById("i6");
+    var links = i6.querySelectorAll("a");
+    for (const i in links) {
+        if (Object.hasOwnProperty.call(links, i)) {
+            const link = links[i];
+            if (detailReadPage_bottomLinkDict[link.innerText]) {
+                link.innerText = detailReadPage_bottomLinkDict[link.innerText];
+            }
+        }
+    }
+
+    // 获取回到详情页面的地址，生成一个链接，插入最前面
+    var backLink = document.createElement("a");
+    backLink.innerText = "返回到详情页";
+    backLink.href = document.getElementById("i5").querySelector("a").href;
+    backLink.style.marginRight = "10px";
+
+    var backImg = document.createElement("img");
+    backImg.src = "https://ehgt.org/g/mr.gif";
+    backImg.classList.add("mr");
+
+    i6.children[0].parentNode.insertBefore(backLink, i6.children[0]);
+    i6.children[0].parentNode.insertBefore(backImg, i6.children[0]);
+
+    // 下载原始图片
+    var i7 = document.getElementById("i7");
+    var downloadLink = i7.querySelector("a");
+    downloadLink.innerText = downloadLink.innerText.replace("Download original", "下载原图").replace("source", "");
 }
 
 //#endregion

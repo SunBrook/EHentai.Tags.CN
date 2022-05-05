@@ -584,4 +584,14 @@ const settingsPage_countryDict = {
 
 //#endregion
 
+//#region 作品阅读页面底部链接
+
+const detailReadPage_bottomLinkDict = {
+	"Show all galleries with this file": "显示包含此图片的所有作品",
+	"Click here if the image fails loading": "重新加载图片",
+	"Generate a static forum image link": "生成用于论坛的图片链接"
+}
+
+//#endregion
+
 //#endregion

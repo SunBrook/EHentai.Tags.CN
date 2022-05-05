@@ -258,4 +258,34 @@ function crossDomain() {
     document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
+// 英语日期转纯数字日期
+function transDate(dateEn) {
+    var monthDict = {
+        "January": 1,
+        "February": 2,
+        "March": 3,
+        "April": 4,
+        "May": 5,
+        "June": 6,
+        "July": 7,
+        "August": 8,
+        "September": 9,
+        "October": 10,
+        "November": 11,
+        "December": 12
+    };
+    var dateSplit = dateEn.split(' ');
+    return `${dateSplit[2]}/${monthDict[dateSplit[1]]}/${Number(dateSplit[0])}`;
+}
+
+// 过滤字符串开头和结尾的空格
+function trimStartEnd(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+// 过滤字符串结尾空格
+function trimEnd(str) {
+    return str.replace(/(\s*$)/g, "");
+}
+
 //#endregion

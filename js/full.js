@@ -26,260 +26,290 @@
 
 // 检查字典是否为空
 function checkDictNull(dict) {
-	for (const n in dict) {
-		return false;
-	}
-	return true;
+    for (const n in dict) {
+        return false;
+    }
+    return true;
 }
 
 // 获取地址参数
 function GetQueryString(name) {
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-	var r = window.location.search.substring(1).match(reg);
-	if (r != null) return decodeURI(r[2]); return null;
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substring(1).match(reg);
+    if (r != null) return decodeURI(r[2]); return null;
 }
 
 // 数组删除元素
 Array.prototype.remove = function (val) {
-	var index = this.indexOf(val);
-	if (index > -1) {
-		this.splice(index, 1);
-	}
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
 };
 
 // 数组差集
 function getDiffSet(array1, array2) {
-	return array1.filter(item => !new Set(array2).has(item));
+    return array1.filter(item => !new Set(array2).has(item));
 }
 
 // 导出json文件
 function saveJSON(data, filename) {
-	if (!data) return;
-	if (!filename) filename = "json.json";
-	if (typeof data === "object") {
-		data = JSON.stringify(data, undefined, 4);
-	}
-	// 要创建一个 blob 数据
-	let blob = new Blob([data], { type: "text/json" }),
-		a = document.createElement("a");
-	a.download = filename;
+    if (!data) return;
+    if (!filename) filename = "json.json";
+    if (typeof data === "object") {
+        data = JSON.stringify(data, undefined, 4);
+    }
+    // 要创建一个 blob 数据
+    let blob = new Blob([data], { type: "text/json" }),
+        a = document.createElement("a");
+    a.download = filename;
 
-	// 将blob转换为地址
-	// 创建 URL 的 Blob 对象
-	a.href = window.URL.createObjectURL(blob);
+    // 将blob转换为地址
+    // 创建 URL 的 Blob 对象
+    a.href = window.URL.createObjectURL(blob);
 
-	// 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
-	a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-	// 添加鼠标事件
-	let event = new MouseEvent("click", {});
+    // 添加鼠标事件
+    let event = new MouseEvent("click", {});
 
-	// 向一个指定的事件目标派发一个事件
-	a.dispatchEvent(event);
+    // 向一个指定的事件目标派发一个事件
+    a.dispatchEvent(event);
 }
 
 // 获取当前时间
 function getCurrentDate(format) {
-	var now = new Date();
-	var year = now.getFullYear(); //年份
-	var month = now.getMonth();//月份
-	var date = now.getDate();//日期
-	var day = now.getDay();//周几
-	var hour = now.getHours();//小时
-	var minu = now.getMinutes();//分钟
-	var sec = now.getSeconds();//秒
-	month = month + 1;
-	if (month < 10) month = "0" + month;
-	if (date < 10) date = "0" + date;
-	if (hour < 10) hour = "0" + hour;
-	if (minu < 10) minu = "0" + minu;
-	if (sec < 10) sec = "0" + sec;
-	var time = "";
-	//精确到天
-	if (format == 1) {
-		time = year + "-" + month + "-" + date;
-	}
-	//精确到分
-	else if (format == 2) {
-		time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
-	}
-	return time;
+    var now = new Date();
+    var year = now.getFullYear(); //年份
+    var month = now.getMonth();//月份
+    var date = now.getDate();//日期
+    var day = now.getDay();//周几
+    var hour = now.getHours();//小时
+    var minu = now.getMinutes();//分钟
+    var sec = now.getSeconds();//秒
+    month = month + 1;
+    if (month < 10) month = "0" + month;
+    if (date < 10) date = "0" + date;
+    if (hour < 10) hour = "0" + hour;
+    if (minu < 10) minu = "0" + minu;
+    if (sec < 10) sec = "0" + sec;
+    var time = "";
+    //精确到天
+    if (format == 1) {
+        time = year + "-" + month + "-" + date;
+    }
+    //精确到分
+    else if (format == 2) {
+        time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
+    }
+    return time;
 }
 
 // 调用谷歌翻译接口
 function getGoogleTranslate(text, func) {
-	var httpRequest = new XMLHttpRequest();
-	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
-	httpRequest.open("GET", url, true);
-	httpRequest.send();
+    var httpRequest = new XMLHttpRequest();
+    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
+    httpRequest.open("GET", url, true);
+    httpRequest.send();
 
-	httpRequest.onreadystatechange = function () {
-		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-			var json = JSON.parse(httpRequest.responseText);
-			func(json);
-		}
-	}
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var json = JSON.parse(httpRequest.responseText);
+            func(json);
+        }
+    }
 }
 
 // 借助谷歌翻译设置翻译后的值
 function translatePageElement(element) {
-	getGoogleTranslate(element.innerText, function (data) {
-		var sentences = data.sentences;
-		var longtext = '';
-		for (const i in sentences) {
-			if (Object.hasOwnProperty.call(sentences, i)) {
-				const sentence = sentences[i];
-				longtext += sentence.trans;
-			}
-		}
-		element.innerText = longtext;
-	});
+    getGoogleTranslate(element.innerText, function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+    });
 }
 
 function getGoogleTranslateEN(text, func) {
-	var httpRequest = new XMLHttpRequest();
-	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
-	httpRequest.open("GET", url, true);
-	httpRequest.send();
+    var httpRequest = new XMLHttpRequest();
+    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
+    httpRequest.open("GET", url, true);
+    httpRequest.send();
 
-	httpRequest.onreadystatechange = function () {
-		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-			var json = JSON.parse(httpRequest.responseText);
-			func(json);
-		}
-	}
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var json = JSON.parse(httpRequest.responseText);
+            func(json);
+        }
+    }
 }
 
 function translatePageElementEN(element) {
-	getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
-		var sentences = data.sentences;
-		var longtext = '';
-		for (const i in sentences) {
-			if (Object.hasOwnProperty.call(sentences, i)) {
-				const sentence = sentences[i];
-				longtext += sentence.trans;
-			}
-		}
-		element.innerText = longtext;
-	});
+    getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+    });
 }
 
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {
-	clearInterval(slideTimer);
-	var h = 0;
-	slideTimer = setInterval(function () {
-		// 当目标高度与实际高度小于10px时，以1px的速度步进
-		var step = (realHeight - h) / 10;
-		step = Math.ceil(step);
-		h += step;
-		if (Math.abs(realHeight - h) <= Math.abs(step)) {
-			h = realHeight;
-			element.style.height = `${realHeight}px`;
-			func();
-			clearInterval(slideTimer);
-		} else {
-			element.style.height = `${h}px`;
-		}
-	}, speed);
+    clearInterval(slideTimer);
+    var h = 0;
+    slideTimer = setInterval(function () {
+        // 当目标高度与实际高度小于10px时，以1px的速度步进
+        var step = (realHeight - h) / 10;
+        step = Math.ceil(step);
+        h += step;
+        if (Math.abs(realHeight - h) <= Math.abs(step)) {
+            h = realHeight;
+            element.style.height = `${realHeight}px`;
+            func();
+            clearInterval(slideTimer);
+        } else {
+            element.style.height = `${h}px`;
+        }
+    }, speed);
 }
 function slideUp(element, speed, func) {
-	clearInterval(slideTimer);
-	slideTimer = setInterval(function () {
-		var step = (0 - element.clientHeight) / 10;
-		step = Math.floor(step);
-		element.style.height = `${element.clientHeight + step}px`;
-		if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
-			element.style.height = "0px";
-			func();
-			clearInterval(slideTimer);
-		}
-	}, speed);
+    clearInterval(slideTimer);
+    slideTimer = setInterval(function () {
+        var step = (0 - element.clientHeight) / 10;
+        step = Math.floor(step);
+        element.style.height = `${element.clientHeight + step}px`;
+        if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
+            element.style.height = "0px";
+            func();
+            clearInterval(slideTimer);
+        }
+    }, speed);
 }
 
 // 展开折叠动画 (右左)
 var slideTimer2 = null;
 function slideRight(element, realWidth, speed, func) {
-	clearInterval(slideTimer2);
-	var w = 0;
-	slideTimer2 = setInterval(function () {
-		// 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
-		var step = (realWidth - w) / 10;
-		step = Math.ceil(step);
-		w += step;
-		if (Math.abs(realWidth - w) <= Math.abs(step)) {
-			w = realWidth;
-			element.style.width = `${realWidth}px`;
-			func();
-			clearInterval(slideTimer2);
-		} else {
-			element.style.width = `${w}px`;
-		}
-	}, speed);
+    clearInterval(slideTimer2);
+    var w = 0;
+    slideTimer2 = setInterval(function () {
+        // 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
+        var step = (realWidth - w) / 10;
+        step = Math.ceil(step);
+        w += step;
+        if (Math.abs(realWidth - w) <= Math.abs(step)) {
+            w = realWidth;
+            element.style.width = `${realWidth}px`;
+            func();
+            clearInterval(slideTimer2);
+        } else {
+            element.style.width = `${w}px`;
+        }
+    }, speed);
 }
 function slideLeft(element, speed, func) {
-	clearInterval(slideTimer2);
-	slideTimer2 = setInterval(function () {
-		var step = (0 - element.clientWidth) / 10;
-		step = Math.floor(step);
-		element.style.width = `${element.clientWidth + step}px`;
-		if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
-			element.style.width = "0px";
-			func();
-			clearInterval(slideTimer2);
-		}
-	})
+    clearInterval(slideTimer2);
+    slideTimer2 = setInterval(function () {
+        var step = (0 - element.clientWidth) / 10;
+        step = Math.floor(step);
+        element.style.width = `${element.clientWidth + step}px`;
+        if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
+            element.style.width = "0px";
+            func();
+            clearInterval(slideTimer2);
+        }
+    })
 }
 
 
 // 页面样式注入
 function styleInject(css, ref) {
-	if (ref === void 0) ref = {};
-	var insertAt = ref.insertAt;
+    if (ref === void 0) ref = {};
+    var insertAt = ref.insertAt;
 
-	if (!css || typeof document === 'undefined') { return; }
+    if (!css || typeof document === 'undefined') { return; }
 
-	var head = document.head || document.getElementsByTagName('head')[0];
-	var style = document.createElement('style');
-	style.type = 'text/css';
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.type = 'text/css';
 
-	if (insertAt === 'top') {
-		if (head.firstChild) {
-			head.insertBefore(style, head.firstChild);
-		} else {
-			head.appendChild(style);
-		}
-	} else {
-		head.appendChild(style);
-	}
+    if (insertAt === 'top') {
+        if (head.firstChild) {
+            head.insertBefore(style, head.firstChild);
+        } else {
+            head.appendChild(style);
+        }
+    } else {
+        head.appendChild(style);
+    }
 
-	if (style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		style.appendChild(document.createTextNode(css));
-	}
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
 }
 
 // UrlEncode
 function urlEncode(str) {
-	str = (str + '').toString();
+    str = (str + '').toString();
 
-	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-		replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 // UrlDecode
 function urlDecode(str) {
-	return decodeURIComponent(str);
+    return decodeURIComponent(str);
 }
 
 // 跨域
 function crossDomain() {
-	var meta = document.createElement("meta");
-	meta.httpEquiv = "Content-Security-Policy";
-	meta.content = "upgrade-insecure-requests";
-	document.getElementsByTagName("head")[0].appendChild(meta);
+    var meta = document.createElement("meta");
+    meta.httpEquiv = "Content-Security-Policy";
+    meta.content = "upgrade-insecure-requests";
+    document.getElementsByTagName("head")[0].appendChild(meta);
+}
+
+// 英语日期转纯数字日期
+function transDate(dateEn) {
+    var monthDict = {
+        "January": 1,
+        "February": 2,
+        "March": 3,
+        "April": 4,
+        "May": 5,
+        "June": 6,
+        "July": 7,
+        "August": 8,
+        "September": 9,
+        "October": 10,
+        "November": 11,
+        "December": 12
+    };
+    var dateSplit = dateEn.split(' ');
+    return `${dateSplit[2]}/${monthDict[dateSplit[1]]}/${Number(dateSplit[0])}`;
+}
+
+// 过滤字符串开头和结尾的空格
+function trimStartEnd(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+// 过滤字符串结尾空格
+function trimEnd(str) {
+    return str.replace(/(\s*$)/g, "");
 }
 
 //#endregion
@@ -870,7 +900,18 @@ const settingsPage_countryDict = {
 
 //#endregion
 
+//#region 作品阅读页面底部链接
+
+const detailReadPage_bottomLinkDict = {
+	"Show all galleries with this file": "显示包含此图片的所有作品",
+	"Click here if the image fails loading": "重新加载图片",
+	"Generate a static forum image link": "生成用于论坛的图片链接"
+}
+
 //#endregion
+
+//#endregion
+
 
 
 //#region step0.localstorage.js localstorage 数据方法，迁入 indexdb，如无特殊需要，删除之前存储的数据
@@ -2291,6 +2332,17 @@ func_eh_ex(() => {
 	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-thumb {
 		background-color: #b5a297;
 		border-radius: 10px;
+	}
+	
+	.t_detail_comment .comment_span {
+		margin-right: 10px;
+		float: left;
+	}
+	
+	.t_detail_comment .comment_span,
+	.t_detail_comment .comment_span input,
+	.t_detail_comment .comment_span label {
+		cursor: pointer;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -3405,7 +3457,7 @@ func_eh_ex(() => {
 		margin-top: 10px;
 	}
 	
-	.t_frontpage_ido #searchbox .nopm input[type="button"], 
+	.t_frontpage_ido #searchbox .nopm input[type="button"],
 	.t_frontpage_ido #searchbox .nopm input[type="submit"] {
 		width: 70px;
 	}
@@ -3456,25 +3508,35 @@ func_eh_ex(() => {
 		background-color: #7b7e85c2;
 	}
 	
-	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar{
+	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
 	
-	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-track  {
+	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
 	
-	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-thumb  {
+	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
+	}
+	
+	.t_detail_comment .comment_span {
+		margin-right: 10px;
+		float: left;
+	}
+	
+	.t_detail_comment .comment_span,
+	.t_detail_comment .comment_span input,
+	.t_detail_comment .comment_span label {
+		cursor: pointer;
 	}`;
 	styleInject(category_style);
 });
 
 //#endregion
-
 
 
 //#region step1.2.translateTopBottomMenu.js 头部菜单、底部菜单翻译
@@ -5129,215 +5191,220 @@ function frontPageTitleTranslate() {
 
 // 添加样式和逻辑，从 localstroage 中读取显示隐藏
 function frontPageTopStyleStep01() {
-	// 调整头部样式
-	var searchBoxDiv = document.getElementById("searchbox");
-	searchBoxDiv.style.width = "auto";
-	searchBoxDiv.style.border = "0";
+    // 调整头部样式
+    var searchBoxDiv = document.getElementById("searchbox");
+    searchBoxDiv.style.width = "auto";
+    searchBoxDiv.style.border = "0";
 
-	// 头部添加词库更新提示
-	var dataUpdateDiv = document.createElement("div");
-	dataUpdateDiv.id = "data_update_tip";
-	var dataUpdateText = document.createTextNode("词库升级中...");
-	dataUpdateDiv.appendChild(dataUpdateText);
-	searchBoxDiv.appendChild(dataUpdateDiv);
+    // 头部添加词库更新提示
+    var dataUpdateDiv = document.createElement("div");
+    dataUpdateDiv.id = "data_update_tip";
+    var dataUpdateText = document.createTextNode("词库升级中...");
+    dataUpdateDiv.appendChild(dataUpdateText);
+    searchBoxDiv.appendChild(dataUpdateDiv);
 
-	// 纯搜索模式、标签模式（默认）按钮
-	var searchModeDiv = document.createElement("div");
-	searchModeDiv.id = "div_searchMode_btn";
-	searchModeDiv.addEventListener("click", searchModeChange);
-	searchBoxDiv.appendChild(searchModeDiv);
+    // 纯搜索模式、标签模式（默认）按钮
+    var searchModeDiv = document.createElement("div");
+    searchModeDiv.id = "div_searchMode_btn";
+    searchModeDiv.addEventListener("click", searchModeChange);
+    searchBoxDiv.appendChild(searchModeDiv);
 
-	function searchModeChange() {
-		var tagDiv = document.getElementById("div_ee8413b2");
-		if (searchModeDiv.innerText == "纯搜索模式") {
-			normalModeWrapperDiv.style.display = "none";
-			tagDiv.style.display = "none";
-			searchBoxDiv.children[0].style.display = "block";
-			fsdivShow();
-			searchModeDiv.innerText = "标签模式";
-			setSearchMode(1);
+    function searchModeChange() {
+        var tagDiv = document.getElementById("div_ee8413b2");
+        if (searchModeDiv.innerText == "纯搜索模式") {
+            normalModeWrapperDiv.style.display = "none";
+            tagDiv.style.display = "none";
+            searchBoxDiv.children[0].style.display = "block";
+            fsdivShow();
+            searchModeDiv.innerText = "标签模式";
+            setSearchMode(1);
 
-		} else {
-			normalModeWrapperDiv.style.display = "block";
-			tagDiv.style.display = "block";
-			searchModeDiv.innerText = "纯搜索模式";
-			setSearchMode(0);
+        } else {
+            normalModeWrapperDiv.style.display = "block";
+            tagDiv.style.display = "block";
+            searchModeDiv.innerText = "纯搜索模式";
+            setSearchMode(0);
 
-			// 判断头部是否需要显示
-			var oldSearchDivVisible = getOldSearchDivVisible();
-			if (oldSearchDivVisible == 0) {
-				topVisibleDiv.innerText = "头部显示";
-				searchBoxDiv.children[0].style.display = "none";
-				fsdivHide();
-			} else {
-				topVisibleDiv.innerText = "头部隐藏";
-			}
-		}
-	}
+            // 判断头部是否需要显示
+            var oldSearchDivVisible = getOldSearchDivVisible();
+            if (oldSearchDivVisible == 0) {
+                topVisibleDiv.innerText = "头部显示";
+                searchBoxDiv.children[0].style.display = "none";
+                fsdivHide();
+            } else {
+                topVisibleDiv.innerText = "头部隐藏";
+            }
+        }
+    }
 
-	// 头部按钮包裹层，包裹标准模式下的按钮
-	var normalModeWrapperDiv = document.createElement("div");
-	normalModeWrapperDiv.id = "div_normalMode_wrapper";
-	searchBoxDiv.appendChild(normalModeWrapperDiv);
+    // 头部按钮包裹层，包裹标准模式下的按钮
+    var normalModeWrapperDiv = document.createElement("div");
+    normalModeWrapperDiv.id = "div_normalMode_wrapper";
+    searchBoxDiv.appendChild(normalModeWrapperDiv);
 
-	// 头部添加字体颜色按钮
-	var fontColorDiv = document.createElement("div");
-	fontColorDiv.id = "div_fontColor_btn";
-	var fontColorText = document.createTextNode("字体颜色");
-	fontColorDiv.appendChild(fontColorText);
-	normalModeWrapperDiv.appendChild(fontColorDiv);
+    // 头部添加字体颜色按钮
+    var fontColorDiv = document.createElement("div");
+    fontColorDiv.id = "div_fontColor_btn";
+    var fontColorText = document.createTextNode("字体颜色");
+    fontColorDiv.appendChild(fontColorText);
+    normalModeWrapperDiv.appendChild(fontColorDiv);
 
-	// 头部添加背景图片按钮
-	var bgDiv = document.createElement("div");
-	bgDiv.id = "div_background_btn";
-	var bgText = document.createTextNode("背景图片");
-	bgDiv.appendChild(bgText);
-	normalModeWrapperDiv.appendChild(bgDiv);
+    // 头部添加背景图片按钮
+    var bgDiv = document.createElement("div");
+    bgDiv.id = "div_background_btn";
+    var bgText = document.createTextNode("背景图片");
+    bgDiv.appendChild(bgText);
+    normalModeWrapperDiv.appendChild(bgDiv);
 
-	// 头部显示隐藏按钮
-	var topVisibleDiv = document.createElement("div");
-	topVisibleDiv.id = "div_top_visible_btn";
-	topVisibleDiv.addEventListener("click", topVisibleChange);
-	normalModeWrapperDiv.appendChild(topVisibleDiv);
+    // 头部显示隐藏按钮
+    var topVisibleDiv = document.createElement("div");
+    topVisibleDiv.id = "div_top_visible_btn";
+    topVisibleDiv.addEventListener("click", topVisibleChange);
+    normalModeWrapperDiv.appendChild(topVisibleDiv);
 
-	function topVisibleChange() {
-		if (topVisibleDiv.innerText == "头部显示") {
-			// 头部显示
-			searchBoxDiv.children[0].style.display = "block";
-			fsdivShow();
-			topVisibleDiv.innerText = "头部隐藏";
-			setOldSearchDivVisible(1);
+    function topVisibleChange() {
+        if (topVisibleDiv.innerText == "头部显示") {
+            // 头部显示
+            searchBoxDiv.children[0].style.display = "block";
+            fsdivShow();
+            topVisibleDiv.innerText = "头部隐藏";
+            setOldSearchDivVisible(1);
 
-		} else {
-			// 头部隐藏
-			searchBoxDiv.children[0].style.display = "none";
-			fsdivHide();
-			topVisibleDiv.innerText = "头部显示";
-			setOldSearchDivVisible(0);
-		}
-	}
+        } else {
+            // 头部隐藏
+            searchBoxDiv.children[0].style.display = "none";
+            fsdivHide();
+            topVisibleDiv.innerText = "头部显示";
+            setOldSearchDivVisible(0);
+        }
+    }
 
-	// 读取头部是否隐藏，并应用到页面中
-	var oldSearchDivVisible = getOldSearchDivVisible();
-	if (oldSearchDivVisible == 0) {
-		topVisibleDiv.innerText = "头部显示";
-		searchBoxDiv.children[0].style.display = "none";
-		fsdivHide();
-	} else {
-		topVisibleDiv.innerText = "头部隐藏";
-	}
+    // 读取头部是否隐藏，并应用到页面中
+    var oldSearchDivVisible = getOldSearchDivVisible();
+    if (oldSearchDivVisible == 0) {
+        topVisibleDiv.innerText = "头部显示";
+        searchBoxDiv.children[0].style.display = "none";
+        fsdivHide();
+    } else {
+        topVisibleDiv.innerText = "头部隐藏";
+    }
 
-	// 优先级高于头部隐藏
-	// 读取模式数据，应用到页面中
-	var oldSearchMode = getSearchMode();
-	if (oldSearchMode == 1) {
-		normalModeWrapperDiv.style.display = "none";
-		searchBoxDiv.children[0].style.display = "block";
-		fsdivShow();
-		searchModeDiv.innerText = "标签模式";
-	} else {
-		searchModeDiv.innerText = "纯搜索模式";
-	}
+    // 优先级高于头部隐藏
+    // 读取模式数据，应用到页面中
+    var oldSearchMode = getSearchMode();
+    if (oldSearchMode == 1) {
+        normalModeWrapperDiv.style.display = "none";
+        searchBoxDiv.children[0].style.display = "block";
+        fsdivShow();
+        searchModeDiv.innerText = "标签模式";
+    } else {
+        searchModeDiv.innerText = "纯搜索模式";
+    }
 }
 
 // 从indexedDB 中读取隐藏折叠
 function frontPageTopStyleStep02() {
-	var searchBoxDiv = document.getElementById("searchbox");
-	var topVisibleDiv = document.getElementById("div_top_visible_btn");
-	var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
-	var searchModeDiv = document.getElementById("div_searchMode_btn");
-	var tagDiv = document.getElementById("div_ee8413b2");
+    var searchBoxDiv = document.getElementById("searchbox");
+    var topVisibleDiv = document.getElementById("div_top_visible_btn");
+    var normalModeWrapperDiv = document.getElementById("div_normalMode_wrapper");
+    var searchModeDiv = document.getElementById("div_searchMode_btn");
+    var tagDiv = document.getElementById("div_ee8413b2");
 
-	var oldSearchDivVisible = getOldSearchDivVisible();
-	if (oldSearchDivVisible == null) {
-		// 尝试从 indexedDB 中读取配置，如果存在则说明 localstroage 配置丢失，需要补充，页面对应隐藏折叠
-		read(table_Settings, table_Settings_key_OldSearchDiv_Visible, result => {
-			if (result) {
-				if (!result.value) {
-					topVisibleDiv.innerText = "头部显示";
-					searchBoxDiv.children[0].style.display = "none";
-					fsdivHide();
-				} else {
-					topVisibleDiv.innerText = "头部隐藏";
-				}
-				setOldSearchDivVisible(result.value ? 1 : 0);
-			}
-		}, () => { });
+    var oldSearchDivVisible = getOldSearchDivVisible();
+    if (oldSearchDivVisible == null) {
+        // 尝试从 indexedDB 中读取配置，如果存在则说明 localstroage 配置丢失，需要补充，页面对应隐藏折叠
+        read(table_Settings, table_Settings_key_OldSearchDiv_Visible, result => {
+            if (result) {
+                if (!result.value) {
+                    topVisibleDiv.innerText = "头部显示";
+                    searchBoxDiv.children[0].style.display = "none";
+                    fsdivHide();
+                } else {
+                    topVisibleDiv.innerText = "头部隐藏";
+                }
+                setOldSearchDivVisible(result.value ? 1 : 0);
+            }
+        }, () => { });
 
-	}
+    }
 
-	// 添加按钮点击事件，用于将配置存储到 indexDB 中
-	topVisibleDiv.addEventListener("click", () => {
-		var settings_oldSearchDivVisible = {
-			item: table_Settings_key_OldSearchDiv_Visible,
-			value: topVisibleDiv.innerText == "头部隐藏"
-		};
-		update(table_Settings, settings_oldSearchDivVisible, () => {
-			setDbSyncMessage(sync_oldSearchTopVisible);
-		}, () => { });
-	});
+    // 添加按钮点击事件，用于将配置存储到 indexDB 中
+    topVisibleDiv.addEventListener("click", () => {
+        var settings_oldSearchDivVisible = {
+            item: table_Settings_key_OldSearchDiv_Visible,
+            value: topVisibleDiv.innerText == "头部隐藏"
+        };
+        update(table_Settings, settings_oldSearchDivVisible, () => {
+            setDbSyncMessage(sync_oldSearchTopVisible);
+        }, () => { });
+    });
 
 
-	var oldSearchMode = getSearchMode();
-	if (oldSearchMode == null) {
-		read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
-			if (result) {
-				if (result.value == 1) {
-					normalModeWrapperDiv.style.display = "none";
-					searchBoxDiv.children[0].style.display = "block";
-					fsdivShow();
-					tagDiv.style.display = "none";
-					searchModeDiv.innerText = "标签模式";
-				} else {
-					searchModeDiv.innerText = "纯搜索模式";
-				}
-				setSearchMode(result.value);
-			}
-		}, () => { });
-	}
+    var oldSearchMode = getSearchMode();
+    if (oldSearchMode == null) {
+        read(table_Settings, table_Settings_key_FrontPageSearchMode, result => {
+            if (result) {
+                if (result.value == 1) {
+                    normalModeWrapperDiv.style.display = "none";
+                    searchBoxDiv.children[0].style.display = "block";
+                    fsdivShow();
+                    tagDiv.style.display = "none";
+                    searchModeDiv.innerText = "标签模式";
+                } else {
+                    searchModeDiv.innerText = "纯搜索模式";
+                }
+                setSearchMode(result.value);
+            }
+        }, () => { });
+    }
 
-	searchModeDiv.addEventListener("click", () => {
-		var settings_keyfrontPageSearchMode = {
-			item: table_Settings_key_FrontPageSearchMode,
-			value: searchModeDiv.innerText == "标签模式" ? 1 : 0
-		};
-		update(table_Settings, settings_keyfrontPageSearchMode, () => {
-			setDbSyncMessage(sync_frontPageSearchMode);
-		}, () => { });
-	});
+    searchModeDiv.addEventListener("click", () => {
+        var settings_keyfrontPageSearchMode = {
+            item: table_Settings_key_FrontPageSearchMode,
+            value: searchModeDiv.innerText == "标签模式" ? 1 : 0
+        };
+        update(table_Settings, settings_keyfrontPageSearchMode, () => {
+            setDbSyncMessage(sync_frontPageSearchMode);
+        }, () => { });
+    });
 }
 
 
 function fsdivHide() {
-	var fsdiv = document.getElementById("fsdiv");
-	if (fsdiv) {
-		fsdiv.style.display = "none";
-	}
-	var iw = document.getElementById("iw");
-	if (iw) {
-		iw.style.display = "none";
-	}
+    var fsdiv = document.getElementById("fsdiv");
+    if (fsdiv) {
+        fsdiv.style.display = "none";
+    }
+    var iw = document.getElementById("iw");
+    if (iw) {
+        iw.style.display = "none";
+    }
 }
 
 function fsdivShow() {
-	var labels = document.getElementsByClassName("nopm")[1].children;
-	if (labels.length > 1) {
-		var fsdiv = document.getElementById("fsdiv");
-		if (fsdiv) {
-			var txt = labels[1].innerText;
-			if (txt == "隐藏文件搜索") {
-				fsdiv.style.display = "block";
-			}
-		}
-	}
+    var nopms = document.getElementsByClassName("nopm");
+    if (nopms.legnth > 1) {
+        var labels = nopms[1].children;
+        if (labels.length > 1) {
+            var fsdiv = document.getElementById("fsdiv");
+            if (fsdiv) {
+                var txt = labels[1].innerText;
+                if (txt == "隐藏文件搜索") {
+                    fsdiv.style.display = "block";
+                }
+            }
+        }
+    }
 
-	var iw = document.getElementById("iw");
-	if (iw) {
-		iw.style.display = "block";
-	}
+
+    var iw = document.getElementById("iw");
+    if (iw) {
+        iw.style.display = "block";
+    }
 }
 
 //#endregion
+
 
 
 //#region step3.3.frontPageHtml.js 首页HTML 
@@ -5466,131 +5533,370 @@ function frontPageHtml() {
 
 // 头部添加词库更新提示
 function detailDataUpdate() {
-	var dataUpdateDiv = document.createElement("div");
-	dataUpdateDiv.id = "data_update_tip";
-	var dataUpdateText = document.createTextNode("词库升级中...");
-	dataUpdateDiv.appendChild(dataUpdateText);
-	var gd2Div = document.getElementById("gd2");
-	gd2Div.appendChild(dataUpdateDiv);
+    var dataUpdateDiv = document.createElement("div");
+    dataUpdateDiv.id = "data_update_tip";
+    var dataUpdateText = document.createTextNode("词库升级中...");
+    dataUpdateDiv.appendChild(dataUpdateText);
+    var gd2Div = document.getElementById("gd2");
+    gd2Div.appendChild(dataUpdateDiv);
 }
 
 // 详情页翻译
 function detailPageTranslate() {
 
-	// 跨域
-	crossDomain();
+    // 跨域
+    crossDomain();
 
-	//#region 左侧作品详情
+    //#region 左侧作品详情
 
-	// 类型
-	var bookType = document.getElementsByClassName("cs");
-	if (bookType.length > 0) {
-		bookType[0].innerText = bookTypeData[bookType[0].innerText] ?? bookType[0].innerText;
-	}
+    // 类型
+    var bookType = document.getElementsByClassName("cs");
+    if (bookType.length > 0) {
+        bookType[0].innerText = bookTypeData[bookType[0].innerText] ?? bookType[0].innerText;
+    }
 
-	// 上传人员
-	var uploder = document.getElementById("gdn");
-	if (uploder) {
-		var up = uploder.innerHTML;
-		var newInnerHtml = `由 ${up} 上传`;
-		uploder.innerHTML = newInnerHtml;
-	}
+    // 上传人员
+    var uploder = document.getElementById("gdn");
+    if (uploder) {
+        var up = uploder.innerHTML;
+        var newInnerHtml = `由 ${up} 上传`;
+        uploder.innerHTML = newInnerHtml;
+    }
 
 
-	var gddDiv = document.getElementById("gdd");
-	var trList = gddDiv.querySelectorAll("tr");
+    var gddDiv = document.getElementById("gdd");
+    var trList = gddDiv.querySelectorAll("tr");
 
-	// 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
-	var spanElement = document.createElement("span");
-	spanElement.style.display = "none";
-	var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
-	spanElement.appendChild(spanTxt);
-	gddDiv.appendChild(spanElement);
+    // 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
+    var spanElement = document.createElement("span");
+    spanElement.style.display = "none";
+    var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
+    spanElement.appendChild(spanTxt);
+    gddDiv.appendChild(spanElement);
 
-	// 上传时间
-	trList[0].firstChild.innerText = "上传:";
+    // 上传时间
+    trList[0].firstChild.innerText = "上传:";
 
-	// 父级
-	trList[1].firstChild.innerText = "父级:";
-	if (trList[1].lastChild.innerText == "None") {
-		trList[1].lastChild.innerText = "无";
-	}
+    // 父级
+    trList[1].firstChild.innerText = "父级:";
+    if (trList[1].lastChild.innerText == "None") {
+        trList[1].lastChild.innerText = "无";
+    }
 
-	// 是否可见
-	trList[2].firstChild.innerText = "可见:";
-	trList[2].lastChild.innerText = trList[2].lastChild.innerText == "Yes" ? "是" : "否";
+    // 是否可见
+    trList[2].firstChild.innerText = "可见:";
+    trList[2].lastChild.innerText = trList[2].lastChild.innerText == "Yes" ? "是" : "否";
 
-	// 语言
-	trList[3].firstChild.innerText = "语言:";
+    // 语言
+    trList[3].firstChild.innerText = "语言:";
 
-	// 文件大小
-	trList[4].firstChild.innerText = "大小:";
+    // 文件大小
+    trList[4].firstChild.innerText = "大小:";
 
-	// 篇幅
-	trList[5].firstChild.innerText = "篇幅:";
-	trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
+    // 篇幅
+    trList[5].firstChild.innerText = "篇幅:";
+    trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
 
-	// 收藏
-	trList[6].firstChild.innerText = "收藏:";
-	var favoriteText = trList[6].lastChild.innerText;
-	if (favoriteText == "None") {
-		trList[6].lastChild.innerText = "0 次";
-	}
-	else if (favoriteText == "Once") {
-		trList[6].lastChild.innerText = "1 次";
-	}
-	else {
-		trList[6].lastChild.innerText = favoriteText.replace("times", "次");
-	}
+    // 收藏
+    trList[6].firstChild.innerText = "收藏:";
+    var favoriteText = trList[6].lastChild.innerText;
+    if (favoriteText == "None") {
+        trList[6].lastChild.innerText = "0 次";
+    }
+    else if (favoriteText == "Once") {
+        trList[6].lastChild.innerText = "1 次";
+    }
+    else {
+        trList[6].lastChild.innerText = favoriteText.replace("times", "次");
+    }
 
-	// 评分
-	var trRateList = document.getElementById("gdr").querySelectorAll("tr");
-	trRateList[0].firstChild.innerText = "评分:";
-	trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
+    // 评分
+    var trRateList = document.getElementById("gdr").querySelectorAll("tr");
+    trRateList[0].firstChild.innerText = "评分:";
+    trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
 
-	// 添加到收藏(Ex 账号)
-	document.getElementById("favoritelink").innerText = "收藏此作品";
+    // 添加到收藏(Ex 账号)
+    document.getElementById("favoritelink").innerText = "收藏此作品";
 
-	//#endregion
+    //#endregion
 
-	// 文本框提示
-	document.getElementById("newtagfield").placeholder = "添加新标签，用逗号分隔";
-	document.getElementById("newtagbutton").value = "添加";
+    // 文本框提示
+    document.getElementById("newtagfield").placeholder = "添加新标签，用逗号分隔";
+    document.getElementById("newtagbutton").value = "添加";
 
-	// 右侧五个菜单
-	var gd5a = document.getElementById("gd5").querySelectorAll("a");
-	for (const i in gd5a) {
-		if (Object.hasOwnProperty.call(gd5a, i)) {
-			const a = gd5a[i];
-			if (a.innerText.indexOf("Torrent Download") != -1) {
-				a.innerText = a.innerText.replace("Torrent Download", "种子下载");
-			} else {
-				a.innerText = gd5aDict[a.innerText] ?? a.innerText;
-			}
-		}
-	}
+    // 右侧五个菜单
+    var gd5a = document.getElementById("gd5").querySelectorAll("a");
+    for (const i in gd5a) {
+        if (Object.hasOwnProperty.call(gd5a, i)) {
+            const a = gd5a[i];
+            if (a.innerText.indexOf("Torrent Download") != -1) {
+                a.innerText = a.innerText.replace("Torrent Download", "种子下载");
+            } else {
+                a.innerText = gd5aDict[a.innerText] ?? a.innerText;
+            }
+        }
+    }
 
-	// 展示数量
-	var gpc = document.getElementsByClassName("gpc")[0];
-	gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
+    // 展示数量
+    var gpc = document.getElementsByClassName("gpc")[0];
+    gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
 
-	// 展示行数
-	var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
-	for (const i in gdo2) {
-		if (Object.hasOwnProperty.call(gdo2, i)) {
-			const div = gdo2[i];
-			div.innerText = div.innerText.replace("rows", "行");
-		}
-	}
+    // 展示行数
+    var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
+    for (const i in gdo2) {
+        if (Object.hasOwnProperty.call(gdo2, i)) {
+            const div = gdo2[i];
+            div.innerText = div.innerText.replace("rows", "行");
+        }
+    }
 
-	// 图片尺寸
-	var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
-	gdo4[0].innerText = "小图";
-	gdo4[1].innerText = "大图";
+    // 图片尺寸
+    var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
+    gdo4[0].innerText = "小图";
+    gdo4[1].innerText = "大图";
 
+
+    // 评论翻译
+    var cdiv = document.getElementById("cdiv");
+    var c1s = cdiv.querySelectorAll("div.c1");
+
+    // 添加样式类，方便修改样式
+    cdiv.classList.add("t_detail_comment");
+
+    for (const i in c1s) {
+        if (Object.hasOwnProperty.call(c1s, i)) {
+            const c1 = c1s[i];
+
+            var c2 = c1.children[0];
+
+            // Posted on 04 May 2022, 11:21 by:   
+            var c3 = c2.querySelector("div.c3");
+            var postTime = trimEnd(c3.childNodes[0].data.replace("Posted on ", "").replace("by:", ""));
+            var postTimeArray = postTime.split(",");
+            c3.childNodes[0].data = `评论时间：${transDate(postTimeArray[0])}${postTimeArray[1]} ， 评论者：`;
+
+            // EH 私信
+            if (webHost == "e-hentai.org") {
+                var pmImg = c3.children[1].children[0];
+                pmImg.title = "发私信";
+            }
+
+            // 根据 c6 添加翻译功能
+            var translateSpan = document.createElement("span");
+            translateSpan.classList.add("comment_span");
+            translateSpan.id = "googleTranslateSpan_" + i;
+            var translateCheckbox = document.createElement("input");
+            translateCheckbox.setAttribute("type", "checkbox");
+            translateCheckbox.id = "googleTranslateCheckbox_" + i;
+            translateCheckbox.dataset.translate_id = c1.querySelector("div.c6").id;
+            var translateLabel = document.createElement("label");
+            translateLabel.setAttribute("for", translateCheckbox.id);
+            translateLabel.id = "translateLabel" + i;
+            translateLabel.innerText = "翻译";
+
+            translateSpan.appendChild(translateCheckbox);
+            translateSpan.appendChild(translateLabel);
+            c3.parentNode.insertBefore(translateSpan, c3);
+
+            translateCheckbox.onclick = function (e) {
+                var c6 = document.getElementById(e.target.dataset.translate_id);
+                if (e.target.checked) {
+                    // 选中事件
+                    if (c6.dataset.trans_en) {
+                        // 翻译过，直接替换
+                        c6.innerText = c6.dataset.trans_en;
+                    } else {
+                        // 谷歌翻译
+                        c6.title = c6.innerText;
+                        c6.dataset.origin_html = c6.innerHTML;
+                        var c6ChildNodes = c6.childNodes;
+                        for (const i in c6ChildNodes) {
+                            if (Object.hasOwnProperty.call(c6ChildNodes, i)) {
+                                const item = c6ChildNodes[i];
+                                if (item.nodeName == "#text" && item.data) {
+                                    var span = document.createElement("span");
+                                    span.innerText = item.data;
+                                    item.parentNode.insertBefore(span, item);
+                                    item.parentNode.removeChild(item);
+                                    translatePageElement(span);
+                                } else if (item.innerText) {
+                                    translatePageElement(item);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // 取消选中事件
+                    if (c6.dataset.origin_html) {
+                        c6.innerHTML = c6.dataset.origin_html;
+                    }
+                }
+            }
+
+            // [Vote+] [Vote-]
+            var c4 = c2.querySelector("div.c4");
+            if (c4) {
+                if (c4.childNodes.length == 2 && c4.childNodes[1].data == "Uploader Comment") {
+                    c4.childNodes[1].data = "上传者的评论";
+                } else {
+
+                    if (c4.childNodes.length == 3) {
+                        // 编辑
+                        c4.children[0].innerText = " 编辑 ";
+                        var c6Id = c1.querySelector("div.c6").id.replace("comment_", "");
+                        c4.children[0].onclick = function () {
+                            edit_comment_copy(c6Id);
+                            return false;
+                        }
+                    } else {
+                        // 点赞
+                        var leftBracket = c4.childNodes[0];
+                        leftBracket.data = "\xa0";
+                        var middleBracket = c4.childNodes[2];
+                        middleBracket.data = "\xa0\xa0";
+                        var rightBracket = c4.childNodes[4];
+                        rightBracket.data = "\xa0";
+
+                        var like = c4.children[0];
+                        like.innerText = "[ 👍 ]";
+                        like.title = "点赞";
+                        var dislike = c4.children[1];
+                        dislike.innerText = "[ 👎 ]";
+                        dislike.title = "点踩";
+                    }
+                }
+            }
+
+            // Score +10
+            var c5 = c2.querySelector("div.c5");
+            if (c5) {
+                c5.childNodes[0].data = "得分 \xa0";
+            }
+
+            // Last edited on 04 May 2022, 16:41.
+            var c8 = c1.querySelector("div.c8");
+            if (c8) {
+                c8.childNodes[0].data = "最后编辑时间：";
+                var strong = c8.children[0];
+                var modifyTimeArray = strong.innerText.split(",");
+                strong.innerText = `${transDate(modifyTimeArray[0])}${modifyTimeArray[1]}`;
+            }
+
+            // You did not enter a valid comment.
+            var c6 = c1.querySelector("div.c6");
+            if (c6) {
+                var pbr = c6.querySelector("p.br");
+                if (pbr) {
+                    switch (pbr.innerText) {
+                        case "You did not enter a valid comment.":
+                            pbr.innerText = "您没有输入有效的评论";
+                            break;
+                        case "Your comment is too short.":
+                            pbr.innerText = "评论写的太短了";
+                            break;
+                        default:
+                            translatePageElement(pbr);
+                            break;
+                    }
+                }
+
+                var gce = c6.querySelector("div.gce");
+                if (gce) {
+                    var submitBtn = gce.querySelector("input:last-child");
+                    submitBtn.value = "发布评论";
+                }
+            }
+        }
+    }
+
+    var chd = document.getElementById("chd");
+    if (chd.children.length == 2) {
+        // 底部展开全部翻译
+        var p1 = chd.children[0];
+        p1.childNodes[0].data = p1.childNodes[0].data
+            .replace("There are", "还有")
+            .replace("more comments below the viewing threshold", "评论未显示");
+        // 点击显示全部
+        p1.children[0].innerText = "点击显示全部";
+    }
+
+    // 翻译评论功能
+    var postnewcomment = document.getElementById("postnewcomment");
+    postnewcomment.children[0].innerText = " 评 论 ";
+    var formDiv = document.getElementById("formdiv");
+    var mycommentInput = formDiv.querySelector("textarea");
+    mycommentInput.setAttribute("placeholder", "在此处输入您的评论，然后点击发表评论。如果最后发布的评论是您的，则此评论将附加到该帖子中。");
+    var mycommentSubmit = formDiv.querySelector("input");
+    mycommentSubmit.value = "发表评论";
+}
+
+function edit_comment_copy(b) {
+    if (comment_xhr != undefined) {
+        return
+    }
+    comment_xhr = new XMLHttpRequest();
+    var a = {
+        method: "geteditcomment",
+        apiuid: apiuid,
+        apikey: apikey,
+        gid: gid,
+        token: token,
+        comment_id: b
+    };
+    api_call(comment_xhr, a, make_comment_editable_copy);
+}
+function make_comment_editable_copy() {
+    var a = api_response(comment_xhr);
+    var formHtml = `${a.editable_comment}`;
+    formHtml = formHtml.replace('<input type="submit" value="Edit Comment" />', '<input type="submit" value="发布评论" />');
+
+    if (a != false) {
+        if (a.error != undefined) {
+            alert("Could not get editable comment: " + a.error)
+        }
+        if (a.comment_id != undefined) {
+            document.getElementById("comment_" + a.comment_id).innerHTML = formHtml
+        }
+        comment_xhr = undefined
+    }
+}
+
+// 作品查看页面
+function detailReadPage() {
+    var i6 = document.getElementById("i6");
+    var links = i6.querySelectorAll("a");
+    for (const i in links) {
+        if (Object.hasOwnProperty.call(links, i)) {
+            const link = links[i];
+            if (detailReadPage_bottomLinkDict[link.innerText]) {
+                link.innerText = detailReadPage_bottomLinkDict[link.innerText];
+            }
+        }
+    }
+
+    // 获取回到详情页面的地址，生成一个链接，插入最前面
+    var backLink = document.createElement("a");
+    backLink.innerText = "返回到详情页";
+    backLink.href = document.getElementById("i5").querySelector("a").href;
+    backLink.style.marginRight = "10px";
+
+    var backImg = document.createElement("img");
+    backImg.src = "https://ehgt.org/g/mr.gif";
+    backImg.classList.add("mr");
+
+    i6.children[0].parentNode.insertBefore(backLink, i6.children[0]);
+    i6.children[0].parentNode.insertBefore(backImg, i6.children[0]);
+
+    // 下载原始图片
+    var i7 = document.getElementById("i7");
+    var downloadLink = i7.querySelector("a");
+    downloadLink.innerText = downloadLink.innerText.replace("Download original", "下载原图").replace("source", "");
 }
 
 //#endregion
+
+
+
 
 //#region step4.2.detailbtn.js 详情页主要按钮功能
 
@@ -8823,8 +9129,10 @@ function uconfigPageReWrapperForm(contentForm) {
 //TODO 首页背景
 //TODO 插件背景图片，有损压缩，保存快速替换
 //TODO EH 打怪兽弹窗无法直接关闭，添加关闭按钮
-//TODO 详情评论翻译
-//TODO 详情页底部菜单链接
+
+//DONE 详情评论翻译
+//DONE 作品阅读页底部菜单链接
+//DONE 作品阅读页跳转到全部作品搜索的脚本报错
 
 
 //#region main.js 主方法
@@ -8839,6 +9147,10 @@ bottomMenuTranslateZh();
 if (window.location.pathname.indexOf("/g/") != -1) {
 	// 详情页
 	detailPage();
+}
+else if (window.location.pathname.indexOf("/s/") != -1){
+	// 作品查看页
+	detailReadPage();
 }
 else {
 	if (window.location.pathname.indexOf("/uploader/") != -1) {
