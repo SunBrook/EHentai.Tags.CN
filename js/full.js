@@ -9259,7 +9259,6 @@ function uconfigPageReWrapperForm(contentForm) {
 //TODO 收藏上传者，显示 收藏他/她 或者 取消收藏
 //TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
 //TODO 首页显示已收藏的标签
-//TODO 简洁模式，适合轻量使用用户，就是使用原始的文本框输入，参照收藏页面
 //TODO 首页背景
 //TODO 插件背景图片，有损压缩，保存快速替换
 //TODO EH 打怪兽弹窗无法直接关闭，添加关闭按钮
