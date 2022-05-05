@@ -284,7 +284,9 @@ function detailPageTranslate() {
         var p1 = chd.children[0];
         p1.childNodes[0].data = p1.childNodes[0].data
             .replace("There are", "还有")
-            .replace("more comments below the viewing threshold", "评论未显示");
+            .replace("There is", "还有")
+            .replace("more comments below the viewing threshold", "评论未显示")
+            .replace("more comment below the viewing threshold", "评论未显示");
         // 点击显示全部
         p1.children[0].innerText = "点击显示全部";
     }
@@ -350,8 +352,14 @@ function detailReadPage() {
     backLink.style.marginRight = "10px";
 
     var backImg = document.createElement("img");
-    backImg.src = "https://ehgt.org/g/mr.gif";
+    func_eh_ex(() => {
+        backImg.src = "https://ehgt.org/g/mr.gif";
+    }, () => {
+        backImg.src = "https://exhentai.org/img/mr.gif";
+    });
+
     backImg.classList.add("mr");
+    backImg.style.marginRight = "4px";
 
     i6.children[0].parentNode.insertBefore(backLink, i6.children[0]);
     i6.children[0].parentNode.insertBefore(backImg, i6.children[0]);
@@ -360,6 +368,134 @@ function detailReadPage() {
     var i7 = document.getElementById("i7");
     var downloadLink = i7.querySelector("a");
     downloadLink.innerText = downloadLink.innerText.replace("Download original", "下载原图").replace("source", "");
+
+
+    // 重新修改点击事件
+    var sns = document.getElementsByClassName("sn");
+    for (const i in sns) {
+        if (Object.hasOwnProperty.call(sns, i)) {
+            const sn = sns[i];
+            var links = sn.querySelectorAll("a");
+            var firstParams = links[0].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
+            links[0].onclick = function () {
+                return _load_image_copy(firstParams[0], firstParams[1].replace(/\'/g, ""), false);
+            }
+
+            var prevParams = links[1].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
+            links[1].onclick = function () {
+                return _load_image_copy(prevParams[0], prevParams[1].replace(/\'/g, ""), false);
+            }
+
+            var nextParams = links[2].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
+            links[2].onclick = function () {
+                return _load_image_copy(nextParams[0], nextParams[1].replace(/\'/g, ""), false);
+            }
+
+            var lastParams = links[3].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
+            links[3].onclick = function () {
+                return _load_image_copy(lastParams[0], lastParams[1].replace(/\'/g, ""), false);
+            }
+        }
+    }
+}
+
+function _load_image_copy(e, f, d) {
+    if (holdingOverrideKey) {
+        return true
+    }
+    var c = "s/" + f + "/" + gid + "-" + e;
+    var a = base_url + c;
+    if (!d) {
+        if (load_cooldown) {
+            return false
+        } ++pcnt
+    } else {
+        --pcnt
+    }
+    if (history.pushState && (pcnt <= prl)) {
+        if (dispatch_xhr != undefined) {
+            return false
+        }
+        if (!d) {
+            load_cooldown = true;
+            setTimeout(function () {
+                load_cooldown = false
+            },
+                1000)
+        }
+        dispatch_xhr = new XMLHttpRequest();
+        var b = {
+            method: "showpage",
+            gid: gid,
+            page: e,
+            imgkey: f,
+            showkey: showkey
+        };
+        api_call(dispatch_xhr, b,
+            function () {
+                load_image_dispatch_copy()
+            });
+        if (!d) {
+            history.pushState({
+                page: e,
+                imgkey: f
+            },
+                document.title, a)
+        }
+    } else {
+        pcnt = 0;
+        document.location = a
+    }
+    return false
+}
+
+function load_image_dispatch_copy() {
+    var a = api_response(dispatch_xhr);
+    if (a != false) {
+        if (a.error != undefined) {
+            document.location = document.location + ""
+        } else {
+            history.replaceState({
+                page: a.p,
+                imgkey: a.k,
+                json: a,
+                expire: get_unixtime() + 300
+            },
+                document.title, base_url + a.s);
+
+            a.n = a.n.replace(/load_image/g, "load_image_copy");
+
+            a.i6 = a.i6
+                .replace("Show all galleries with this file", "显示包含此图片的所有作品")
+                .replace("Click here if the image fails loading", "重新加载图片")
+                .replace("Generate a static forum image link", "生成用于论坛的图片链接");
+            func_eh_ex(() => {
+                a.i6 = ` &nbsp; <img src=\"https://ehgt.org/g/mr.gif\" class=\"mr\" /> <a href="https://exhentai.org/g/2211477/40853439b7/">返回到详情页</a>${a.i6}`;
+            }, () => {
+                a.i6 = ` &nbsp; <img src=\"https://exhentai.org/img/mr.gif\" class=\"mr\" /> <a href="https://exhentai.org/g/2211477/40853439b7/">返回到详情页</a>${a.i6}`;
+            });
+
+
+            a.i7 = a.i7.replace("Download original", "下载原图").replace("source", "");
+            apply_json_state_copy(a)
+        }
+        dispatch_xhr = undefined
+    }
+}
+
+function apply_json_state_copy(a) {
+    window.scrollTo(0, 0);
+    document.getElementById("i1").style.width = a.x + "px";
+    document.getElementById("i2").innerHTML = a.n + a.i;
+    document.getElementById("i3").innerHTML = a.i3;
+    document.getElementById("i4").innerHTML = a.i + a.n;
+    document.getElementById("i5").innerHTML = a.i5;
+    document.getElementById("i6").innerHTML = a.i6;
+    document.getElementById("i7").innerHTML = a.i7;
+    si = parseInt(a.si);
+    xres = parseInt(a.x);
+    yres = parseInt(a.y);
+    update_window_extents()
 }
 
 //#endregion
