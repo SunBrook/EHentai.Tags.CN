@@ -594,4 +594,13 @@ const detailReadPage_bottomLinkDict = {
 
 //#endregion
 
+//#region HentaiVerse 弹框出现的常用句子
+const hentaivaseDialogSentenceDict = {
+	"You have encountered a monster!": "你遇到了一个怪物！",
+	"Click here to fight in the HentaiVerse.": "点击这里进行战斗。",
+	"It is the dawn of a new day!": "多么美好的一天！",
+	"Reflecting on your journey so far, you find that you are a little wiser.": "回顾你迄今为止的旅程，你会发现自己更聪明了一点。",
+}
+//#endregion
+
 //#endregion

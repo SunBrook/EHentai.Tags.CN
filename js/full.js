@@ -910,6 +910,15 @@ const detailReadPage_bottomLinkDict = {
 
 //#endregion
 
+//#region HentaiVerse 弹框出现的常用句子
+const hentaivaseDialogSentenceDict = {
+	"You have encountered a monster!": "你遇到了一个怪物！",
+	"Click here to fight in the HentaiVerse.": "点击这里进行战斗。",
+	"It is the dawn of a new day!": "多么美好的一天！",
+	"Reflecting on your journey so far, you find that you are a little wiser.": "回顾你迄今为止的旅程，你会发现自己更聪明了一点。",
+}
+//#endregion
+
 //#endregion
 
 
@@ -1645,7 +1654,7 @@ func_eh_ex(() => {
 		max-height: 500px;
 		position: relative;
 		top: -10px;
-		z-index: 99;
+		z-index: 100;
 		display: none;
 		width: 100%;
 		overflow-y: auto;
@@ -2343,6 +2352,22 @@ func_eh_ex(() => {
 	.t_detail_comment .comment_span input,
 	.t_detail_comment .comment_span label {
 		cursor: pointer;
+	}
+	
+	#eventpane #eventpane_close_btn {
+		width: 30px;
+		height: 30px;
+		border: 1px solid #5c0d11;
+		line-height: 30px;
+		float: right;
+		margin-top: -4px;
+		margin-right: -4px;
+		font-size: 18px;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -2958,7 +2983,7 @@ func_eh_ex(() => {
 		max-height: 500px;
 		position: relative;
 		top: -10px;
-		z-index: 99;
+		z-index: 100;
 		display: none;
 		width: 100%;
 		overflow-y: auto;
@@ -9248,6 +9273,67 @@ function uconfigPageReWrapperForm(contentForm) {
 
 //#endregion
 
+//#region step8.1.eventpane.js hentaivase 弹框
+
+function hentaiVaseDialog() {
+    // 检测页面上是否存在弹框，检测域名为EH，且页面上存在 eventpane 元素
+    if (webHost == "e-hentai.org") {
+        var eventpane = document.getElementById("eventpane");
+        if (eventpane && eventpane.children.length > 0) {
+            // 跨域
+            crossDomain();
+
+            // 匹配和翻译弹框文本
+            recursionTranslate(eventpane);
+
+            // 添加手动关闭按钮
+            var closeBtn = document.createElement("div");
+            closeBtn.id = "eventpane_close_btn";
+            closeBtn.innerText = "X";
+            closeBtn.title = "关闭";
+
+            closeBtn.addEventListener("click", function () {
+                eventpane.style.display = "none";
+            });
+
+            eventpane.insertBefore(closeBtn, eventpane.children[0]);
+        }
+    }
+}
+
+function recursionTranslate(element) {
+    var elementChildNodes = element.childNodes;
+    for (const i in elementChildNodes) {
+        if (Object.hasOwnProperty.call(elementChildNodes, i)) {
+            const child = elementChildNodes[i];
+            if (child.nodeName == "#text" && child.data) {
+                var span = document.createElement("span");
+                span.innerText = child.data;
+                child.parentNode.insertBefore(span, child);
+                child.parentNode.removeChild(child);
+            }
+        }
+    }
+
+    for (let i = 0; i < element.children.length; i++) {
+        const child = element.children[i];
+        if (child.children.length > 0) {
+            recursionTranslate(child);
+        } else if (child.innerText) {
+            child.title = child.innerText;
+            // 先匹配常用文本
+            if (hentaivaseDialogSentenceDict[child.innerText]) {
+                child.innerText = hentaivaseDialogSentenceDict[child.innerText];
+            } else {
+                // 谷歌机翻
+                translatePageElement(child);
+            }
+        }
+    }
+}
+
+//#endregion
+
 
 
 
@@ -9260,17 +9346,21 @@ function uconfigPageReWrapperForm(contentForm) {
 //TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
 //TODO 首页显示已收藏的标签
 //TODO 首页背景
+
 //TODO 插件背景图片，有损压缩，保存快速替换
-//TODO EH 打怪兽弹窗无法直接关闭，添加关闭按钮
+//DONE EH 打怪兽弹窗文字翻译，添加关闭按钮
+//DONE 修复了收藏页面候选框露底的bug
 
 
 //#region main.js 主方法
 
-// 标记可用浏览器版本
 // 头部菜单汉化
 topMenuTranslateZh();
 // 底部菜单汉化
 bottomMenuTranslateZh();
+
+// EH 游戏弹窗翻译
+hentaiVaseDialog();
 
 // 根据地址链接判断当前是首页还是详情页
 if (window.location.pathname.indexOf("/g/") != -1) {

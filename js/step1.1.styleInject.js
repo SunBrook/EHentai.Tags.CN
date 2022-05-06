@@ -622,7 +622,7 @@ func_eh_ex(() => {
 		max-height: 500px;
 		position: relative;
 		top: -10px;
-		z-index: 99;
+		z-index: 100;
 		display: none;
 		width: 100%;
 		overflow-y: auto;
@@ -1320,6 +1320,22 @@ func_eh_ex(() => {
 	.t_detail_comment .comment_span input,
 	.t_detail_comment .comment_span label {
 		cursor: pointer;
+	}
+	
+	#eventpane #eventpane_close_btn {
+		width: 30px;
+		height: 30px;
+		border: 1px solid #5c0d11;
+		line-height: 30px;
+		float: right;
+		margin-top: -4px;
+		margin-right: -4px;
+		font-size: 18px;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -1935,7 +1951,7 @@ func_eh_ex(() => {
 		max-height: 500px;
 		position: relative;
 		top: -10px;
-		z-index: 99;
+		z-index: 100;
 		display: none;
 		width: 100%;
 		overflow-y: auto;
