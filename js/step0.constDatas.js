@@ -608,4 +608,10 @@ const hentaivaseDialogSentenceDict = {
 }
 //#endregion
 
+//#region 有损图片大小限制
+
+const lowImgSizeLimit = 512000; // 500kb
+
+//#endregion
+
 //#endregion

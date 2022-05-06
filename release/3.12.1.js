@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         ExHentai 中文标签助手_测试版_beta
-// @namespace    ExHentai 中文标签助手_DYZYFTS_beta
+// @name         ExHentai 中文标签助手
+// @namespace    ExHentai 中文标签助手_DYZYFTS
 // @license		 MIT
 // @compatible  firefox >= 60
 // @compatible  edge >= 16
@@ -922,6 +922,12 @@ const hentaivaseDialogSentenceDict = {
 	"It is the dawn of a new day!": "多么美好的一天！",
 	"Reflecting on your journey so far, you find that you are a little wiser.": "回顾你迄今为止的旅程，你会发现自己更聪明了一点。",
 }
+//#endregion
+
+//#region 有损图片大小限制
+
+const lowImgSizeLimit = 512000; // 500kb
+
 //#endregion
 
 //#endregion
@@ -4535,11 +4541,11 @@ function initUserSettings(func_compelete) {
 										cvs.toBlob(function (blob) {
 											var settings_Key_Bg_Low_ImgOverSize = {
 												item: table_Settings_Key_Bg_Low_ImgOverSize,
-												value: blob.size > 512000
+												value: blob.size > lowImgSizeLimit
 											};
 											update(table_Settings, settings_Key_Bg_Low_ImgOverSize, () => { complete6 = true }, () => { complete6 = true });
 
-											if (blob.size <= 512000) {
+											if (blob.size <= lowImgSizeLimit) {
 												// 只尝试存储压缩后500kb容量的图片到 localstroage
 												var reader2 = new FileReader();
 												reader2.readAsDataURL(blob);
@@ -9703,7 +9709,7 @@ function mainPageCategory() {
 						ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
 
 						cvs.toBlob(function (blob) {
-							if (blob.size <= 512000) {
+							if (blob.size <= lowImgSizeLimit) {
 								t_jpgOverSize = false;
 								// 只尝试存储压缩后500kb容量的图片到 localstroage
 								var reader2 = new FileReader();
@@ -12182,7 +12188,6 @@ function mainPageCategory() {
 
 		});
 	});
-
 }
 
 function detailPage() {

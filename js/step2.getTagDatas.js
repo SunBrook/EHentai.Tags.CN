@@ -926,11 +926,11 @@ function initUserSettings(func_compelete) {
                                         cvs.toBlob(function (blob) {
                                             var settings_Key_Bg_Low_ImgOverSize = {
                                                 item: table_Settings_Key_Bg_Low_ImgOverSize,
-                                                value: blob.size > 512000
+                                                value: blob.size > lowImgSizeLimit
                                             };
                                             update(table_Settings, settings_Key_Bg_Low_ImgOverSize, () => { complete6 = true }, () => { complete6 = true });
 
-                                            if (blob.size <= 512000) {
+                                            if (blob.size <= lowImgSizeLimit) {
                                                 // 只尝试存储压缩后500kb容量的图片到 localstroage
                                                 var reader2 = new FileReader();
                                                 reader2.readAsDataURL(blob);

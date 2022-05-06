@@ -95,7 +95,7 @@ bgUploadFile.onchange = function () {
                 ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
 
                 cvs.toBlob(function (blob) {
-                    if (blob.size <= 512000) {
+                    if (blob.size <= lowImgSizeLimit) {
                         t_jpgOverSize = false;
                         // 只尝试存储压缩后500kb容量的图片到 localstroage
                         var reader2 = new FileReader();
