@@ -87,4 +87,14 @@ function setSearchMode(mode) {
     return localStorage.setItem(dbFrontPageSearchMode, mode);
 }
 
+// 存储有损压缩图片
+function getBgLowImage() {
+    return localStorage.getItem(dbBgLowImageBase64);
+}
+function setBgLowImage(base64) {
+    return localStorage.setItem(dbBgLowImageBase64, base64);
+}
+function removeBgLowImage() {
+    localStorage.removeItem(dbBgLowImageBase64);
+}
 //#endregion

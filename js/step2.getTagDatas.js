@@ -805,6 +805,9 @@ function initUserSettings(func_compelete) {
         var complete3 = false;
         var complete4 = false;
         var complete5 = false;
+        var complete6 = false;
+        var complete7 = false;
+        var complete8 = false;
 
         // 本地折叠按钮
         var categoryListExpendArray = getCategoryListExpend();
@@ -890,9 +893,100 @@ function initUserSettings(func_compelete) {
             complete5 = true;
         }
 
+        // 有损压缩图片数据同步
+        var bgLowImgBase64 = getBgLowImage();
+        if (!bgLowImgBase64) {
+            // 从 indexeddb 有损压缩中读取，如果不存在这重新生成
+            read(table_Settings, table_Settings_Key_Bg_Low_ImgBase64, result => {
+                if (result && result.value) {
+                    try {
+                        setBgLowImage(result.value);
+                    } finally {
+                        complete6 = true;
+                        complete7 = true;
+                        complete8 = true;
+                    }
+                } else {
+                    // 没有数据，属于旧版本没有获取数据的情况，需要根据源有数据重新生成
+                    read(table_Settings, table_Settings_Key_Bg_ImgBase64, result => {
+                        if (result && result.value) {
+                            var t_imgBase64 = result.value;
+                            read(table_Settings, table_Settings_Key_Bg_Low_ImgOverSize, result => {
+                                if (!(result && result.value)) {
+                                    // 需要尝试更新有损图片数据
+                                    var img = new Image();
+                                    img.src = t_imgBase64;
+                                    img.onload = function () {
+                                        var cvs = document.createElement("canvas");
+                                        var ctx = cvs.getContext('2d');
+                                        cvs.width = img.width;
+                                        cvs.height = img.height;
+                                        ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+
+                                        cvs.toBlob(function (blob) {
+                                            var settings_Key_Bg_Low_ImgOverSize = {
+                                                item: table_Settings_Key_Bg_Low_ImgOverSize,
+                                                value: blob.size > 512000
+                                            };
+                                            update(table_Settings, settings_Key_Bg_Low_ImgOverSize, () => { complete6 = true }, () => { complete6 = true });
+
+                                            if (blob.size <= 512000) {
+                                                // 只尝试存储压缩后500kb容量的图片到 localstroage
+                                                var reader2 = new FileReader();
+                                                reader2.readAsDataURL(blob);
+                                                reader2.onload = function (e2) {
+                                                    var t_jpgBase64 = e2.target.result;
+                                                    var settings_Key_Bg_Low_ImgBase64 = {
+                                                        item: table_Settings_Key_Bg_Low_ImgBase64,
+                                                        value: t_jpgBase64
+                                                    };
+                                                    update(table_Settings, settings_Key_Bg_Low_ImgBase64, () => { complete7 = true }, () => { complete7 = true });
+                                                    try {
+                                                        setBgLowImage(t_jpgBase64);
+                                                    } finally {
+                                                        complete8 = true;
+                                                    }
+                                                };
+                                            } else {
+                                                // 容量超出
+                                                complete7 = true;
+                                                complete8 = true;
+                                            }
+
+                                        }, 'image/jpeg', 0.1);
+                                    }
+                                } else {
+                                    complete6 = true;
+                                    complete7 = true;
+                                    complete8 = true;
+                                }
+                            }, () => {
+                                complete6 = true;
+                                complete7 = true;
+                                complete8 = true;
+                            });
+                        } else {
+                            // 没有存储图片
+                            complete6 = true;
+                            complete7 = true;
+                            complete8 = true;
+                        }
+                    }, () => {
+                        complete6 = true;
+                        complete7 = true;
+                        complete8 = true;
+                    });
+                }
+            })
+        } else {
+            // 存在图片
+            complete6 = true;
+            complete7 = true;
+            complete8 = true;
+        }
 
         var t = setInterval(() => {
-            if (complete1 && complete2 && complete3 && complete4 && complete5) {
+            if (complete1 && complete2 && complete3 && complete4 && complete5 && complete6 && complete7 && complete8) {
                 t && clearInterval(t);
                 func_compelete();
             }

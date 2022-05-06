@@ -148,6 +148,9 @@ const dbSyncMessageKey = "dbSyncMessage";
 // 搜索模式
 const dbFrontPageSearchMode = "dbfrontPageSearchMode";
 
+// 存储有损压缩图片
+const dbBgLowImageBase64 = "dbBgLowImageBase64";
+
 //#endregion
 
 //#region indexedDB 数据表、索引、键
@@ -171,6 +174,8 @@ const table_Settings_key_FavoriteList = "f_favoriteList";
 const table_Settings_key_FavoriteList_Html = "f_favoriteListHtml";
 const table_Settings_Key_FavoriteList_Extend = "f_favoriteListExtend";
 const table_Settings_Key_Bg_ImgBase64 = "f_bgImageBase64";
+const table_Settings_Key_Bg_Low_ImgBase64 = "f_bgLowImageBase64";
+const table_Settings_Key_Bg_Low_ImgOverSize = "f_bgLowImageOverSize";
 const table_Settings_Key_Bg_Opacity = "f_bgOpacity";
 const table_Settings_Key_Bg_Mask = "f_bgMask";
 const table_Settings_key_FrontPageFontParentColor = "f_frontPageFontParentColor";
