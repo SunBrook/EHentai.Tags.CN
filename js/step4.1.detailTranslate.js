@@ -367,9 +367,10 @@ function detailReadPage() {
     // 下载原始图片
     var i7 = document.getElementById("i7");
     var downloadLink = i7.querySelector("a");
-    downloadLink.innerText = downloadLink.innerText.replace("Download original", "下载原图").replace("source", "");
-
-
+    if (downloadLink) {
+        downloadLink.innerText = downloadLink.innerText.replace("Download original", "下载原图").replace("source", "");
+    }
+    
     // 重新修改点击事件
     var sns = document.getElementsByClassName("sn");
     for (const i in sns) {
