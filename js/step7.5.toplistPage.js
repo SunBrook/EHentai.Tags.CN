@@ -152,20 +152,9 @@ function translateToplistTitleDisplay() {
                     // 需要翻译
                     a.title = a.innerText;
 
-                    var encodeText = urlEncode(a.innerText);
                     // 单条翻译
-                    getGoogleTranslate(encodeText, function (data) {
-                        var sentences = data.sentences;
-                        var longtext = '';
-                        for (const i in sentences) {
-                            if (Object.hasOwnProperty.call(sentences, i)) {
-                                const sentence = sentences[i];
-                                longtext += sentence.trans;
-                            }
-                        }
-
-                        a.innerText = longtext;
-                        a.dataset.translate = longtext;
+                    translatePageElementFunc(a, true, () => {
+                        a.dataset.translate = a.innerText;
                     });
                 }
             }

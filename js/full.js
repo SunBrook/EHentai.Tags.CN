@@ -26,293 +26,310 @@
 
 // 检查字典是否为空
 function checkDictNull(dict) {
-	for (const n in dict) {
-		return false;
-	}
-	return true;
+    for (const n in dict) {
+        return false;
+    }
+    return true;
 }
 
 // 获取地址参数
 function GetQueryString(name) {
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-	var r = window.location.search.substring(1).match(reg);
-	if (r != null) return decodeURI(r[2]); return null;
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substring(1).match(reg);
+    if (r != null) return decodeURI(r[2]); return null;
 }
 
 // 数组删除元素
 Array.prototype.remove = function (val) {
-	var index = this.indexOf(val);
-	if (index > -1) {
-		this.splice(index, 1);
-	}
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
 };
 
 // 数组差集
 function getDiffSet(array1, array2) {
-	return array1.filter(item => !new Set(array2).has(item));
+    return array1.filter(item => !new Set(array2).has(item));
 }
 
 // 导出json文件
 function saveJSON(data, filename) {
-	if (!data) return;
-	if (!filename) filename = "json.json";
-	if (typeof data === "object") {
-		data = JSON.stringify(data, undefined, 4);
-	}
-	// 要创建一个 blob 数据
-	let blob = new Blob([data], { type: "text/json" }),
-		a = document.createElement("a");
-	a.download = filename;
+    if (!data) return;
+    if (!filename) filename = "json.json";
+    if (typeof data === "object") {
+        data = JSON.stringify(data, undefined, 4);
+    }
+    // 要创建一个 blob 数据
+    let blob = new Blob([data], { type: "text/json" }),
+        a = document.createElement("a");
+    a.download = filename;
 
-	// 将blob转换为地址
-	// 创建 URL 的 Blob 对象
-	a.href = window.URL.createObjectURL(blob);
+    // 将blob转换为地址
+    // 创建 URL 的 Blob 对象
+    a.href = window.URL.createObjectURL(blob);
 
-	// 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
-	a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-	// 添加鼠标事件
-	let event = new MouseEvent("click", {});
+    // 添加鼠标事件
+    let event = new MouseEvent("click", {});
 
-	// 向一个指定的事件目标派发一个事件
-	a.dispatchEvent(event);
+    // 向一个指定的事件目标派发一个事件
+    a.dispatchEvent(event);
 }
 
 // 获取当前时间
 function getCurrentDate(format) {
-	var now = new Date();
-	var year = now.getFullYear(); //年份
-	var month = now.getMonth();//月份
-	var date = now.getDate();//日期
-	var day = now.getDay();//周几
-	var hour = now.getHours();//小时
-	var minu = now.getMinutes();//分钟
-	var sec = now.getSeconds();//秒
-	month = month + 1;
-	if (month < 10) month = "0" + month;
-	if (date < 10) date = "0" + date;
-	if (hour < 10) hour = "0" + hour;
-	if (minu < 10) minu = "0" + minu;
-	if (sec < 10) sec = "0" + sec;
-	var time = "";
-	//精确到天
-	if (format == 1) {
-		time = year + "-" + month + "-" + date;
-	}
-	//精确到分
-	else if (format == 2) {
-		time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
-	}
-	return time;
+    var now = new Date();
+    var year = now.getFullYear(); //年份
+    var month = now.getMonth();//月份
+    var date = now.getDate();//日期
+    var day = now.getDay();//周几
+    var hour = now.getHours();//小时
+    var minu = now.getMinutes();//分钟
+    var sec = now.getSeconds();//秒
+    month = month + 1;
+    if (month < 10) month = "0" + month;
+    if (date < 10) date = "0" + date;
+    if (hour < 10) hour = "0" + hour;
+    if (minu < 10) minu = "0" + minu;
+    if (sec < 10) sec = "0" + sec;
+    var time = "";
+    //精确到天
+    if (format == 1) {
+        time = year + "-" + month + "-" + date;
+    }
+    //精确到分
+    else if (format == 2) {
+        time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
+    }
+    return time;
 }
 
 // 调用谷歌翻译接口
 function getGoogleTranslate(text, func) {
-	var httpRequest = new XMLHttpRequest();
-	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
-	httpRequest.open("GET", url, true);
-	httpRequest.send();
+    var httpRequest = new XMLHttpRequest();
+    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
+    httpRequest.open("GET", url, true);
+    httpRequest.send();
 
-	httpRequest.onreadystatechange = function () {
-		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-			var json = JSON.parse(httpRequest.responseText);
-			func(json);
-		}
-	}
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var json = JSON.parse(httpRequest.responseText);
+            func(json);
+        }
+    }
 }
 
 // 借助谷歌翻译设置翻译后的值
 function translatePageElement(element) {
-	getGoogleTranslate(element.innerText, function (data) {
-		var sentences = data.sentences;
-		var longtext = '';
-		for (const i in sentences) {
-			if (Object.hasOwnProperty.call(sentences, i)) {
-				const sentence = sentences[i];
-				longtext += sentence.trans;
-			}
-		}
-		element.innerText = longtext;
-	});
+    getGoogleTranslate(element.innerText, function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+    });
+}
+
+function translatePageElementFunc(element, isNeedUrlEncode, func_compelete) {
+    var innerText = isNeedUrlEncode ? urlEncode(element.innerText) : element.innerText;
+    getGoogleTranslate(innerText, function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+        func_compelete();
+    });
 }
 
 function getGoogleTranslateEN(text, func) {
-	var httpRequest = new XMLHttpRequest();
-	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
-	httpRequest.open("GET", url, true);
-	httpRequest.send();
+    var httpRequest = new XMLHttpRequest();
+    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
+    httpRequest.open("GET", url, true);
+    httpRequest.send();
 
-	httpRequest.onreadystatechange = function () {
-		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-			var json = JSON.parse(httpRequest.responseText);
-			func(json);
-		}
-	}
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var json = JSON.parse(httpRequest.responseText);
+            func(json);
+        }
+    }
 }
 
 function translatePageElementEN(element) {
-	getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
-		var sentences = data.sentences;
-		var longtext = '';
-		for (const i in sentences) {
-			if (Object.hasOwnProperty.call(sentences, i)) {
-				const sentence = sentences[i];
-				longtext += sentence.trans;
-			}
-		}
-		element.innerText = longtext;
-	});
+    getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+    });
 }
 
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {
-	clearInterval(slideTimer);
-	var h = 0;
-	slideTimer = setInterval(function () {
-		// 当目标高度与实际高度小于10px时，以1px的速度步进
-		var step = (realHeight - h) / 10;
-		step = Math.ceil(step);
-		h += step;
-		if (Math.abs(realHeight - h) <= Math.abs(step)) {
-			h = realHeight;
-			element.style.height = `${realHeight}px`;
-			func();
-			clearInterval(slideTimer);
-		} else {
-			element.style.height = `${h}px`;
-		}
-	}, speed);
+    clearInterval(slideTimer);
+    var h = 0;
+    slideTimer = setInterval(function () {
+        // 当目标高度与实际高度小于10px时，以1px的速度步进
+        var step = (realHeight - h) / 10;
+        step = Math.ceil(step);
+        h += step;
+        if (Math.abs(realHeight - h) <= Math.abs(step)) {
+            h = realHeight;
+            element.style.height = `${realHeight}px`;
+            func();
+            clearInterval(slideTimer);
+        } else {
+            element.style.height = `${h}px`;
+        }
+    }, speed);
 }
 function slideUp(element, speed, func) {
-	clearInterval(slideTimer);
-	slideTimer = setInterval(function () {
-		var step = (0 - element.clientHeight) / 10;
-		step = Math.floor(step);
-		element.style.height = `${element.clientHeight + step}px`;
-		if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
-			element.style.height = "0px";
-			func();
-			clearInterval(slideTimer);
-		}
-	}, speed);
+    clearInterval(slideTimer);
+    slideTimer = setInterval(function () {
+        var step = (0 - element.clientHeight) / 10;
+        step = Math.floor(step);
+        element.style.height = `${element.clientHeight + step}px`;
+        if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
+            element.style.height = "0px";
+            func();
+            clearInterval(slideTimer);
+        }
+    }, speed);
 }
 
 // 展开折叠动画 (右左)
 var slideTimer2 = null;
 function slideRight(element, realWidth, speed, func) {
-	clearInterval(slideTimer2);
-	var w = 0;
-	slideTimer2 = setInterval(function () {
-		// 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
-		var step = (realWidth - w) / 10;
-		step = Math.ceil(step);
-		w += step;
-		if (Math.abs(realWidth - w) <= Math.abs(step)) {
-			w = realWidth;
-			element.style.width = `${realWidth}px`;
-			func();
-			clearInterval(slideTimer2);
-		} else {
-			element.style.width = `${w}px`;
-		}
-	}, speed);
+    clearInterval(slideTimer2);
+    var w = 0;
+    slideTimer2 = setInterval(function () {
+        // 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
+        var step = (realWidth - w) / 10;
+        step = Math.ceil(step);
+        w += step;
+        if (Math.abs(realWidth - w) <= Math.abs(step)) {
+            w = realWidth;
+            element.style.width = `${realWidth}px`;
+            func();
+            clearInterval(slideTimer2);
+        } else {
+            element.style.width = `${w}px`;
+        }
+    }, speed);
 }
 function slideLeft(element, speed, func) {
-	clearInterval(slideTimer2);
-	slideTimer2 = setInterval(function () {
-		var step = (0 - element.clientWidth) / 10;
-		step = Math.floor(step);
-		element.style.width = `${element.clientWidth + step}px`;
-		if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
-			element.style.width = "0px";
-			func();
-			clearInterval(slideTimer2);
-		}
-	})
+    clearInterval(slideTimer2);
+    slideTimer2 = setInterval(function () {
+        var step = (0 - element.clientWidth) / 10;
+        step = Math.floor(step);
+        element.style.width = `${element.clientWidth + step}px`;
+        if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
+            element.style.width = "0px";
+            func();
+            clearInterval(slideTimer2);
+        }
+    })
 }
 
 
 // 页面样式注入
 function styleInject(css, ref) {
-	if (ref === void 0) ref = {};
-	var insertAt = ref.insertAt;
+    if (ref === void 0) ref = {};
+    var insertAt = ref.insertAt;
 
-	if (!css || typeof document === 'undefined') { return; }
+    if (!css || typeof document === 'undefined') { return; }
 
-	var head = document.head || document.getElementsByTagName('head')[0];
-	var style = document.createElement('style');
-	style.type = 'text/css';
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.type = 'text/css';
 
-	if (insertAt === 'top') {
-		if (head.firstChild) {
-			head.insertBefore(style, head.firstChild);
-		} else {
-			head.appendChild(style);
-		}
-	} else {
-		head.appendChild(style);
-	}
+    if (insertAt === 'top') {
+        if (head.firstChild) {
+            head.insertBefore(style, head.firstChild);
+        } else {
+            head.appendChild(style);
+        }
+    } else {
+        head.appendChild(style);
+    }
 
-	if (style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		style.appendChild(document.createTextNode(css));
-	}
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
 }
 
 // UrlEncode
 function urlEncode(str) {
-	str = (str + '').toString();
+    str = (str + '').toString();
 
-	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-		replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 // UrlDecode
 function urlDecode(str) {
-	return decodeURIComponent(str);
+    return decodeURIComponent(str);
 }
 
 // 跨域
 function crossDomain() {
-	var meta = document.createElement("meta");
-	meta.httpEquiv = "Content-Security-Policy";
-	meta.content = "upgrade-insecure-requests";
-	document.getElementsByTagName("head")[0].appendChild(meta);
+    var meta = document.createElement("meta");
+    meta.httpEquiv = "Content-Security-Policy";
+    meta.content = "upgrade-insecure-requests";
+    document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
 // 英语日期转纯数字日期
 function transDate(dateEn) {
-	var monthDict = {
-		"January": 1,
-		"February": 2,
-		"March": 3,
-		"April": 4,
-		"May": 5,
-		"June": 6,
-		"July": 7,
-		"August": 8,
-		"September": 9,
-		"October": 10,
-		"November": 11,
-		"December": 12
-	};
-	var dateSplit = dateEn.split(' ');
-	return `${dateSplit[2]}/${monthDict[dateSplit[1]]}/${Number(dateSplit[0])}`;
+    var monthDict = {
+        "January": 1,
+        "February": 2,
+        "March": 3,
+        "April": 4,
+        "May": 5,
+        "June": 6,
+        "July": 7,
+        "August": 8,
+        "September": 9,
+        "October": 10,
+        "November": 11,
+        "December": 12
+    };
+    var dateSplit = dateEn.split(' ');
+    return `${dateSplit[2]}/${monthDict[dateSplit[1]]}/${Number(dateSplit[0])}`;
 }
 
 // 过滤字符串开头和结尾的空格
 function trimStartEnd(str) {
-	return str.replace(/(^\s*)|(\s*$)/g, "");
+    return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 
 // 过滤字符串结尾空格
 function trimEnd(str) {
-	return str.replace(/(\s*$)/g, "");
+    return str.replace(/(\s*$)/g, "");
 }
 
 //#endregion
+
 
 //#region step0.constDatas.js 数据字典
 
@@ -500,6 +517,7 @@ const table_Settings_Key_FrontPageFontSubHoverColor = "f_frontPageFontSubHoverCo
 const table_Settings_key_NewsPageTopImageVisible = "f_newsPageTopImageVisible";
 const table_Settings_key_NewsPageTranslate = "f_newsPageTranslate";
 const table_Settings_key_FrontPageSearchMode = "f_frontPageSearchMode";
+const table_Settings_key_TosPageTranslate = "f_tosPageTranslate";
 
 // fetishList 全部类别 - 父子信息表
 const table_fetishListSubItems = "t_fetishListSubItems";
@@ -539,6 +557,7 @@ const sync_googleTranslate_torrentDetailInfo_command = "syncGoogleTranslateTorre
 const sync_newsPage_topImage_visible = "syncNewsPageTopImageVisible";
 const sync_googleTranslate_newsPage_news = "syncGoogleTranslateNewsPageNews";
 const sync_frontPageSearchMode = "syncFrontPageSearchMode";
+const sync_googleTranslate_tosPage = "syncGoogleTranslateTosPage";
 
 //#endregion
 
@@ -931,7 +950,6 @@ const lowImgSizeLimit = 512000; // 500kb
 //#endregion
 
 //#endregion
-
 
 //#region step0.localstorage.js localstorage 数据方法，迁入 indexdb，如无特殊需要，删除之前存储的数据
 
@@ -1831,7 +1849,8 @@ func_eh_ex(() => {
 	#dms #googleTranslateDiv,
 	.t_popular_toppane #googleTranslateDiv,
 	.t_toplist_ido #googleTranslateDiv,
-	.t_torrentsPage_ido #googleTranslateDiv {
+	.t_torrentsPage_ido #googleTranslateDiv,
+	.t_tosPage_stuffbox #googleTranslateDiv {
 		float: left;
 		background-color: #edebdf;
 		padding: 2px 3px 6px 7px;
@@ -1869,6 +1888,12 @@ func_eh_ex(() => {
 		top: 105px;
 	}
 	
+	.t_tosPage_stuffbox #googleTranslateDiv {
+		width: 78px;
+		float: right;
+		position: relative;
+	}
+	
 	#dms #translateLabel,
 	.t_popular_toppane #translateLabel,
 	.t_toplist_ido #translateLabel {
@@ -1886,7 +1911,9 @@ func_eh_ex(() => {
 	.t_toplist_ido #googleTranslateDiv,
 	.t_toplist_ido #translateLabel,
 	.t_torrentsPage_ido #googleTranslateDiv,
-	.t_torrentsPage_ido #translateLabel {
+	.t_torrentsPage_ido #translateLabel,
+	.t_tosPage_stuffbox #googleTranslateDiv,
+	.t_tosPage_stuffbox #translateLabel {
 		cursor: pointer;
 	}
 	
@@ -1920,7 +1947,8 @@ func_eh_ex(() => {
 	#gd5 #googleTranslateDiv,
 	#gd5 #googleTranslateDiv #googleTranslateCheckbox,
 	#gd5 #googleTranslateDiv #translateLabel,
-	.t_toplist_ido #googleTranslateDiv {
+	.t_toplist_ido #googleTranslateDiv,
+	.t_tosPage_stuffbox #googleTranslateDiv {
 		cursor: pointer;
 	}
 	
@@ -1949,7 +1977,8 @@ func_eh_ex(() => {
 	#div_ee8413b2_detail_searchBtn:hover,
 	.t_popular_toppane #googleTranslateDiv:hover,
 	.t_toplist_ido #googleTranslateDiv:hover,
-	.t_torrentsPage_ido #googleTranslateDiv:hover {
+	.t_torrentsPage_ido #googleTranslateDiv:hover,
+	.t_tosPage_stuffbox #googleTranslateDiv:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
 	
@@ -2387,6 +2416,10 @@ func_eh_ex(() => {
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+	}
+	
+	.t_tosPage_stuffbox {
+		padding: 10px !important;
 	}`;
 	styleInject(category_style);
 }, () => {
@@ -4910,20 +4943,9 @@ function translateMainPageTitleDisplay() {
 					// 需要翻译
 					div.title = div.innerText;
 
-					var encodeText = urlEncode(div.innerText);
 					// 单条翻译
-					getGoogleTranslate(encodeText, function (data) {
-						var sentences = data.sentences;
-						var longtext = '';
-						for (const i in sentences) {
-							if (Object.hasOwnProperty.call(sentences, i)) {
-								const sentence = sentences[i];
-								longtext += sentence.trans;
-							}
-						}
-
-						div.innerText = longtext;
-						div.dataset.translate = longtext;
+					translatePageElementFunc(div, true, () => {
+						div.dataset.translate = div.innerText;
 					});
 				}
 			}
@@ -5219,16 +5241,7 @@ function mainPageTranslate() {
 		// 没有搜索到记录
 		var iw = document.getElementById("iw");
 		if (iw) {
-			getGoogleTranslate(iw.innerText, function (data) {
-				var sentences = data.sentences;
-				var longtext = '';
-				for (const i in sentences) {
-					if (Object.hasOwnProperty.call(sentences, i)) {
-						const sentence = sentences[i];
-						longtext += sentence.trans;
-					}
-				}
-				iw.innerText = longtext;
+			translatePageElementFunc(iw, false, () => {
 				func_eh_ex(() => { }, () => {
 					var myTag = document.createElement("a");
 					myTag.href = "https://exhentai.org/mytags";
@@ -7665,338 +7678,328 @@ function torrentsTableTitleGlink() {
 
 function torrentsDetailPages() {
 
-	// 判断是哪个页面
-	var forms = document.getElementsByTagName("form");
-	var inputs = forms[forms.length - 1].querySelectorAll("input");
-	var submitBtn = inputs[inputs.length - 1];
-	if (submitBtn.value == "Back to Index") {
-		// 详情页
-		submitBtn.value = "返回";
-		torrentsDetailInfo();
+    // 判断是哪个页面
+    var forms = document.getElementsByTagName("form");
+    var inputs = forms[forms.length - 1].querySelectorAll("input");
+    var submitBtn = inputs[inputs.length - 1];
+    if (submitBtn.value == "Back to Index") {
+        // 详情页
+        submitBtn.value = "返回";
+        torrentsDetailInfo();
 
-	} else if (submitBtn.value == "Upload Torrent") {
-		// 首页
-		submitBtn.value = "上传种子";
-		torrentsDetailIndex();
-	}
+    } else if (submitBtn.value == "Upload Torrent") {
+        // 首页
+        submitBtn.value = "上传种子";
+        torrentsDetailIndex();
+    }
 }
 
 function torrentsDetailInfo() {
-	// 跨域
-	crossDomain();
+    // 跨域
+    crossDomain();
 
-	// 添加类 torrents_detail_info，方便添加样式
-	var torrentinfo = document.getElementById("torrentinfo");
-	torrentinfo.classList.add("torrents_detail_info");
+    // 添加类 torrents_detail_info，方便添加样式
+    var torrentinfo = document.getElementById("torrentinfo");
+    torrentinfo.classList.add("torrents_detail_info");
 
-	// 表格统计数据翻译
-	var ett = document.getElementById("ett");
-	var trs = ett.querySelectorAll("tr");
-	trs[0].children[0].innerText = "发布时间";
-	trs[0].children[2].innerText = "做种";
-	trs[1].children[0].innerText = "上传者";
-	trs[1].children[2].innerText = "下载";
-	trs[2].children[0].innerText = "文件大小";
-	trs[2].children[2].innerText = "完成";
+    // 表格统计数据翻译
+    var ett = document.getElementById("ett");
+    var trs = ett.querySelectorAll("tr");
+    trs[0].children[0].innerText = "发布时间";
+    trs[0].children[2].innerText = "做种";
+    trs[1].children[0].innerText = "上传者";
+    trs[1].children[2].innerText = "下载";
+    trs[2].children[0].innerText = "文件大小";
+    trs[2].children[2].innerText = "完成";
 
-	// 种子下载翻译
-	var torrentTable = document.getElementsByTagName("table")[1];
-	var tr2s = torrentTable.querySelectorAll("tr");
-	var alinkPersonal = tr2s[0].children[0].children[0];
-	alinkPersonal.innerText = "种子下载 - 私人";
-	tr2s[0].children[1].innerText = "（ 只属于你 - 确保记录你的下载统计信息 ）";
-	var alinkOpen = tr2s[1].children[0].children[0];
-	alinkOpen.innerText = "种子下载 - 可二次分发";
-	tr2s[1].children[1].innerText = "（ 如果您想再发布或提供给其他人使用 ）";
+    // 种子下载翻译
+    var torrentTable = document.getElementsByTagName("table")[1];
+    var tr2s = torrentTable.querySelectorAll("tr");
+    var alinkPersonal = tr2s[0].children[0].children[0];
+    alinkPersonal.innerText = "种子下载 - 私人";
+    tr2s[0].children[1].innerText = "（ 只属于你 - 确保记录你的下载统计信息 ）";
+    var alinkOpen = tr2s[1].children[0].children[0];
+    alinkOpen.innerText = "种子下载 - 可二次分发";
+    tr2s[1].children[1].innerText = "（ 如果您想再发布或提供给其他人使用 ）";
 
-	// 上传者留言，谷歌机翻
-	var etd = document.getElementById("etd");
-	var commandP = document.createElement("p");
-	commandP.id = "commandP";
-	commandP.innerText = etd.innerText;
-	etd.innerText = "";
-	etd.appendChild(commandP);
+    // 上传者留言，谷歌机翻
+    var etd = document.getElementById("etd");
+    var commandP = document.createElement("p");
+    commandP.id = "commandP";
+    commandP.innerText = etd.innerText;
+    etd.innerText = "";
+    etd.appendChild(commandP);
 
-	var translateDiv = document.createElement("div");
-	translateDiv.id = "googleTranslateDiv";
-	var translateCheckbox = document.createElement("input");
-	translateCheckbox.setAttribute("type", "checkbox");
-	translateCheckbox.id = "googleTranslateCheckbox";
-	translateCheckbox.addEventListener("click", torrentsDetailInfoCommand);
-	var translateLabel = document.createElement("label");
-	translateLabel.setAttribute("for", translateCheckbox.id);
-	translateLabel.id = "translateLabel";
-	translateLabel.innerText = "谷歌机翻";
-	translateDiv.appendChild(translateLabel);
-	translateDiv.appendChild(translateCheckbox);
+    var translateDiv = document.createElement("div");
+    translateDiv.id = "googleTranslateDiv";
+    var translateCheckbox = document.createElement("input");
+    translateCheckbox.setAttribute("type", "checkbox");
+    translateCheckbox.id = "googleTranslateCheckbox";
+    translateCheckbox.addEventListener("click", torrentsDetailInfoCommand);
+    var translateLabel = document.createElement("label");
+    translateLabel.setAttribute("for", translateCheckbox.id);
+    translateLabel.id = "translateLabel";
+    translateLabel.innerText = "谷歌机翻";
+    translateDiv.appendChild(translateLabel);
+    translateDiv.appendChild(translateCheckbox);
 
-	etd.appendChild(translateDiv);
+    etd.appendChild(translateDiv);
 
-	// 获取设置
-	indexDbInit(() => {
-		// 读取是否选中
-		read(table_Settings, table_Settings_key_TranslateTorrentDetailInfoCommand, result => {
-			if (result && result.value) {
-				translateCheckbox.setAttribute("checked", true);
-				translateTorrentDetailInfoCommandDisplay();
-			}
-		}, () => { });
-	});
+    // 获取设置
+    indexDbInit(() => {
+        // 读取是否选中
+        read(table_Settings, table_Settings_key_TranslateTorrentDetailInfoCommand, result => {
+            if (result && result.value) {
+                translateCheckbox.setAttribute("checked", true);
+                translateTorrentDetailInfoCommandDisplay();
+            }
+        }, () => { });
+    });
 
-	// 同步谷歌机翻留言
-	DataSyncTranslateTorrentDetailInfoCommand();
+    // 同步谷歌机翻留言
+    DataSyncTranslateTorrentDetailInfoCommand();
 
-	// 投票删除
-	var expungeform = document.getElementById("expungeform");
-	var deleteLink = expungeform.children[0].children[2];
-	deleteLink.innerText = "投票删除";
-	deleteLink.onclick = function () {
-		var deleteText = "你确定要投票删除这个种子吗？此操作无法撤消。";
-		if (confirm(deleteText)) {
-			expungeform.submit();
-		}
-	}
+    // 投票删除
+    var expungeform = document.getElementById("expungeform");
+    var deleteLink = expungeform.children[0].children[2];
+    deleteLink.innerText = "投票删除";
+    deleteLink.onclick = function () {
+        var deleteText = "你确定要投票删除这个种子吗？此操作无法撤消。";
+        if (confirm(deleteText)) {
+            expungeform.submit();
+        }
+    }
 
-	// 关闭窗口
-	closeWindow();
+    // 关闭窗口
+    closeWindow();
 
-	document.getElementsByClassName("stuffbox")[0].lastChild.style.marginTop = "0";
+    document.getElementsByClassName("stuffbox")[0].lastChild.style.marginTop = "0";
 }
 
 function torrentsDetailInfoCommand() {
-	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-	// 更新存储
-	var settings_translateTorrentDetailInfoCommand = {
-		item: table_Settings_key_TranslateTorrentDetailInfoCommand,
-		value: isChecked
-	};
-	update(table_Settings, settings_translateTorrentDetailInfoCommand, () => {
-		// 通知通知，翻译标题
-		setDbSyncMessage(sync_googleTranslate_torrentDetailInfo_command);
-		translateTorrentDetailInfoCommandDisplay();
-	}, () => { });
+    // 更新存储
+    var settings_translateTorrentDetailInfoCommand = {
+        item: table_Settings_key_TranslateTorrentDetailInfoCommand,
+        value: isChecked
+    };
+    update(table_Settings, settings_translateTorrentDetailInfoCommand, () => {
+        // 通知通知，翻译标题
+        setDbSyncMessage(sync_googleTranslate_torrentDetailInfo_command);
+        translateTorrentDetailInfoCommandDisplay();
+    }, () => { });
 }
 
 function translateTorrentDetailInfoCommandDisplay() {
-	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-	var commandP = document.getElementById("commandP");
-	if (isChecked) {
-		// 翻译留言
-		if (commandP.dataset.translate) {
-			// 已经翻译过
-			commandP.innerText = commandP.dataset.translate;
-		} else {
-			// 需要翻译
-			commandP.title = commandP.innerText;
-			var encodeText = urlEncode(commandP.innerText);
-			getGoogleTranslate(encodeText, function (data) {
-				var sentences = data.sentences;
-				var longtext = '';
-				for (const i in sentences) {
-					if (Object.hasOwnProperty.call(sentences, i)) {
-						const sentence = sentences[i];
-						longtext += sentence.trans;
-					}
-				}
-
-				commandP.innerText = longtext;
-				commandP.dataset.translate = longtext;
-			});
-		}
-	} else {
-		// 显示原文
-		commandP.innerText = commandP.title;
-	}
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+    var commandP = document.getElementById("commandP");
+    if (isChecked) {
+        // 翻译留言
+        if (commandP.dataset.translate) {
+            // 已经翻译过
+            commandP.innerText = commandP.dataset.translate;
+        } else {
+            // 需要翻译
+            commandP.title = commandP.innerText;
+            translatePageElementFunc(commandP, true, () => {
+                commandP.dataset.translate = commandP.innerText;
+            });
+        }
+    } else {
+        // 显示原文
+        commandP.innerText = commandP.title;
+    }
 }
 
 function DataSyncTranslateTorrentDetailInfoCommand() {
-	// 谷歌机翻：标题
-	window.onstorage = function (e) {
-		try {
-			console.log(e);
-			switch (e.newValue) {
-				case sync_googleTranslate_torrentDetailInfo_command:
-					updateGoogleTorrentDetailInfoCommand();
-					break;
-			}
-		} catch (error) {
-			removeDbSyncMessage();
-		}
-	}
+    // 谷歌机翻：标题
+    window.onstorage = function (e) {
+        try {
+            console.log(e);
+            switch (e.newValue) {
+                case sync_googleTranslate_torrentDetailInfo_command:
+                    updateGoogleTorrentDetailInfoCommand();
+                    break;
+            }
+        } catch (error) {
+            removeDbSyncMessage();
+        }
+    }
 
-	// 谷歌翻译留言
-	function updateGoogleTorrentDetailInfoCommand() {
-		indexDbInit(() => {
-			read(table_Settings, table_Settings_key_TranslateTorrentDetailInfoCommand, result => {
-				var translateCheckbox = document.getElementById("googleTranslateCheckbox");
-				translateCheckbox.checked = result && result.value;
-				translateTorrentDetailInfoCommandDisplay();
-				removeDbSyncMessage();
+    // 谷歌翻译留言
+    function updateGoogleTorrentDetailInfoCommand() {
+        indexDbInit(() => {
+            read(table_Settings, table_Settings_key_TranslateTorrentDetailInfoCommand, result => {
+                var translateCheckbox = document.getElementById("googleTranslateCheckbox");
+                translateCheckbox.checked = result && result.value;
+                translateTorrentDetailInfoCommandDisplay();
+                removeDbSyncMessage();
 
-			}, () => { removeDbSyncMessage(); });
-		})
-	}
+            }, () => { removeDbSyncMessage(); });
+        })
+    }
 }
 
 
 function torrentsDetailIndex() {
-	// 添加类 torrents_detail_index，方便添加样式
-	var torrentinfo = document.getElementById("torrentinfo");
-	torrentinfo.classList.add("torrents_detail_index");
+    // 添加类 torrents_detail_index，方便添加样式
+    var torrentinfo = document.getElementById("torrentinfo");
+    torrentinfo.classList.add("torrents_detail_index");
 
-	// 翻译找到种子数量
-	var torrentinfo = document.getElementById("torrentinfo");
-	var torrentCount = torrentinfo.children[0].children[1];
-	var count = torrentCount.innerText.replace("torrent was found for this gallery.", "").replace("torrents were found for this gallery.", "");
-	torrentCount.innerText = `本作品共有 ${count} 个种子。`
+    // 翻译找到种子数量
+    var torrentinfo = document.getElementById("torrentinfo");
+    var torrentCount = torrentinfo.children[0].children[1];
+    var count = torrentCount.innerText.replace("torrent was found for this gallery.", "").replace("torrents were found for this gallery.", "");
+    torrentCount.innerText = `本作品共有 ${count} 个种子。`
 
-	// 逐个翻译种子模块说明
-	var torrentForms = torrentinfo.children[0].querySelectorAll("form");
-	for (const i in torrentForms) {
-		if (Object.hasOwnProperty.call(torrentForms, i)) {
-			const forms = torrentForms[i];
-			var table = forms.children[0].children[1];
-			var trs = table.querySelectorAll("tr");
-			trs[0].children[0].children[0].innerText = "上传于：";
-			trs[0].children[1].children[0].innerText = "文件大小：";
-			trs[0].children[3].children[0].innerText = "做种：";
-			trs[0].children[4].children[0].innerText = "下载：";
-			trs[0].children[5].children[0].innerText = "完成：";
-			trs[1].children[0].children[0].innerText = "上传者：";
-			trs[1].children[1].children[0].value = "详细信息";
-		}
-	}
+    // 逐个翻译种子模块说明
+    var torrentForms = torrentinfo.children[0].querySelectorAll("form");
+    for (const i in torrentForms) {
+        if (Object.hasOwnProperty.call(torrentForms, i)) {
+            const forms = torrentForms[i];
+            var table = forms.children[0].children[1];
+            var trs = table.querySelectorAll("tr");
+            trs[0].children[0].children[0].innerText = "上传于：";
+            trs[0].children[1].children[0].innerText = "文件大小：";
+            trs[0].children[3].children[0].innerText = "做种：";
+            trs[0].children[4].children[0].innerText = "下载：";
+            trs[0].children[5].children[0].innerText = "完成：";
+            trs[1].children[0].children[0].innerText = "上传者：";
+            trs[1].children[1].children[0].value = "详细信息";
+        }
+    }
 
-	// 翻译底部
-	var bottomDiv = torrentinfo.children[1].children[0];
-	bottomDiv.children[0].innerText = "新种子：";
-	bottomDiv.children[0].nextSibling.textContent = "你可以在这里为本作品上传种子，种子文件最大大小为 10 MB";
-	bottomDiv.children[1].nextSibling.textContent = "如果你自己创建种子，请将其设置为 AnnounceTracker：";
-	bottomDiv.children[3].nextSibling.textContent = "请注意，你必须在上传后从该站点下载私有种子，以便记录统计信息。";
+    // 翻译底部
+    var bottomDiv = torrentinfo.children[1].children[0];
+    bottomDiv.children[0].innerText = "新种子：";
+    bottomDiv.children[0].nextSibling.textContent = "你可以在这里为本作品上传种子，种子文件最大大小为 10 MB";
+    bottomDiv.children[1].nextSibling.textContent = "如果你自己创建种子，请将其设置为 AnnounceTracker：";
+    bottomDiv.children[3].nextSibling.textContent = "请注意，你必须在上传后从该站点下载私有种子，以便记录统计信息。";
 
-	// 关闭窗口
-	closeWindow();
+    // 关闭窗口
+    closeWindow();
 }
 
 function closeWindow() {
-	var closeWindowLink = document.getElementsByClassName("stuffbox")[0].children[1].children[0];
-	closeWindowLink.innerText = "关闭窗口";
+    var closeWindowLink = document.getElementsByClassName("stuffbox")[0].children[1].children[0];
+    closeWindowLink.innerText = "关闭窗口";
 }
 
 //#endregion
+
 
 //#region step7.5.toplistPage.js 排行榜
 
 function toplistPage() {
 
-	var ido = document.getElementsByClassName("ido");
-	if (ido.length > 0) {
-		var parentDiv = ido[0];
+    var ido = document.getElementsByClassName("ido");
+    if (ido.length > 0) {
+        var parentDiv = ido[0];
 
-		// 添加样式防止覆盖
-		parentDiv.classList.add("t_toplist_ido");
+        // 添加样式防止覆盖
+        parentDiv.classList.add("t_toplist_ido");
 
-		// 头部面包屑导航翻译
-		var headLinks = parentDiv.firstElementChild.querySelectorAll("a");
-		for (const i in headLinks) {
-			if (Object.hasOwnProperty.call(headLinks, i)) {
-				const link = headLinks[i];
-				link.innerText = toplie_subtitle_dict[link.innerText];
-			}
-		}
+        // 头部面包屑导航翻译
+        var headLinks = parentDiv.firstElementChild.querySelectorAll("a");
+        for (const i in headLinks) {
+            if (Object.hasOwnProperty.call(headLinks, i)) {
+                const link = headLinks[i];
+                link.innerText = toplie_subtitle_dict[link.innerText];
+            }
+        }
 
-		// 排行页 或 作品/上传者排名页
-		var dcDiv = document.getElementsByClassName("dc");
-		if (dcDiv.length > 0) {
-			var dc = dcDiv[0];
+        // 排行页 或 作品/上传者排名页
+        var dcDiv = document.getElementsByClassName("dc");
+        if (dcDiv.length > 0) {
+            var dc = dcDiv[0];
 
-			// 各项父级翻译
-			var h2list = parentDiv.querySelectorAll("h2");
-			for (const i in h2list) {
-				if (Object.hasOwnProperty.call(h2list, i)) {
-					const h2 = h2list[i];
-					h2.innerText = toplist_parent_dict[h2.innerText];
-				}
-			}
+            // 各项父级翻译
+            var h2list = parentDiv.querySelectorAll("h2");
+            for (const i in h2list) {
+                if (Object.hasOwnProperty.call(h2list, i)) {
+                    const h2 = h2list[i];
+                    h2.innerText = toplist_parent_dict[h2.innerText];
+                }
+            }
 
-			// 各项排行翻译
-			var plist = parentDiv.querySelectorAll("p");
-			for (const i in plist) {
-				if (Object.hasOwnProperty.call(plist, i)) {
-					const p = plist[i];
-					if (p.innerText.indexOf("All-Time") != -1) {
-						p.lastChild.innerText = "总排行";
-					} else if (p.innerText.indexOf("Past Year") != -1) {
-						p.lastChild.innerText = "年排行";
-					} else if (p.innerText.indexOf("Past Month") != -1) {
-						p.lastChild.innerText = "月排行";
-					} else if (p.innerText.indexOf("Yesterday") != -1) {
-						p.lastChild.innerText = "日排行";
-					}
-				}
-			}
+            // 各项排行翻译
+            var plist = parentDiv.querySelectorAll("p");
+            for (const i in plist) {
+                if (Object.hasOwnProperty.call(plist, i)) {
+                    const p = plist[i];
+                    if (p.innerText.indexOf("All-Time") != -1) {
+                        p.lastChild.innerText = "总排行";
+                    } else if (p.innerText.indexOf("Past Year") != -1) {
+                        p.lastChild.innerText = "年排行";
+                    } else if (p.innerText.indexOf("Past Month") != -1) {
+                        p.lastChild.innerText = "月排行";
+                    } else if (p.innerText.indexOf("Yesterday") != -1) {
+                        p.lastChild.innerText = "日排行";
+                    }
+                }
+            }
 
-			// 删除全部分割线
-			var hrlist = parentDiv.querySelectorAll("hr");
-			for (const i in hrlist) {
-				if (Object.hasOwnProperty.call(hrlist, i)) {
-					const hr = hrlist[i];
-					hr.parentNode.removeChild(hr);
-				}
-			}
+            // 删除全部分割线
+            var hrlist = parentDiv.querySelectorAll("hr");
+            for (const i in hrlist) {
+                if (Object.hasOwnProperty.call(hrlist, i)) {
+                    const hr = hrlist[i];
+                    hr.parentNode.removeChild(hr);
+                }
+            }
 
-			// 跨域
-			crossDomain();
+            // 跨域
+            crossDomain();
 
-			// 作品标题翻译
-			var translateDiv = document.createElement("div");
-			translateDiv.id = "googleTranslateDiv";
-			var translateCheckbox = document.createElement("input");
-			translateCheckbox.setAttribute("type", "checkbox");
-			translateCheckbox.id = "googleTranslateCheckbox";
-			translateDiv.appendChild(translateCheckbox);
-			var translateLabel = document.createElement("label");
-			translateLabel.setAttribute("for", translateCheckbox.id);
-			translateLabel.id = "translateLabel";
-			translateLabel.innerText = "谷歌机翻 : 标题";
+            // 作品标题翻译
+            var translateDiv = document.createElement("div");
+            translateDiv.id = "googleTranslateDiv";
+            var translateCheckbox = document.createElement("input");
+            translateCheckbox.setAttribute("type", "checkbox");
+            translateCheckbox.id = "googleTranslateCheckbox";
+            translateDiv.appendChild(translateCheckbox);
+            var translateLabel = document.createElement("label");
+            translateLabel.setAttribute("for", translateCheckbox.id);
+            translateLabel.id = "translateLabel";
+            translateLabel.innerText = "谷歌机翻 : 标题";
 
-			translateDiv.appendChild(translateLabel);
-			translateCheckbox.addEventListener("click", translateToplistPageTitle);
-			var h2 = dc.firstElementChild;
-			h2.appendChild(translateDiv);
+            translateDiv.appendChild(translateLabel);
+            translateCheckbox.addEventListener("click", translateToplistPageTitle);
+            var h2 = dc.firstElementChild;
+            h2.appendChild(translateDiv);
 
-			indexDbInit(() => {
-				read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-					if (result && result.value) {
-						translateCheckbox.setAttribute("checked", true);
-						translateToplistTitleDisplay();
-					}
-				}, () => { });
-			});
+            indexDbInit(() => {
+                read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+                    if (result && result.value) {
+                        translateCheckbox.setAttribute("checked", true);
+                        translateToplistTitleDisplay();
+                    }
+                }, () => { });
+            });
 
-		} else {
+        } else {
 
-			// 点击页面链接跳转
-			// 1. 跳转到页面详情不管，detail.js 实现功能
-			// 2. 跳转到上传页面不管，upload.js 实现功能
-			// 3. 跳转到上传者排行页面，需要翻译
-			// 4. 跳转到作品排行页面，需要翻译
+            // 点击页面链接跳转
+            // 1. 跳转到页面详情不管，detail.js 实现功能
+            // 2. 跳转到上传页面不管，upload.js 实现功能
+            // 3. 跳转到上传者排行页面，需要翻译
+            // 4. 跳转到作品排行页面，需要翻译
 
-			var search = window.location.search;
-			if (search.indexOf("?tl=") != -1) {
-				var pageNo = search.replace("?tl=", "");
-				var bookRateArrayNo = ["11", "12", "13", "15"];
-				if (bookRateArrayNo.indexOf(pageNo) != -1) {
-					// 作品排行页面
-					toplistBookRank();
-				} else {
-					// 上传者排行页面
-					toplistUploaderRank();
-				}
-			}
-		}
-	}
+            var search = window.location.search;
+            if (search.indexOf("?tl=") != -1) {
+                var pageNo = search.replace("?tl=", "");
+                var bookRateArrayNo = ["11", "12", "13", "15"];
+                if (bookRateArrayNo.indexOf(pageNo) != -1) {
+                    // 作品排行页面
+                    toplistBookRank();
+                } else {
+                    // 上传者排行页面
+                    toplistUploaderRank();
+                }
+            }
+        }
+    }
 
 
 
@@ -8006,154 +8009,143 @@ function toplistPage() {
 
 // 翻译排行榜作品名称
 function translateToplistPageTitle() {
-	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-	// 更新存储
-	var settings_translateFrontPageTitles = {
-		item: table_Settings_key_TranslateFrontPageTitles,
-		value: isChecked
-	};
+    // 更新存储
+    var settings_translateFrontPageTitles = {
+        item: table_Settings_key_TranslateFrontPageTitles,
+        value: isChecked
+    };
 
-	indexDbInit(() => {
-		update(table_Settings, settings_translateFrontPageTitles, () => {
-			// 通知通知，翻译标题
-			setDbSyncMessage(sync_googleTranslate_frontPage_title);
-			translateToplistTitleDisplay();
-		}, () => { });
-	})
+    indexDbInit(() => {
+        update(table_Settings, settings_translateFrontPageTitles, () => {
+            // 通知通知，翻译标题
+            setDbSyncMessage(sync_googleTranslate_frontPage_title);
+            translateToplistTitleDisplay();
+        }, () => { });
+    })
 }
 
 
 function translateToplistTitleDisplay() {
-	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-	var titleDivs = document.getElementsByClassName("dc")[0].querySelectorAll("div.tun");
-	if (isChecked) {
-		// 翻译标题
-		for (const i in titleDivs) {
-			if (Object.hasOwnProperty.call(titleDivs, i)) {
-				const a = titleDivs[i].firstElementChild;
-				if (a.dataset.translate) {
-					// 已经翻译过
-					a.innerText = a.dataset.translate;
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+    var titleDivs = document.getElementsByClassName("dc")[0].querySelectorAll("div.tun");
+    if (isChecked) {
+        // 翻译标题
+        for (const i in titleDivs) {
+            if (Object.hasOwnProperty.call(titleDivs, i)) {
+                const a = titleDivs[i].firstElementChild;
+                if (a.dataset.translate) {
+                    // 已经翻译过
+                    a.innerText = a.dataset.translate;
 
-				} else {
-					// 需要翻译
-					a.title = a.innerText;
+                } else {
+                    // 需要翻译
+                    a.title = a.innerText;
 
-					var encodeText = urlEncode(a.innerText);
-					// 单条翻译
-					getGoogleTranslate(encodeText, function (data) {
-						var sentences = data.sentences;
-						var longtext = '';
-						for (const i in sentences) {
-							if (Object.hasOwnProperty.call(sentences, i)) {
-								const sentence = sentences[i];
-								longtext += sentence.trans;
-							}
-						}
+                    // 单条翻译
+                    translatePageElementFunc(a, true, () => {
+                        a.dataset.translate = a.innerText;
+                    });
+                }
+            }
+        }
 
-						a.innerText = longtext;
-						a.dataset.translate = longtext;
-					});
-				}
-			}
-		}
-
-	} else {
-		// 显示原文
-		for (const i in titleDivs) {
-			if (Object.hasOwnProperty.call(titleDivs, i)) {
-				const a = titleDivs[i].firstElementChild;
-				if (a.title) {
-					a.innerText = a.title;
-				}
-			}
-		}
-	}
+    } else {
+        // 显示原文
+        for (const i in titleDivs) {
+            if (Object.hasOwnProperty.call(titleDivs, i)) {
+                const a = titleDivs[i].firstElementChild;
+                if (a.title) {
+                    a.innerText = a.title;
+                }
+            }
+        }
+    }
 }
 
 
 
 // 上传者排行页面
 function toplistUploaderRank() {
-	var itg = document.getElementsByClassName("itg");
-	if (itg.length > 0) {
-		var rankTable = itg[0];
-		var tableThs = rankTable.querySelectorAll("th");
-		for (const i in tableThs) {
-			if (Object.hasOwnProperty.call(tableThs, i)) {
-				const th = tableThs[i];
-				if (th.classList.contains("hr")) {
-					th.innerText = "排名";
-				} else if (th.classList.contains("hs")) {
-					th.innerText = "分数";
-				} else if (th.classList.contains("hn")) {
-					th.innerText = "上传者";
-				}
-			}
-		}
-	}
+    var itg = document.getElementsByClassName("itg");
+    if (itg.length > 0) {
+        var rankTable = itg[0];
+        var tableThs = rankTable.querySelectorAll("th");
+        for (const i in tableThs) {
+            if (Object.hasOwnProperty.call(tableThs, i)) {
+                const th = tableThs[i];
+                if (th.classList.contains("hr")) {
+                    th.innerText = "排名";
+                } else if (th.classList.contains("hs")) {
+                    th.innerText = "分数";
+                } else if (th.classList.contains("hn")) {
+                    th.innerText = "上传者";
+                }
+            }
+        }
+    }
 }
 
 // 作品排行页面
 function toplistBookRank() {
-	// 跨域
-	crossDomain();
+    // 跨域
+    crossDomain();
 
-	var ido = document.getElementsByClassName("ido");
-	if (ido.length > 0) {
-		var toppane = ido[0];
-		toppane.classList.add("t_toplist_bookrage");
+    var ido = document.getElementsByClassName("ido");
+    if (ido.length > 0) {
+        var toppane = ido[0];
+        toppane.classList.add("t_toplist_bookrage");
 
-		// 标题机翻
-		var translateDiv = document.createElement("div");
-		translateDiv.id = "googleTranslateDiv";
-		var translateCheckbox = document.createElement("input");
-		translateCheckbox.setAttribute("type", "checkbox");
-		translateCheckbox.id = "googleTranslateCheckbox";
-		translateDiv.appendChild(translateCheckbox);
-		var translateLabel = document.createElement("label");
-		translateLabel.setAttribute("for", translateCheckbox.id);
-		translateLabel.id = "translateLabel";
-		translateLabel.innerText = "谷歌机翻 : 标题";
+        // 标题机翻
+        var translateDiv = document.createElement("div");
+        translateDiv.id = "googleTranslateDiv";
+        var translateCheckbox = document.createElement("input");
+        translateCheckbox.setAttribute("type", "checkbox");
+        translateCheckbox.id = "googleTranslateCheckbox";
+        translateDiv.appendChild(translateCheckbox);
+        var translateLabel = document.createElement("label");
+        translateLabel.setAttribute("for", translateCheckbox.id);
+        translateLabel.id = "translateLabel";
+        translateLabel.innerText = "谷歌机翻 : 标题";
 
-		translateDiv.appendChild(translateLabel);
-		translateCheckbox.addEventListener("click", translateMainPageTitle);
-		toppane.insertBefore(translateDiv, toppane.lastChild);
+        translateDiv.appendChild(translateLabel);
+        translateCheckbox.addEventListener("click", translateMainPageTitle);
+        toppane.insertBefore(translateDiv, toppane.lastChild);
 
-		// 头部添加词库升级提示
-		var dataUpdateDiv = document.createElement("div");
-		dataUpdateDiv.id = "data_update_tip";
-		var dataUpdateText = document.createTextNode("词库升级中...");
-		dataUpdateDiv.appendChild(dataUpdateText);
-		toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
+        // 头部添加词库升级提示
+        var dataUpdateDiv = document.createElement("div");
+        dataUpdateDiv.id = "data_update_tip";
+        var dataUpdateText = document.createTextNode("词库升级中...");
+        dataUpdateDiv.appendChild(dataUpdateText);
+        toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
 
-		// 表头翻译
-		toplistBookRateTableHeadTranslate();
+        // 表头翻译
+        toplistBookRateTableHeadTranslate();
 
-		// 作品类型翻译
-		bookTypeTranslate();
+        // 作品类型翻译
+        bookTypeTranslate();
 
-		// 作品篇幅
-		toplistBookpages();
+        // 作品篇幅
+        toplistBookpages();
 
-		indexDbInit(() => {
-			// 谷歌机翻标题
-			read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-				if (result && result.value) {
-					translateCheckbox.setAttribute("checked", true);
-					translateMainPageTitleDisplay();
-				}
-			}, () => { });
+        indexDbInit(() => {
+            // 谷歌机翻标题
+            read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+                if (result && result.value) {
+                    translateCheckbox.setAttribute("checked", true);
+                    translateMainPageTitleDisplay();
+                }
+            }, () => { });
 
-			// 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
-			// 表格标签翻译
-			toplistBookRateTryUseOldData();
-		});
+            // 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
+            // 表格标签翻译
+            toplistBookRateTryUseOldData();
+        });
 
-		// 同步谷歌机翻标题
-		DataSyncCommonTranslateTitle();
-	}
+        // 同步谷歌机翻标题
+        DataSyncCommonTranslateTitle();
+    }
 
 
 
@@ -8161,135 +8153,139 @@ function toplistBookRank() {
 
 // 作品排行页面，翻译表头
 function toplistBookRateTableHeadTranslate() {
-	var table = document.getElementsByClassName("itg");
-	if (table.length > 0) {
-		var theads = table[0].querySelectorAll("th");
+    var table = document.getElementsByClassName("itg");
+    if (table.length > 0) {
+        var theads = table[0].querySelectorAll("th");
 
-		for (const i in theads) {
-			if (Object.hasOwnProperty.call(theads, i)) {
-				const th = theads[i];
-				th.innerText = thData[th.innerText] ?? th.innerText;
-			}
-		}
+        for (const i in theads) {
+            if (Object.hasOwnProperty.call(theads, i)) {
+                const th = theads[i];
+                th.innerText = thData[th.innerText] ?? th.innerText;
+            }
+        }
 
-		// 删除第一个表头的跨列属性，然后追加表头
-		var firstTh = theads[0];
-		firstTh.removeAttribute("colspan");
-		firstTh.innerText = "排名";
+        // 删除第一个表头的跨列属性，然后追加表头
+        var firstTh = theads[0];
+        firstTh.removeAttribute("colspan");
+        firstTh.innerText = "排名";
 
-		var bookTypeTh = document.createElement("th");
-		bookTypeTh.innerText = "作品类型";
-		firstTh.parentNode.insertBefore(bookTypeTh, firstTh.nextElementSibling);
-	}
+        var bookTypeTh = document.createElement("th");
+        bookTypeTh.innerText = "作品类型";
+        firstTh.parentNode.insertBefore(bookTypeTh, firstTh.nextElementSibling);
+    }
 }
 
 //  作品排行页面，获取词库数据
 function toplistBookRateTryUseOldData() {
-	// 验证数据完整性
-	checkDataIntact(() => {
-		// 判断是否存在旧数据
-		var fetishHasValue = false;
-		var ehTagHasValue = false;
-		var complete1 = false;
-		var complete2 = false;
+    // 验证数据完整性
+    checkDataIntact(() => {
+        // 判断是否存在旧数据
+        var fetishHasValue = false;
+        var ehTagHasValue = false;
+        var complete1 = false;
+        var complete2 = false;
 
-		checkTableEmpty(table_fetishListSubItems, () => {
-			// 数据为空
-			complete1 = true;
-		}, () => {
-			// 存在数据
-			fetishHasValue = true;
-			complete1 = true;
-		});
+        checkTableEmpty(table_fetishListSubItems, () => {
+            // 数据为空
+            complete1 = true;
+        }, () => {
+            // 存在数据
+            fetishHasValue = true;
+            complete1 = true;
+        });
 
-		checkTableEmpty(table_EhTagSubItems, () => {
-			// 数据为空
-			complete2 = true;
-		}, () => {
-			// 存在数据
-			ehTagHasValue = true;
-			complete2 = true;
-		});
+        checkTableEmpty(table_EhTagSubItems, () => {
+            // 数据为空
+            complete2 = true;
+        }, () => {
+            // 存在数据
+            ehTagHasValue = true;
+            complete2 = true;
+        });
 
-		var t = setInterval(() => {
-			if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
-				t && clearInterval(t);
-				// 存在数据
-				toplistTableTagTranslate();
-				// 检查更新
-				checkUpdateData(() => {
-					// 存在更新
-					toplistTableTagTranslate();
-				}, () => { });
-			} else if (complete1 && complete2) {
-				t && clearInterval(t);
-				// 不存在数据
-				checkUpdateData(() => {
-					// 存在更新
-					toplistTableTagTranslate();
-				}, () => {
-					toplistTableTagTranslate();
-				});
-			}
-		}, 10);
-	});
+        var t = setInterval(() => {
+            if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+                t && clearInterval(t);
+                // 存在数据
+                toplistTableTagTranslate();
+                // 检查更新
+                checkUpdateData(() => {
+                    // 存在更新
+                    toplistTableTagTranslate();
+                }, () => { });
+            } else if (complete1 && complete2) {
+                t && clearInterval(t);
+                // 不存在数据
+                checkUpdateData(() => {
+                    // 存在更新
+                    toplistTableTagTranslate();
+                }, () => {
+                    toplistTableTagTranslate();
+                });
+            }
+        }, 10);
+    });
 }
 
 // 表格标签翻译
 function toplistTableTagTranslate() {
-	// 父项:子项，偶尔出现单个子项
-	var gt = document.getElementsByClassName("gt");
-	function translate(gt, i) {
-		const item = gt[i];
-		if (!item.dataset.title) {
-			item.dataset.title = item.title;
-		}
-		var ps_en = item.dataset.title;
-		read(table_EhTagSubItems, ps_en, result => {
-			if (result) {
-				// 父子项
-				item.innerText = `${result.parent_zh}:${result.sub_zh}`;
-				if (result.sub_desc) {
-					item.title = `${item.title}\r\n${result.sub_desc}`;
-				}
-			} else {
-				// 没有找到，翻译父项，子项保留
-				var array = ps_en.split(":");
-				if (array.length == 2) {
-					var parent_en = array[0];
-					var sub_en = array[1];
-					read(table_detailParentItems, parent_en, result => {
-						if (result) {
-							item.innerText = `${result.name}:${sub_en}`;
-							if (result.sub_desc) {
-								item.title = `${item.title}\r\n${result.sub_desc}`;
-							}
-						}
-					}, () => { });
-				}
-			}
-		}, () => { });
-	}
-	for (const i in gt) {
-		if (Object.hasOwnProperty.call(gt, i)) {
-			translate(gt, i);
-		}
-	}
+    // 父项:子项，偶尔出现单个子项
+    var gt = document.getElementsByClassName("gt");
+    function translate(gt, i) {
+        const item = gt[i];
+        if (!item.dataset.title) {
+            item.dataset.title = item.title;
+        }
+        var ps_en = item.dataset.title;
+        read(table_EhTagSubItems, ps_en, result => {
+            if (result) {
+                // 父子项
+                item.innerText = `${result.parent_zh}:${result.sub_zh}`;
+                if (result.sub_desc) {
+                    item.title = `${item.title}\r\n${result.sub_desc}`;
+                }
+            } else {
+                // 没有找到，翻译父项，子项保留
+                var array = ps_en.split(":");
+                if (array.length == 2) {
+                    var parent_en = array[0];
+                    var sub_en = array[1];
+                    read(table_detailParentItems, parent_en, result => {
+                        if (result) {
+                            item.innerText = `${result.name}:${sub_en}`;
+                            if (result.sub_desc) {
+                                item.title = `${item.title}\r\n${result.sub_desc}`;
+                            }
+                        }
+                    }, () => { });
+                }
+            }
+        }, () => { });
+    }
+    for (const i in gt) {
+        if (Object.hasOwnProperty.call(gt, i)) {
+            translate(gt, i);
+        }
+    }
 }
 
 // 作品篇幅
 function toplistBookpages() {
-	// 标题 + 悬浮图 + 标签
-	var tdPages = document.getElementsByClassName("glhide");
-	for (const i in tdPages) {
-		if (Object.hasOwnProperty.call(tdPages, i)) {
-			const td = tdPages[i];
-			innerTextPageToYe(td.lastChild);
-		}
-	}
+    // 标题 + 悬浮图 + 标签
+    var tdPages = document.getElementsByClassName("glhide");
+    for (const i in tdPages) {
+        if (Object.hasOwnProperty.call(tdPages, i)) {
+            const td = tdPages[i];
+            innerTextPageToYe(td.lastChild);
+        }
+    }
 }
 
 //#endregion
+
+
+
+
 
 //#region step7.6.myHomePage.js 我的主页 - 总览
 
@@ -8321,479 +8317,480 @@ function myHomePage() {
 var newsPageTranslateIsReady = false; // 翻译前是否准备完毕
 
 function newsPage() {
-	// 跨域
-	crossDomain();
+    // 跨域
+    crossDomain();
 
-	// 添加样式方便调整页面样式
-	var newsouter = document.getElementById("newsouter");
-	newsouter.classList.add("t_newspage_souter");
+    // 添加样式方便调整页面样式
+    var newsouter = document.getElementById("newsouter");
+    newsouter.classList.add("t_newspage_souter");
 
-	var nb = document.getElementById("nb");
+    var nb = document.getElementById("nb");
 
-	// 头部图片隐藏折叠按钮
-	var baredge = document.getElementsByClassName("baredge")[0];
-	var bartop = document.getElementsByClassName("bartop")[0];
-	var botm = document.getElementById("botm");
-	var botmHeight = botm.clientHeight;
+    // 头部图片隐藏折叠按钮
+    var baredge = document.getElementsByClassName("baredge")[0];
+    var bartop = document.getElementsByClassName("bartop")[0];
+    var botm = document.getElementById("botm");
+    var botmHeight = botm.clientHeight;
 
-	var imgHiddenBtn = document.createElement("div");
-	imgHiddenBtn.style.display = "none";
-	imgHiddenBtn.id = "imgHiddenBtn";
-	imgHiddenBtn.innerText = "头部图片隐藏";
-	nb.parentNode.insertBefore(imgHiddenBtn, nb.nextElementSibling);
-	imgHiddenBtn.onclick = function () {
-		var visible = imgHiddenBtn.innerText == "头部图片显示";
-		// 显示和隐藏
-		newsPageTopImageDisplay(visible);
-		// 更改设置并更新
-		setNewsPageTopImageVisisble(visible);
-	};
+    var imgHiddenBtn = document.createElement("div");
+    imgHiddenBtn.style.display = "none";
+    imgHiddenBtn.id = "imgHiddenBtn";
+    imgHiddenBtn.innerText = "头部图片隐藏";
+    nb.parentNode.insertBefore(imgHiddenBtn, nb.nextElementSibling);
+    imgHiddenBtn.onclick = function () {
+        var visible = imgHiddenBtn.innerText == "头部图片显示";
+        // 显示和隐藏
+        newsPageTopImageDisplay(visible);
+        // 更改设置并更新
+        setNewsPageTopImageVisisble(visible);
+    };
 
-	function newsPageTopImageDisplay(visible) {
-		// 改为动画效果
-		var imgHiddenBtn = document.getElementById("imgHiddenBtn");
-		if (visible) {
-			if (imgHiddenBtn.innerText == "头部图片显示") {
-				// 需要显示
-				slideDown(botm, botmHeight, 10, function () {
-					baredge.classList.remove("hiddenTopImgBorder");
-					bartop.classList.remove("hiddenTopImgBorder");
-					imgHiddenBtn.innerText = "头部图片隐藏";
-				});
-			}
-		} else {
-			if (imgHiddenBtn.innerText == "头部图片隐藏") {
-				// 需要隐藏
-				slideUp(botm, 10, function () {
-					baredge.classList.add("hiddenTopImgBorder");
-					bartop.classList.add("hiddenTopImgBorder");
-					imgHiddenBtn.innerText = "头部图片显示";
-				});
-			}
-		}
-	}
+    function newsPageTopImageDisplay(visible) {
+        // 改为动画效果
+        var imgHiddenBtn = document.getElementById("imgHiddenBtn");
+        if (visible) {
+            if (imgHiddenBtn.innerText == "头部图片显示") {
+                // 需要显示
+                slideDown(botm, botmHeight, 10, function () {
+                    baredge.classList.remove("hiddenTopImgBorder");
+                    bartop.classList.remove("hiddenTopImgBorder");
+                    imgHiddenBtn.innerText = "头部图片隐藏";
+                });
+            }
+        } else {
+            if (imgHiddenBtn.innerText == "头部图片隐藏") {
+                // 需要隐藏
+                slideUp(botm, 10, function () {
+                    baredge.classList.add("hiddenTopImgBorder");
+                    bartop.classList.add("hiddenTopImgBorder");
+                    imgHiddenBtn.innerText = "头部图片显示";
+                });
+            }
+        }
+    }
 
-	function setNewsPageTopImageVisisble(visible) {
-		indexDbInit(() => {
-			// 保存存储信息
-			var setting_newsPageTopImageVisible = {
-				item: table_Settings_key_NewsPageTopImageVisible,
-				value: visible
-			}
-			update(table_Settings, setting_newsPageTopImageVisible, () => {
-				// 通知头部图片隐藏显示
-				setDbSyncMessage(sync_newsPage_topImage_visible);
-			}, () => { });
-		});
-	}
+    function setNewsPageTopImageVisisble(visible) {
+        indexDbInit(() => {
+            // 保存存储信息
+            var setting_newsPageTopImageVisible = {
+                item: table_Settings_key_NewsPageTopImageVisible,
+                value: visible
+            }
+            update(table_Settings, setting_newsPageTopImageVisible, () => {
+                // 通知头部图片隐藏显示
+                setDbSyncMessage(sync_newsPage_topImage_visible);
+            }, () => { });
+        });
+    }
 
 
-	// 谷歌机翻
-	var translateDiv = document.createElement("div");
-	translateDiv.id = "googleTranslateDiv";
-	translateDiv.style.display = "none";
-	var translateCheckbox = document.createElement("input");
-	translateCheckbox.setAttribute("type", "checkbox");
-	translateCheckbox.id = "googleTranslateCheckbox";
-	var translateLabel = document.createElement("label");
-	translateLabel.setAttribute("for", translateCheckbox.id);
-	translateLabel.id = "translateLabel";
-	translateLabel.innerText = "谷歌机翻 : 新闻";
+    // 谷歌机翻
+    var translateDiv = document.createElement("div");
+    translateDiv.id = "googleTranslateDiv";
+    translateDiv.style.display = "none";
+    var translateCheckbox = document.createElement("input");
+    translateCheckbox.setAttribute("type", "checkbox");
+    translateCheckbox.id = "googleTranslateCheckbox";
+    var translateLabel = document.createElement("label");
+    translateLabel.setAttribute("for", translateCheckbox.id);
+    translateLabel.id = "translateLabel";
+    translateLabel.innerText = "谷歌机翻 : 新闻";
 
-	translateDiv.appendChild(translateLabel);
-	translateDiv.appendChild(translateCheckbox);
+    translateDiv.appendChild(translateLabel);
+    translateDiv.appendChild(translateCheckbox);
 
-	translateCheckbox.addEventListener("click", newsPageNewsTranslate);
-	nb.parentNode.insertBefore(translateDiv, nb);
+    translateCheckbox.addEventListener("click", newsPageNewsTranslate);
+    nb.parentNode.insertBefore(translateDiv, nb);
 
-	indexDbInit(() => {
-		// 读取并设置头部图片是否隐藏
-		read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
-			// 按钮显示出来
-			imgHiddenBtn.style.display = "block";
-			newsPageTopImageDisplay(result && result.value);
-		}, () => {
-			imgHiddenBtn.style.display = "block";
-		});
+    indexDbInit(() => {
+        // 读取并设置头部图片是否隐藏
+        read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
+            // 按钮显示出来
+            imgHiddenBtn.style.display = "block";
+            newsPageTopImageDisplay(result && result.value);
+        }, () => {
+            imgHiddenBtn.style.display = "block";
+        });
 
-		// 读取新闻页面翻译
-		read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
-			translateDiv.style.display = "block";
-			if (result && result.value) {
-				translateCheckbox.setAttribute("checked", true);
-				newsPageNewsTranslateDisplay();
-			}
-		}, () => {
-			translateDiv.style.display = "block";
-		});
-	});
+        // 读取新闻页面翻译
+        read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
+            translateDiv.style.display = "block";
+            if (result && result.value) {
+                translateCheckbox.setAttribute("checked", true);
+                newsPageNewsTranslateDisplay();
+            }
+        }, () => {
+            translateDiv.style.display = "block";
+        });
+    });
 
-	// 新闻分栏，隐藏折叠按钮
-	var nd = document.getElementsByClassName("nd");
-	var h2s = nd[0].querySelectorAll("h2");
-	var newstitles = document.getElementsByClassName("newstitle");
+    // 新闻分栏，隐藏折叠按钮
+    var nd = document.getElementsByClassName("nd");
+    var h2s = nd[0].querySelectorAll("h2");
+    var newstitles = document.getElementsByClassName("newstitle");
 
-	for (const i in h2s) {
-		if (Object.hasOwnProperty.call(h2s, i)) {
-			const h2 = h2s[i];
-			var div = document.createElement("div");
-			div.classList.add("title_extend");
-			div.innerText = "-";
-			h2.appendChild(div);
-		}
-	}
+    for (const i in h2s) {
+        if (Object.hasOwnProperty.call(h2s, i)) {
+            const h2 = h2s[i];
+            var div = document.createElement("div");
+            div.classList.add("title_extend");
+            div.innerText = "-";
+            h2.appendChild(div);
+        }
+    }
 
-	for (const i in newstitles) {
-		if (Object.hasOwnProperty.call(newstitles, i)) {
-			const newstitle = newstitles[i];
-			var div = document.createElement("div");
-			div.classList.add("title_extend");
-			div.innerText = "-";
-			newstitle.appendChild(div);
-		}
-	}
+    for (const i in newstitles) {
+        if (Object.hasOwnProperty.call(newstitles, i)) {
+            const newstitle = newstitles[i];
+            var div = document.createElement("div");
+            div.classList.add("title_extend");
+            div.innerText = "-";
+            newstitle.appendChild(div);
+        }
+    }
 
-	// 为每个折叠按钮添加事件
-	var titleExpends = document.getElementsByClassName("title_extend");
-	for (const i in titleExpends) {
-		if (Object.hasOwnProperty.call(titleExpends, i)) {
-			const titleExpend = titleExpends[i];
-			titleExpend.onclick = function () {
-				var parentChildNodes = titleExpend.parentNode.parentNode.children;
-				if (titleExpend.innerText == "-") {
-					// 折叠
-					for (const k in parentChildNodes) {
-						if (Object.hasOwnProperty.call(parentChildNodes, k)) {
-							const childNode = parentChildNodes[k];
-							if (childNode.nodeName == "H2") continue;
-							if (childNode.classList.contains("newstitle")) continue;
-							childNode.style.display = "none";
-						}
-					}
-					titleExpend.innerText = "+";
-				} else {
-					// 展开
-					for (const k in parentChildNodes) {
-						if (Object.hasOwnProperty.call(parentChildNodes, k)) {
-							const childNode = parentChildNodes[k];
-							if (childNode.nodeName == "H2") continue;
-							if (childNode.classList.contains("newstitle")) continue;
-							childNode.style.display = "block";
-						}
-					}
-					titleExpend.innerText = "-";
-				}
-			}
-		}
-	}
+    // 为每个折叠按钮添加事件
+    var titleExpends = document.getElementsByClassName("title_extend");
+    for (const i in titleExpends) {
+        if (Object.hasOwnProperty.call(titleExpends, i)) {
+            const titleExpend = titleExpends[i];
+            titleExpend.onclick = function () {
+                var parentChildNodes = titleExpend.parentNode.parentNode.children;
+                if (titleExpend.innerText == "-") {
+                    // 折叠
+                    for (const k in parentChildNodes) {
+                        if (Object.hasOwnProperty.call(parentChildNodes, k)) {
+                            const childNode = parentChildNodes[k];
+                            if (childNode.nodeName == "H2") continue;
+                            if (childNode.classList.contains("newstitle")) continue;
+                            childNode.style.display = "none";
+                        }
+                    }
+                    titleExpend.innerText = "+";
+                } else {
+                    // 展开
+                    for (const k in parentChildNodes) {
+                        if (Object.hasOwnProperty.call(parentChildNodes, k)) {
+                            const childNode = parentChildNodes[k];
+                            if (childNode.nodeName == "H2") continue;
+                            if (childNode.classList.contains("newstitle")) continue;
+                            childNode.style.display = "block";
+                        }
+                    }
+                    titleExpend.innerText = "-";
+                }
+            }
+        }
+    }
 
-	// 数据同步
-	window.onstorage = function (e) {
-		try {
-			console.log(e);
-			switch (e.newValue) {
-				case sync_newsPage_topImage_visible:
-					newsPageSyncTopImageVisible();
-					break;
-				case sync_googleTranslate_newsPage_news:
-					newsPageSyncTranslate();
-					break;
-			}
-		} catch (error) {
-			removeDbSyncMessage();
-		}
-	}
+    // 数据同步
+    window.onstorage = function (e) {
+        try {
+            console.log(e);
+            switch (e.newValue) {
+                case sync_newsPage_topImage_visible:
+                    newsPageSyncTopImageVisible();
+                    break;
+                case sync_googleTranslate_newsPage_news:
+                    newsPageSyncTranslate();
+                    break;
+            }
+        } catch (error) {
+            removeDbSyncMessage();
+        }
+    }
 
-	function newsPageSyncTopImageVisible() {
-		indexDbInit(() => {
-			read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
-				newsPageTopImageDisplay(result && result.value);
-			}, () => { });
-		});
-	}
+    function newsPageSyncTopImageVisible() {
+        indexDbInit(() => {
+            read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
+                newsPageTopImageDisplay(result && result.value);
+            }, () => { });
+        });
+    }
 
-	function newsPageSyncTranslate() {
-		indexDbInit(() => {
-			read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
-				translateCheckbox.checked = result && result.value;
-				newsPageNewsTranslateDisplay();
-			}, () => { });
-		});
-	}
+    function newsPageSyncTranslate() {
+        indexDbInit(() => {
+            read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
+                translateCheckbox.checked = result && result.value;
+                newsPageNewsTranslateDisplay();
+            }, () => { });
+        });
+    }
 }
 
 
 
 function newsPageNewsTranslate() {
-	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-	// 更新存储
-	var settings_newsPageTranslate = {
-		item: table_Settings_key_NewsPageTranslate,
-		value: isChecked
-	};
-	update(table_Settings, settings_newsPageTranslate, () => {
-		// 通知通知，翻译标题
-		setDbSyncMessage(sync_googleTranslate_newsPage_news);
-		newsPageNewsTranslateDisplay();
-	}, () => { });
+    // 更新存储
+    var settings_newsPageTranslate = {
+        item: table_Settings_key_NewsPageTranslate,
+        value: isChecked
+    };
+    update(table_Settings, settings_newsPageTranslate, () => {
+        // 通知，翻译新闻内容
+        setDbSyncMessage(sync_googleTranslate_newsPage_news);
+        newsPageNewsTranslateDisplay();
+    }, () => { });
 }
 
 function newsPageNewsTranslateDisplay() {
-	// 准备
-	if (!newsPageTranslateIsReady) {
-		newsPageTranslatePrepare();
-	}
+    // 准备
+    if (!newsPageTranslateIsReady) {
+        newsPageTranslatePrepare();
+    }
 
-	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-	newsPageTranslateNewsTitle(isChecked);
-	newsPageTranslateSiteStatus(isChecked);
-	newsPageSiteUpdateLog(isChecked);
-	newsPagesTranslateRightNews(isChecked);
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+    newsPageTranslateNewsTitle(isChecked);
+    newsPageTranslateSiteStatus(isChecked);
+    newsPageSiteUpdateLog(isChecked);
+    newsPagesTranslateRightNews(isChecked);
 }
 
 // 翻译之前的准备工作
 function newsPageTranslatePrepare() {
 
-	// 翻译前整理：网站更新日志
-	var nwo = document.getElementsByClassName("nwo")[1];
-	var nwi = nwo.querySelectorAll("div.nwi")[0];
-	var nwiChildNodes = nwi.childNodes;
-	for (const i in nwiChildNodes) {
-		if (Object.hasOwnProperty.call(nwiChildNodes, i)) {
-			const childNode = nwiChildNodes[i];
-			if (childNode.nodeName == "#text") {
-				var span = document.createElement("span");
-				span.innerText = childNode.data;
-				span.classList.add("googleTranslate_02");
-				nwi.insertBefore(span, childNode.nextElementSibling);
-				childNode.parentNode.removeChild(childNode);
-			} else if (childNode.innerText) {
-				childNode.classList.add("googleTranslate_02");
-			}
-		}
-	}
+    // 翻译前整理：网站更新日志
+    var nwo = document.getElementsByClassName("nwo")[1];
+    var nwi = nwo.querySelectorAll("div.nwi")[0];
+    var nwiChildNodes = nwi.childNodes;
+    for (const i in nwiChildNodes) {
+        if (Object.hasOwnProperty.call(nwiChildNodes, i)) {
+            const childNode = nwiChildNodes[i];
+            if (childNode.nodeName == "#text") {
+                var span = document.createElement("span");
+                span.innerText = childNode.data;
+                span.classList.add("googleTranslate_02");
+                nwi.insertBefore(span, childNode.nextElementSibling);
+                childNode.parentNode.removeChild(childNode);
+            } else if (childNode.innerText) {
+                childNode.classList.add("googleTranslate_02");
+            }
+        }
+    }
 
-	var nwu = nwo.querySelectorAll("div.nwu")[0];
-	var nwuFirstChild = nwu.firstChild;
-	var nwuFirstSpan = document.createElement("span");
-	nwuFirstSpan.innerText = nwuFirstChild.textContent;
-	nwuFirstSpan.id = "googleTranslate_02_span";
-	nwu.insertBefore(nwuFirstSpan, nwuFirstChild);
-	nwuFirstChild.parentNode.removeChild(nwuFirstChild);
+    var nwu = nwo.querySelectorAll("div.nwu")[0];
+    var nwuFirstChild = nwu.firstChild;
+    var nwuFirstSpan = document.createElement("span");
+    nwuFirstSpan.innerText = nwuFirstChild.textContent;
+    nwuFirstSpan.id = "googleTranslate_02_span";
+    nwu.insertBefore(nwuFirstSpan, nwuFirstChild);
+    nwuFirstChild.parentNode.removeChild(nwuFirstChild);
 
-	// 翻译前整理：右侧新闻
-	var newstables = document.getElementsByClassName("newstable");
-	for (const i in newstables) {
-		if (Object.hasOwnProperty.call(newstables, i)) {
-			const newstable = newstables[i];
+    // 翻译前整理：右侧新闻
+    var newstables = document.getElementsByClassName("newstable");
+    for (const i in newstables) {
+        if (Object.hasOwnProperty.call(newstables, i)) {
+            const newstable = newstables[i];
 
-			var newsdate = newstable.children[1];
-			if (newsdate.innerText) {
-				newsdate.classList.add("googleTranslate_03");
-			}
+            var newsdate = newstable.children[1];
+            if (newsdate.innerText) {
+                newsdate.classList.add("googleTranslate_03");
+            }
 
-			var newstext = newstable.children[2];
-			var newstextChildNodes = newstext.childNodes;
-			for (const i in newstextChildNodes) {
-				if (Object.hasOwnProperty.call(newstextChildNodes, i)) {
-					const childNode = newstextChildNodes[i];
-					if (childNode.nodeName == "#text") {
-						var span = document.createElement("span");
-						span.innerText = childNode.data;
-						span.classList.add("googleTranslate_03");
-						newstext.insertBefore(span, childNode.nextElementSibling);
-						childNode.parentNode.removeChild(childNode);
-					} else if (childNode.innerText) {
-						childNode.classList.add("googleTranslate_03");
-					}
-				}
-			}
+            var newstext = newstable.children[2];
+            var newstextChildNodes = newstext.childNodes;
+            for (const i in newstextChildNodes) {
+                if (Object.hasOwnProperty.call(newstextChildNodes, i)) {
+                    const childNode = newstextChildNodes[i];
+                    if (childNode.nodeName == "#text") {
+                        var span = document.createElement("span");
+                        span.innerText = childNode.data;
+                        span.classList.add("googleTranslate_03");
+                        newstext.insertBefore(span, childNode.nextElementSibling);
+                        childNode.parentNode.removeChild(childNode);
+                    } else if (childNode.innerText) {
+                        childNode.classList.add("googleTranslate_03");
+                    }
+                }
+            }
 
-			var newslink = newstable.children[3];
-			if (newslink.children.length > 0) {
-				var newslinkA = newslink.children[0];
-				if (newslinkA.innerText) {
-					newslinkA.classList.add("googleTranslate_03");
-				}
-			}
-		}
-	}
+            var newslink = newstable.children[3];
+            if (newslink.children.length > 0) {
+                var newslinkA = newslink.children[0];
+                if (newslinkA.innerText) {
+                    newslinkA.classList.add("googleTranslate_03");
+                }
+            }
+        }
+    }
 
-	var rightLastDiv = document.getElementsByClassName("nwo")[2].lastChild;
-	if (rightLastDiv.children.length > 0) {
-		var a = rightLastDiv.children[0];
-		if (a.innerText) {
-			a.classList.add("googleTranslate_03");
-		}
-	}
+    var rightLastDiv = document.getElementsByClassName("nwo")[2].lastChild;
+    if (rightLastDiv.children.length > 0) {
+        var a = rightLastDiv.children[0];
+        if (a.innerText) {
+            a.classList.add("googleTranslate_03");
+        }
+    }
 
-	newsPageTranslateIsReady = true;
+    newsPageTranslateIsReady = true;
 }
 
 // 翻译：新闻标题
 function newsPageTranslateNewsTitle(isChecked) {
-	var nd = document.getElementsByClassName("nd");
-	var h2s = nd[0].querySelectorAll("h2");
-	var newstitles = document.getElementsByClassName("newstitle");
-	if (isChecked) {
-		for (const i in h2s) {
-			if (Object.hasOwnProperty.call(h2s, i)) {
-				const h2 = h2s[i];
-				var a = h2.children[0];
-				if (a.dataset.translate) {
-					a.innerText = a.dataset.translate;
-				} else {
-					a.classList.add("googleTranslate_00");
-					a.title = a.innerText;
-					if (newPagesTitles[a.innerText]) {
-						a.innerText = newPagesTitles[a.innerText];
-					} else {
-						translatePageElementEN(a);
-					}
-				}
-			}
-		}
+    var nd = document.getElementsByClassName("nd");
+    var h2s = nd[0].querySelectorAll("h2");
+    var newstitles = document.getElementsByClassName("newstitle");
+    if (isChecked) {
+        for (const i in h2s) {
+            if (Object.hasOwnProperty.call(h2s, i)) {
+                const h2 = h2s[i];
+                var a = h2.children[0];
+                if (a.dataset.translate) {
+                    a.innerText = a.dataset.translate;
+                } else {
+                    a.classList.add("googleTranslate_00");
+                    a.title = a.innerText;
+                    if (newPagesTitles[a.innerText]) {
+                        a.innerText = newPagesTitles[a.innerText];
+                    } else {
+                        translatePageElementEN(a);
+                    }
+                }
+            }
+        }
 
-		for (const i in newstitles) {
-			if (Object.hasOwnProperty.call(newstitles, i)) {
-				const newstitle = newstitles[i];
-				var a = newstitle.children[0];
-				if (a.dataset.translate) {
-					a.innerText = a.dataset.translate;
-				} else {
-					a.classList.add("googleTranslate_00");
-					a.title = a.innerText;
-					if (newPagesTitles[a.innerText]) {
-						a.innerText = newPagesTitles[a.innerText];
-					} else {
-						translatePageElementEN(a);
-					}
-				}
-			}
-		}
-	} else {
-		var googleTranslates = document.getElementsByClassName("googleTranslate_00");
-		for (const i in googleTranslates) {
-			if (Object.hasOwnProperty.call(googleTranslates, i)) {
-				const trans = googleTranslates[i];
-				if (!trans.dataset.translate) {
-					trans.dataset.translate = trans.innerText;
-				}
-				trans.innerText = trans.title;
-			}
-		}
-	}
+        for (const i in newstitles) {
+            if (Object.hasOwnProperty.call(newstitles, i)) {
+                const newstitle = newstitles[i];
+                var a = newstitle.children[0];
+                if (a.dataset.translate) {
+                    a.innerText = a.dataset.translate;
+                } else {
+                    a.classList.add("googleTranslate_00");
+                    a.title = a.innerText;
+                    if (newPagesTitles[a.innerText]) {
+                        a.innerText = newPagesTitles[a.innerText];
+                    } else {
+                        translatePageElementEN(a);
+                    }
+                }
+            }
+        }
+    } else {
+        var googleTranslates = document.getElementsByClassName("googleTranslate_00");
+        for (const i in googleTranslates) {
+            if (Object.hasOwnProperty.call(googleTranslates, i)) {
+                const trans = googleTranslates[i];
+                if (!trans.dataset.translate) {
+                    trans.dataset.translate = trans.innerText;
+                }
+                trans.innerText = trans.title;
+            }
+        }
+    }
 
 }
 
 // 翻译：最新网站状态
 function newsPageTranslateSiteStatus(isChecked) {
-	var nwo = document.getElementsByClassName("nwo")[0];
-	var nwis = nwo.querySelectorAll("div.nwi");
-	var nwf = document.getElementsByClassName("nwf")[0];
-	if (isChecked) {
-		for (const i in nwis) {
-			if (Object.hasOwnProperty.call(nwis, i)) {
-				const nwi = nwis[i];
-				var tds = nwi.querySelectorAll("td");
-				for (const t in tds) {
-					if (Object.hasOwnProperty.call(tds, t)) {
-						const td = tds[t];
-						if (td.innerText) {
-							if (td.dataset.translate) {
-								td.innerText = td.dataset.translate;
-							} else {
-								td.classList.add("googleTranslate_01");
-								td.title = td.innerText;
-								translatePageElementEN(td);
-							}
-						}
-					}
-				}
-			}
-		}
-		var zh_html = `你可以在 <a href="https://twitter.com/ehentai">推特上关注我们</a> 以便在网站不可用时获取网站状态信息。 `;
-		nwf.innerHTML = zh_html;
-	} else {
-		var googleTranslates = document.getElementsByClassName("googleTranslate_01");
-		for (const i in googleTranslates) {
-			if (Object.hasOwnProperty.call(googleTranslates, i)) {
-				const trans = googleTranslates[i];
-				if (!trans.dataset.translate) {
-					trans.dataset.translate = trans.innerText;
-				}
-				trans.innerText = trans.title;
-			}
-		}
-		var en_html = `You can follow <a href="https://twitter.com/ehentai">follow us on Twitter</a> to receive these site status updates if the site is ever unavailable. `;
-		nwf.innerHTML = en_html;
-	}
+    var nwo = document.getElementsByClassName("nwo")[0];
+    var nwis = nwo.querySelectorAll("div.nwi");
+    var nwf = document.getElementsByClassName("nwf")[0];
+    if (isChecked) {
+        for (const i in nwis) {
+            if (Object.hasOwnProperty.call(nwis, i)) {
+                const nwi = nwis[i];
+                var tds = nwi.querySelectorAll("td");
+                for (const t in tds) {
+                    if (Object.hasOwnProperty.call(tds, t)) {
+                        const td = tds[t];
+                        if (td.innerText) {
+                            if (td.dataset.translate) {
+                                td.innerText = td.dataset.translate;
+                            } else {
+                                td.classList.add("googleTranslate_01");
+                                td.title = td.innerText;
+                                translatePageElementEN(td);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        var zh_html = `你可以在 <a href="https://twitter.com/ehentai">推特上关注我们</a> 以便在网站不可用时获取网站状态信息。 `;
+        nwf.innerHTML = zh_html;
+    } else {
+        var googleTranslates = document.getElementsByClassName("googleTranslate_01");
+        for (const i in googleTranslates) {
+            if (Object.hasOwnProperty.call(googleTranslates, i)) {
+                const trans = googleTranslates[i];
+                if (!trans.dataset.translate) {
+                    trans.dataset.translate = trans.innerText;
+                }
+                trans.innerText = trans.title;
+            }
+        }
+        var en_html = `You can follow <a href="https://twitter.com/ehentai">follow us on Twitter</a> to receive these site status updates if the site is ever unavailable. `;
+        nwf.innerHTML = en_html;
+    }
 }
 
 // 翻译：网站更新日志
 function newsPageSiteUpdateLog(isChecked) {
-	newsPagesTranslateCommon("googleTranslate_02", isChecked);
-	var nwuFirstSpan = document.getElementById("googleTranslate_02_span");
-	if (isChecked) {
-		if (nwuFirstSpan.innerText) {
-			if (nwuFirstSpan.innerText.indexOf("Previous Years:") != -1) {
-				nwuFirstSpan.title = nwuFirstSpan.innerText;
-				nwuFirstSpan.innerText = "往年记录：";
-			} else if (nwuFirstSpan.dataset.translate) {
-				nwuFirstSpan.innerText = nwuFirstSpan.dataset.translate;
-			} else {
-				nwuFirstSpan.title = nwuFirstSpan.innerText;
-				translatePageElementEN(nwuFirstSpan);
-			}
-		}
-	} else {
-		if (!nwuFirstSpan.dataset.translate) {
-			nwuFirstSpan.dataset.translate = nwuFirstSpan.innerText;
-		}
-		nwuFirstSpan.innerText = nwuFirstSpan.title;
-	}
+    newsPagesTranslateCommon("googleTranslate_02", isChecked);
+    var nwuFirstSpan = document.getElementById("googleTranslate_02_span");
+    if (isChecked) {
+        if (nwuFirstSpan.innerText) {
+            if (nwuFirstSpan.innerText.indexOf("Previous Years:") != -1) {
+                nwuFirstSpan.title = nwuFirstSpan.innerText;
+                nwuFirstSpan.innerText = "往年记录：";
+            } else if (nwuFirstSpan.dataset.translate) {
+                nwuFirstSpan.innerText = nwuFirstSpan.dataset.translate;
+            } else {
+                nwuFirstSpan.title = nwuFirstSpan.innerText;
+                translatePageElementEN(nwuFirstSpan);
+            }
+        }
+    } else {
+        if (!nwuFirstSpan.dataset.translate) {
+            nwuFirstSpan.dataset.translate = nwuFirstSpan.innerText;
+        }
+        nwuFirstSpan.innerText = nwuFirstSpan.title;
+    }
 }
 
 // 翻译：右边新闻
 function newsPagesTranslateRightNews(isChecked) {
-	newsPagesTranslateCommon("googleTranslate_03", isChecked);
+    newsPagesTranslateCommon("googleTranslate_03", isChecked);
 }
 
 
 function newsPagesTranslateCommon(className, isChecked) {
-	var googleTranslates = document.getElementsByClassName(className);
-	if (isChecked) {
-		for (const i in googleTranslates) {
-			if (Object.hasOwnProperty.call(googleTranslates, i)) {
-				const trans = googleTranslates[i];
-				if (trans.innerText) {
-					if (trans.dataset.translate) {
-						trans.innerText = trans.dataset.translate;
-					} else {
-						trans.classList.add(className);
-						trans.title = trans.innerText;
-						translatePageElementEN(trans);
-					}
-				}
-			}
-		}
-	} else {
-		for (const i in googleTranslates) {
-			if (Object.hasOwnProperty.call(googleTranslates, i)) {
-				const trans = googleTranslates[i];
-				if (!trans.dataset.translate) {
-					trans.dataset.translate = trans.innerText;
-				}
-				trans.innerText = trans.title;
-			}
-		}
-	}
+    var googleTranslates = document.getElementsByClassName(className);
+    if (isChecked) {
+        for (const i in googleTranslates) {
+            if (Object.hasOwnProperty.call(googleTranslates, i)) {
+                const trans = googleTranslates[i];
+                if (trans.innerText) {
+                    if (trans.dataset.translate) {
+                        trans.innerText = trans.dataset.translate;
+                    } else {
+                        trans.classList.add(className);
+                        trans.title = trans.innerText;
+                        translatePageElementEN(trans);
+                    }
+                }
+            }
+        }
+    } else {
+        for (const i in googleTranslates) {
+            if (Object.hasOwnProperty.call(googleTranslates, i)) {
+                const trans = googleTranslates[i];
+                if (!trans.dataset.translate) {
+                    trans.dataset.translate = trans.innerText;
+                }
+                trans.innerText = trans.title;
+            }
+        }
+    }
 }
 
 
 
 //#endregion
+
 
 //#region step7.8.uconfigPage.js 设置页面
 
@@ -9387,6 +9384,151 @@ function uconfigPageReWrapperForm(contentForm) {
 
 //#endregion
 
+//#region step7.9.tosPage.js 帮助页面
+
+function tosPage() {
+    // 跨域
+    crossDomain();
+
+    // 添加样式方便调整页面样式
+    var stuffbox = document.querySelector("div.stuffbox");
+    stuffbox.classList.add("t_tosPage_stuffbox");
+
+    // 添加谷歌翻译按钮，翻译全文
+    var translateDiv = document.createElement("div");
+    translateDiv.id = "googleTranslateDiv";
+    translateDiv.style.display = "none";
+    var translateCheckbox = document.createElement("input");
+    translateCheckbox.setAttribute("type", "checkbox");
+    translateCheckbox.id = "googleTranslateCheckbox";
+    var translateLabel = document.createElement("label");
+    translateLabel.setAttribute("for", translateCheckbox.id);
+    translateLabel.id = "translateLabel";
+    translateLabel.innerText = "谷歌机翻";
+
+    translateDiv.appendChild(translateCheckbox);
+    translateDiv.appendChild(translateLabel);
+
+    translateCheckbox.addEventListener("click", tosPageTranslate);
+    stuffbox.insertBefore(translateDiv, stuffbox.children[0]);
+
+
+    indexDbInit(() => {
+        // 读取新闻页面翻译
+        read(table_Settings, table_Settings_key_TosPageTranslate, result => {
+            translateDiv.style.display = "block";
+            if (result && result.value) {
+                translateCheckbox.setAttribute("checked", true);
+                tosPageTranslateDisplay();
+            }
+            translateDiv.style.display = "block";
+        }, () => {
+            translateDiv.style.display = "block";
+        });
+    });
+
+    // 数据同步
+    window.onstorage = function (e) {
+        try {
+            console.log(e);
+            switch (e.newValue) {
+                case sync_googleTranslate_tosPage:
+                    tosPageTranslateSync();
+                    break;
+            }
+        } catch (error) {
+            removeDbSyncMessage();
+        }
+    }
+}
+
+function tosPageTranslateSync() {
+    indexDbInit(() => {
+        read(table_Settings, table_Settings_key_TosPageTranslate, result => {
+            var translateCheckbox = document.getElementById("googleTranslateCheckbox");
+            translateCheckbox.checked = result && result.value;
+            tosPageTranslateDisplay();
+        }, () => { });
+    });
+}
+
+function tosPageTranslate() {
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+
+    // 更新存储
+    var settings_tosPageTranslate = {
+        item: table_Settings_key_TosPageTranslate,
+        value: isChecked
+    };
+    update(table_Settings, settings_tosPageTranslate, () => {
+        // 通知，翻译全文
+        setDbSyncMessage(sync_googleTranslate_tosPage);
+        tosPageTranslateDisplay();
+    }, () => { });
+}
+
+function tosPageTranslateDisplay() {
+    var stuffbox = document.querySelector("div.stuffbox");
+    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+    if (isChecked) {
+        recursionTosPageTranslate(stuffbox);
+    } else {
+        recursionTosPageOriginEn(stuffbox);
+    }
+
+}
+
+function recursionTosPageTranslate(element) {
+    if (element.id == "googleTranslateDiv") return;
+    var elementChildNodes = element.childNodes;
+    for (const i in elementChildNodes) {
+        if (Object.hasOwnProperty.call(elementChildNodes, i)) {
+            const child = elementChildNodes[i];
+            if (child.nodeName == "#text" && child.data) {
+                var trimData = trimEnd(child.data);
+                if (trimData.replace(/[\r\n]/g, "") != "") {
+                    var span = document.createElement("span");
+                    span.innerText = trimData;
+                    child.parentNode.insertBefore(span, child);
+                }
+                child.parentNode.removeChild(child);
+            }
+        }
+    }
+
+    for (let i = 0; i < element.children.length; i++) {
+        const child = element.children[i];
+        if (child.children.length > 0) {
+            recursionTosPageTranslate(child);
+        } else if (child.dataset.translate_zh) {
+            child.innerText = child.dataset.translate_zh;
+        } else if (child.innerText) {
+            child.title = child.innerText;
+            // 谷歌机翻
+            translatePageElementFunc(child, true, () => {
+                child.dataset.translate_zh = child.innerText;
+            });
+        }
+    }
+}
+
+function recursionTosPageOriginEn(element) {
+    if (element.id == "googleTranslateDiv") return;
+    for (let i = 0; i < element.children.length; i++) {
+        const child = element.children[i];
+        if (child.children.length > 0) {
+            recursionTosPageOriginEn(child);
+        } else if (child.title) {
+            child.innerText = child.title;
+        }
+    }
+}
+
+
+//#endregion
+
+
+
 //#region step8.1.eventpane.js hentaivase 弹框
 
 function hentaiVaseDialog() {
@@ -9460,10 +9602,6 @@ function recursionTranslate(element) {
 //TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
 //TODO 首页显示已收藏的标签
 //TODO 首页背景
-
-//DONE 插件背景图片，有损压缩，保存快速替换
-//DONE EH 打怪兽弹窗文字翻译，添加关闭按钮
-//DONE 修复了收藏页面候选框露底的bug
 
 
 //#region main.js 主方法
@@ -9557,6 +9695,7 @@ else {
 			case '/lofi/':					// 低保真版
 				break;
 			case '/tos.php':				// 服务条款页面
+				tosPage();
 				break;
 		}
 	}

@@ -32,20 +32,9 @@ function translateMainPageTitleDisplay() {
 					// 需要翻译
 					div.title = div.innerText;
 
-					var encodeText = urlEncode(div.innerText);
 					// 单条翻译
-					getGoogleTranslate(encodeText, function (data) {
-						var sentences = data.sentences;
-						var longtext = '';
-						for (const i in sentences) {
-							if (Object.hasOwnProperty.call(sentences, i)) {
-								const sentence = sentences[i];
-								longtext += sentence.trans;
-							}
-						}
-
-						div.innerText = longtext;
-						div.dataset.translate = longtext;
+					translatePageElementFunc(div, true, () => {
+						div.dataset.translate = div.innerText;
 					});
 				}
 			}
@@ -341,16 +330,7 @@ function mainPageTranslate() {
 		// 没有搜索到记录
 		var iw = document.getElementById("iw");
 		if (iw) {
-			getGoogleTranslate(iw.innerText, function (data) {
-				var sentences = data.sentences;
-				var longtext = '';
-				for (const i in sentences) {
-					if (Object.hasOwnProperty.call(sentences, i)) {
-						const sentence = sentences[i];
-						longtext += sentence.trans;
-					}
-				}
-				iw.innerText = longtext;
+			translatePageElementFunc(iw, false, () => {
 				func_eh_ex(() => { }, () => {
 					var myTag = document.createElement("a");
 					myTag.href = "https://exhentai.org/mytags";

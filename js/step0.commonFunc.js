@@ -112,6 +112,22 @@ function translatePageElement(element) {
     });
 }
 
+function translatePageElementFunc(element, isNeedUrlEncode, func_compelete) {
+    var innerText = isNeedUrlEncode ? urlEncode(element.innerText) : element.innerText;
+    getGoogleTranslate(innerText, function (data) {
+        var sentences = data.sentences;
+        var longtext = '';
+        for (const i in sentences) {
+            if (Object.hasOwnProperty.call(sentences, i)) {
+                const sentence = sentences[i];
+                longtext += sentence.trans;
+            }
+        }
+        element.innerText = longtext;
+        func_compelete();
+    });
+}
+
 function getGoogleTranslateEN(text, func) {
     var httpRequest = new XMLHttpRequest();
     var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;

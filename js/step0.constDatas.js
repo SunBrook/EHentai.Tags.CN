@@ -184,6 +184,7 @@ const table_Settings_Key_FrontPageFontSubHoverColor = "f_frontPageFontSubHoverCo
 const table_Settings_key_NewsPageTopImageVisible = "f_newsPageTopImageVisible";
 const table_Settings_key_NewsPageTranslate = "f_newsPageTranslate";
 const table_Settings_key_FrontPageSearchMode = "f_frontPageSearchMode";
+const table_Settings_key_TosPageTranslate = "f_tosPageTranslate";
 
 // fetishList 全部类别 - 父子信息表
 const table_fetishListSubItems = "t_fetishListSubItems";
@@ -223,6 +224,7 @@ const sync_googleTranslate_torrentDetailInfo_command = "syncGoogleTranslateTorre
 const sync_newsPage_topImage_visible = "syncNewsPageTopImageVisible";
 const sync_googleTranslate_newsPage_news = "syncGoogleTranslateNewsPageNews";
 const sync_frontPageSearchMode = "syncFrontPageSearchMode";
+const sync_googleTranslate_tosPage = "syncGoogleTranslateTosPage";
 
 //#endregion
 

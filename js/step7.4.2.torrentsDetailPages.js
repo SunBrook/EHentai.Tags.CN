@@ -126,19 +126,8 @@ function translateTorrentDetailInfoCommandDisplay() {
         } else {
             // 需要翻译
             commandP.title = commandP.innerText;
-            var encodeText = urlEncode(commandP.innerText);
-            getGoogleTranslate(encodeText, function (data) {
-                var sentences = data.sentences;
-                var longtext = '';
-                for (const i in sentences) {
-                    if (Object.hasOwnProperty.call(sentences, i)) {
-                        const sentence = sentences[i];
-                        longtext += sentence.trans;
-                    }
-                }
-
-                commandP.innerText = longtext;
-                commandP.dataset.translate = longtext;
+            translatePageElementFunc(commandP, true, () => {
+                commandP.dataset.translate = commandP.innerText;
             });
         }
     } else {

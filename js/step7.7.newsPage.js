@@ -215,7 +215,7 @@ function newsPageNewsTranslate() {
         value: isChecked
     };
     update(table_Settings, settings_newsPageTranslate, () => {
-        // 通知通知，翻译标题
+        // 通知，翻译新闻内容
         setDbSyncMessage(sync_googleTranslate_newsPage_news);
         newsPageNewsTranslateDisplay();
     }, () => { });
