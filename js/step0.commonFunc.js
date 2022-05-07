@@ -221,7 +221,7 @@ function slideLeft(element, speed, func) {
             func();
             clearInterval(slideTimer2);
         }
-    })
+    }, speed);
 }
 
 

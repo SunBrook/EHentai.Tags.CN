@@ -7,7 +7,9 @@ function detailDataUpdate() {
     var dataUpdateText = document.createTextNode("词库升级中...");
     dataUpdateDiv.appendChild(dataUpdateText);
     var gd2Div = document.getElementById("gd2");
-    gd2Div.appendChild(dataUpdateDiv);
+    if (gd2Div) {
+        gd2Div.appendChild(dataUpdateDiv);
+    }
 }
 
 // 详情页翻译
@@ -370,7 +372,7 @@ function detailReadPage() {
     if (downloadLink) {
         downloadLink.innerText = downloadLink.innerText.replace("Download original", "下载原图").replace("source", "");
     }
-    
+
     // 重新修改点击事件
     var sns = document.getElementsByClassName("sn");
     for (const i in sns) {
@@ -497,6 +499,59 @@ function apply_json_state_copy(a) {
     xres = parseInt(a.x);
     yres = parseInt(a.y);
     update_window_extents()
+}
+
+// 作品详情页面，可能会弹出不适合所有人查看的作品警告，如果出现则翻译谷歌翻译文本，且跳过页面后续的执行操作
+function checkBooksWarning() {
+    var gm = document.querySelector("div.gm");
+    if (!gm) {
+        var nb = document.getElementById("nb");
+        var warnDiv = nb.nextElementSibling;
+        if (warnDiv) {
+            // 跨域
+            crossDomain();
+
+            // 翻译警告信息
+            recursionDetailPageWarnTranslate(warnDiv);
+        }
+
+        return true; // 警告页面
+    }
+
+    return false; // 无警告
+}
+
+function recursionDetailPageWarnTranslate(element) {
+    var elementChildNodes = element.childNodes;
+    for (const i in elementChildNodes) {
+        if (Object.hasOwnProperty.call(elementChildNodes, i)) {
+            const child = elementChildNodes[i];
+            if (child.nodeName == "#text" && child.data) {
+                var trimData = trimEnd(child.data);
+                if (trimData.replace(/[\r\n]/g, "") != "") {
+                    var span = document.createElement("span");
+                    span.innerText = trimData;
+                    child.parentNode.insertBefore(span, child);
+                }
+                child.parentNode.removeChild(child);
+            }
+        }
+    }
+
+    for (let i = 0; i < element.children.length; i++) {
+        const child = element.children[i];
+        if (child.children.length > 0) {
+            recursionDetailPageWarnTranslate(child);
+        } else if (child.innerText) {
+            child.title = child.innerText;
+            if (detailPage_warnContentDict[child.innerText]) {
+                child.innerText = detailPage_warnContentDict[child.innerText];
+            } else {
+                // 谷歌机翻
+                translatePageElement(child);
+            }
+        }
+    }
 }
 
 //#endregion

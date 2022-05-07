@@ -245,7 +245,7 @@ function slideLeft(element, speed, func) {
             func();
             clearInterval(slideTimer2);
         }
-    })
+    }, speed);
 }
 
 
@@ -329,7 +329,6 @@ function trimEnd(str) {
 }
 
 //#endregion
-
 
 //#region step0.constDatas.js 数据字典
 
@@ -949,7 +948,19 @@ const lowImgSizeLimit = 512000; // 500kb
 
 //#endregion
 
+//#region 详情页面警告提示信息
+
+const detailPage_warnContentDict = {
+	"Content Warning": "内容警告",
+	"View Gallery": "查看图库",
+	"Get Me Outta Here": "让我离开这里",
+	"Never Warn Me Again": "永远不要再警告我"
+}
+
 //#endregion
+
+//#endregion
+
 
 //#region step0.localstorage.js localstorage 数据方法，迁入 indexdb，如无特殊需要，删除之前存储的数据
 
@@ -5685,504 +5696,560 @@ function frontPageHtml() {
 
 // 头部添加词库更新提示
 function detailDataUpdate() {
-    var dataUpdateDiv = document.createElement("div");
-    dataUpdateDiv.id = "data_update_tip";
-    var dataUpdateText = document.createTextNode("词库升级中...");
-    dataUpdateDiv.appendChild(dataUpdateText);
-    var gd2Div = document.getElementById("gd2");
-    gd2Div.appendChild(dataUpdateDiv);
+	var dataUpdateDiv = document.createElement("div");
+	dataUpdateDiv.id = "data_update_tip";
+	var dataUpdateText = document.createTextNode("词库升级中...");
+	dataUpdateDiv.appendChild(dataUpdateText);
+	var gd2Div = document.getElementById("gd2");
+	if (gd2Div) {
+		gd2Div.appendChild(dataUpdateDiv);
+	}
 }
 
 // 详情页翻译
 function detailPageTranslate() {
 
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    //#region 左侧作品详情
+	//#region 左侧作品详情
 
-    // 类型
-    var bookType = document.getElementsByClassName("cs");
-    if (bookType.length > 0) {
-        bookType[0].innerText = bookTypeData[bookType[0].innerText] ?? bookType[0].innerText;
-    }
+	// 类型
+	var bookType = document.getElementsByClassName("cs");
+	if (bookType.length > 0) {
+		bookType[0].innerText = bookTypeData[bookType[0].innerText] ?? bookType[0].innerText;
+	}
 
-    // 上传人员
-    var uploder = document.getElementById("gdn");
-    if (uploder) {
-        var up = uploder.innerHTML;
-        var newInnerHtml = `由 ${up} 上传`;
-        uploder.innerHTML = newInnerHtml;
-    }
-
-
-    var gddDiv = document.getElementById("gdd");
-    var trList = gddDiv.querySelectorAll("tr");
-
-    // 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
-    var spanElement = document.createElement("span");
-    spanElement.style.display = "none";
-    var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
-    spanElement.appendChild(spanTxt);
-    gddDiv.appendChild(spanElement);
-
-    // 上传时间
-    trList[0].firstChild.innerText = "上传:";
-
-    // 父级
-    trList[1].firstChild.innerText = "父级:";
-    if (trList[1].lastChild.innerText == "None") {
-        trList[1].lastChild.innerText = "无";
-    }
-
-    // 是否可见
-    trList[2].firstChild.innerText = "可见:";
-    trList[2].lastChild.innerText = trList[2].lastChild.innerText == "Yes" ? "是" : "否";
-
-    // 语言
-    trList[3].firstChild.innerText = "语言:";
-
-    // 文件大小
-    trList[4].firstChild.innerText = "大小:";
-
-    // 篇幅
-    trList[5].firstChild.innerText = "篇幅:";
-    trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
-
-    // 收藏
-    trList[6].firstChild.innerText = "收藏:";
-    var favoriteText = trList[6].lastChild.innerText;
-    if (favoriteText == "None") {
-        trList[6].lastChild.innerText = "0 次";
-    }
-    else if (favoriteText == "Once") {
-        trList[6].lastChild.innerText = "1 次";
-    }
-    else {
-        trList[6].lastChild.innerText = favoriteText.replace("times", "次");
-    }
-
-    // 评分
-    var trRateList = document.getElementById("gdr").querySelectorAll("tr");
-    trRateList[0].firstChild.innerText = "评分:";
-    trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
-
-    // 添加到收藏(Ex 账号)
-    document.getElementById("favoritelink").innerText = "收藏此作品";
-
-    //#endregion
-
-    // 文本框提示
-    document.getElementById("newtagfield").placeholder = "添加新标签，用逗号分隔";
-    document.getElementById("newtagbutton").value = "添加";
-
-    // 右侧五个菜单
-    var gd5a = document.getElementById("gd5").querySelectorAll("a");
-    for (const i in gd5a) {
-        if (Object.hasOwnProperty.call(gd5a, i)) {
-            const a = gd5a[i];
-            if (a.innerText.indexOf("Torrent Download") != -1) {
-                a.innerText = a.innerText.replace("Torrent Download", "种子下载");
-            } else {
-                a.innerText = gd5aDict[a.innerText] ?? a.innerText;
-            }
-        }
-    }
-
-    // 展示数量
-    var gpc = document.getElementsByClassName("gpc")[0];
-    gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
-
-    // 展示行数
-    var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
-    for (const i in gdo2) {
-        if (Object.hasOwnProperty.call(gdo2, i)) {
-            const div = gdo2[i];
-            div.innerText = div.innerText.replace("rows", "行");
-        }
-    }
-
-    // 图片尺寸
-    var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
-    gdo4[0].innerText = "小图";
-    gdo4[1].innerText = "大图";
+	// 上传人员
+	var uploder = document.getElementById("gdn");
+	if (uploder) {
+		var up = uploder.innerHTML;
+		var newInnerHtml = `由 ${up} 上传`;
+		uploder.innerHTML = newInnerHtml;
+	}
 
 
-    // 评论翻译
-    var cdiv = document.getElementById("cdiv");
-    var c1s = cdiv.querySelectorAll("div.c1");
+	var gddDiv = document.getElementById("gdd");
+	var trList = gddDiv.querySelectorAll("tr");
 
-    // 添加样式类，方便修改样式
-    cdiv.classList.add("t_detail_comment");
+	// 添加隐藏的 文件大小 和 篇幅长度，有其他作者的下载图片脚本需要获取
+	var spanElement = document.createElement("span");
+	spanElement.style.display = "none";
+	var spanTxt = document.createTextNode(`File Size: ${trList[4].lastChild.innerText} Length: ${trList[5].lastChild.innerText}`);
+	spanElement.appendChild(spanTxt);
+	gddDiv.appendChild(spanElement);
 
-    for (const i in c1s) {
-        if (Object.hasOwnProperty.call(c1s, i)) {
-            const c1 = c1s[i];
+	// 上传时间
+	trList[0].firstChild.innerText = "上传:";
 
-            var c2 = c1.children[0];
+	// 父级
+	trList[1].firstChild.innerText = "父级:";
+	if (trList[1].lastChild.innerText == "None") {
+		trList[1].lastChild.innerText = "无";
+	}
 
-            // Posted on 04 May 2022, 11:21 by:   
-            var c3 = c2.querySelector("div.c3");
-            var postTime = trimEnd(c3.childNodes[0].data.replace("Posted on ", "").replace("by:", ""));
-            var postTimeArray = postTime.split(",");
-            c3.childNodes[0].data = `评论时间：${transDate(postTimeArray[0])}${postTimeArray[1]} ， 评论者：`;
+	// 是否可见
+	trList[2].firstChild.innerText = "可见:";
+	trList[2].lastChild.innerText = trList[2].lastChild.innerText == "Yes" ? "是" : "否";
 
-            // EH 私信
-            if (webHost == "e-hentai.org") {
-                var pmImg = c3.children[1].children[0];
-                pmImg.title = "发私信";
-            }
+	// 语言
+	trList[3].firstChild.innerText = "语言:";
 
-            // 根据 c6 添加翻译功能
-            var translateSpan = document.createElement("span");
-            translateSpan.classList.add("comment_span");
-            translateSpan.id = "googleTranslateSpan_" + i;
-            var translateCheckbox = document.createElement("input");
-            translateCheckbox.setAttribute("type", "checkbox");
-            translateCheckbox.id = "googleTranslateCheckbox_" + i;
-            translateCheckbox.dataset.translate_id = c1.querySelector("div.c6").id;
-            var translateLabel = document.createElement("label");
-            translateLabel.setAttribute("for", translateCheckbox.id);
-            translateLabel.id = "translateLabel" + i;
-            translateLabel.innerText = "翻译";
+	// 文件大小
+	trList[4].firstChild.innerText = "大小:";
 
-            translateSpan.appendChild(translateCheckbox);
-            translateSpan.appendChild(translateLabel);
-            c3.parentNode.insertBefore(translateSpan, c3);
+	// 篇幅
+	trList[5].firstChild.innerText = "篇幅:";
+	trList[5].lastChild.innerText = trList[5].lastChild.innerText.replace("pages", "页");
 
-            translateCheckbox.onclick = function (e) {
-                var c6 = document.getElementById(e.target.dataset.translate_id);
-                if (e.target.checked) {
-                    // 选中事件
-                    if (c6.dataset.trans_en) {
-                        // 翻译过，直接替换
-                        c6.innerText = c6.dataset.trans_en;
-                    } else {
-                        // 谷歌翻译
-                        c6.title = c6.innerText;
-                        c6.dataset.origin_html = c6.innerHTML;
-                        var c6ChildNodes = c6.childNodes;
-                        for (const i in c6ChildNodes) {
-                            if (Object.hasOwnProperty.call(c6ChildNodes, i)) {
-                                const item = c6ChildNodes[i];
-                                if (item.nodeName == "#text" && item.data) {
-                                    var span = document.createElement("span");
-                                    span.innerText = item.data;
-                                    item.parentNode.insertBefore(span, item);
-                                    item.parentNode.removeChild(item);
-                                    translatePageElement(span);
-                                } else if (item.innerText) {
-                                    translatePageElement(item);
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    // 取消选中事件
-                    if (c6.dataset.origin_html) {
-                        c6.innerHTML = c6.dataset.origin_html;
-                    }
-                }
-            }
+	// 收藏
+	trList[6].firstChild.innerText = "收藏:";
+	var favoriteText = trList[6].lastChild.innerText;
+	if (favoriteText == "None") {
+		trList[6].lastChild.innerText = "0 次";
+	}
+	else if (favoriteText == "Once") {
+		trList[6].lastChild.innerText = "1 次";
+	}
+	else {
+		trList[6].lastChild.innerText = favoriteText.replace("times", "次");
+	}
 
-            // [Vote+] [Vote-]
-            var c4 = c2.querySelector("div.c4");
-            if (c4) {
-                if (c4.childNodes.length == 2 && c4.childNodes[1].data == "Uploader Comment") {
-                    c4.childNodes[1].data = "上传者的评论";
-                } else {
+	// 评分
+	var trRateList = document.getElementById("gdr").querySelectorAll("tr");
+	trRateList[0].firstChild.innerText = "评分:";
+	trRateList[1].firstChild.innerText = trRateList[1].firstChild.innerText.replace("Average", "平均分");
 
-                    if (c4.childNodes.length == 3) {
-                        // 编辑
-                        c4.children[0].innerText = " 编辑 ";
-                        var c6Id = c1.querySelector("div.c6").id.replace("comment_", "");
-                        c4.children[0].onclick = function () {
-                            edit_comment_copy(c6Id);
-                            return false;
-                        }
-                    } else {
-                        // 点赞
-                        var leftBracket = c4.childNodes[0];
-                        leftBracket.data = "\xa0";
-                        var middleBracket = c4.childNodes[2];
-                        middleBracket.data = "\xa0\xa0";
-                        var rightBracket = c4.childNodes[4];
-                        rightBracket.data = "\xa0";
+	// 添加到收藏(Ex 账号)
+	document.getElementById("favoritelink").innerText = "收藏此作品";
 
-                        var like = c4.children[0];
-                        like.innerText = "[ 👍 ]";
-                        like.title = "点赞";
-                        var dislike = c4.children[1];
-                        dislike.innerText = "[ 👎 ]";
-                        dislike.title = "点踩";
-                    }
-                }
-            }
+	//#endregion
 
-            // Score +10
-            var c5 = c2.querySelector("div.c5");
-            if (c5) {
-                c5.childNodes[0].data = "得分 \xa0";
-            }
+	// 文本框提示
+	document.getElementById("newtagfield").placeholder = "添加新标签，用逗号分隔";
+	document.getElementById("newtagbutton").value = "添加";
 
-            // Last edited on 04 May 2022, 16:41.
-            var c8 = c1.querySelector("div.c8");
-            if (c8) {
-                c8.childNodes[0].data = "最后编辑时间：";
-                var strong = c8.children[0];
-                var modifyTimeArray = strong.innerText.split(",");
-                strong.innerText = `${transDate(modifyTimeArray[0])}${modifyTimeArray[1]}`;
-            }
+	// 右侧五个菜单
+	var gd5a = document.getElementById("gd5").querySelectorAll("a");
+	for (const i in gd5a) {
+		if (Object.hasOwnProperty.call(gd5a, i)) {
+			const a = gd5a[i];
+			if (a.innerText.indexOf("Torrent Download") != -1) {
+				a.innerText = a.innerText.replace("Torrent Download", "种子下载");
+			} else {
+				a.innerText = gd5aDict[a.innerText] ?? a.innerText;
+			}
+		}
+	}
 
-            // You did not enter a valid comment.
-            var c6 = c1.querySelector("div.c6");
-            if (c6) {
-                var pbr = c6.querySelector("p.br");
-                if (pbr) {
-                    switch (pbr.innerText) {
-                        case "You did not enter a valid comment.":
-                            pbr.innerText = "您没有输入有效的评论";
-                            break;
-                        case "Your comment is too short.":
-                            pbr.innerText = "评论写的太短了";
-                            break;
-                        default:
-                            translatePageElement(pbr);
-                            break;
-                    }
-                }
+	// 展示数量
+	var gpc = document.getElementsByClassName("gpc")[0];
+	gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
 
-                var gce = c6.querySelector("div.gce");
-                if (gce) {
-                    var submitBtn = gce.querySelector("input:last-child");
-                    submitBtn.value = "发布评论";
-                }
-            }
-        }
-    }
+	// 展示行数
+	var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
+	for (const i in gdo2) {
+		if (Object.hasOwnProperty.call(gdo2, i)) {
+			const div = gdo2[i];
+			div.innerText = div.innerText.replace("rows", "行");
+		}
+	}
 
-    var chd = document.getElementById("chd");
-    if (chd.children.length == 2) {
-        // 底部展开全部翻译
-        var p1 = chd.children[0];
-        p1.childNodes[0].data = p1.childNodes[0].data
-            .replace("There are", "还有")
-            .replace("There is", "还有")
-            .replace("more comments below the viewing threshold", "评论未显示")
-            .replace("more comment below the viewing threshold", "评论未显示");
-        // 点击显示全部
-        p1.children[0].innerText = "点击显示全部";
-    }
+	// 图片尺寸
+	var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
+	gdo4[0].innerText = "小图";
+	gdo4[1].innerText = "大图";
 
-    // 翻译评论功能
-    var postnewcomment = document.getElementById("postnewcomment");
-    postnewcomment.children[0].innerText = " 评 论 ";
-    var formDiv = document.getElementById("formdiv");
-    var mycommentInput = formDiv.querySelector("textarea");
-    mycommentInput.setAttribute("placeholder", "在此处输入您的评论，然后点击发表评论。如果最后发布的评论是您的，则此评论将附加到该帖子中。");
-    var mycommentSubmit = formDiv.querySelector("input");
-    mycommentSubmit.value = "发表评论";
+
+	// 评论翻译
+	var cdiv = document.getElementById("cdiv");
+	var c1s = cdiv.querySelectorAll("div.c1");
+
+	// 添加样式类，方便修改样式
+	cdiv.classList.add("t_detail_comment");
+
+	for (const i in c1s) {
+		if (Object.hasOwnProperty.call(c1s, i)) {
+			const c1 = c1s[i];
+
+			var c2 = c1.children[0];
+
+			// Posted on 04 May 2022, 11:21 by:   
+			var c3 = c2.querySelector("div.c3");
+			var postTime = trimEnd(c3.childNodes[0].data.replace("Posted on ", "").replace("by:", ""));
+			var postTimeArray = postTime.split(",");
+			c3.childNodes[0].data = `评论时间：${transDate(postTimeArray[0])}${postTimeArray[1]} ， 评论者：`;
+
+			// EH 私信
+			if (webHost == "e-hentai.org") {
+				var pmImg = c3.children[1].children[0];
+				pmImg.title = "发私信";
+			}
+
+			// 根据 c6 添加翻译功能
+			var translateSpan = document.createElement("span");
+			translateSpan.classList.add("comment_span");
+			translateSpan.id = "googleTranslateSpan_" + i;
+			var translateCheckbox = document.createElement("input");
+			translateCheckbox.setAttribute("type", "checkbox");
+			translateCheckbox.id = "googleTranslateCheckbox_" + i;
+			translateCheckbox.dataset.translate_id = c1.querySelector("div.c6").id;
+			var translateLabel = document.createElement("label");
+			translateLabel.setAttribute("for", translateCheckbox.id);
+			translateLabel.id = "translateLabel" + i;
+			translateLabel.innerText = "翻译";
+
+			translateSpan.appendChild(translateCheckbox);
+			translateSpan.appendChild(translateLabel);
+			c3.parentNode.insertBefore(translateSpan, c3);
+
+			translateCheckbox.onclick = function (e) {
+				var c6 = document.getElementById(e.target.dataset.translate_id);
+				if (e.target.checked) {
+					// 选中事件
+					if (c6.dataset.trans_en) {
+						// 翻译过，直接替换
+						c6.innerText = c6.dataset.trans_en;
+					} else {
+						// 谷歌翻译
+						c6.title = c6.innerText;
+						c6.dataset.origin_html = c6.innerHTML;
+						var c6ChildNodes = c6.childNodes;
+						for (const i in c6ChildNodes) {
+							if (Object.hasOwnProperty.call(c6ChildNodes, i)) {
+								const item = c6ChildNodes[i];
+								if (item.nodeName == "#text" && item.data) {
+									var span = document.createElement("span");
+									span.innerText = item.data;
+									item.parentNode.insertBefore(span, item);
+									item.parentNode.removeChild(item);
+									translatePageElement(span);
+								} else if (item.innerText) {
+									translatePageElement(item);
+								}
+							}
+						}
+					}
+				} else {
+					// 取消选中事件
+					if (c6.dataset.origin_html) {
+						c6.innerHTML = c6.dataset.origin_html;
+					}
+				}
+			}
+
+			// [Vote+] [Vote-]
+			var c4 = c2.querySelector("div.c4");
+			if (c4) {
+				if (c4.childNodes.length == 2 && c4.childNodes[1].data == "Uploader Comment") {
+					c4.childNodes[1].data = "上传者的评论";
+				} else {
+
+					if (c4.childNodes.length == 3) {
+						// 编辑
+						c4.children[0].innerText = " 编辑 ";
+						var c6Id = c1.querySelector("div.c6").id.replace("comment_", "");
+						c4.children[0].onclick = function () {
+							edit_comment_copy(c6Id);
+							return false;
+						}
+					} else {
+						// 点赞
+						var leftBracket = c4.childNodes[0];
+						leftBracket.data = "\xa0";
+						var middleBracket = c4.childNodes[2];
+						middleBracket.data = "\xa0\xa0";
+						var rightBracket = c4.childNodes[4];
+						rightBracket.data = "\xa0";
+
+						var like = c4.children[0];
+						like.innerText = "[ 👍 ]";
+						like.title = "点赞";
+						var dislike = c4.children[1];
+						dislike.innerText = "[ 👎 ]";
+						dislike.title = "点踩";
+					}
+				}
+			}
+
+			// Score +10
+			var c5 = c2.querySelector("div.c5");
+			if (c5) {
+				c5.childNodes[0].data = "得分 \xa0";
+			}
+
+			// Last edited on 04 May 2022, 16:41.
+			var c8 = c1.querySelector("div.c8");
+			if (c8) {
+				c8.childNodes[0].data = "最后编辑时间：";
+				var strong = c8.children[0];
+				var modifyTimeArray = strong.innerText.split(",");
+				strong.innerText = `${transDate(modifyTimeArray[0])}${modifyTimeArray[1]}`;
+			}
+
+			// You did not enter a valid comment.
+			var c6 = c1.querySelector("div.c6");
+			if (c6) {
+				var pbr = c6.querySelector("p.br");
+				if (pbr) {
+					switch (pbr.innerText) {
+						case "You did not enter a valid comment.":
+							pbr.innerText = "您没有输入有效的评论";
+							break;
+						case "Your comment is too short.":
+							pbr.innerText = "评论写的太短了";
+							break;
+						default:
+							translatePageElement(pbr);
+							break;
+					}
+				}
+
+				var gce = c6.querySelector("div.gce");
+				if (gce) {
+					var submitBtn = gce.querySelector("input:last-child");
+					submitBtn.value = "发布评论";
+				}
+			}
+		}
+	}
+
+	var chd = document.getElementById("chd");
+	if (chd.children.length == 2) {
+		// 底部展开全部翻译
+		var p1 = chd.children[0];
+		p1.childNodes[0].data = p1.childNodes[0].data
+			.replace("There are", "还有")
+			.replace("There is", "还有")
+			.replace("more comments below the viewing threshold", "评论未显示")
+			.replace("more comment below the viewing threshold", "评论未显示");
+		// 点击显示全部
+		p1.children[0].innerText = "点击显示全部";
+	}
+
+	// 翻译评论功能
+	var postnewcomment = document.getElementById("postnewcomment");
+	postnewcomment.children[0].innerText = " 评 论 ";
+	var formDiv = document.getElementById("formdiv");
+	var mycommentInput = formDiv.querySelector("textarea");
+	mycommentInput.setAttribute("placeholder", "在此处输入您的评论，然后点击发表评论。如果最后发布的评论是您的，则此评论将附加到该帖子中。");
+	var mycommentSubmit = formDiv.querySelector("input");
+	mycommentSubmit.value = "发表评论";
 }
 
 function edit_comment_copy(b) {
-    if (comment_xhr != undefined) {
-        return
-    }
-    comment_xhr = new XMLHttpRequest();
-    var a = {
-        method: "geteditcomment",
-        apiuid: apiuid,
-        apikey: apikey,
-        gid: gid,
-        token: token,
-        comment_id: b
-    };
-    api_call(comment_xhr, a, make_comment_editable_copy);
+	if (comment_xhr != undefined) {
+		return
+	}
+	comment_xhr = new XMLHttpRequest();
+	var a = {
+		method: "geteditcomment",
+		apiuid: apiuid,
+		apikey: apikey,
+		gid: gid,
+		token: token,
+		comment_id: b
+	};
+	api_call(comment_xhr, a, make_comment_editable_copy);
 }
 function make_comment_editable_copy() {
-    var a = api_response(comment_xhr);
-    var formHtml = `${a.editable_comment}`;
-    formHtml = formHtml.replace('<input type="submit" value="Edit Comment" />', '<input type="submit" value="发布评论" />');
+	var a = api_response(comment_xhr);
+	var formHtml = `${a.editable_comment}`;
+	formHtml = formHtml.replace('<input type="submit" value="Edit Comment" />', '<input type="submit" value="发布评论" />');
 
-    if (a != false) {
-        if (a.error != undefined) {
-            alert("Could not get editable comment: " + a.error)
-        }
-        if (a.comment_id != undefined) {
-            document.getElementById("comment_" + a.comment_id).innerHTML = formHtml
-        }
-        comment_xhr = undefined
-    }
+	if (a != false) {
+		if (a.error != undefined) {
+			alert("Could not get editable comment: " + a.error)
+		}
+		if (a.comment_id != undefined) {
+			document.getElementById("comment_" + a.comment_id).innerHTML = formHtml
+		}
+		comment_xhr = undefined
+	}
 }
 
 // 作品查看页面
 function detailReadPage() {
-    var i6 = document.getElementById("i6");
-    var links = i6.querySelectorAll("a");
-    for (const i in links) {
-        if (Object.hasOwnProperty.call(links, i)) {
-            const link = links[i];
-            if (detailReadPage_bottomLinkDict[link.innerText]) {
-                link.innerText = detailReadPage_bottomLinkDict[link.innerText];
-            }
-        }
-    }
+	var i6 = document.getElementById("i6");
+	var links = i6.querySelectorAll("a");
+	for (const i in links) {
+		if (Object.hasOwnProperty.call(links, i)) {
+			const link = links[i];
+			if (detailReadPage_bottomLinkDict[link.innerText]) {
+				link.innerText = detailReadPage_bottomLinkDict[link.innerText];
+			}
+		}
+	}
 
-    // 获取回到详情页面的地址，生成一个链接，插入最前面
-    var backLink = document.createElement("a");
-    backLink.innerText = "返回到详情页";
-    backLink.href = document.getElementById("i5").querySelector("a").href;
-    backLink.style.marginRight = "10px";
+	// 获取回到详情页面的地址，生成一个链接，插入最前面
+	var backLink = document.createElement("a");
+	backLink.innerText = "返回到详情页";
+	backLink.href = document.getElementById("i5").querySelector("a").href;
+	backLink.style.marginRight = "10px";
 
-    var backImg = document.createElement("img");
-    func_eh_ex(() => {
-        backImg.src = "https://ehgt.org/g/mr.gif";
-    }, () => {
-        backImg.src = "https://exhentai.org/img/mr.gif";
-    });
+	var backImg = document.createElement("img");
+	func_eh_ex(() => {
+		backImg.src = "https://ehgt.org/g/mr.gif";
+	}, () => {
+		backImg.src = "https://exhentai.org/img/mr.gif";
+	});
 
-    backImg.classList.add("mr");
-    backImg.style.marginRight = "4px";
+	backImg.classList.add("mr");
+	backImg.style.marginRight = "4px";
 
-    i6.children[0].parentNode.insertBefore(backLink, i6.children[0]);
-    i6.children[0].parentNode.insertBefore(backImg, i6.children[0]);
+	i6.children[0].parentNode.insertBefore(backLink, i6.children[0]);
+	i6.children[0].parentNode.insertBefore(backImg, i6.children[0]);
 
-    // 下载原始图片
-    var i7 = document.getElementById("i7");
-    var downloadLink = i7.querySelector("a");
-    if (downloadLink) {
-        downloadLink.innerText = downloadLink.innerText.replace("Download original", "下载原图").replace("source", "");
-    }
-    
-    // 重新修改点击事件
-    var sns = document.getElementsByClassName("sn");
-    for (const i in sns) {
-        if (Object.hasOwnProperty.call(sns, i)) {
-            const sn = sns[i];
-            var links = sn.querySelectorAll("a");
-            var firstParams = links[0].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
-            links[0].onclick = function () {
-                return _load_image_copy(firstParams[0], firstParams[1].replace(/\'/g, ""), false);
-            }
+	// 下载原始图片
+	var i7 = document.getElementById("i7");
+	var downloadLink = i7.querySelector("a");
+	if (downloadLink) {
+		downloadLink.innerText = downloadLink.innerText.replace("Download original", "下载原图").replace("source", "");
+	}
 
-            var prevParams = links[1].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
-            links[1].onclick = function () {
-                return _load_image_copy(prevParams[0], prevParams[1].replace(/\'/g, ""), false);
-            }
+	// 重新修改点击事件
+	var sns = document.getElementsByClassName("sn");
+	for (const i in sns) {
+		if (Object.hasOwnProperty.call(sns, i)) {
+			const sn = sns[i];
+			var links = sn.querySelectorAll("a");
+			var firstParams = links[0].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
+			links[0].onclick = function () {
+				return _load_image_copy(firstParams[0], firstParams[1].replace(/\'/g, ""), false);
+			}
 
-            var nextParams = links[2].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
-            links[2].onclick = function () {
-                return _load_image_copy(nextParams[0], nextParams[1].replace(/\'/g, ""), false);
-            }
+			var prevParams = links[1].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
+			links[1].onclick = function () {
+				return _load_image_copy(prevParams[0], prevParams[1].replace(/\'/g, ""), false);
+			}
 
-            var lastParams = links[3].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
-            links[3].onclick = function () {
-                return _load_image_copy(lastParams[0], lastParams[1].replace(/\'/g, ""), false);
-            }
-        }
-    }
+			var nextParams = links[2].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
+			links[2].onclick = function () {
+				return _load_image_copy(nextParams[0], nextParams[1].replace(/\'/g, ""), false);
+			}
+
+			var lastParams = links[3].getAttribute("onclick").replace("return load_image(", "").replace(")", "").split(", ");
+			links[3].onclick = function () {
+				return _load_image_copy(lastParams[0], lastParams[1].replace(/\'/g, ""), false);
+			}
+		}
+	}
 }
 
 function _load_image_copy(e, f, d) {
-    if (holdingOverrideKey) {
-        return true
-    }
-    var c = "s/" + f + "/" + gid + "-" + e;
-    var a = base_url + c;
-    if (!d) {
-        if (load_cooldown) {
-            return false
-        } ++pcnt
-    } else {
-        --pcnt
-    }
-    if (history.pushState && (pcnt <= prl)) {
-        if (dispatch_xhr != undefined) {
-            return false
-        }
-        if (!d) {
-            load_cooldown = true;
-            setTimeout(function () {
-                load_cooldown = false
-            },
-                1000)
-        }
-        dispatch_xhr = new XMLHttpRequest();
-        var b = {
-            method: "showpage",
-            gid: gid,
-            page: e,
-            imgkey: f,
-            showkey: showkey
-        };
-        api_call(dispatch_xhr, b,
-            function () {
-                load_image_dispatch_copy()
-            });
-        if (!d) {
-            history.pushState({
-                page: e,
-                imgkey: f
-            },
-                document.title, a)
-        }
-    } else {
-        pcnt = 0;
-        document.location = a
-    }
-    return false
+	if (holdingOverrideKey) {
+		return true
+	}
+	var c = "s/" + f + "/" + gid + "-" + e;
+	var a = base_url + c;
+	if (!d) {
+		if (load_cooldown) {
+			return false
+		} ++pcnt
+	} else {
+		--pcnt
+	}
+	if (history.pushState && (pcnt <= prl)) {
+		if (dispatch_xhr != undefined) {
+			return false
+		}
+		if (!d) {
+			load_cooldown = true;
+			setTimeout(function () {
+				load_cooldown = false
+			},
+				1000)
+		}
+		dispatch_xhr = new XMLHttpRequest();
+		var b = {
+			method: "showpage",
+			gid: gid,
+			page: e,
+			imgkey: f,
+			showkey: showkey
+		};
+		api_call(dispatch_xhr, b,
+			function () {
+				load_image_dispatch_copy()
+			});
+		if (!d) {
+			history.pushState({
+				page: e,
+				imgkey: f
+			},
+				document.title, a)
+		}
+	} else {
+		pcnt = 0;
+		document.location = a
+	}
+	return false
 }
 
 function load_image_dispatch_copy() {
-    var a = api_response(dispatch_xhr);
-    if (a != false) {
-        if (a.error != undefined) {
-            document.location = document.location + ""
-        } else {
-            history.replaceState({
-                page: a.p,
-                imgkey: a.k,
-                json: a,
-                expire: get_unixtime() + 300
-            },
-                document.title, base_url + a.s);
+	var a = api_response(dispatch_xhr);
+	if (a != false) {
+		if (a.error != undefined) {
+			document.location = document.location + ""
+		} else {
+			history.replaceState({
+				page: a.p,
+				imgkey: a.k,
+				json: a,
+				expire: get_unixtime() + 300
+			},
+				document.title, base_url + a.s);
 
-            a.n = a.n.replace(/load_image/g, "load_image_copy");
+			a.n = a.n.replace(/load_image/g, "load_image_copy");
 
-            a.i6 = a.i6
-                .replace("Show all galleries with this file", "显示包含此图片的所有作品")
-                .replace("Click here if the image fails loading", "重新加载图片")
-                .replace("Generate a static forum image link", "生成用于论坛的图片链接");
-            func_eh_ex(() => {
-                a.i6 = ` &nbsp; <img src=\"https://ehgt.org/g/mr.gif\" class=\"mr\" /> <a href="https://exhentai.org/g/2211477/40853439b7/">返回到详情页</a>${a.i6}`;
-            }, () => {
-                a.i6 = ` &nbsp; <img src=\"https://exhentai.org/img/mr.gif\" class=\"mr\" /> <a href="https://exhentai.org/g/2211477/40853439b7/">返回到详情页</a>${a.i6}`;
-            });
+			a.i6 = a.i6
+				.replace("Show all galleries with this file", "显示包含此图片的所有作品")
+				.replace("Click here if the image fails loading", "重新加载图片")
+				.replace("Generate a static forum image link", "生成用于论坛的图片链接");
+			func_eh_ex(() => {
+				a.i6 = ` &nbsp; <img src=\"https://ehgt.org/g/mr.gif\" class=\"mr\" /> <a href="https://exhentai.org/g/2211477/40853439b7/">返回到详情页</a>${a.i6}`;
+			}, () => {
+				a.i6 = ` &nbsp; <img src=\"https://exhentai.org/img/mr.gif\" class=\"mr\" /> <a href="https://exhentai.org/g/2211477/40853439b7/">返回到详情页</a>${a.i6}`;
+			});
 
 
-            a.i7 = a.i7.replace("Download original", "下载原图").replace("source", "");
-            apply_json_state_copy(a)
-        }
-        dispatch_xhr = undefined
-    }
+			a.i7 = a.i7.replace("Download original", "下载原图").replace("source", "");
+			apply_json_state_copy(a)
+		}
+		dispatch_xhr = undefined
+	}
 }
 
 function apply_json_state_copy(a) {
-    window.scrollTo(0, 0);
-    document.getElementById("i1").style.width = a.x + "px";
-    document.getElementById("i2").innerHTML = a.n + a.i;
-    document.getElementById("i3").innerHTML = a.i3;
-    document.getElementById("i4").innerHTML = a.i + a.n;
-    document.getElementById("i5").innerHTML = a.i5;
-    document.getElementById("i6").innerHTML = a.i6;
-    document.getElementById("i7").innerHTML = a.i7;
-    si = parseInt(a.si);
-    xres = parseInt(a.x);
-    yres = parseInt(a.y);
-    update_window_extents()
+	window.scrollTo(0, 0);
+	document.getElementById("i1").style.width = a.x + "px";
+	document.getElementById("i2").innerHTML = a.n + a.i;
+	document.getElementById("i3").innerHTML = a.i3;
+	document.getElementById("i4").innerHTML = a.i + a.n;
+	document.getElementById("i5").innerHTML = a.i5;
+	document.getElementById("i6").innerHTML = a.i6;
+	document.getElementById("i7").innerHTML = a.i7;
+	si = parseInt(a.si);
+	xres = parseInt(a.x);
+	yres = parseInt(a.y);
+	update_window_extents()
+}
+
+// 作品详情页面，可能会弹出不适合所有人查看的作品警告，如果出现则翻译谷歌翻译文本，且跳过页面后续的执行操作
+function checkBooksWarning() {
+	var gm = document.querySelector("div.gm");
+	if (!gm) {
+		var nb = document.getElementById("nb");
+		var warnDiv = nb.nextElementSibling;
+		if (warnDiv) {
+			// 跨域
+			crossDomain();
+
+			// 翻译警告信息
+			recursionDetailPageWarnTranslate(warnDiv);
+		}
+
+		return true; // 警告页面
+	}
+
+	return false; // 无警告
+}
+
+function recursionDetailPageWarnTranslate(element) {
+	var elementChildNodes = element.childNodes;
+	for (const i in elementChildNodes) {
+		if (Object.hasOwnProperty.call(elementChildNodes, i)) {
+			const child = elementChildNodes[i];
+			if (child.nodeName == "#text" && child.data) {
+				var trimData = trimEnd(child.data);
+				if (trimData.replace(/[\r\n]/g, "") != "") {
+					var span = document.createElement("span");
+					span.innerText = trimData;
+					child.parentNode.insertBefore(span, child);
+				}
+				child.parentNode.removeChild(child);
+			}
+		}
+	}
+
+	for (let i = 0; i < element.children.length; i++) {
+		const child = element.children[i];
+		if (child.children.length > 0) {
+			recursionDetailPageWarnTranslate(child);
+		} else if (child.innerText) {
+			child.title = child.innerText;
+			if (detailPage_warnContentDict[child.innerText]) {
+				child.innerText = detailPage_warnContentDict[child.innerText];
+			} else {
+				// 谷歌机翻
+				translatePageElement(child);
+			}
+		}
+	}
 }
 
 //#endregion
+
 
 
 //#region step4.2.detailbtn.js 详情页主要按钮功能
@@ -7679,212 +7746,212 @@ function torrentsTableTitleGlink() {
 
 function torrentsDetailPages() {
 
-    // 判断是哪个页面
-    var forms = document.getElementsByTagName("form");
-    var inputs = forms[forms.length - 1].querySelectorAll("input");
-    var submitBtn = inputs[inputs.length - 1];
-    if (submitBtn.value == "Back to Index") {
-        // 详情页
-        submitBtn.value = "返回";
-        torrentsDetailInfo();
+	// 判断是哪个页面
+	var forms = document.getElementsByTagName("form");
+	var inputs = forms[forms.length - 1].querySelectorAll("input");
+	var submitBtn = inputs[inputs.length - 1];
+	if (submitBtn.value == "Back to Index") {
+		// 详情页
+		submitBtn.value = "返回";
+		torrentsDetailInfo();
 
-    } else if (submitBtn.value == "Upload Torrent") {
-        // 首页
-        submitBtn.value = "上传种子";
-        torrentsDetailIndex();
-    }
+	} else if (submitBtn.value == "Upload Torrent") {
+		// 首页
+		submitBtn.value = "上传种子";
+		torrentsDetailIndex();
+	}
 }
 
 function torrentsDetailInfo() {
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 添加类 torrents_detail_info，方便添加样式
-    var torrentinfo = document.getElementById("torrentinfo");
-    torrentinfo.classList.add("torrents_detail_info");
+	// 添加类 torrents_detail_info，方便添加样式
+	var torrentinfo = document.getElementById("torrentinfo");
+	torrentinfo.classList.add("torrents_detail_info");
 
-    // 表格统计数据翻译
-    var ett = document.getElementById("ett");
-    var trs = ett.querySelectorAll("tr");
-    trs[0].children[0].innerText = "发布时间";
-    trs[0].children[2].innerText = "做种";
-    trs[1].children[0].innerText = "上传者";
-    trs[1].children[2].innerText = "下载";
-    trs[2].children[0].innerText = "文件大小";
-    trs[2].children[2].innerText = "完成";
+	// 表格统计数据翻译
+	var ett = document.getElementById("ett");
+	var trs = ett.querySelectorAll("tr");
+	trs[0].children[0].innerText = "发布时间";
+	trs[0].children[2].innerText = "做种";
+	trs[1].children[0].innerText = "上传者";
+	trs[1].children[2].innerText = "下载";
+	trs[2].children[0].innerText = "文件大小";
+	trs[2].children[2].innerText = "完成";
 
-    // 种子下载翻译
-    var torrentTable = document.getElementsByTagName("table")[1];
-    var tr2s = torrentTable.querySelectorAll("tr");
-    var alinkPersonal = tr2s[0].children[0].children[0];
-    alinkPersonal.innerText = "种子下载 - 私人";
-    tr2s[0].children[1].innerText = "（ 只属于你 - 确保记录你的下载统计信息 ）";
-    var alinkOpen = tr2s[1].children[0].children[0];
-    alinkOpen.innerText = "种子下载 - 可二次分发";
-    tr2s[1].children[1].innerText = "（ 如果您想再发布或提供给其他人使用 ）";
+	// 种子下载翻译
+	var torrentTable = document.getElementsByTagName("table")[1];
+	var tr2s = torrentTable.querySelectorAll("tr");
+	var alinkPersonal = tr2s[0].children[0].children[0];
+	alinkPersonal.innerText = "种子下载 - 私人";
+	tr2s[0].children[1].innerText = "（ 只属于你 - 确保记录你的下载统计信息 ）";
+	var alinkOpen = tr2s[1].children[0].children[0];
+	alinkOpen.innerText = "种子下载 - 可二次分发";
+	tr2s[1].children[1].innerText = "（ 如果您想再发布或提供给其他人使用 ）";
 
-    // 上传者留言，谷歌机翻
-    var etd = document.getElementById("etd");
-    var commandP = document.createElement("p");
-    commandP.id = "commandP";
-    commandP.innerText = etd.innerText;
-    etd.innerText = "";
-    etd.appendChild(commandP);
+	// 上传者留言，谷歌机翻
+	var etd = document.getElementById("etd");
+	var commandP = document.createElement("p");
+	commandP.id = "commandP";
+	commandP.innerText = etd.innerText;
+	etd.innerText = "";
+	etd.appendChild(commandP);
 
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    translateCheckbox.addEventListener("click", torrentsDetailInfoCommand);
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻";
-    translateDiv.appendChild(translateLabel);
-    translateDiv.appendChild(translateCheckbox);
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	translateCheckbox.addEventListener("click", torrentsDetailInfoCommand);
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻";
+	translateDiv.appendChild(translateLabel);
+	translateDiv.appendChild(translateCheckbox);
 
-    etd.appendChild(translateDiv);
+	etd.appendChild(translateDiv);
 
-    // 获取设置
-    indexDbInit(() => {
-        // 读取是否选中
-        read(table_Settings, table_Settings_key_TranslateTorrentDetailInfoCommand, result => {
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                translateTorrentDetailInfoCommandDisplay();
-            }
-        }, () => { });
-    });
+	// 获取设置
+	indexDbInit(() => {
+		// 读取是否选中
+		read(table_Settings, table_Settings_key_TranslateTorrentDetailInfoCommand, result => {
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				translateTorrentDetailInfoCommandDisplay();
+			}
+		}, () => { });
+	});
 
-    // 同步谷歌机翻留言
-    DataSyncTranslateTorrentDetailInfoCommand();
+	// 同步谷歌机翻留言
+	DataSyncTranslateTorrentDetailInfoCommand();
 
-    // 投票删除
-    var expungeform = document.getElementById("expungeform");
-    var deleteLink = expungeform.children[0].children[2];
-    deleteLink.innerText = "投票删除";
-    deleteLink.onclick = function () {
-        var deleteText = "你确定要投票删除这个种子吗？此操作无法撤消。";
-        if (confirm(deleteText)) {
-            expungeform.submit();
-        }
-    }
+	// 投票删除
+	var expungeform = document.getElementById("expungeform");
+	var deleteLink = expungeform.children[0].children[2];
+	deleteLink.innerText = "投票删除";
+	deleteLink.onclick = function () {
+		var deleteText = "你确定要投票删除这个种子吗？此操作无法撤消。";
+		if (confirm(deleteText)) {
+			expungeform.submit();
+		}
+	}
 
-    // 关闭窗口
-    closeWindow();
+	// 关闭窗口
+	closeWindow();
 
-    document.getElementsByClassName("stuffbox")[0].lastChild.style.marginTop = "0";
+	document.getElementsByClassName("stuffbox")[0].lastChild.style.marginTop = "0";
 }
 
 function torrentsDetailInfoCommand() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-    // 更新存储
-    var settings_translateTorrentDetailInfoCommand = {
-        item: table_Settings_key_TranslateTorrentDetailInfoCommand,
-        value: isChecked
-    };
-    update(table_Settings, settings_translateTorrentDetailInfoCommand, () => {
-        // 通知通知，翻译标题
-        setDbSyncMessage(sync_googleTranslate_torrentDetailInfo_command);
-        translateTorrentDetailInfoCommandDisplay();
-    }, () => { });
+	// 更新存储
+	var settings_translateTorrentDetailInfoCommand = {
+		item: table_Settings_key_TranslateTorrentDetailInfoCommand,
+		value: isChecked
+	};
+	update(table_Settings, settings_translateTorrentDetailInfoCommand, () => {
+		// 通知通知，翻译标题
+		setDbSyncMessage(sync_googleTranslate_torrentDetailInfo_command);
+		translateTorrentDetailInfoCommandDisplay();
+	}, () => { });
 }
 
 function translateTorrentDetailInfoCommandDisplay() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-    var commandP = document.getElementById("commandP");
-    if (isChecked) {
-        // 翻译留言
-        if (commandP.dataset.translate) {
-            // 已经翻译过
-            commandP.innerText = commandP.dataset.translate;
-        } else {
-            // 需要翻译
-            commandP.title = commandP.innerText;
-            translatePageElementFunc(commandP, true, () => {
-                commandP.dataset.translate = commandP.innerText;
-            });
-        }
-    } else {
-        // 显示原文
-        commandP.innerText = commandP.title;
-    }
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var commandP = document.getElementById("commandP");
+	if (isChecked) {
+		// 翻译留言
+		if (commandP.dataset.translate) {
+			// 已经翻译过
+			commandP.innerText = commandP.dataset.translate;
+		} else {
+			// 需要翻译
+			commandP.title = commandP.innerText;
+			translatePageElementFunc(commandP, true, () => {
+				commandP.dataset.translate = commandP.innerText;
+			});
+		}
+	} else {
+		// 显示原文
+		commandP.innerText = commandP.title;
+	}
 }
 
 function DataSyncTranslateTorrentDetailInfoCommand() {
-    // 谷歌机翻：标题
-    window.onstorage = function (e) {
-        try {
-            console.log(e);
-            switch (e.newValue) {
-                case sync_googleTranslate_torrentDetailInfo_command:
-                    updateGoogleTorrentDetailInfoCommand();
-                    break;
-            }
-        } catch (error) {
-            removeDbSyncMessage();
-        }
-    }
+	// 谷歌机翻：标题
+	window.onstorage = function (e) {
+		try {
+			console.log(e);
+			switch (e.newValue) {
+				case sync_googleTranslate_torrentDetailInfo_command:
+					updateGoogleTorrentDetailInfoCommand();
+					break;
+			}
+		} catch (error) {
+			removeDbSyncMessage();
+		}
+	}
 
-    // 谷歌翻译留言
-    function updateGoogleTorrentDetailInfoCommand() {
-        indexDbInit(() => {
-            read(table_Settings, table_Settings_key_TranslateTorrentDetailInfoCommand, result => {
-                var translateCheckbox = document.getElementById("googleTranslateCheckbox");
-                translateCheckbox.checked = result && result.value;
-                translateTorrentDetailInfoCommandDisplay();
-                removeDbSyncMessage();
+	// 谷歌翻译留言
+	function updateGoogleTorrentDetailInfoCommand() {
+		indexDbInit(() => {
+			read(table_Settings, table_Settings_key_TranslateTorrentDetailInfoCommand, result => {
+				var translateCheckbox = document.getElementById("googleTranslateCheckbox");
+				translateCheckbox.checked = result && result.value;
+				translateTorrentDetailInfoCommandDisplay();
+				removeDbSyncMessage();
 
-            }, () => { removeDbSyncMessage(); });
-        })
-    }
+			}, () => { removeDbSyncMessage(); });
+		})
+	}
 }
 
 
 function torrentsDetailIndex() {
-    // 添加类 torrents_detail_index，方便添加样式
-    var torrentinfo = document.getElementById("torrentinfo");
-    torrentinfo.classList.add("torrents_detail_index");
+	// 添加类 torrents_detail_index，方便添加样式
+	var torrentinfo = document.getElementById("torrentinfo");
+	torrentinfo.classList.add("torrents_detail_index");
 
-    // 翻译找到种子数量
-    var torrentinfo = document.getElementById("torrentinfo");
-    var torrentCount = torrentinfo.children[0].children[1];
-    var count = torrentCount.innerText.replace("torrent was found for this gallery.", "").replace("torrents were found for this gallery.", "");
-    torrentCount.innerText = `本作品共有 ${count} 个种子。`
+	// 翻译找到种子数量
+	var torrentinfo = document.getElementById("torrentinfo");
+	var torrentCount = torrentinfo.children[0].children[1];
+	var count = torrentCount.innerText.replace("torrent was found for this gallery.", "").replace("torrents were found for this gallery.", "");
+	torrentCount.innerText = `本作品共有 ${count} 个种子。`
 
-    // 逐个翻译种子模块说明
-    var torrentForms = torrentinfo.children[0].querySelectorAll("form");
-    for (const i in torrentForms) {
-        if (Object.hasOwnProperty.call(torrentForms, i)) {
-            const forms = torrentForms[i];
-            var table = forms.children[0].children[1];
-            var trs = table.querySelectorAll("tr");
-            trs[0].children[0].children[0].innerText = "上传于：";
-            trs[0].children[1].children[0].innerText = "文件大小：";
-            trs[0].children[3].children[0].innerText = "做种：";
-            trs[0].children[4].children[0].innerText = "下载：";
-            trs[0].children[5].children[0].innerText = "完成：";
-            trs[1].children[0].children[0].innerText = "上传者：";
-            trs[1].children[1].children[0].value = "详细信息";
-        }
-    }
+	// 逐个翻译种子模块说明
+	var torrentForms = torrentinfo.children[0].querySelectorAll("form");
+	for (const i in torrentForms) {
+		if (Object.hasOwnProperty.call(torrentForms, i)) {
+			const forms = torrentForms[i];
+			var table = forms.children[0].children[1];
+			var trs = table.querySelectorAll("tr");
+			trs[0].children[0].children[0].innerText = "上传于：";
+			trs[0].children[1].children[0].innerText = "文件大小：";
+			trs[0].children[3].children[0].innerText = "做种：";
+			trs[0].children[4].children[0].innerText = "下载：";
+			trs[0].children[5].children[0].innerText = "完成：";
+			trs[1].children[0].children[0].innerText = "上传者：";
+			trs[1].children[1].children[0].value = "详细信息";
+		}
+	}
 
-    // 翻译底部
-    var bottomDiv = torrentinfo.children[1].children[0];
-    bottomDiv.children[0].innerText = "新种子：";
-    bottomDiv.children[0].nextSibling.textContent = "你可以在这里为本作品上传种子，种子文件最大大小为 10 MB";
-    bottomDiv.children[1].nextSibling.textContent = "如果你自己创建种子，请将其设置为 AnnounceTracker：";
-    bottomDiv.children[3].nextSibling.textContent = "请注意，你必须在上传后从该站点下载私有种子，以便记录统计信息。";
+	// 翻译底部
+	var bottomDiv = torrentinfo.children[1].children[0];
+	bottomDiv.children[0].innerText = "新种子：";
+	bottomDiv.children[0].nextSibling.textContent = "你可以在这里为本作品上传种子，种子文件最大大小为 10 MB";
+	bottomDiv.children[1].nextSibling.textContent = "如果你自己创建种子，请将其设置为 AnnounceTracker：";
+	bottomDiv.children[3].nextSibling.textContent = "请注意，你必须在上传后从该站点下载私有种子，以便记录统计信息。";
 
-    // 关闭窗口
-    closeWindow();
+	// 关闭窗口
+	closeWindow();
 }
 
 function closeWindow() {
-    var closeWindowLink = document.getElementsByClassName("stuffbox")[0].children[1].children[0];
-    closeWindowLink.innerText = "关闭窗口";
+	var closeWindowLink = document.getElementsByClassName("stuffbox")[0].children[1].children[0];
+	closeWindowLink.innerText = "关闭窗口";
 }
 
 //#endregion
@@ -7894,113 +7961,113 @@ function closeWindow() {
 
 function toplistPage() {
 
-    var ido = document.getElementsByClassName("ido");
-    if (ido.length > 0) {
-        var parentDiv = ido[0];
+	var ido = document.getElementsByClassName("ido");
+	if (ido.length > 0) {
+		var parentDiv = ido[0];
 
-        // 添加样式防止覆盖
-        parentDiv.classList.add("t_toplist_ido");
+		// 添加样式防止覆盖
+		parentDiv.classList.add("t_toplist_ido");
 
-        // 头部面包屑导航翻译
-        var headLinks = parentDiv.firstElementChild.querySelectorAll("a");
-        for (const i in headLinks) {
-            if (Object.hasOwnProperty.call(headLinks, i)) {
-                const link = headLinks[i];
-                link.innerText = toplie_subtitle_dict[link.innerText];
-            }
-        }
+		// 头部面包屑导航翻译
+		var headLinks = parentDiv.firstElementChild.querySelectorAll("a");
+		for (const i in headLinks) {
+			if (Object.hasOwnProperty.call(headLinks, i)) {
+				const link = headLinks[i];
+				link.innerText = toplie_subtitle_dict[link.innerText];
+			}
+		}
 
-        // 排行页 或 作品/上传者排名页
-        var dcDiv = document.getElementsByClassName("dc");
-        if (dcDiv.length > 0) {
-            var dc = dcDiv[0];
+		// 排行页 或 作品/上传者排名页
+		var dcDiv = document.getElementsByClassName("dc");
+		if (dcDiv.length > 0) {
+			var dc = dcDiv[0];
 
-            // 各项父级翻译
-            var h2list = parentDiv.querySelectorAll("h2");
-            for (const i in h2list) {
-                if (Object.hasOwnProperty.call(h2list, i)) {
-                    const h2 = h2list[i];
-                    h2.innerText = toplist_parent_dict[h2.innerText];
-                }
-            }
+			// 各项父级翻译
+			var h2list = parentDiv.querySelectorAll("h2");
+			for (const i in h2list) {
+				if (Object.hasOwnProperty.call(h2list, i)) {
+					const h2 = h2list[i];
+					h2.innerText = toplist_parent_dict[h2.innerText];
+				}
+			}
 
-            // 各项排行翻译
-            var plist = parentDiv.querySelectorAll("p");
-            for (const i in plist) {
-                if (Object.hasOwnProperty.call(plist, i)) {
-                    const p = plist[i];
-                    if (p.innerText.indexOf("All-Time") != -1) {
-                        p.lastChild.innerText = "总排行";
-                    } else if (p.innerText.indexOf("Past Year") != -1) {
-                        p.lastChild.innerText = "年排行";
-                    } else if (p.innerText.indexOf("Past Month") != -1) {
-                        p.lastChild.innerText = "月排行";
-                    } else if (p.innerText.indexOf("Yesterday") != -1) {
-                        p.lastChild.innerText = "日排行";
-                    }
-                }
-            }
+			// 各项排行翻译
+			var plist = parentDiv.querySelectorAll("p");
+			for (const i in plist) {
+				if (Object.hasOwnProperty.call(plist, i)) {
+					const p = plist[i];
+					if (p.innerText.indexOf("All-Time") != -1) {
+						p.lastChild.innerText = "总排行";
+					} else if (p.innerText.indexOf("Past Year") != -1) {
+						p.lastChild.innerText = "年排行";
+					} else if (p.innerText.indexOf("Past Month") != -1) {
+						p.lastChild.innerText = "月排行";
+					} else if (p.innerText.indexOf("Yesterday") != -1) {
+						p.lastChild.innerText = "日排行";
+					}
+				}
+			}
 
-            // 删除全部分割线
-            var hrlist = parentDiv.querySelectorAll("hr");
-            for (const i in hrlist) {
-                if (Object.hasOwnProperty.call(hrlist, i)) {
-                    const hr = hrlist[i];
-                    hr.parentNode.removeChild(hr);
-                }
-            }
+			// 删除全部分割线
+			var hrlist = parentDiv.querySelectorAll("hr");
+			for (const i in hrlist) {
+				if (Object.hasOwnProperty.call(hrlist, i)) {
+					const hr = hrlist[i];
+					hr.parentNode.removeChild(hr);
+				}
+			}
 
-            // 跨域
-            crossDomain();
+			// 跨域
+			crossDomain();
 
-            // 作品标题翻译
-            var translateDiv = document.createElement("div");
-            translateDiv.id = "googleTranslateDiv";
-            var translateCheckbox = document.createElement("input");
-            translateCheckbox.setAttribute("type", "checkbox");
-            translateCheckbox.id = "googleTranslateCheckbox";
-            translateDiv.appendChild(translateCheckbox);
-            var translateLabel = document.createElement("label");
-            translateLabel.setAttribute("for", translateCheckbox.id);
-            translateLabel.id = "translateLabel";
-            translateLabel.innerText = "谷歌机翻 : 标题";
+			// 作品标题翻译
+			var translateDiv = document.createElement("div");
+			translateDiv.id = "googleTranslateDiv";
+			var translateCheckbox = document.createElement("input");
+			translateCheckbox.setAttribute("type", "checkbox");
+			translateCheckbox.id = "googleTranslateCheckbox";
+			translateDiv.appendChild(translateCheckbox);
+			var translateLabel = document.createElement("label");
+			translateLabel.setAttribute("for", translateCheckbox.id);
+			translateLabel.id = "translateLabel";
+			translateLabel.innerText = "谷歌机翻 : 标题";
 
-            translateDiv.appendChild(translateLabel);
-            translateCheckbox.addEventListener("click", translateToplistPageTitle);
-            var h2 = dc.firstElementChild;
-            h2.appendChild(translateDiv);
+			translateDiv.appendChild(translateLabel);
+			translateCheckbox.addEventListener("click", translateToplistPageTitle);
+			var h2 = dc.firstElementChild;
+			h2.appendChild(translateDiv);
 
-            indexDbInit(() => {
-                read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-                    if (result && result.value) {
-                        translateCheckbox.setAttribute("checked", true);
-                        translateToplistTitleDisplay();
-                    }
-                }, () => { });
-            });
+			indexDbInit(() => {
+				read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+					if (result && result.value) {
+						translateCheckbox.setAttribute("checked", true);
+						translateToplistTitleDisplay();
+					}
+				}, () => { });
+			});
 
-        } else {
+		} else {
 
-            // 点击页面链接跳转
-            // 1. 跳转到页面详情不管，detail.js 实现功能
-            // 2. 跳转到上传页面不管，upload.js 实现功能
-            // 3. 跳转到上传者排行页面，需要翻译
-            // 4. 跳转到作品排行页面，需要翻译
+			// 点击页面链接跳转
+			// 1. 跳转到页面详情不管，detail.js 实现功能
+			// 2. 跳转到上传页面不管，upload.js 实现功能
+			// 3. 跳转到上传者排行页面，需要翻译
+			// 4. 跳转到作品排行页面，需要翻译
 
-            var search = window.location.search;
-            if (search.indexOf("?tl=") != -1) {
-                var pageNo = search.replace("?tl=", "");
-                var bookRateArrayNo = ["11", "12", "13", "15"];
-                if (bookRateArrayNo.indexOf(pageNo) != -1) {
-                    // 作品排行页面
-                    toplistBookRank();
-                } else {
-                    // 上传者排行页面
-                    toplistUploaderRank();
-                }
-            }
-        }
-    }
+			var search = window.location.search;
+			if (search.indexOf("?tl=") != -1) {
+				var pageNo = search.replace("?tl=", "");
+				var bookRateArrayNo = ["11", "12", "13", "15"];
+				if (bookRateArrayNo.indexOf(pageNo) != -1) {
+					// 作品排行页面
+					toplistBookRank();
+				} else {
+					// 上传者排行页面
+					toplistUploaderRank();
+				}
+			}
+		}
+	}
 
 
 
@@ -8010,143 +8077,143 @@ function toplistPage() {
 
 // 翻译排行榜作品名称
 function translateToplistPageTitle() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-    // 更新存储
-    var settings_translateFrontPageTitles = {
-        item: table_Settings_key_TranslateFrontPageTitles,
-        value: isChecked
-    };
+	// 更新存储
+	var settings_translateFrontPageTitles = {
+		item: table_Settings_key_TranslateFrontPageTitles,
+		value: isChecked
+	};
 
-    indexDbInit(() => {
-        update(table_Settings, settings_translateFrontPageTitles, () => {
-            // 通知通知，翻译标题
-            setDbSyncMessage(sync_googleTranslate_frontPage_title);
-            translateToplistTitleDisplay();
-        }, () => { });
-    })
+	indexDbInit(() => {
+		update(table_Settings, settings_translateFrontPageTitles, () => {
+			// 通知通知，翻译标题
+			setDbSyncMessage(sync_googleTranslate_frontPage_title);
+			translateToplistTitleDisplay();
+		}, () => { });
+	})
 }
 
 
 function translateToplistTitleDisplay() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-    var titleDivs = document.getElementsByClassName("dc")[0].querySelectorAll("div.tun");
-    if (isChecked) {
-        // 翻译标题
-        for (const i in titleDivs) {
-            if (Object.hasOwnProperty.call(titleDivs, i)) {
-                const a = titleDivs[i].firstElementChild;
-                if (a.dataset.translate) {
-                    // 已经翻译过
-                    a.innerText = a.dataset.translate;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var titleDivs = document.getElementsByClassName("dc")[0].querySelectorAll("div.tun");
+	if (isChecked) {
+		// 翻译标题
+		for (const i in titleDivs) {
+			if (Object.hasOwnProperty.call(titleDivs, i)) {
+				const a = titleDivs[i].firstElementChild;
+				if (a.dataset.translate) {
+					// 已经翻译过
+					a.innerText = a.dataset.translate;
 
-                } else {
-                    // 需要翻译
-                    a.title = a.innerText;
+				} else {
+					// 需要翻译
+					a.title = a.innerText;
 
-                    // 单条翻译
-                    translatePageElementFunc(a, true, () => {
-                        a.dataset.translate = a.innerText;
-                    });
-                }
-            }
-        }
+					// 单条翻译
+					translatePageElementFunc(a, true, () => {
+						a.dataset.translate = a.innerText;
+					});
+				}
+			}
+		}
 
-    } else {
-        // 显示原文
-        for (const i in titleDivs) {
-            if (Object.hasOwnProperty.call(titleDivs, i)) {
-                const a = titleDivs[i].firstElementChild;
-                if (a.title) {
-                    a.innerText = a.title;
-                }
-            }
-        }
-    }
+	} else {
+		// 显示原文
+		for (const i in titleDivs) {
+			if (Object.hasOwnProperty.call(titleDivs, i)) {
+				const a = titleDivs[i].firstElementChild;
+				if (a.title) {
+					a.innerText = a.title;
+				}
+			}
+		}
+	}
 }
 
 
 
 // 上传者排行页面
 function toplistUploaderRank() {
-    var itg = document.getElementsByClassName("itg");
-    if (itg.length > 0) {
-        var rankTable = itg[0];
-        var tableThs = rankTable.querySelectorAll("th");
-        for (const i in tableThs) {
-            if (Object.hasOwnProperty.call(tableThs, i)) {
-                const th = tableThs[i];
-                if (th.classList.contains("hr")) {
-                    th.innerText = "排名";
-                } else if (th.classList.contains("hs")) {
-                    th.innerText = "分数";
-                } else if (th.classList.contains("hn")) {
-                    th.innerText = "上传者";
-                }
-            }
-        }
-    }
+	var itg = document.getElementsByClassName("itg");
+	if (itg.length > 0) {
+		var rankTable = itg[0];
+		var tableThs = rankTable.querySelectorAll("th");
+		for (const i in tableThs) {
+			if (Object.hasOwnProperty.call(tableThs, i)) {
+				const th = tableThs[i];
+				if (th.classList.contains("hr")) {
+					th.innerText = "排名";
+				} else if (th.classList.contains("hs")) {
+					th.innerText = "分数";
+				} else if (th.classList.contains("hn")) {
+					th.innerText = "上传者";
+				}
+			}
+		}
+	}
 }
 
 // 作品排行页面
 function toplistBookRank() {
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    var ido = document.getElementsByClassName("ido");
-    if (ido.length > 0) {
-        var toppane = ido[0];
-        toppane.classList.add("t_toplist_bookrage");
+	var ido = document.getElementsByClassName("ido");
+	if (ido.length > 0) {
+		var toppane = ido[0];
+		toppane.classList.add("t_toplist_bookrage");
 
-        // 标题机翻
-        var translateDiv = document.createElement("div");
-        translateDiv.id = "googleTranslateDiv";
-        var translateCheckbox = document.createElement("input");
-        translateCheckbox.setAttribute("type", "checkbox");
-        translateCheckbox.id = "googleTranslateCheckbox";
-        translateDiv.appendChild(translateCheckbox);
-        var translateLabel = document.createElement("label");
-        translateLabel.setAttribute("for", translateCheckbox.id);
-        translateLabel.id = "translateLabel";
-        translateLabel.innerText = "谷歌机翻 : 标题";
+		// 标题机翻
+		var translateDiv = document.createElement("div");
+		translateDiv.id = "googleTranslateDiv";
+		var translateCheckbox = document.createElement("input");
+		translateCheckbox.setAttribute("type", "checkbox");
+		translateCheckbox.id = "googleTranslateCheckbox";
+		translateDiv.appendChild(translateCheckbox);
+		var translateLabel = document.createElement("label");
+		translateLabel.setAttribute("for", translateCheckbox.id);
+		translateLabel.id = "translateLabel";
+		translateLabel.innerText = "谷歌机翻 : 标题";
 
-        translateDiv.appendChild(translateLabel);
-        translateCheckbox.addEventListener("click", translateMainPageTitle);
-        toppane.insertBefore(translateDiv, toppane.lastChild);
+		translateDiv.appendChild(translateLabel);
+		translateCheckbox.addEventListener("click", translateMainPageTitle);
+		toppane.insertBefore(translateDiv, toppane.lastChild);
 
-        // 头部添加词库升级提示
-        var dataUpdateDiv = document.createElement("div");
-        dataUpdateDiv.id = "data_update_tip";
-        var dataUpdateText = document.createTextNode("词库升级中...");
-        dataUpdateDiv.appendChild(dataUpdateText);
-        toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
+		// 头部添加词库升级提示
+		var dataUpdateDiv = document.createElement("div");
+		dataUpdateDiv.id = "data_update_tip";
+		var dataUpdateText = document.createTextNode("词库升级中...");
+		dataUpdateDiv.appendChild(dataUpdateText);
+		toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
 
-        // 表头翻译
-        toplistBookRateTableHeadTranslate();
+		// 表头翻译
+		toplistBookRateTableHeadTranslate();
 
-        // 作品类型翻译
-        bookTypeTranslate();
+		// 作品类型翻译
+		bookTypeTranslate();
 
-        // 作品篇幅
-        toplistBookpages();
+		// 作品篇幅
+		toplistBookpages();
 
-        indexDbInit(() => {
-            // 谷歌机翻标题
-            read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-                if (result && result.value) {
-                    translateCheckbox.setAttribute("checked", true);
-                    translateMainPageTitleDisplay();
-                }
-            }, () => { });
+		indexDbInit(() => {
+			// 谷歌机翻标题
+			read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+				if (result && result.value) {
+					translateCheckbox.setAttribute("checked", true);
+					translateMainPageTitleDisplay();
+				}
+			}, () => { });
 
-            // 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
-            // 表格标签翻译
-            toplistBookRateTryUseOldData();
-        });
+			// 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
+			// 表格标签翻译
+			toplistBookRateTryUseOldData();
+		});
 
-        // 同步谷歌机翻标题
-        DataSyncCommonTranslateTitle();
-    }
+		// 同步谷歌机翻标题
+		DataSyncCommonTranslateTitle();
+	}
 
 
 
@@ -8154,132 +8221,132 @@ function toplistBookRank() {
 
 // 作品排行页面，翻译表头
 function toplistBookRateTableHeadTranslate() {
-    var table = document.getElementsByClassName("itg");
-    if (table.length > 0) {
-        var theads = table[0].querySelectorAll("th");
+	var table = document.getElementsByClassName("itg");
+	if (table.length > 0) {
+		var theads = table[0].querySelectorAll("th");
 
-        for (const i in theads) {
-            if (Object.hasOwnProperty.call(theads, i)) {
-                const th = theads[i];
-                th.innerText = thData[th.innerText] ?? th.innerText;
-            }
-        }
+		for (const i in theads) {
+			if (Object.hasOwnProperty.call(theads, i)) {
+				const th = theads[i];
+				th.innerText = thData[th.innerText] ?? th.innerText;
+			}
+		}
 
-        // 删除第一个表头的跨列属性，然后追加表头
-        var firstTh = theads[0];
-        firstTh.removeAttribute("colspan");
-        firstTh.innerText = "排名";
+		// 删除第一个表头的跨列属性，然后追加表头
+		var firstTh = theads[0];
+		firstTh.removeAttribute("colspan");
+		firstTh.innerText = "排名";
 
-        var bookTypeTh = document.createElement("th");
-        bookTypeTh.innerText = "作品类型";
-        firstTh.parentNode.insertBefore(bookTypeTh, firstTh.nextElementSibling);
-    }
+		var bookTypeTh = document.createElement("th");
+		bookTypeTh.innerText = "作品类型";
+		firstTh.parentNode.insertBefore(bookTypeTh, firstTh.nextElementSibling);
+	}
 }
 
 //  作品排行页面，获取词库数据
 function toplistBookRateTryUseOldData() {
-    // 验证数据完整性
-    checkDataIntact(() => {
-        // 判断是否存在旧数据
-        var fetishHasValue = false;
-        var ehTagHasValue = false;
-        var complete1 = false;
-        var complete2 = false;
+	// 验证数据完整性
+	checkDataIntact(() => {
+		// 判断是否存在旧数据
+		var fetishHasValue = false;
+		var ehTagHasValue = false;
+		var complete1 = false;
+		var complete2 = false;
 
-        checkTableEmpty(table_fetishListSubItems, () => {
-            // 数据为空
-            complete1 = true;
-        }, () => {
-            // 存在数据
-            fetishHasValue = true;
-            complete1 = true;
-        });
+		checkTableEmpty(table_fetishListSubItems, () => {
+			// 数据为空
+			complete1 = true;
+		}, () => {
+			// 存在数据
+			fetishHasValue = true;
+			complete1 = true;
+		});
 
-        checkTableEmpty(table_EhTagSubItems, () => {
-            // 数据为空
-            complete2 = true;
-        }, () => {
-            // 存在数据
-            ehTagHasValue = true;
-            complete2 = true;
-        });
+		checkTableEmpty(table_EhTagSubItems, () => {
+			// 数据为空
+			complete2 = true;
+		}, () => {
+			// 存在数据
+			ehTagHasValue = true;
+			complete2 = true;
+		});
 
-        var t = setInterval(() => {
-            if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
-                t && clearInterval(t);
-                // 存在数据
-                toplistTableTagTranslate();
-                // 检查更新
-                checkUpdateData(() => {
-                    // 存在更新
-                    toplistTableTagTranslate();
-                }, () => { });
-            } else if (complete1 && complete2) {
-                t && clearInterval(t);
-                // 不存在数据
-                checkUpdateData(() => {
-                    // 存在更新
-                    toplistTableTagTranslate();
-                }, () => {
-                    toplistTableTagTranslate();
-                });
-            }
-        }, 10);
-    });
+		var t = setInterval(() => {
+			if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+				t && clearInterval(t);
+				// 存在数据
+				toplistTableTagTranslate();
+				// 检查更新
+				checkUpdateData(() => {
+					// 存在更新
+					toplistTableTagTranslate();
+				}, () => { });
+			} else if (complete1 && complete2) {
+				t && clearInterval(t);
+				// 不存在数据
+				checkUpdateData(() => {
+					// 存在更新
+					toplistTableTagTranslate();
+				}, () => {
+					toplistTableTagTranslate();
+				});
+			}
+		}, 10);
+	});
 }
 
 // 表格标签翻译
 function toplistTableTagTranslate() {
-    // 父项:子项，偶尔出现单个子项
-    var gt = document.getElementsByClassName("gt");
-    function translate(gt, i) {
-        const item = gt[i];
-        if (!item.dataset.title) {
-            item.dataset.title = item.title;
-        }
-        var ps_en = item.dataset.title;
-        read(table_EhTagSubItems, ps_en, result => {
-            if (result) {
-                // 父子项
-                item.innerText = `${result.parent_zh}:${result.sub_zh}`;
-                if (result.sub_desc) {
-                    item.title = `${item.title}\r\n${result.sub_desc}`;
-                }
-            } else {
-                // 没有找到，翻译父项，子项保留
-                var array = ps_en.split(":");
-                if (array.length == 2) {
-                    var parent_en = array[0];
-                    var sub_en = array[1];
-                    read(table_detailParentItems, parent_en, result => {
-                        if (result) {
-                            item.innerText = `${result.name}:${sub_en}`;
-                            if (result.sub_desc) {
-                                item.title = `${item.title}\r\n${result.sub_desc}`;
-                            }
-                        }
-                    }, () => { });
-                }
-            }
-        }, () => { });
-    }
-    for (const i in gt) {
-        if (Object.hasOwnProperty.call(gt, i)) {
-            translate(gt, i);
-        }
-    }
+	// 父项:子项，偶尔出现单个子项
+	var gt = document.getElementsByClassName("gt");
+	function translate(gt, i) {
+		const item = gt[i];
+		if (!item.dataset.title) {
+			item.dataset.title = item.title;
+		}
+		var ps_en = item.dataset.title;
+		read(table_EhTagSubItems, ps_en, result => {
+			if (result) {
+				// 父子项
+				item.innerText = `${result.parent_zh}:${result.sub_zh}`;
+				if (result.sub_desc) {
+					item.title = `${item.title}\r\n${result.sub_desc}`;
+				}
+			} else {
+				// 没有找到，翻译父项，子项保留
+				var array = ps_en.split(":");
+				if (array.length == 2) {
+					var parent_en = array[0];
+					var sub_en = array[1];
+					read(table_detailParentItems, parent_en, result => {
+						if (result) {
+							item.innerText = `${result.name}:${sub_en}`;
+							if (result.sub_desc) {
+								item.title = `${item.title}\r\n${result.sub_desc}`;
+							}
+						}
+					}, () => { });
+				}
+			}
+		}, () => { });
+	}
+	for (const i in gt) {
+		if (Object.hasOwnProperty.call(gt, i)) {
+			translate(gt, i);
+		}
+	}
 }
 
 // 作品篇幅
 function toplistBookpages() {
-    // 标题 + 悬浮图 + 标签
-    var tdPages = document.getElementsByClassName("glhide");
-    for (const i in tdPages) {
-        if (Object.hasOwnProperty.call(tdPages, i)) {
-            const td = tdPages[i];
-            innerTextPageToYe(td.lastChild);
-        }
-    }
+	// 标题 + 悬浮图 + 标签
+	var tdPages = document.getElementsByClassName("glhide");
+	for (const i in tdPages) {
+		if (Object.hasOwnProperty.call(tdPages, i)) {
+			const td = tdPages[i];
+			innerTextPageToYe(td.lastChild);
+		}
+	}
 }
 
 //#endregion
@@ -8318,474 +8385,474 @@ function myHomePage() {
 var newsPageTranslateIsReady = false; // 翻译前是否准备完毕
 
 function newsPage() {
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 添加样式方便调整页面样式
-    var newsouter = document.getElementById("newsouter");
-    newsouter.classList.add("t_newspage_souter");
+	// 添加样式方便调整页面样式
+	var newsouter = document.getElementById("newsouter");
+	newsouter.classList.add("t_newspage_souter");
 
-    var nb = document.getElementById("nb");
+	var nb = document.getElementById("nb");
 
-    // 头部图片隐藏折叠按钮
-    var baredge = document.getElementsByClassName("baredge")[0];
-    var bartop = document.getElementsByClassName("bartop")[0];
-    var botm = document.getElementById("botm");
-    var botmHeight = botm.clientHeight;
+	// 头部图片隐藏折叠按钮
+	var baredge = document.getElementsByClassName("baredge")[0];
+	var bartop = document.getElementsByClassName("bartop")[0];
+	var botm = document.getElementById("botm");
+	var botmHeight = botm.clientHeight;
 
-    var imgHiddenBtn = document.createElement("div");
-    imgHiddenBtn.style.display = "none";
-    imgHiddenBtn.id = "imgHiddenBtn";
-    imgHiddenBtn.innerText = "头部图片隐藏";
-    nb.parentNode.insertBefore(imgHiddenBtn, nb.nextElementSibling);
-    imgHiddenBtn.onclick = function () {
-        var visible = imgHiddenBtn.innerText == "头部图片显示";
-        // 显示和隐藏
-        newsPageTopImageDisplay(visible);
-        // 更改设置并更新
-        setNewsPageTopImageVisisble(visible);
-    };
+	var imgHiddenBtn = document.createElement("div");
+	imgHiddenBtn.style.display = "none";
+	imgHiddenBtn.id = "imgHiddenBtn";
+	imgHiddenBtn.innerText = "头部图片隐藏";
+	nb.parentNode.insertBefore(imgHiddenBtn, nb.nextElementSibling);
+	imgHiddenBtn.onclick = function () {
+		var visible = imgHiddenBtn.innerText == "头部图片显示";
+		// 显示和隐藏
+		newsPageTopImageDisplay(visible);
+		// 更改设置并更新
+		setNewsPageTopImageVisisble(visible);
+	};
 
-    function newsPageTopImageDisplay(visible) {
-        // 改为动画效果
-        var imgHiddenBtn = document.getElementById("imgHiddenBtn");
-        if (visible) {
-            if (imgHiddenBtn.innerText == "头部图片显示") {
-                // 需要显示
-                slideDown(botm, botmHeight, 10, function () {
-                    baredge.classList.remove("hiddenTopImgBorder");
-                    bartop.classList.remove("hiddenTopImgBorder");
-                    imgHiddenBtn.innerText = "头部图片隐藏";
-                });
-            }
-        } else {
-            if (imgHiddenBtn.innerText == "头部图片隐藏") {
-                // 需要隐藏
-                slideUp(botm, 10, function () {
-                    baredge.classList.add("hiddenTopImgBorder");
-                    bartop.classList.add("hiddenTopImgBorder");
-                    imgHiddenBtn.innerText = "头部图片显示";
-                });
-            }
-        }
-    }
+	function newsPageTopImageDisplay(visible) {
+		// 改为动画效果
+		var imgHiddenBtn = document.getElementById("imgHiddenBtn");
+		if (visible) {
+			if (imgHiddenBtn.innerText == "头部图片显示") {
+				// 需要显示
+				slideDown(botm, botmHeight, 10, function () {
+					baredge.classList.remove("hiddenTopImgBorder");
+					bartop.classList.remove("hiddenTopImgBorder");
+					imgHiddenBtn.innerText = "头部图片隐藏";
+				});
+			}
+		} else {
+			if (imgHiddenBtn.innerText == "头部图片隐藏") {
+				// 需要隐藏
+				slideUp(botm, 10, function () {
+					baredge.classList.add("hiddenTopImgBorder");
+					bartop.classList.add("hiddenTopImgBorder");
+					imgHiddenBtn.innerText = "头部图片显示";
+				});
+			}
+		}
+	}
 
-    function setNewsPageTopImageVisisble(visible) {
-        indexDbInit(() => {
-            // 保存存储信息
-            var setting_newsPageTopImageVisible = {
-                item: table_Settings_key_NewsPageTopImageVisible,
-                value: visible
-            }
-            update(table_Settings, setting_newsPageTopImageVisible, () => {
-                // 通知头部图片隐藏显示
-                setDbSyncMessage(sync_newsPage_topImage_visible);
-            }, () => { });
-        });
-    }
+	function setNewsPageTopImageVisisble(visible) {
+		indexDbInit(() => {
+			// 保存存储信息
+			var setting_newsPageTopImageVisible = {
+				item: table_Settings_key_NewsPageTopImageVisible,
+				value: visible
+			}
+			update(table_Settings, setting_newsPageTopImageVisible, () => {
+				// 通知头部图片隐藏显示
+				setDbSyncMessage(sync_newsPage_topImage_visible);
+			}, () => { });
+		});
+	}
 
 
-    // 谷歌机翻
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    translateDiv.style.display = "none";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻 : 新闻";
+	// 谷歌机翻
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	translateDiv.style.display = "none";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻 : 新闻";
 
-    translateDiv.appendChild(translateLabel);
-    translateDiv.appendChild(translateCheckbox);
+	translateDiv.appendChild(translateLabel);
+	translateDiv.appendChild(translateCheckbox);
 
-    translateCheckbox.addEventListener("click", newsPageNewsTranslate);
-    nb.parentNode.insertBefore(translateDiv, nb);
+	translateCheckbox.addEventListener("click", newsPageNewsTranslate);
+	nb.parentNode.insertBefore(translateDiv, nb);
 
-    indexDbInit(() => {
-        // 读取并设置头部图片是否隐藏
-        read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
-            // 按钮显示出来
-            imgHiddenBtn.style.display = "block";
-            newsPageTopImageDisplay(result && result.value);
-        }, () => {
-            imgHiddenBtn.style.display = "block";
-        });
+	indexDbInit(() => {
+		// 读取并设置头部图片是否隐藏
+		read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
+			// 按钮显示出来
+			imgHiddenBtn.style.display = "block";
+			newsPageTopImageDisplay(result && result.value);
+		}, () => {
+			imgHiddenBtn.style.display = "block";
+		});
 
-        // 读取新闻页面翻译
-        read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
-            translateDiv.style.display = "block";
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                newsPageNewsTranslateDisplay();
-            }
-        }, () => {
-            translateDiv.style.display = "block";
-        });
-    });
+		// 读取新闻页面翻译
+		read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
+			translateDiv.style.display = "block";
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				newsPageNewsTranslateDisplay();
+			}
+		}, () => {
+			translateDiv.style.display = "block";
+		});
+	});
 
-    // 新闻分栏，隐藏折叠按钮
-    var nd = document.getElementsByClassName("nd");
-    var h2s = nd[0].querySelectorAll("h2");
-    var newstitles = document.getElementsByClassName("newstitle");
+	// 新闻分栏，隐藏折叠按钮
+	var nd = document.getElementsByClassName("nd");
+	var h2s = nd[0].querySelectorAll("h2");
+	var newstitles = document.getElementsByClassName("newstitle");
 
-    for (const i in h2s) {
-        if (Object.hasOwnProperty.call(h2s, i)) {
-            const h2 = h2s[i];
-            var div = document.createElement("div");
-            div.classList.add("title_extend");
-            div.innerText = "-";
-            h2.appendChild(div);
-        }
-    }
+	for (const i in h2s) {
+		if (Object.hasOwnProperty.call(h2s, i)) {
+			const h2 = h2s[i];
+			var div = document.createElement("div");
+			div.classList.add("title_extend");
+			div.innerText = "-";
+			h2.appendChild(div);
+		}
+	}
 
-    for (const i in newstitles) {
-        if (Object.hasOwnProperty.call(newstitles, i)) {
-            const newstitle = newstitles[i];
-            var div = document.createElement("div");
-            div.classList.add("title_extend");
-            div.innerText = "-";
-            newstitle.appendChild(div);
-        }
-    }
+	for (const i in newstitles) {
+		if (Object.hasOwnProperty.call(newstitles, i)) {
+			const newstitle = newstitles[i];
+			var div = document.createElement("div");
+			div.classList.add("title_extend");
+			div.innerText = "-";
+			newstitle.appendChild(div);
+		}
+	}
 
-    // 为每个折叠按钮添加事件
-    var titleExpends = document.getElementsByClassName("title_extend");
-    for (const i in titleExpends) {
-        if (Object.hasOwnProperty.call(titleExpends, i)) {
-            const titleExpend = titleExpends[i];
-            titleExpend.onclick = function () {
-                var parentChildNodes = titleExpend.parentNode.parentNode.children;
-                if (titleExpend.innerText == "-") {
-                    // 折叠
-                    for (const k in parentChildNodes) {
-                        if (Object.hasOwnProperty.call(parentChildNodes, k)) {
-                            const childNode = parentChildNodes[k];
-                            if (childNode.nodeName == "H2") continue;
-                            if (childNode.classList.contains("newstitle")) continue;
-                            childNode.style.display = "none";
-                        }
-                    }
-                    titleExpend.innerText = "+";
-                } else {
-                    // 展开
-                    for (const k in parentChildNodes) {
-                        if (Object.hasOwnProperty.call(parentChildNodes, k)) {
-                            const childNode = parentChildNodes[k];
-                            if (childNode.nodeName == "H2") continue;
-                            if (childNode.classList.contains("newstitle")) continue;
-                            childNode.style.display = "block";
-                        }
-                    }
-                    titleExpend.innerText = "-";
-                }
-            }
-        }
-    }
+	// 为每个折叠按钮添加事件
+	var titleExpends = document.getElementsByClassName("title_extend");
+	for (const i in titleExpends) {
+		if (Object.hasOwnProperty.call(titleExpends, i)) {
+			const titleExpend = titleExpends[i];
+			titleExpend.onclick = function () {
+				var parentChildNodes = titleExpend.parentNode.parentNode.children;
+				if (titleExpend.innerText == "-") {
+					// 折叠
+					for (const k in parentChildNodes) {
+						if (Object.hasOwnProperty.call(parentChildNodes, k)) {
+							const childNode = parentChildNodes[k];
+							if (childNode.nodeName == "H2") continue;
+							if (childNode.classList.contains("newstitle")) continue;
+							childNode.style.display = "none";
+						}
+					}
+					titleExpend.innerText = "+";
+				} else {
+					// 展开
+					for (const k in parentChildNodes) {
+						if (Object.hasOwnProperty.call(parentChildNodes, k)) {
+							const childNode = parentChildNodes[k];
+							if (childNode.nodeName == "H2") continue;
+							if (childNode.classList.contains("newstitle")) continue;
+							childNode.style.display = "block";
+						}
+					}
+					titleExpend.innerText = "-";
+				}
+			}
+		}
+	}
 
-    // 数据同步
-    window.onstorage = function (e) {
-        try {
-            console.log(e);
-            switch (e.newValue) {
-                case sync_newsPage_topImage_visible:
-                    newsPageSyncTopImageVisible();
-                    break;
-                case sync_googleTranslate_newsPage_news:
-                    newsPageSyncTranslate();
-                    break;
-            }
-        } catch (error) {
-            removeDbSyncMessage();
-        }
-    }
+	// 数据同步
+	window.onstorage = function (e) {
+		try {
+			console.log(e);
+			switch (e.newValue) {
+				case sync_newsPage_topImage_visible:
+					newsPageSyncTopImageVisible();
+					break;
+				case sync_googleTranslate_newsPage_news:
+					newsPageSyncTranslate();
+					break;
+			}
+		} catch (error) {
+			removeDbSyncMessage();
+		}
+	}
 
-    function newsPageSyncTopImageVisible() {
-        indexDbInit(() => {
-            read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
-                newsPageTopImageDisplay(result && result.value);
-            }, () => { });
-        });
-    }
+	function newsPageSyncTopImageVisible() {
+		indexDbInit(() => {
+			read(table_Settings, table_Settings_key_NewsPageTopImageVisible, result => {
+				newsPageTopImageDisplay(result && result.value);
+			}, () => { });
+		});
+	}
 
-    function newsPageSyncTranslate() {
-        indexDbInit(() => {
-            read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
-                translateCheckbox.checked = result && result.value;
-                newsPageNewsTranslateDisplay();
-            }, () => { });
-        });
-    }
+	function newsPageSyncTranslate() {
+		indexDbInit(() => {
+			read(table_Settings, table_Settings_key_NewsPageTranslate, result => {
+				translateCheckbox.checked = result && result.value;
+				newsPageNewsTranslateDisplay();
+			}, () => { });
+		});
+	}
 }
 
 
 
 function newsPageNewsTranslate() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-    // 更新存储
-    var settings_newsPageTranslate = {
-        item: table_Settings_key_NewsPageTranslate,
-        value: isChecked
-    };
-    update(table_Settings, settings_newsPageTranslate, () => {
-        // 通知，翻译新闻内容
-        setDbSyncMessage(sync_googleTranslate_newsPage_news);
-        newsPageNewsTranslateDisplay();
-    }, () => { });
+	// 更新存储
+	var settings_newsPageTranslate = {
+		item: table_Settings_key_NewsPageTranslate,
+		value: isChecked
+	};
+	update(table_Settings, settings_newsPageTranslate, () => {
+		// 通知，翻译新闻内容
+		setDbSyncMessage(sync_googleTranslate_newsPage_news);
+		newsPageNewsTranslateDisplay();
+	}, () => { });
 }
 
 function newsPageNewsTranslateDisplay() {
-    // 准备
-    if (!newsPageTranslateIsReady) {
-        newsPageTranslatePrepare();
-    }
+	// 准备
+	if (!newsPageTranslateIsReady) {
+		newsPageTranslatePrepare();
+	}
 
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-    newsPageTranslateNewsTitle(isChecked);
-    newsPageTranslateSiteStatus(isChecked);
-    newsPageSiteUpdateLog(isChecked);
-    newsPagesTranslateRightNews(isChecked);
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	newsPageTranslateNewsTitle(isChecked);
+	newsPageTranslateSiteStatus(isChecked);
+	newsPageSiteUpdateLog(isChecked);
+	newsPagesTranslateRightNews(isChecked);
 }
 
 // 翻译之前的准备工作
 function newsPageTranslatePrepare() {
 
-    // 翻译前整理：网站更新日志
-    var nwo = document.getElementsByClassName("nwo")[1];
-    var nwi = nwo.querySelectorAll("div.nwi")[0];
-    var nwiChildNodes = nwi.childNodes;
-    for (const i in nwiChildNodes) {
-        if (Object.hasOwnProperty.call(nwiChildNodes, i)) {
-            const childNode = nwiChildNodes[i];
-            if (childNode.nodeName == "#text") {
-                var span = document.createElement("span");
-                span.innerText = childNode.data;
-                span.classList.add("googleTranslate_02");
-                nwi.insertBefore(span, childNode.nextElementSibling);
-                childNode.parentNode.removeChild(childNode);
-            } else if (childNode.innerText) {
-                childNode.classList.add("googleTranslate_02");
-            }
-        }
-    }
+	// 翻译前整理：网站更新日志
+	var nwo = document.getElementsByClassName("nwo")[1];
+	var nwi = nwo.querySelectorAll("div.nwi")[0];
+	var nwiChildNodes = nwi.childNodes;
+	for (const i in nwiChildNodes) {
+		if (Object.hasOwnProperty.call(nwiChildNodes, i)) {
+			const childNode = nwiChildNodes[i];
+			if (childNode.nodeName == "#text") {
+				var span = document.createElement("span");
+				span.innerText = childNode.data;
+				span.classList.add("googleTranslate_02");
+				nwi.insertBefore(span, childNode.nextElementSibling);
+				childNode.parentNode.removeChild(childNode);
+			} else if (childNode.innerText) {
+				childNode.classList.add("googleTranslate_02");
+			}
+		}
+	}
 
-    var nwu = nwo.querySelectorAll("div.nwu")[0];
-    var nwuFirstChild = nwu.firstChild;
-    var nwuFirstSpan = document.createElement("span");
-    nwuFirstSpan.innerText = nwuFirstChild.textContent;
-    nwuFirstSpan.id = "googleTranslate_02_span";
-    nwu.insertBefore(nwuFirstSpan, nwuFirstChild);
-    nwuFirstChild.parentNode.removeChild(nwuFirstChild);
+	var nwu = nwo.querySelectorAll("div.nwu")[0];
+	var nwuFirstChild = nwu.firstChild;
+	var nwuFirstSpan = document.createElement("span");
+	nwuFirstSpan.innerText = nwuFirstChild.textContent;
+	nwuFirstSpan.id = "googleTranslate_02_span";
+	nwu.insertBefore(nwuFirstSpan, nwuFirstChild);
+	nwuFirstChild.parentNode.removeChild(nwuFirstChild);
 
-    // 翻译前整理：右侧新闻
-    var newstables = document.getElementsByClassName("newstable");
-    for (const i in newstables) {
-        if (Object.hasOwnProperty.call(newstables, i)) {
-            const newstable = newstables[i];
+	// 翻译前整理：右侧新闻
+	var newstables = document.getElementsByClassName("newstable");
+	for (const i in newstables) {
+		if (Object.hasOwnProperty.call(newstables, i)) {
+			const newstable = newstables[i];
 
-            var newsdate = newstable.children[1];
-            if (newsdate.innerText) {
-                newsdate.classList.add("googleTranslate_03");
-            }
+			var newsdate = newstable.children[1];
+			if (newsdate.innerText) {
+				newsdate.classList.add("googleTranslate_03");
+			}
 
-            var newstext = newstable.children[2];
-            var newstextChildNodes = newstext.childNodes;
-            for (const i in newstextChildNodes) {
-                if (Object.hasOwnProperty.call(newstextChildNodes, i)) {
-                    const childNode = newstextChildNodes[i];
-                    if (childNode.nodeName == "#text") {
-                        var span = document.createElement("span");
-                        span.innerText = childNode.data;
-                        span.classList.add("googleTranslate_03");
-                        newstext.insertBefore(span, childNode.nextElementSibling);
-                        childNode.parentNode.removeChild(childNode);
-                    } else if (childNode.innerText) {
-                        childNode.classList.add("googleTranslate_03");
-                    }
-                }
-            }
+			var newstext = newstable.children[2];
+			var newstextChildNodes = newstext.childNodes;
+			for (const i in newstextChildNodes) {
+				if (Object.hasOwnProperty.call(newstextChildNodes, i)) {
+					const childNode = newstextChildNodes[i];
+					if (childNode.nodeName == "#text") {
+						var span = document.createElement("span");
+						span.innerText = childNode.data;
+						span.classList.add("googleTranslate_03");
+						newstext.insertBefore(span, childNode.nextElementSibling);
+						childNode.parentNode.removeChild(childNode);
+					} else if (childNode.innerText) {
+						childNode.classList.add("googleTranslate_03");
+					}
+				}
+			}
 
-            var newslink = newstable.children[3];
-            if (newslink.children.length > 0) {
-                var newslinkA = newslink.children[0];
-                if (newslinkA.innerText) {
-                    newslinkA.classList.add("googleTranslate_03");
-                }
-            }
-        }
-    }
+			var newslink = newstable.children[3];
+			if (newslink.children.length > 0) {
+				var newslinkA = newslink.children[0];
+				if (newslinkA.innerText) {
+					newslinkA.classList.add("googleTranslate_03");
+				}
+			}
+		}
+	}
 
-    var rightLastDiv = document.getElementsByClassName("nwo")[2].lastChild;
-    if (rightLastDiv.children.length > 0) {
-        var a = rightLastDiv.children[0];
-        if (a.innerText) {
-            a.classList.add("googleTranslate_03");
-        }
-    }
+	var rightLastDiv = document.getElementsByClassName("nwo")[2].lastChild;
+	if (rightLastDiv.children.length > 0) {
+		var a = rightLastDiv.children[0];
+		if (a.innerText) {
+			a.classList.add("googleTranslate_03");
+		}
+	}
 
-    newsPageTranslateIsReady = true;
+	newsPageTranslateIsReady = true;
 }
 
 // 翻译：新闻标题
 function newsPageTranslateNewsTitle(isChecked) {
-    var nd = document.getElementsByClassName("nd");
-    var h2s = nd[0].querySelectorAll("h2");
-    var newstitles = document.getElementsByClassName("newstitle");
-    if (isChecked) {
-        for (const i in h2s) {
-            if (Object.hasOwnProperty.call(h2s, i)) {
-                const h2 = h2s[i];
-                var a = h2.children[0];
-                if (a.dataset.translate) {
-                    a.innerText = a.dataset.translate;
-                } else {
-                    a.classList.add("googleTranslate_00");
-                    a.title = a.innerText;
-                    if (newPagesTitles[a.innerText]) {
-                        a.innerText = newPagesTitles[a.innerText];
-                    } else {
-                        translatePageElementEN(a);
-                    }
-                }
-            }
-        }
+	var nd = document.getElementsByClassName("nd");
+	var h2s = nd[0].querySelectorAll("h2");
+	var newstitles = document.getElementsByClassName("newstitle");
+	if (isChecked) {
+		for (const i in h2s) {
+			if (Object.hasOwnProperty.call(h2s, i)) {
+				const h2 = h2s[i];
+				var a = h2.children[0];
+				if (a.dataset.translate) {
+					a.innerText = a.dataset.translate;
+				} else {
+					a.classList.add("googleTranslate_00");
+					a.title = a.innerText;
+					if (newPagesTitles[a.innerText]) {
+						a.innerText = newPagesTitles[a.innerText];
+					} else {
+						translatePageElementEN(a);
+					}
+				}
+			}
+		}
 
-        for (const i in newstitles) {
-            if (Object.hasOwnProperty.call(newstitles, i)) {
-                const newstitle = newstitles[i];
-                var a = newstitle.children[0];
-                if (a.dataset.translate) {
-                    a.innerText = a.dataset.translate;
-                } else {
-                    a.classList.add("googleTranslate_00");
-                    a.title = a.innerText;
-                    if (newPagesTitles[a.innerText]) {
-                        a.innerText = newPagesTitles[a.innerText];
-                    } else {
-                        translatePageElementEN(a);
-                    }
-                }
-            }
-        }
-    } else {
-        var googleTranslates = document.getElementsByClassName("googleTranslate_00");
-        for (const i in googleTranslates) {
-            if (Object.hasOwnProperty.call(googleTranslates, i)) {
-                const trans = googleTranslates[i];
-                if (!trans.dataset.translate) {
-                    trans.dataset.translate = trans.innerText;
-                }
-                trans.innerText = trans.title;
-            }
-        }
-    }
+		for (const i in newstitles) {
+			if (Object.hasOwnProperty.call(newstitles, i)) {
+				const newstitle = newstitles[i];
+				var a = newstitle.children[0];
+				if (a.dataset.translate) {
+					a.innerText = a.dataset.translate;
+				} else {
+					a.classList.add("googleTranslate_00");
+					a.title = a.innerText;
+					if (newPagesTitles[a.innerText]) {
+						a.innerText = newPagesTitles[a.innerText];
+					} else {
+						translatePageElementEN(a);
+					}
+				}
+			}
+		}
+	} else {
+		var googleTranslates = document.getElementsByClassName("googleTranslate_00");
+		for (const i in googleTranslates) {
+			if (Object.hasOwnProperty.call(googleTranslates, i)) {
+				const trans = googleTranslates[i];
+				if (!trans.dataset.translate) {
+					trans.dataset.translate = trans.innerText;
+				}
+				trans.innerText = trans.title;
+			}
+		}
+	}
 
 }
 
 // 翻译：最新网站状态
 function newsPageTranslateSiteStatus(isChecked) {
-    var nwo = document.getElementsByClassName("nwo")[0];
-    var nwis = nwo.querySelectorAll("div.nwi");
-    var nwf = document.getElementsByClassName("nwf")[0];
-    if (isChecked) {
-        for (const i in nwis) {
-            if (Object.hasOwnProperty.call(nwis, i)) {
-                const nwi = nwis[i];
-                var tds = nwi.querySelectorAll("td");
-                for (const t in tds) {
-                    if (Object.hasOwnProperty.call(tds, t)) {
-                        const td = tds[t];
-                        if (td.innerText) {
-                            if (td.dataset.translate) {
-                                td.innerText = td.dataset.translate;
-                            } else {
-                                td.classList.add("googleTranslate_01");
-                                td.title = td.innerText;
-                                translatePageElementEN(td);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        var zh_html = `你可以在 <a href="https://twitter.com/ehentai">推特上关注我们</a> 以便在网站不可用时获取网站状态信息。 `;
-        nwf.innerHTML = zh_html;
-    } else {
-        var googleTranslates = document.getElementsByClassName("googleTranslate_01");
-        for (const i in googleTranslates) {
-            if (Object.hasOwnProperty.call(googleTranslates, i)) {
-                const trans = googleTranslates[i];
-                if (!trans.dataset.translate) {
-                    trans.dataset.translate = trans.innerText;
-                }
-                trans.innerText = trans.title;
-            }
-        }
-        var en_html = `You can follow <a href="https://twitter.com/ehentai">follow us on Twitter</a> to receive these site status updates if the site is ever unavailable. `;
-        nwf.innerHTML = en_html;
-    }
+	var nwo = document.getElementsByClassName("nwo")[0];
+	var nwis = nwo.querySelectorAll("div.nwi");
+	var nwf = document.getElementsByClassName("nwf")[0];
+	if (isChecked) {
+		for (const i in nwis) {
+			if (Object.hasOwnProperty.call(nwis, i)) {
+				const nwi = nwis[i];
+				var tds = nwi.querySelectorAll("td");
+				for (const t in tds) {
+					if (Object.hasOwnProperty.call(tds, t)) {
+						const td = tds[t];
+						if (td.innerText) {
+							if (td.dataset.translate) {
+								td.innerText = td.dataset.translate;
+							} else {
+								td.classList.add("googleTranslate_01");
+								td.title = td.innerText;
+								translatePageElementEN(td);
+							}
+						}
+					}
+				}
+			}
+		}
+		var zh_html = `你可以在 <a href="https://twitter.com/ehentai">推特上关注我们</a> 以便在网站不可用时获取网站状态信息。 `;
+		nwf.innerHTML = zh_html;
+	} else {
+		var googleTranslates = document.getElementsByClassName("googleTranslate_01");
+		for (const i in googleTranslates) {
+			if (Object.hasOwnProperty.call(googleTranslates, i)) {
+				const trans = googleTranslates[i];
+				if (!trans.dataset.translate) {
+					trans.dataset.translate = trans.innerText;
+				}
+				trans.innerText = trans.title;
+			}
+		}
+		var en_html = `You can follow <a href="https://twitter.com/ehentai">follow us on Twitter</a> to receive these site status updates if the site is ever unavailable. `;
+		nwf.innerHTML = en_html;
+	}
 }
 
 // 翻译：网站更新日志
 function newsPageSiteUpdateLog(isChecked) {
-    newsPagesTranslateCommon("googleTranslate_02", isChecked);
-    var nwuFirstSpan = document.getElementById("googleTranslate_02_span");
-    if (isChecked) {
-        if (nwuFirstSpan.innerText) {
-            if (nwuFirstSpan.innerText.indexOf("Previous Years:") != -1) {
-                nwuFirstSpan.title = nwuFirstSpan.innerText;
-                nwuFirstSpan.innerText = "往年记录：";
-            } else if (nwuFirstSpan.dataset.translate) {
-                nwuFirstSpan.innerText = nwuFirstSpan.dataset.translate;
-            } else {
-                nwuFirstSpan.title = nwuFirstSpan.innerText;
-                translatePageElementEN(nwuFirstSpan);
-            }
-        }
-    } else {
-        if (!nwuFirstSpan.dataset.translate) {
-            nwuFirstSpan.dataset.translate = nwuFirstSpan.innerText;
-        }
-        nwuFirstSpan.innerText = nwuFirstSpan.title;
-    }
+	newsPagesTranslateCommon("googleTranslate_02", isChecked);
+	var nwuFirstSpan = document.getElementById("googleTranslate_02_span");
+	if (isChecked) {
+		if (nwuFirstSpan.innerText) {
+			if (nwuFirstSpan.innerText.indexOf("Previous Years:") != -1) {
+				nwuFirstSpan.title = nwuFirstSpan.innerText;
+				nwuFirstSpan.innerText = "往年记录：";
+			} else if (nwuFirstSpan.dataset.translate) {
+				nwuFirstSpan.innerText = nwuFirstSpan.dataset.translate;
+			} else {
+				nwuFirstSpan.title = nwuFirstSpan.innerText;
+				translatePageElementEN(nwuFirstSpan);
+			}
+		}
+	} else {
+		if (!nwuFirstSpan.dataset.translate) {
+			nwuFirstSpan.dataset.translate = nwuFirstSpan.innerText;
+		}
+		nwuFirstSpan.innerText = nwuFirstSpan.title;
+	}
 }
 
 // 翻译：右边新闻
 function newsPagesTranslateRightNews(isChecked) {
-    newsPagesTranslateCommon("googleTranslate_03", isChecked);
+	newsPagesTranslateCommon("googleTranslate_03", isChecked);
 }
 
 
 function newsPagesTranslateCommon(className, isChecked) {
-    var googleTranslates = document.getElementsByClassName(className);
-    if (isChecked) {
-        for (const i in googleTranslates) {
-            if (Object.hasOwnProperty.call(googleTranslates, i)) {
-                const trans = googleTranslates[i];
-                if (trans.innerText) {
-                    if (trans.dataset.translate) {
-                        trans.innerText = trans.dataset.translate;
-                    } else {
-                        trans.classList.add(className);
-                        trans.title = trans.innerText;
-                        translatePageElementEN(trans);
-                    }
-                }
-            }
-        }
-    } else {
-        for (const i in googleTranslates) {
-            if (Object.hasOwnProperty.call(googleTranslates, i)) {
-                const trans = googleTranslates[i];
-                if (!trans.dataset.translate) {
-                    trans.dataset.translate = trans.innerText;
-                }
-                trans.innerText = trans.title;
-            }
-        }
-    }
+	var googleTranslates = document.getElementsByClassName(className);
+	if (isChecked) {
+		for (const i in googleTranslates) {
+			if (Object.hasOwnProperty.call(googleTranslates, i)) {
+				const trans = googleTranslates[i];
+				if (trans.innerText) {
+					if (trans.dataset.translate) {
+						trans.innerText = trans.dataset.translate;
+					} else {
+						trans.classList.add(className);
+						trans.title = trans.innerText;
+						translatePageElementEN(trans);
+					}
+				}
+			}
+		}
+	} else {
+		for (const i in googleTranslates) {
+			if (Object.hasOwnProperty.call(googleTranslates, i)) {
+				const trans = googleTranslates[i];
+				if (!trans.dataset.translate) {
+					trans.dataset.translate = trans.innerText;
+				}
+				trans.innerText = trans.title;
+			}
+		}
+	}
 }
 
 
@@ -9388,141 +9455,141 @@ function uconfigPageReWrapperForm(contentForm) {
 //#region step7.9.tosPage.js 帮助页面
 
 function tosPage() {
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 添加样式方便调整页面样式
-    var stuffbox = document.querySelector("div.stuffbox");
-    stuffbox.classList.add("t_tosPage_stuffbox");
+	// 添加样式方便调整页面样式
+	var stuffbox = document.querySelector("div.stuffbox");
+	stuffbox.classList.add("t_tosPage_stuffbox");
 
-    // 添加谷歌翻译按钮，翻译全文
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    translateDiv.style.display = "none";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻";
+	// 添加谷歌翻译按钮，翻译全文
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	translateDiv.style.display = "none";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻";
 
-    translateDiv.appendChild(translateCheckbox);
-    translateDiv.appendChild(translateLabel);
+	translateDiv.appendChild(translateCheckbox);
+	translateDiv.appendChild(translateLabel);
 
-    translateCheckbox.addEventListener("click", tosPageTranslate);
-    stuffbox.insertBefore(translateDiv, stuffbox.children[0]);
+	translateCheckbox.addEventListener("click", tosPageTranslate);
+	stuffbox.insertBefore(translateDiv, stuffbox.children[0]);
 
 
-    indexDbInit(() => {
-        // 读取新闻页面翻译
-        read(table_Settings, table_Settings_key_TosPageTranslate, result => {
-            translateDiv.style.display = "block";
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                tosPageTranslateDisplay();
-            }
-            translateDiv.style.display = "block";
-        }, () => {
-            translateDiv.style.display = "block";
-        });
-    });
+	indexDbInit(() => {
+		// 读取新闻页面翻译
+		read(table_Settings, table_Settings_key_TosPageTranslate, result => {
+			translateDiv.style.display = "block";
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				tosPageTranslateDisplay();
+			}
+			translateDiv.style.display = "block";
+		}, () => {
+			translateDiv.style.display = "block";
+		});
+	});
 
-    // 数据同步
-    window.onstorage = function (e) {
-        try {
-            console.log(e);
-            switch (e.newValue) {
-                case sync_googleTranslate_tosPage:
-                    tosPageTranslateSync();
-                    break;
-            }
-        } catch (error) {
-            removeDbSyncMessage();
-        }
-    }
+	// 数据同步
+	window.onstorage = function (e) {
+		try {
+			console.log(e);
+			switch (e.newValue) {
+				case sync_googleTranslate_tosPage:
+					tosPageTranslateSync();
+					break;
+			}
+		} catch (error) {
+			removeDbSyncMessage();
+		}
+	}
 }
 
 function tosPageTranslateSync() {
-    indexDbInit(() => {
-        read(table_Settings, table_Settings_key_TosPageTranslate, result => {
-            var translateCheckbox = document.getElementById("googleTranslateCheckbox");
-            translateCheckbox.checked = result && result.value;
-            tosPageTranslateDisplay();
-        }, () => { });
-    });
+	indexDbInit(() => {
+		read(table_Settings, table_Settings_key_TosPageTranslate, result => {
+			var translateCheckbox = document.getElementById("googleTranslateCheckbox");
+			translateCheckbox.checked = result && result.value;
+			tosPageTranslateDisplay();
+		}, () => { });
+	});
 }
 
 function tosPageTranslate() {
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
 
-    // 更新存储
-    var settings_tosPageTranslate = {
-        item: table_Settings_key_TosPageTranslate,
-        value: isChecked
-    };
-    update(table_Settings, settings_tosPageTranslate, () => {
-        // 通知，翻译全文
-        setDbSyncMessage(sync_googleTranslate_tosPage);
-        tosPageTranslateDisplay();
-    }, () => { });
+	// 更新存储
+	var settings_tosPageTranslate = {
+		item: table_Settings_key_TosPageTranslate,
+		value: isChecked
+	};
+	update(table_Settings, settings_tosPageTranslate, () => {
+		// 通知，翻译全文
+		setDbSyncMessage(sync_googleTranslate_tosPage);
+		tosPageTranslateDisplay();
+	}, () => { });
 }
 
 function tosPageTranslateDisplay() {
-    var stuffbox = document.querySelector("div.stuffbox");
-    var isChecked = document.getElementById("googleTranslateCheckbox").checked;
-    if (isChecked) {
-        recursionTosPageTranslate(stuffbox);
-    } else {
-        recursionTosPageOriginEn(stuffbox);
-    }
+	var stuffbox = document.querySelector("div.stuffbox");
+	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
+	if (isChecked) {
+		recursionTosPageTranslate(stuffbox);
+	} else {
+		recursionTosPageOriginEn(stuffbox);
+	}
 
 }
 
 function recursionTosPageTranslate(element) {
-    if (element.id == "googleTranslateDiv") return;
-    var elementChildNodes = element.childNodes;
-    for (const i in elementChildNodes) {
-        if (Object.hasOwnProperty.call(elementChildNodes, i)) {
-            const child = elementChildNodes[i];
-            if (child.nodeName == "#text" && child.data) {
-                var trimData = trimEnd(child.data);
-                if (trimData.replace(/[\r\n]/g, "") != "") {
-                    var span = document.createElement("span");
-                    span.innerText = trimData;
-                    child.parentNode.insertBefore(span, child);
-                }
-                child.parentNode.removeChild(child);
-            }
-        }
-    }
+	if (element.id == "googleTranslateDiv") return;
+	var elementChildNodes = element.childNodes;
+	for (const i in elementChildNodes) {
+		if (Object.hasOwnProperty.call(elementChildNodes, i)) {
+			const child = elementChildNodes[i];
+			if (child.nodeName == "#text" && child.data) {
+				var trimData = trimEnd(child.data);
+				if (trimData.replace(/[\r\n]/g, "") != "") {
+					var span = document.createElement("span");
+					span.innerText = trimData;
+					child.parentNode.insertBefore(span, child);
+				}
+				child.parentNode.removeChild(child);
+			}
+		}
+	}
 
-    for (let i = 0; i < element.children.length; i++) {
-        const child = element.children[i];
-        if (child.children.length > 0) {
-            recursionTosPageTranslate(child);
-        } else if (child.dataset.translate_zh) {
-            child.innerText = child.dataset.translate_zh;
-        } else if (child.innerText) {
-            child.title = child.innerText;
-            // 谷歌机翻
-            translatePageElementFunc(child, true, () => {
-                child.dataset.translate_zh = child.innerText;
-            });
-        }
-    }
+	for (let i = 0; i < element.children.length; i++) {
+		const child = element.children[i];
+		if (child.children.length > 0) {
+			recursionTosPageTranslate(child);
+		} else if (child.dataset.translate_zh) {
+			child.innerText = child.dataset.translate_zh;
+		} else if (child.innerText) {
+			child.title = child.innerText;
+			// 谷歌机翻
+			translatePageElementFunc(child, true, () => {
+				child.dataset.translate_zh = child.innerText;
+			});
+		}
+	}
 }
 
 function recursionTosPageOriginEn(element) {
-    if (element.id == "googleTranslateDiv") return;
-    for (let i = 0; i < element.children.length; i++) {
-        const child = element.children[i];
-        if (child.children.length > 0) {
-            recursionTosPageOriginEn(child);
-        } else if (child.title) {
-            child.innerText = child.title;
-        }
-    }
+	if (element.id == "googleTranslateDiv") return;
+	for (let i = 0; i < element.children.length; i++) {
+		const child = element.children[i];
+		if (child.children.length > 0) {
+			recursionTosPageOriginEn(child);
+		} else if (child.title) {
+			child.innerText = child.title;
+		}
+	}
 }
 
 
@@ -9606,6 +9673,8 @@ function recursionTranslate(element) {
 
 //DONE 帮助页面翻译
 //DONE 阅读页面bug修复
+//DONE 详情警告弹窗翻译
+//DONE 折叠方法bug修复
 
 
 
@@ -12428,6 +12497,8 @@ function mainPageCategory() {
 }
 
 function detailPage() {
+	// 检查页面是否存在警告
+	if (checkBooksWarning()) return;
 
 	// 头部数据更新
 	detailDataUpdate();

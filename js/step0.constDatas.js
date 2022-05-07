@@ -616,4 +616,15 @@ const lowImgSizeLimit = 512000; // 500kb
 
 //#endregion
 
+//#region 详情页面警告提示信息
+
+const detailPage_warnContentDict = {
+	"Content Warning": "内容警告",
+	"View Gallery": "查看图库",
+	"Get Me Outta Here": "让我离开这里",
+	"Never Warn Me Again": "永远不要再警告我"
+}
+
+//#endregion
+
 //#endregion
