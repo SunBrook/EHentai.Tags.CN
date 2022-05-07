@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name         ExHentai 中文标签助手_测试版_beta
-// @namespace    ExHentai 中文标签助手_DYZYFTS_beta
+// @name         ExHentai 中文标签助手
+// @namespace    ExHentai 中文标签助手_DYZYFTS
 // @license		 MIT
 // @compatible  firefox >= 60
 // @compatible  edge >= 16
 // @compatible  chrome >= 61
 // @compatible  safari >= 11
 // @compatible  opera >= 48
-// @version      3.14.0
+// @version      3.13.0
 // @icon         http://exhentai.org/favicon.ico
 // @description  E-hentai + ExHentai 丰富的本地中文标签库 + 自定义管理收藏库，搜索时支持点击选择标签或者手动输入，页面翻译英文标签时支持本地标签库匹配和谷歌机翻。
 // @author       地狱天使
@@ -26,306 +26,306 @@
 
 // 检查字典是否为空
 function checkDictNull(dict) {
-    for (const n in dict) {
-        return false;
-    }
-    return true;
+	for (const n in dict) {
+		return false;
+	}
+	return true;
 }
 
 // 获取地址参数
 function GetQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substring(1).match(reg);
-    if (r != null) return decodeURI(r[2]); return null;
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substring(1).match(reg);
+	if (r != null) return decodeURI(r[2]); return null;
 }
 
 // 数组删除元素
 Array.prototype.remove = function (val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-        this.splice(index, 1);
-    }
+	var index = this.indexOf(val);
+	if (index > -1) {
+		this.splice(index, 1);
+	}
 };
 
 // 数组差集
 function getDiffSet(array1, array2) {
-    return array1.filter(item => !new Set(array2).has(item));
+	return array1.filter(item => !new Set(array2).has(item));
 }
 
 // 导出json文件
 function saveJSON(data, filename) {
-    if (!data) return;
-    if (!filename) filename = "json.json";
-    if (typeof data === "object") {
-        data = JSON.stringify(data, undefined, 4);
-    }
-    // 要创建一个 blob 数据
-    let blob = new Blob([data], { type: "text/json" }),
-        a = document.createElement("a");
-    a.download = filename;
+	if (!data) return;
+	if (!filename) filename = "json.json";
+	if (typeof data === "object") {
+		data = JSON.stringify(data, undefined, 4);
+	}
+	// 要创建一个 blob 数据
+	let blob = new Blob([data], { type: "text/json" }),
+		a = document.createElement("a");
+	a.download = filename;
 
-    // 将blob转换为地址
-    // 创建 URL 的 Blob 对象
-    a.href = window.URL.createObjectURL(blob);
+	// 将blob转换为地址
+	// 创建 URL 的 Blob 对象
+	a.href = window.URL.createObjectURL(blob);
 
-    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
-    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+	// 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+	a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-    // 添加鼠标事件
-    let event = new MouseEvent("click", {});
+	// 添加鼠标事件
+	let event = new MouseEvent("click", {});
 
-    // 向一个指定的事件目标派发一个事件
-    a.dispatchEvent(event);
+	// 向一个指定的事件目标派发一个事件
+	a.dispatchEvent(event);
 }
 
 // 获取当前时间
 function getCurrentDate(format) {
-    var now = new Date();
-    var year = now.getFullYear(); //年份
-    var month = now.getMonth();//月份
-    var date = now.getDate();//日期
-    var day = now.getDay();//周几
-    var hour = now.getHours();//小时
-    var minu = now.getMinutes();//分钟
-    var sec = now.getSeconds();//秒
-    month = month + 1;
-    if (month < 10) month = "0" + month;
-    if (date < 10) date = "0" + date;
-    if (hour < 10) hour = "0" + hour;
-    if (minu < 10) minu = "0" + minu;
-    if (sec < 10) sec = "0" + sec;
-    var time = "";
-    //精确到天
-    if (format == 1) {
-        time = year + "-" + month + "-" + date;
-    }
-    //精确到分
-    else if (format == 2) {
-        time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
-    }
-    return time;
+	var now = new Date();
+	var year = now.getFullYear(); //年份
+	var month = now.getMonth();//月份
+	var date = now.getDate();//日期
+	var day = now.getDay();//周几
+	var hour = now.getHours();//小时
+	var minu = now.getMinutes();//分钟
+	var sec = now.getSeconds();//秒
+	month = month + 1;
+	if (month < 10) month = "0" + month;
+	if (date < 10) date = "0" + date;
+	if (hour < 10) hour = "0" + hour;
+	if (minu < 10) minu = "0" + minu;
+	if (sec < 10) sec = "0" + sec;
+	var time = "";
+	//精确到天
+	if (format == 1) {
+		time = year + "-" + month + "-" + date;
+	}
+	//精确到分
+	else if (format == 2) {
+		time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
+	}
+	return time;
 }
 
 // 调用谷歌翻译接口
 function getGoogleTranslate(text, func) {
-    var httpRequest = new XMLHttpRequest();
-    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
-    httpRequest.open("GET", url, true);
-    httpRequest.send();
+	var httpRequest = new XMLHttpRequest();
+	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
+	httpRequest.open("GET", url, true);
+	httpRequest.send();
 
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var json = JSON.parse(httpRequest.responseText);
-            func(json);
-        }
-    }
+	httpRequest.onreadystatechange = function () {
+		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+			var json = JSON.parse(httpRequest.responseText);
+			func(json);
+		}
+	}
 }
 
 // 借助谷歌翻译设置翻译后的值
 function translatePageElement(element) {
-    getGoogleTranslate(element.innerText, function (data) {
-        var sentences = data.sentences;
-        var longtext = '';
-        for (const i in sentences) {
-            if (Object.hasOwnProperty.call(sentences, i)) {
-                const sentence = sentences[i];
-                longtext += sentence.trans;
-            }
-        }
-        element.innerText = longtext;
-    });
+	getGoogleTranslate(element.innerText, function (data) {
+		var sentences = data.sentences;
+		var longtext = '';
+		for (const i in sentences) {
+			if (Object.hasOwnProperty.call(sentences, i)) {
+				const sentence = sentences[i];
+				longtext += sentence.trans;
+			}
+		}
+		element.innerText = longtext;
+	});
 }
 
 function translatePageElementFunc(element, isNeedUrlEncode, func_compelete) {
-    var innerText = isNeedUrlEncode ? urlEncode(element.innerText) : element.innerText;
-    getGoogleTranslate(innerText, function (data) {
-        var sentences = data.sentences;
-        var longtext = '';
-        for (const i in sentences) {
-            if (Object.hasOwnProperty.call(sentences, i)) {
-                const sentence = sentences[i];
-                longtext += sentence.trans;
-            }
-        }
-        element.innerText = longtext;
-        func_compelete();
-    });
+	var innerText = isNeedUrlEncode ? urlEncode(element.innerText) : element.innerText;
+	getGoogleTranslate(innerText, function (data) {
+		var sentences = data.sentences;
+		var longtext = '';
+		for (const i in sentences) {
+			if (Object.hasOwnProperty.call(sentences, i)) {
+				const sentence = sentences[i];
+				longtext += sentence.trans;
+			}
+		}
+		element.innerText = longtext;
+		func_compelete();
+	});
 }
 
 function getGoogleTranslateEN(text, func) {
-    var httpRequest = new XMLHttpRequest();
-    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
-    httpRequest.open("GET", url, true);
-    httpRequest.send();
+	var httpRequest = new XMLHttpRequest();
+	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
+	httpRequest.open("GET", url, true);
+	httpRequest.send();
 
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var json = JSON.parse(httpRequest.responseText);
-            func(json);
-        }
-    }
+	httpRequest.onreadystatechange = function () {
+		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+			var json = JSON.parse(httpRequest.responseText);
+			func(json);
+		}
+	}
 }
 
 function translatePageElementEN(element) {
-    getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
-        var sentences = data.sentences;
-        var longtext = '';
-        for (const i in sentences) {
-            if (Object.hasOwnProperty.call(sentences, i)) {
-                const sentence = sentences[i];
-                longtext += sentence.trans;
-            }
-        }
-        element.innerText = longtext;
-    });
+	getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
+		var sentences = data.sentences;
+		var longtext = '';
+		for (const i in sentences) {
+			if (Object.hasOwnProperty.call(sentences, i)) {
+				const sentence = sentences[i];
+				longtext += sentence.trans;
+			}
+		}
+		element.innerText = longtext;
+	});
 }
 
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {
-    clearInterval(slideTimer);
-    var h = 0;
-    slideTimer = setInterval(function () {
-        // 当目标高度与实际高度小于10px时，以1px的速度步进
-        var step = (realHeight - h) / 10;
-        step = Math.ceil(step);
-        h += step;
-        if (Math.abs(realHeight - h) <= Math.abs(step)) {
-            h = realHeight;
-            element.style.height = `${realHeight}px`;
-            func();
-            clearInterval(slideTimer);
-        } else {
-            element.style.height = `${h}px`;
-        }
-    }, speed);
+	clearInterval(slideTimer);
+	var h = 0;
+	slideTimer = setInterval(function () {
+		// 当目标高度与实际高度小于10px时，以1px的速度步进
+		var step = (realHeight - h) / 10;
+		step = Math.ceil(step);
+		h += step;
+		if (Math.abs(realHeight - h) <= Math.abs(step)) {
+			h = realHeight;
+			element.style.height = `${realHeight}px`;
+			func();
+			clearInterval(slideTimer);
+		} else {
+			element.style.height = `${h}px`;
+		}
+	}, speed);
 }
 function slideUp(element, speed, func) {
-    clearInterval(slideTimer);
-    slideTimer = setInterval(function () {
-        var step = (0 - element.clientHeight) / 10;
-        step = Math.floor(step);
-        element.style.height = `${element.clientHeight + step}px`;
-        if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
-            element.style.height = "0px";
-            func();
-            clearInterval(slideTimer);
-        }
-    }, speed);
+	clearInterval(slideTimer);
+	slideTimer = setInterval(function () {
+		var step = (0 - element.clientHeight) / 10;
+		step = Math.floor(step);
+		element.style.height = `${element.clientHeight + step}px`;
+		if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
+			element.style.height = "0px";
+			func();
+			clearInterval(slideTimer);
+		}
+	}, speed);
 }
 
 // 展开折叠动画 (右左)
 var slideTimer2 = null;
 function slideRight(element, realWidth, speed, func) {
-    clearInterval(slideTimer2);
-    var w = 0;
-    slideTimer2 = setInterval(function () {
-        // 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
-        var step = (realWidth - w) / 10;
-        step = Math.ceil(step);
-        w += step;
-        if (Math.abs(realWidth - w) <= Math.abs(step)) {
-            w = realWidth;
-            element.style.width = `${realWidth}px`;
-            func();
-            clearInterval(slideTimer2);
-        } else {
-            element.style.width = `${w}px`;
-        }
-    }, speed);
+	clearInterval(slideTimer2);
+	var w = 0;
+	slideTimer2 = setInterval(function () {
+		// 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
+		var step = (realWidth - w) / 10;
+		step = Math.ceil(step);
+		w += step;
+		if (Math.abs(realWidth - w) <= Math.abs(step)) {
+			w = realWidth;
+			element.style.width = `${realWidth}px`;
+			func();
+			clearInterval(slideTimer2);
+		} else {
+			element.style.width = `${w}px`;
+		}
+	}, speed);
 }
 function slideLeft(element, speed, func) {
-    clearInterval(slideTimer2);
-    slideTimer2 = setInterval(function () {
-        var step = (0 - element.clientWidth) / 10;
-        step = Math.floor(step);
-        element.style.width = `${element.clientWidth + step}px`;
-        if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
-            element.style.width = "0px";
-            func();
-            clearInterval(slideTimer2);
-        }
-    }, speed);
+	clearInterval(slideTimer2);
+	slideTimer2 = setInterval(function () {
+		var step = (0 - element.clientWidth) / 10;
+		step = Math.floor(step);
+		element.style.width = `${element.clientWidth + step}px`;
+		if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
+			element.style.width = "0px";
+			func();
+			clearInterval(slideTimer2);
+		}
+	}, speed);
 }
 
 
 // 页面样式注入
 function styleInject(css, ref) {
-    if (ref === void 0) ref = {};
-    var insertAt = ref.insertAt;
+	if (ref === void 0) ref = {};
+	var insertAt = ref.insertAt;
 
-    if (!css || typeof document === 'undefined') { return; }
+	if (!css || typeof document === 'undefined') { return; }
 
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var style = document.createElement('style');
-    style.type = 'text/css';
+	var head = document.head || document.getElementsByTagName('head')[0];
+	var style = document.createElement('style');
+	style.type = 'text/css';
 
-    if (insertAt === 'top') {
-        if (head.firstChild) {
-            head.insertBefore(style, head.firstChild);
-        } else {
-            head.appendChild(style);
-        }
-    } else {
-        head.appendChild(style);
-    }
+	if (insertAt === 'top') {
+		if (head.firstChild) {
+			head.insertBefore(style, head.firstChild);
+		} else {
+			head.appendChild(style);
+		}
+	} else {
+		head.appendChild(style);
+	}
 
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
+	if (style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		style.appendChild(document.createTextNode(css));
+	}
 }
 
 // UrlEncode
 function urlEncode(str) {
-    str = (str + '').toString();
+	str = (str + '').toString();
 
-    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+		replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 // UrlDecode
 function urlDecode(str) {
-    return decodeURIComponent(str);
+	return decodeURIComponent(str);
 }
 
 // 跨域
 function crossDomain() {
-    var meta = document.createElement("meta");
-    meta.httpEquiv = "Content-Security-Policy";
-    meta.content = "upgrade-insecure-requests";
-    document.getElementsByTagName("head")[0].appendChild(meta);
+	var meta = document.createElement("meta");
+	meta.httpEquiv = "Content-Security-Policy";
+	meta.content = "upgrade-insecure-requests";
+	document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
 // 英语日期转纯数字日期
 function transDate(dateEn) {
-    var monthDict = {
-        "January": 1,
-        "February": 2,
-        "March": 3,
-        "April": 4,
-        "May": 5,
-        "June": 6,
-        "July": 7,
-        "August": 8,
-        "September": 9,
-        "October": 10,
-        "November": 11,
-        "December": 12
-    };
-    var dateSplit = dateEn.split(' ');
-    return `${dateSplit[2]}/${monthDict[dateSplit[1]]}/${Number(dateSplit[0])}`;
+	var monthDict = {
+		"January": 1,
+		"February": 2,
+		"March": 3,
+		"April": 4,
+		"May": 5,
+		"June": 6,
+		"July": 7,
+		"August": 8,
+		"September": 9,
+		"October": 10,
+		"November": 11,
+		"December": 12
+	};
+	var dateSplit = dateEn.split(' ');
+	return `${dateSplit[2]}/${monthDict[dateSplit[1]]}/${Number(dateSplit[0])}`;
 }
 
 // 过滤字符串开头和结尾的空格
 function trimStartEnd(str) {
-    return str.replace(/(^\s*)|(\s*$)/g, "");
+	return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 
 // 过滤字符串结尾空格
 function trimEnd(str) {
-    return str.replace(/(\s*$)/g, "");
+	return str.replace(/(\s*$)/g, "");
 }
 
 //#endregion
@@ -961,7 +961,6 @@ const detailPage_warnContentDict = {
 
 //#endregion
 
-
 //#region step0.localstorage.js localstorage 数据方法，迁入 indexdb，如无特殊需要，删除之前存储的数据
 
 // 版本号数据 读取、删除
@@ -1063,7 +1062,6 @@ function removeBgLowImage() {
 }
 //#endregion
 
-
 //#region step0.switch.js 判断域名选择 exhentai 还是 e-henatai
 const webHost = window.location.host;
 function func_eh_ex(ehFunc, exFunc) {
@@ -1076,7 +1074,6 @@ function func_eh_ex(ehFunc, exFunc) {
 }
 
 //#endregion
-
 
 //#region step1.1.styleInject.js 样式注入
 func_eh_ex(() => {
@@ -3626,7 +3623,6 @@ func_eh_ex(() => {
 
 //#endregion
 
-
 //#region step1.2.translateTopBottomMenu.js 头部菜单、底部菜单翻译
 
 function topMenuTranslateZh() {
@@ -3679,8 +3675,6 @@ function bottomMenuTranslateZh() {
 }
 
 //#endregion
-
-
 
 //#region step2.getTagDatas.js 获取标签数据
 
@@ -3757,19 +3751,16 @@ function indexDbInit(func_start_use) {
 	} else {
 		request.onsuccess = function () {
 			db = request.result;
-			console.log("数据库打开成功", db);
 			func_start_use();
 		}
 	}
 }
 
 request.onerror = function (event) {
-	console.log("数据库打开报错", event);
 }
 
 request.onupgradeneeded = function (event) {
 	db = event.target.result;
-	console.log("升级数据库", db);
 
 	// 对象仓库 Settings
 	// 
@@ -3814,7 +3805,6 @@ function read(tableName, key, func_success, func_error) {
 	var request = objectStore.get(key);
 
 	request.onerror = function (event) {
-		console.log('读取事务失败', event);
 		func_error();
 	}
 
@@ -3831,7 +3821,6 @@ function readAll(tableName, func_success, func_end) {
 			func_success(cursor.key, cursor.value);
 			cursor.continue();
 		} else {
-			console.log('没有更多数据了');
 			func_end();
 		}
 	}
@@ -3847,7 +3836,6 @@ function readByIndex(tableName, indexName, indexValue, func_success, func_none) 
 		if (result) {
 			func_success(result);
 		} else {
-			console.log('没找到');
 			func_none();
 		}
 	}
@@ -3903,12 +3891,10 @@ function add(tableName, data, func_success, func_error) {
 		.add(data);
 
 	request.onsuccess = function (event) {
-		console.log('数据写入成功', event);
 		func_success(event);
 	}
 
 	request.onerror = function (event) {
-		console.log('数据写入失败', event);
 		func_error(event);
 	}
 }
@@ -3941,12 +3927,10 @@ function update(tableName, data, func_success, func_error) {
 		.put(data);
 
 	request.onsuccess = function (event) {
-		console.log("数据更新成功", event);
 		func_success();
 	}
 
 	request.onerror = function (event) {
-		console.log("数据更新失败");
 		func_error(event);
 	}
 }
@@ -3956,11 +3940,9 @@ function remove(tableName, key, func_success, func_error) {
 		.objectStore(tableName)
 		.delete(key);
 	request.onsuccess = function (event) {
-		console.log("数据删除成功", event);
 		func_success();
 	}
 	request.onerror = function (event) {
-		console.log('数据删除失败', event);
 		func_error(event);
 	}
 }
@@ -4021,7 +4003,6 @@ function fetishListDataInit(update_func, local_func) {
 			}
 		});
 	}, error => {
-		console.log('error', error);
 	})
 }
 
@@ -4040,7 +4021,6 @@ function ehTagDataInit(update_func, local_func) {
 		});
 
 	}, error => {
-		console.log('error', error);
 	});
 }
 
@@ -4134,7 +4114,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete1 = true;
 				batchAdd(table_fetishListSubItems, table_fetishListSubItems_key, newData.data, newData.count, () => {
 					complete2 = true;
-					console.log('批量添加完成');
 				});
 			});
 
@@ -4189,7 +4168,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete3 = true;
 			complete4 = true;
 			complete5 = true;
-			console.log('fet', "没有新数据");
 		});
 
 		// 如果 EhTag 版本更新，这尝试更新用户收藏（可能没有翻译过的标签进行翻译）
@@ -4257,14 +4235,12 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete6 = true;
 				batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
 					complete7 = true;
-					console.log("批量添加完成");
 				});
 			});
 
 			// 批量添加详情页父级信息
 			batchAdd(table_detailParentItems, table_detailParentItems_key, detailDict, detailDictCount, () => {
 				complete8 = true;
-				console.log("批量添加完成");
 			});
 
 			var settings_ehTag_parentEnArray = {
@@ -4320,7 +4296,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete9 = true;
 			complete10 = true;
 			complete11 = true;
-			console.log('ehtag', "没有新数据");
 		});
 
 		// 用户收藏更新
@@ -4680,7 +4655,6 @@ function initUserSettings(func_compelete) {
 
 //#endregion
 
-
 //#region step3.0.frontTopTranslate.js 首页头部翻译
 
 function frontTopOldSearchTranslate() {
@@ -4916,9 +4890,6 @@ function frontPageTranslateFileSearchResult(fileSearchResultDiv) {
 }
 
 //#endregion
-
-
-
 
 //#region step3.1.frontTranslate.js 首页谷歌翻译
 
@@ -5347,9 +5318,6 @@ function frontPageTitleTranslate() {
 
 //#endregion
 
-
-
-
 //#region step3.2.frontPageTopStyle 首页头部搜索显示隐藏
 
 // 添加样式和逻辑，从 localstroage 中读取显示隐藏
@@ -5568,8 +5536,6 @@ function fsdivShow() {
 
 //#endregion
 
-
-
 //#region step3.3.frontPageHtml.js 首页HTML 
 
 // 首页代码
@@ -5689,8 +5655,6 @@ function frontPageHtml() {
 }
 
 //#endregion
-
-
 
 //#region step4.1.detailTranslate.js 详情页翻译
 
@@ -6250,8 +6214,6 @@ function recursionDetailPageWarnTranslate(element) {
 
 //#endregion
 
-
-
 //#region step4.2.detailbtn.js 详情页主要按钮功能
 
 // 详情页选中的标签信息
@@ -6319,8 +6281,6 @@ function translateDetailPageTitleDisplay() {
 				txtArray.push(cstr);
 			}
 
-			console.log(txtArray);
-			console.log(signDictArray);
 
 			var totalCount = txtArray.length;
 			var indexCount = 0;
@@ -6354,7 +6314,6 @@ function translateDetailPageTitleDisplay() {
 			}, 50);
 
 			function translateCompelete() {
-				console.log(translateDict);
 				if (signDictArray.length == 0 && txtArray.length > 0) {
 					// 纯文字
 					var str = '';
@@ -7033,7 +6992,6 @@ function DataSyncTranslateTorrentDetailInfoCommand() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_torrentDetailInfo_command:
 					updateGoogleTorrentDetailInfoCommand();
@@ -7105,15 +7063,12 @@ function closeWindow() {
 
 //#endregion
 
-
-
 //#region step5.3.datasync.common.translateTitle.js 热门页数据同步
 
 function DataSyncCommonTranslateTitle() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_frontPage_title:
 					updateGoogleTranslateFrontPageTitle();
@@ -7610,7 +7565,6 @@ function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInpu
 
 //#endregion
 
-
 //#region 7.3.watchedPage.js 偏好
 
 // 与首页功能一同实现
@@ -7884,7 +7838,6 @@ function DataSyncTranslateTorrentDetailInfoCommand() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_torrentDetailInfo_command:
 					updateGoogleTorrentDetailInfoCommand();
@@ -7955,7 +7908,6 @@ function closeWindow() {
 }
 
 //#endregion
-
 
 //#region step7.5.toplistPage.js 排行榜
 
@@ -8351,10 +8303,6 @@ function toplistBookpages() {
 
 //#endregion
 
-
-
-
-
 //#region step7.6.myHomePage.js 我的主页 - 总览
 
 function myHomePage() {
@@ -8377,8 +8325,6 @@ function myHomePage() {
 }
 
 //#endregion
-
-
 
 //#region step7.7.newsPage.js
 
@@ -8554,7 +8500,6 @@ function newsPage() {
 	// 数据同步
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_newsPage_topImage_visible:
 					newsPageSyncTopImageVisible();
@@ -8858,7 +8803,6 @@ function newsPagesTranslateCommon(className, isChecked) {
 
 
 //#endregion
-
 
 //#region step7.8.uconfigPage.js 设置页面
 
@@ -9498,7 +9442,6 @@ function tosPage() {
 	// 数据同步
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_tosPage:
 					tosPageTranslateSync();
@@ -9595,8 +9538,6 @@ function recursionTosPageOriginEn(element) {
 
 //#endregion
 
-
-
 //#region step8.1.eventpane.js hentaivase 弹框
 
 function hentaiVaseDialog() {
@@ -9657,26 +9598,6 @@ function recursionTranslate(element) {
 }
 
 //#endregion
-
-
-
-
-//TODO 我的标签和本地标签的导入、导出，我的标签翻译 (EX)
-//TODO 样式细化
-//TODO 悬浮显示预览图
-//TODO 上下键选择候选项
-//TODO 排行榜收藏上传者
-//TODO 收藏上传者，显示 收藏他/她 或者 取消收藏
-//TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
-//TODO 首页显示已收藏的标签
-//TODO 首页背景
-
-//DONE 帮助页面翻译
-//DONE 阅读页面链接bug修复
-//DONE 详情警告弹窗翻译
-//DONE 折叠方法bug修复
-
-
 
 //#region main.js 主方法
 
@@ -9800,7 +9721,6 @@ function mainPageCategory() {
 	// 直接从 localStroage 中取出有损图片先行展示，然后用无损图片替换
 	var bglowbase64 = getBgLowImage();
 	if (bglowbase64) {
-		console.log('有损图片附加');
 		var bg = `url(${bglowbase64}) 0 / cover`;
 		var style = document.createElement('style');
 		style.innerHTML = `#div_ee8413b2_bg::before{background:${bg}}`;
@@ -9810,7 +9730,6 @@ function mainPageCategory() {
 	// 消息通知提前，只要数据改变就应该马上通知，方便快速其他页面快速反应	
 	// 初始化用户配置信息
 	initUserSettings(() => {
-		console.log('初始化用户配置信息完毕');
 
 		// 首页头部样式调整，补充事件
 		frontPageTopStyleStep02();
@@ -9976,7 +9895,6 @@ function mainPageCategory() {
 				reader.readAsDataURL(resultFile);
 				reader.onload = function (e) {
 					var fileContent = e.target.result;
-					console.log(fileContent);
 					t_imgBase64 = fileContent;
 					setListBackgroundImage(t_imgBase64);
 
@@ -10203,7 +10121,6 @@ function mainPageCategory() {
 		}
 
 		//#endregion
-
 
 		//#region step6.2.listFontColor.js 列表字体颜色设置
 
@@ -10924,8 +10841,6 @@ function mainPageCategory() {
 			var item = document.getElementById(id);
 			var cateItem = item.dataset.item;
 			delete searchItemDict[cateItem];
-			console.log(cateItem);
-			console.log(searchItemDict);
 
 			if (checkDictNull(searchItemDict)) {
 				inputClearBtn.style.display = "none";
@@ -10938,7 +10853,6 @@ function mainPageCategory() {
 		}
 
 		//#endregion
-
 
 		// 首页谷歌翻译：标签
 		indexDbInit(() => {
@@ -11015,7 +10929,6 @@ function mainPageCategory() {
 									}
 								}
 								else {
-									console.log(itemArray);
 									// 从恋物列表中查询，看是否存在
 									readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
 										if (fetishData) {
@@ -11042,8 +10955,6 @@ function mainPageCategory() {
 				var item = document.getElementById(id);
 				var cateItem = item.dataset.item;
 				delete searchItemDict[cateItem];
-				console.log(cateItem);
-				console.log(searchItemDict);
 
 				if (checkDictNull(searchItemDict)) {
 					inputClearBtn.style.display = "none";
@@ -11313,11 +11224,6 @@ function mainPageCategory() {
 
 			//#endregion
 
-
-
-
-
-
 			//#region step3.8.favorite.js 收藏功能
 
 			// 读取转换本地收藏数据
@@ -11471,7 +11377,6 @@ function mainPageCategory() {
 			function firstUpdateFavoriteSubItems(favoriteSubItems, foundTotalCount) {
 				// 更新本地收藏表
 				batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteSubItems, foundTotalCount, () => {
-					console.log('批量添加本地收藏表完成');
 					// 稳妥起见，更新完之后再删除本地的原始收藏列表
 					remove(table_Settings, table_Settings_key_FavoriteList, () => { }, () => { });
 				});
@@ -12257,12 +12162,10 @@ function mainPageCategory() {
 
 			//#endregion
 
-
 			//#region step5.1.dataSync.frontPage.js 首页数据同步
 
 			window.onstorage = function (e) {
 				try {
-					console.log(e);
 					switch (e.newValue) {
 						case sync_oldSearchTopVisible:
 							updatePageTopVisible();
@@ -12337,7 +12240,6 @@ function mainPageCategory() {
 					editToFavorite();
 
 					read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
-						console.log('r', result);
 						if (result && result.value) {
 							// 存在收藏 html
 							// 页面附加Html
@@ -12486,14 +12388,8 @@ function mainPageCategory() {
 
 			//#endregion
 
-
-
 		});
-
-
-
 	});
-
 }
 
 function detailPage() {
@@ -12516,14 +12412,10 @@ function detailPage() {
 		detailTryUseOldData();
 	});
 
-
-
-
 	//#region step5.2.dataSync.detailPage.js 详情页数据同步
 
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_detailPage_title:
 					updateGoogleTranslateDetailPageTitle();
