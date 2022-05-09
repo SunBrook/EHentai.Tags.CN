@@ -26,306 +26,306 @@
 
 // 检查字典是否为空
 function checkDictNull(dict) {
-    for (const n in dict) {
-        return false;
-    }
-    return true;
+	for (const n in dict) {
+		return false;
+	}
+	return true;
 }
 
 // 获取地址参数
 function GetQueryString(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substring(1).match(reg);
-    if (r != null) return decodeURI(r[2]); return null;
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substring(1).match(reg);
+	if (r != null) return decodeURI(r[2]); return null;
 }
 
 // 数组删除元素
 Array.prototype.remove = function (val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-        this.splice(index, 1);
-    }
+	var index = this.indexOf(val);
+	if (index > -1) {
+		this.splice(index, 1);
+	}
 };
 
 // 数组差集
 function getDiffSet(array1, array2) {
-    return array1.filter(item => !new Set(array2).has(item));
+	return array1.filter(item => !new Set(array2).has(item));
 }
 
 // 导出json文件
 function saveJSON(data, filename) {
-    if (!data) return;
-    if (!filename) filename = "json.json";
-    if (typeof data === "object") {
-        data = JSON.stringify(data, undefined, 4);
-    }
-    // 要创建一个 blob 数据
-    let blob = new Blob([data], { type: "text/json" }),
-        a = document.createElement("a");
-    a.download = filename;
+	if (!data) return;
+	if (!filename) filename = "json.json";
+	if (typeof data === "object") {
+		data = JSON.stringify(data, undefined, 4);
+	}
+	// 要创建一个 blob 数据
+	let blob = new Blob([data], { type: "text/json" }),
+		a = document.createElement("a");
+	a.download = filename;
 
-    // 将blob转换为地址
-    // 创建 URL 的 Blob 对象
-    a.href = window.URL.createObjectURL(blob);
+	// 将blob转换为地址
+	// 创建 URL 的 Blob 对象
+	a.href = window.URL.createObjectURL(blob);
 
-    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
-    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+	// 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+	a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
 
-    // 添加鼠标事件
-    let event = new MouseEvent("click", {});
+	// 添加鼠标事件
+	let event = new MouseEvent("click", {});
 
-    // 向一个指定的事件目标派发一个事件
-    a.dispatchEvent(event);
+	// 向一个指定的事件目标派发一个事件
+	a.dispatchEvent(event);
 }
 
 // 获取当前时间
 function getCurrentDate(format) {
-    var now = new Date();
-    var year = now.getFullYear(); //年份
-    var month = now.getMonth();//月份
-    var date = now.getDate();//日期
-    var day = now.getDay();//周几
-    var hour = now.getHours();//小时
-    var minu = now.getMinutes();//分钟
-    var sec = now.getSeconds();//秒
-    month = month + 1;
-    if (month < 10) month = "0" + month;
-    if (date < 10) date = "0" + date;
-    if (hour < 10) hour = "0" + hour;
-    if (minu < 10) minu = "0" + minu;
-    if (sec < 10) sec = "0" + sec;
-    var time = "";
-    //精确到天
-    if (format == 1) {
-        time = year + "-" + month + "-" + date;
-    }
-    //精确到分
-    else if (format == 2) {
-        time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
-    }
-    return time;
+	var now = new Date();
+	var year = now.getFullYear(); //年份
+	var month = now.getMonth();//月份
+	var date = now.getDate();//日期
+	var day = now.getDay();//周几
+	var hour = now.getHours();//小时
+	var minu = now.getMinutes();//分钟
+	var sec = now.getSeconds();//秒
+	month = month + 1;
+	if (month < 10) month = "0" + month;
+	if (date < 10) date = "0" + date;
+	if (hour < 10) hour = "0" + hour;
+	if (minu < 10) minu = "0" + minu;
+	if (sec < 10) sec = "0" + sec;
+	var time = "";
+	//精确到天
+	if (format == 1) {
+		time = year + "-" + month + "-" + date;
+	}
+	//精确到分
+	else if (format == 2) {
+		time = year + "/" + month + "/" + date + " " + hour + ":" + minu + ":" + sec;
+	}
+	return time;
 }
 
 // 调用谷歌翻译接口
 function getGoogleTranslate(text, func) {
-    var httpRequest = new XMLHttpRequest();
-    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
-    httpRequest.open("GET", url, true);
-    httpRequest.send();
+	var httpRequest = new XMLHttpRequest();
+	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dj=1&dt=t&q=${text}`;
+	httpRequest.open("GET", url, true);
+	httpRequest.send();
 
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var json = JSON.parse(httpRequest.responseText);
-            func(json);
-        }
-    }
+	httpRequest.onreadystatechange = function () {
+		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+			var json = JSON.parse(httpRequest.responseText);
+			func(json);
+		}
+	}
 }
 
 // 借助谷歌翻译设置翻译后的值
 function translatePageElement(element) {
-    getGoogleTranslate(element.innerText, function (data) {
-        var sentences = data.sentences;
-        var longtext = '';
-        for (const i in sentences) {
-            if (Object.hasOwnProperty.call(sentences, i)) {
-                const sentence = sentences[i];
-                longtext += sentence.trans;
-            }
-        }
-        element.innerText = longtext;
-    });
+	getGoogleTranslate(element.innerText, function (data) {
+		var sentences = data.sentences;
+		var longtext = '';
+		for (const i in sentences) {
+			if (Object.hasOwnProperty.call(sentences, i)) {
+				const sentence = sentences[i];
+				longtext += sentence.trans;
+			}
+		}
+		element.innerText = longtext;
+	});
 }
 
 function translatePageElementFunc(element, isNeedUrlEncode, func_compelete) {
-    var innerText = isNeedUrlEncode ? urlEncode(element.innerText) : element.innerText;
-    getGoogleTranslate(innerText, function (data) {
-        var sentences = data.sentences;
-        var longtext = '';
-        for (const i in sentences) {
-            if (Object.hasOwnProperty.call(sentences, i)) {
-                const sentence = sentences[i];
-                longtext += sentence.trans;
-            }
-        }
-        element.innerText = longtext;
-        func_compelete();
-    });
+	var innerText = isNeedUrlEncode ? urlEncode(element.innerText) : element.innerText;
+	getGoogleTranslate(innerText, function (data) {
+		var sentences = data.sentences;
+		var longtext = '';
+		for (const i in sentences) {
+			if (Object.hasOwnProperty.call(sentences, i)) {
+				const sentence = sentences[i];
+				longtext += sentence.trans;
+			}
+		}
+		element.innerText = longtext;
+		func_compelete();
+	});
 }
 
 function getGoogleTranslateEN(text, func) {
-    var httpRequest = new XMLHttpRequest();
-    var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
-    httpRequest.open("GET", url, true);
-    httpRequest.send();
+	var httpRequest = new XMLHttpRequest();
+	var url = `http://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dj=1&dt=t&q=${text}`;
+	httpRequest.open("GET", url, true);
+	httpRequest.send();
 
-    httpRequest.onreadystatechange = function () {
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var json = JSON.parse(httpRequest.responseText);
-            func(json);
-        }
-    }
+	httpRequest.onreadystatechange = function () {
+		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+			var json = JSON.parse(httpRequest.responseText);
+			func(json);
+		}
+	}
 }
 
 function translatePageElementEN(element) {
-    getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
-        var sentences = data.sentences;
-        var longtext = '';
-        for (const i in sentences) {
-            if (Object.hasOwnProperty.call(sentences, i)) {
-                const sentence = sentences[i];
-                longtext += sentence.trans;
-            }
-        }
-        element.innerText = longtext;
-    });
+	getGoogleTranslateEN(urlEncode(element.innerText), function (data) {
+		var sentences = data.sentences;
+		var longtext = '';
+		for (const i in sentences) {
+			if (Object.hasOwnProperty.call(sentences, i)) {
+				const sentence = sentences[i];
+				longtext += sentence.trans;
+			}
+		}
+		element.innerText = longtext;
+	});
 }
 
 // 展开折叠动画 (下上)
 var slideTimer = null;
 function slideDown(element, realHeight, speed, func) {
-    clearInterval(slideTimer);
-    var h = 0;
-    slideTimer = setInterval(function () {
-        // 当目标高度与实际高度小于10px时，以1px的速度步进
-        var step = (realHeight - h) / 10;
-        step = Math.ceil(step);
-        h += step;
-        if (Math.abs(realHeight - h) <= Math.abs(step)) {
-            h = realHeight;
-            element.style.height = `${realHeight}px`;
-            func();
-            clearInterval(slideTimer);
-        } else {
-            element.style.height = `${h}px`;
-        }
-    }, speed);
+	clearInterval(slideTimer);
+	var h = 0;
+	slideTimer = setInterval(function () {
+		// 当目标高度与实际高度小于10px时，以1px的速度步进
+		var step = (realHeight - h) / 10;
+		step = Math.ceil(step);
+		h += step;
+		if (Math.abs(realHeight - h) <= Math.abs(step)) {
+			h = realHeight;
+			element.style.height = `${realHeight}px`;
+			func();
+			clearInterval(slideTimer);
+		} else {
+			element.style.height = `${h}px`;
+		}
+	}, speed);
 }
 function slideUp(element, speed, func) {
-    clearInterval(slideTimer);
-    slideTimer = setInterval(function () {
-        var step = (0 - element.clientHeight) / 10;
-        step = Math.floor(step);
-        element.style.height = `${element.clientHeight + step}px`;
-        if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
-            element.style.height = "0px";
-            func();
-            clearInterval(slideTimer);
-        }
-    }, speed);
+	clearInterval(slideTimer);
+	slideTimer = setInterval(function () {
+		var step = (0 - element.clientHeight) / 10;
+		step = Math.floor(step);
+		element.style.height = `${element.clientHeight + step}px`;
+		if (Math.abs(0 - element.clientHeight) <= Math.abs(step)) {
+			element.style.height = "0px";
+			func();
+			clearInterval(slideTimer);
+		}
+	}, speed);
 }
 
 // 展开折叠动画 (右左)
 var slideTimer2 = null;
 function slideRight(element, realWidth, speed, func) {
-    clearInterval(slideTimer2);
-    var w = 0;
-    slideTimer2 = setInterval(function () {
-        // 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
-        var step = (realWidth - w) / 10;
-        step = Math.ceil(step);
-        w += step;
-        if (Math.abs(realWidth - w) <= Math.abs(step)) {
-            w = realWidth;
-            element.style.width = `${realWidth}px`;
-            func();
-            clearInterval(slideTimer2);
-        } else {
-            element.style.width = `${w}px`;
-        }
-    }, speed);
+	clearInterval(slideTimer2);
+	var w = 0;
+	slideTimer2 = setInterval(function () {
+		// 当目标宽度与实际宽度小于10px, 以 1px 的速度步进
+		var step = (realWidth - w) / 10;
+		step = Math.ceil(step);
+		w += step;
+		if (Math.abs(realWidth - w) <= Math.abs(step)) {
+			w = realWidth;
+			element.style.width = `${realWidth}px`;
+			func();
+			clearInterval(slideTimer2);
+		} else {
+			element.style.width = `${w}px`;
+		}
+	}, speed);
 }
 function slideLeft(element, speed, func) {
-    clearInterval(slideTimer2);
-    slideTimer2 = setInterval(function () {
-        var step = (0 - element.clientWidth) / 10;
-        step = Math.floor(step);
-        element.style.width = `${element.clientWidth + step}px`;
-        if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
-            element.style.width = "0px";
-            func();
-            clearInterval(slideTimer2);
-        }
-    }, speed);
+	clearInterval(slideTimer2);
+	slideTimer2 = setInterval(function () {
+		var step = (0 - element.clientWidth) / 10;
+		step = Math.floor(step);
+		element.style.width = `${element.clientWidth + step}px`;
+		if (Math.abs(0 - element.clientWidth) <= Math.abs(step)) {
+			element.style.width = "0px";
+			func();
+			clearInterval(slideTimer2);
+		}
+	}, speed);
 }
 
 
 // 页面样式注入
 function styleInject(css, ref) {
-    if (ref === void 0) ref = {};
-    var insertAt = ref.insertAt;
+	if (ref === void 0) ref = {};
+	var insertAt = ref.insertAt;
 
-    if (!css || typeof document === 'undefined') { return; }
+	if (!css || typeof document === 'undefined') { return; }
 
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var style = document.createElement('style');
-    style.type = 'text/css';
+	var head = document.head || document.getElementsByTagName('head')[0];
+	var style = document.createElement('style');
+	style.type = 'text/css';
 
-    if (insertAt === 'top') {
-        if (head.firstChild) {
-            head.insertBefore(style, head.firstChild);
-        } else {
-            head.appendChild(style);
-        }
-    } else {
-        head.appendChild(style);
-    }
+	if (insertAt === 'top') {
+		if (head.firstChild) {
+			head.insertBefore(style, head.firstChild);
+		} else {
+			head.appendChild(style);
+		}
+	} else {
+		head.appendChild(style);
+	}
 
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
+	if (style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		style.appendChild(document.createTextNode(css));
+	}
 }
 
 // UrlEncode
 function urlEncode(str) {
-    str = (str + '').toString();
+	str = (str + '').toString();
 
-    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
+	return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+		replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 // UrlDecode
 function urlDecode(str) {
-    return decodeURIComponent(str);
+	return decodeURIComponent(str);
 }
 
 // 跨域
 function crossDomain() {
-    var meta = document.createElement("meta");
-    meta.httpEquiv = "Content-Security-Policy";
-    meta.content = "upgrade-insecure-requests";
-    document.getElementsByTagName("head")[0].appendChild(meta);
+	var meta = document.createElement("meta");
+	meta.httpEquiv = "Content-Security-Policy";
+	meta.content = "upgrade-insecure-requests";
+	document.getElementsByTagName("head")[0].appendChild(meta);
 }
 
 // 英语日期转纯数字日期
 function transDate(dateEn) {
-    var monthDict = {
-        "January": 1,
-        "February": 2,
-        "March": 3,
-        "April": 4,
-        "May": 5,
-        "June": 6,
-        "July": 7,
-        "August": 8,
-        "September": 9,
-        "October": 10,
-        "November": 11,
-        "December": 12
-    };
-    var dateSplit = dateEn.split(' ');
-    return `${dateSplit[2]}/${monthDict[dateSplit[1]]}/${Number(dateSplit[0])}`;
+	var monthDict = {
+		"January": 1,
+		"February": 2,
+		"March": 3,
+		"April": 4,
+		"May": 5,
+		"June": 6,
+		"July": 7,
+		"August": 8,
+		"September": 9,
+		"October": 10,
+		"November": 11,
+		"December": 12
+	};
+	var dateSplit = dateEn.split(' ');
+	return `${dateSplit[2]}/${monthDict[dateSplit[1]]}/${Number(dateSplit[0])}`;
 }
 
 // 过滤字符串开头和结尾的空格
 function trimStartEnd(str) {
-    return str.replace(/(^\s*)|(\s*$)/g, "");
+	return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 
 // 过滤字符串结尾空格
 function trimEnd(str) {
-    return str.replace(/(\s*$)/g, "");
+	return str.replace(/(\s*$)/g, "");
 }
 
 //#endregion
@@ -517,6 +517,7 @@ const table_Settings_key_NewsPageTopImageVisible = "f_newsPageTopImageVisible";
 const table_Settings_key_NewsPageTranslate = "f_newsPageTranslate";
 const table_Settings_key_FrontPageSearchMode = "f_frontPageSearchMode";
 const table_Settings_key_TosPageTranslate = "f_tosPageTranslate";
+const table_Settings_key_MyTagsAllCategory_Html = "f_myTagsAllCategoryHtml";
 
 // fetishList 全部类别 - 父子信息表
 const table_fetishListSubItems = "t_fetishListSubItems";
@@ -960,7 +961,6 @@ const detailPage_warnContentDict = {
 //#endregion
 
 //#endregion
-
 
 //#region step0.localstorage.js localstorage 数据方法，迁入 indexdb，如无特殊需要，删除之前存储的数据
 
@@ -3620,11 +3620,255 @@ func_eh_ex(() => {
 	.t_detail_comment .comment_span input,
 	.t_detail_comment .comment_span label {
 		cursor: pointer;
+	}
+	
+	#t_mytags_div {
+		width: calc(100% - 2px);
+		border: 1px solid white;
+		margin-bottom: 10px;
+	}
+	
+	#t_mytags_data_update_tip {
+		width: 100px;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		vertical-align: middle;
+		font-size: 10px;
+		position: absolute;
+		margin-top: 5px;
+		display: none;
+		background-color: #34353b;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	
+	#t_mytags_div #t_mytags_top {
+		height: 49px;
+		width: 100%;
+		border-bottom: 1px solid white;
+	}
+	
+	#t_mytags_div #t_mytags_bottom {
+		height: 0;
+		overflow-y: hidden;
+	}
+	
+	#t_mytags_div #t_mytags_bottom #t_split_line {
+		border-left: 1px solid white;
+		height: 100%;
+		float: left;
+	}
+	
+	#t_mytags_div #t_mytags_bottom #t_allCategories,
+	#t_mytags_div #t_mytags_bottom #t_favoriteCategories {
+		width: calc(50% - 0.5px);
+		height: 100%;
+		float: left;
+	}
+	
+	#t_mytags_top #clear_search_btn,
+	#t_mytags_top #t_mytags_extend_btn,
+	#t_mytags_top #t_mytags_submitCategories_btn,
+	#t_mytags_top #t_mytags_clodToFavorite_btn {
+		border: 1px solid white;
+		height: 35px;
+		line-height: 35px;
+		margin: 5.5px 10px 0 0;
+		cursor: pointer;
+		text-align: center;
+		color: white;
+	}
+	
+	#t_mytags_top #t_mytags_extend_btn {
+		float: left;
+		margin-left: 10px;
+	}
+	
+	#t_mytags_top #t_mytags_extend_btn,
+	#t_mytags_top #t_mytags_submitCategories_btn,
+	#t_mytags_top #t_mytags_clodToFavorite_btn {
+		width: 115px;
+	}
+	
+	#t_mytags_top #clear_search_btn {
+		width: 50px;
+		float: left;
+		margin-left: -11px;
+		margin-right: 50px;
+		text-align: center;
+		color: white;
+	}
+	
+	#t_mytags_top #t_mytags_clodToFavorite_btn,
+	#t_mytags_top #t_mytags_submitCategories_btn {
+		float: right;
+	}
+	
+	#t_mytags_top #t_mytags_search {
+		border: 1px solid white;
+		height: 31px;
+		line-height: 31px;
+		margin: 5.5px 10px 0 0;
+		background-color: transparent;
+		color: white;
+		padding-left: 5px;
+		float: left;
+		margin-left: 50px;
+		width: calc(100% - 560px);
+		min-width: 100px;
+	}
+	
+	#t_mytags_bottom #t_allCategories #t_allCategories_tool,
+	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_tool {
+		height: 25px;
+		background-color: #41454c;
+	}
+	
+	#t_mytags_bottom .mytags_allCheck_div {
+		border-right: 1px solid white;
+		border-top: 1px solid white;
+		height: 24px;
+		line-height: 24px;
+		width: 80px;
+		float: left;
+		text-align: center;
+		color: white;
+	}
+	
+	#t_mytags_bottom p {
+		height: 24px;
+		line-height: 24px;
+		margin: 0;
+		padding: 0;
+		font-weight: bold;
+		border-top: 1px solid white;
+		text-align: center;
+		color: white;
+	}
+	
+	#t_mytags_bottom #mytags_left_all_collapse,
+	#t_mytags_bottom #mytags_left_all_expand,
+	#t_mytags_bottom #mytags_right_all_collapse,
+	#t_mytags_bottom #mytags_right_all_expand {
+		border-left: 1px solid white;
+		border-top: 1px solid white;
+		height: 24px;
+		line-height: 24px;
+		width: 50.5px;
+		float: right;
+		cursor: pointer;
+		text-align: center;
+		color: white;
+	}
+	
+	#t_mytags_bottom #t_allCategories #t_allCategories_window,
+	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window {
+		height: 325px;
+	}
+	
+	#t_mytags_bottom #t_allCategories_window h4,
+	#t_mytags_bottom #t_favoriteCategories_window h4 {
+		color: #fadfc0;
+		font-weight: bold;
+		margin: 0;
+		padding: 5px;
+	}
+	
+	#t_mytags_bottom #t_allCategories_window h4 span,
+	#t_mytags_bottom #t_favoriteCategories_window h4 span {
+		border: 1px solid #fadfc0;
+		cursor: pointer;
+		width: 10px;
+		display: inline-block;
+		text-align: center;
+		height: 10px;
+		line-height: 7px;
+		font-weight: 500;
+		cursor: pointer;
+	}
+	
+	#t_mytags_bottom #t_allCategories_window h4 span:hover,
+	#t_mytags_bottom #t_favoriteCategories_window h4 span:hover {
+		transform: scale(1.2);
+	}
+	
+	#t_mytags_bottom .mytags_item_wrapper {
+		border: 1px solid #fadfc0;
+		margin: 10px 0 10px 10px;
+		display: inline-block;
+		padding: 2px 5px;
+		color: #fadfc0;
+	}
+	
+	#t_mytags_bottom .mytags_item_wrapper,
+	#t_mytags_bottom .mytags_item_wrapper input,
+	#t_mytags_bottom .mytags_item_wrapper label {
+		cursor: pointer;
+	}
+	
+	#t_mytags_bottom .mytags_item_wrapper label {
+		line-height: 20px;
+	}
+	
+	#t_mytags_bottom #t_mytags_allcategory_loading_div,
+	#t_mytags_bottom #t_mytags_favoritecategory_loading_div {
+		height: 325px;
+		width: 100%;
+		line-height: 325px;
+		text-align: center;
+		font-size: 20px;
+	}
+	
+	
+	#t_mytags_top #clear_search_btn,
+	#t_mytags_top #t_mytags_extend_btn,
+	#t_mytags_top #t_mytags_submitCategories_btn,
+	#t_mytags_top #t_mytags_clodToFavorite_btn,
+	#t_mytags_bottom #mytags_left_all_collapse,
+	#t_mytags_bottom #mytags_left_all_expand,
+	#t_mytags_bottom #mytags_right_all_collapse,
+	#t_mytags_bottom #mytags_right_all_expand,
+	#t_mytags_bottom .mytags_allCheck_div,
+	#t_mytags_bottom p,
+	#t_mytags_bottom .mytags_item_wrapper {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	
+	#t_mytags_top #clear_search_btn:hover,
+	#t_mytags_top #t_mytags_extend_btn:hover,
+	#t_mytags_top #t_mytags_submitCategories_btn:hover,
+	#t_mytags_top #t_mytags_clodToFavorite_btn:hover,
+	#t_mytags_bottom #mytags_left_all_collapse:hover,
+	#t_mytags_bottom #mytags_left_all_expand:hover,
+	#t_mytags_bottom #mytags_right_all_collapse:hover,
+	#t_mytags_bottom #mytags_right_all_expand:hover,
+	#t_mytags_bottom .mytags_allCheck_div:hover,
+	#t_mytags_bottom .mytags_item_wrapper:hover {
+		background-color: rgba(255, 246, 246, 0.397);
+	}
+	
+	.t_mytagsPage_outer #tagset_outer div:nth-child(1) {
+		width: 184px;
+	}
+	
+	.t_mytagsPage_outer #tagset_outer div:nth-child(3) {
+		width: 86px;
+	}
+	
+	.t_mytagsPage_outer #tagset_outer div:nth-child(6) {
+		padding-left: 50px;
 	}`;
 	styleInject(category_style);
 });
 
 //#endregion
+
 
 
 //#region step1.2.translateTopBottomMenu.js 头部菜单、底部菜单翻译
@@ -9595,6 +9839,195 @@ function recursionTosPageOriginEn(element) {
 
 //#endregion
 
+//#region step7.10.mytagsPage.js 我的标签
+
+function mytagsPage() {
+    // 添加类方便修改样式
+    var outer = document.getElementById("outer");
+    outer.classList.add("t_mytagsPage_outer");
+
+    // 查询是否存在上传的标签，如果存在这弹窗
+
+
+
+
+    // 新建插件布局
+    mytagsCategoryWindow();
+
+    // 插件逻辑实现
+    mytagsCategoryWindowEvents();
+
+    // 底部页面翻译
+
+
+
+    // var valueArray = ["other:3d", "group:imomuya honpo"];
+    // localStorage.setItem("mytags", JSON.stringify(valueArray));
+
+    // 加个遮罩，提示进度，鼠标移入暂停操作
+    // var items = localStorage.getItem("mytags");
+    // if (items) {
+    //     var itemArray = JSON.parse(items);
+    //     if (itemArray.length > 0) {
+    //         var item0 = itemArray.shift();
+    //         localStorage.setItem("mytags", JSON.stringify(itemArray));
+
+    //         var tagname_new = document.getElementById("tagname_new");
+    //         var tagsave_0 = document.getElementById("tagsave_0");
+    //         tagname_new.value = item0;
+    //         tagsave_0.removeAttribute("disabled");
+    //         tagsave_0.click();
+    //     }
+    // }
+
+    // var valueArray = ["other:3d", "group:imomuya honpo"];
+    // var tagname_new = document.getElementById("tagname_new");
+    // var tagsave_0 = document.getElementById("tagsave_0");
+
+    // for (let i = 0; i < valueArray.length; i++) {
+    //     tagname_new.value = valueArray[i];
+    //     tagsave_0.removeAttribute("disabled");
+    //     tagsave_0.click();
+    // }
+}
+
+// 我的标签插件布局
+function mytagsCategoryWindow() {
+    var mainHtml = `<div id="t_mytags_div">
+    <div id="t_mytags_top">
+        <div id="t_mytags_extend_btn">展开 / 折叠</div>
+        <input type="text" id="t_mytags_search" placeholder="请输入关键字进行搜索" />
+        <div id="clear_search_btn">清空</div>
+        <div id="t_mytags_clodToFavorite_btn" title="账号的标签，同步到本地收藏列表">账号 -> 收藏</div>
+        <div id="t_mytags_submitCategories_btn" title="下方勾选的标签，同步添加到账号标签中">勾选 -> 账号</div>
+    </div>
+    <div id="t_mytags_bottom">
+        <div id="t_allCategories">
+            <div id="t_allCategories_window">
+                <div id="t_mytags_allcategory_loading_div">💕 请等待一小会儿，马上就好 💕</div>
+                <h4>语言
+                    <span data-category="Language" class="category_extend category_extend_fetish">-</span>
+                </h4>
+                <div id="items_div_Language">
+                    <span class="mytags_item_wrapper">
+                        <input type="checkbox" value="language:chinese" id="allCate_language:chinese">
+                        <label for="allCate_language:chinese">中文</label>
+                    </span>
+                    <span class="mytags_item_wrapper">
+                        <input type="checkbox" value="language:english" id="allCate_language:english">
+                        <label for="allCate_language:english">英文</label>
+                    </span>
+                </div>
+            </div>
+            <div id="t_allCategories_tool">
+                <div id="mytags_left_all_collapse">折叠</div>
+                <div id="mytags_left_all_expand">展开</div>
+                <div class="mytags_allCheck_div">
+                    <input type="checkbox" id="allCategories_allCheck" />
+                    <label for="allCategories_allCheck">全选</label>
+                </div>
+                <p>全部类别，仅展示可操作标签</p>
+            </div>
+        </div>
+        <div id="t_split_line"></div>
+        <div id="t_favoriteCategories">
+            <div id="t_favoriteCategories_window">
+                <div id="t_mytags_favoritecategory_loading_div">💕 请等待一小会儿，马上就好 💕</div>
+                <h4>语言
+                    <span data-category="Language" class="category_extend category_extend_fetish">-</span>
+                </h4>
+                <div id="items_div_Language">
+                    <span class="mytags_item_wrapper">
+                        <input type="checkbox" value="language:chinese" id="favoriteCate_language:chinese">
+                        <label for="favoriteCate_language:chinese">中文</label>
+                    </span>
+                    <span class="mytags_item_wrapper">
+                        <input type="checkbox" value="language:english" id="favoriteCate_language:english">
+                        <label for="favoriteCate_language:english">英文</label>
+                    </span>
+                </div>
+            </div>
+            <div id="t_favoriteCategories_tool">
+                <div id="mytags_right_all_collapse">折叠</div>
+                <div id="mytags_right_all_expand">展开</div>
+
+                <div class="mytags_allCheck_div">
+                    <input type="checkbox" id="favoriteCategories_allCheck" />
+                    <label for="favoriteCategories_allCheck">全选</label>
+                </div>
+                <p>本地收藏，仅展示可操作标签</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="t_mytags_data_update_tip"></div>`;
+    var outer = document.getElementById("outer");
+    var div = document.createElement("div");
+    div.innerHTML = mainHtml;
+    outer.insertBefore(div, outer.children[0]);
+}
+
+// 我的标签插件逻辑实现
+function mytagsCategoryWindowEvents() {
+    // 展开折叠按钮、输入框、清空按钮、勾选->账号、账号->收藏、底部div
+    var extendBtn = document.getElementById("t_mytags_extend_btn");
+    var searchInput = document.getElementById("t_mytags_search");
+    var clearBtn = document.getElementById("clear_search_btn");
+    var submitCategoriesBtn = document.getElementById("t_mytags_submitCategories_btn");
+    var clodToFavoriteBtn = document.getElementById("t_mytags_clodToFavorite_btn");
+    var bottomDiv = document.getElementById("t_mytags_bottom");
+
+    // 全部类别：数据展示div、全选按钮、展开按钮、折叠按钮
+    var allCategoriesWindow = document.getElementById("t_allCategories_window");
+    var allCategoriesAllCheckBox = document.getElementById("allCategories_allCheck");
+    var leftAllCollapseBtn = document.getElementById("mytags_left_all_collapse");
+    var leftAllExpandBtn = document.getElementById("mytags_left_all_expand");
+
+    // 本地收藏：数据展示div、全选按钮、展开按钮、折叠按钮
+    var favoriteCategoriesWindow = document.getElementById("t_favoriteCategories_window");
+    var favoriteCategoriesAllCheckBox = document.getElementById("favoriteCategories_allCheck");
+    var rightAllCollapseBtn = document.getElementById("mytags_right_all_collapse");
+    var rightAllExpandBtn = document.getElementById("mytags_right_all_expand");
+
+    // 展示数据填充
+    extendBtn.onclick = function () {
+        if (bottomDiv.dataset.visible == 1) {
+            bottomDiv.dataset.visible = 0;
+            slideUp(bottomDiv, 15, () => { });
+        } else {
+            bottomDiv.dataset.visible = 1;
+            slideDown(bottomDiv, 350, 15, () => { });
+        }
+    }
+
+    // 展开折叠功能
+
+    // 输入框
+
+    // 清空按钮
+
+    // 
+}
+
+// 展示数据填充
+function mytagsInitWindowsData() {
+    // 没有数据显示等待
+
+    // TODO 收藏时更新我的标签收藏 HTML，接收收藏的同步消息，用于更新标签收藏 html
+
+    // 根据收藏数据生成收藏html
+
+
+
+    // 先尝试获取备份的全部类别html，如果没有就根据entag 生成html，如果没有ehtag 就更新ehtag 并生成最新的html。最后检查新版本
+
+}
+
+
+//#endregion
+
+
+
 
 
 //#region step8.1.eventpane.js hentaivase 弹框
@@ -9661,7 +10094,6 @@ function recursionTranslate(element) {
 
 
 
-//TODO 我的标签和本地标签的导入、导出，我的标签翻译 (EX)
 //TODO 样式细化
 //TODO 悬浮显示预览图
 //TODO 上下键选择候选项
@@ -9671,10 +10103,7 @@ function recursionTranslate(element) {
 //TODO 首页显示已收藏的标签
 //TODO 首页背景
 
-//DONE 帮助页面翻译
-//DONE 阅读页面链接bug修复
-//DONE 详情警告弹窗翻译
-//DONE 折叠方法bug修复
+//TODO 我的标签和本地标签的导入、导出，我的标签翻译 (EX)
 
 
 
@@ -9765,6 +10194,7 @@ else {
 				//?act=new		创建图库
 				break;
 			case '/mytags':					// 我的标签
+				mytagsPage();
 				break;
 			case '/lofi/':					// 低保真版
 				break;

@@ -1184,3 +1184,246 @@ table .gtw {
 .t_detail_comment .comment_span label {
     cursor: pointer;
 }
+
+#t_mytags_div {
+    width: calc(100% - 2px);
+    border: 1px solid white;
+    margin-bottom: 10px;
+}
+
+#t_mytags_data_update_tip {
+    width: 100px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 10px;
+    position: absolute;
+    margin-top: 5px;
+    display: none;
+    background-color: #34353b;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#t_mytags_div #t_mytags_top {
+    height: 49px;
+    width: 100%;
+    border-bottom: 1px solid white;
+}
+
+#t_mytags_div #t_mytags_bottom {
+    height: 0;
+    overflow-y: hidden;
+}
+
+#t_mytags_div #t_mytags_bottom #t_split_line {
+    border-left: 1px solid white;
+    height: 100%;
+    float: left;
+}
+
+#t_mytags_div #t_mytags_bottom #t_allCategories,
+#t_mytags_div #t_mytags_bottom #t_favoriteCategories {
+    width: calc(50% - 0.5px);
+    height: 100%;
+    float: left;
+}
+
+#t_mytags_top #clear_search_btn,
+#t_mytags_top #t_mytags_extend_btn,
+#t_mytags_top #t_mytags_submitCategories_btn,
+#t_mytags_top #t_mytags_clodToFavorite_btn {
+    border: 1px solid white;
+    height: 35px;
+    line-height: 35px;
+    margin: 5.5px 10px 0 0;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+}
+
+#t_mytags_top #t_mytags_extend_btn {
+    float: left;
+    margin-left: 10px;
+}
+
+#t_mytags_top #t_mytags_extend_btn,
+#t_mytags_top #t_mytags_submitCategories_btn,
+#t_mytags_top #t_mytags_clodToFavorite_btn {
+    width: 115px;
+}
+
+#t_mytags_top #clear_search_btn {
+    width: 50px;
+    float: left;
+    margin-left: -11px;
+    margin-right: 50px;
+    text-align: center;
+    color: white;
+}
+
+#t_mytags_top #t_mytags_clodToFavorite_btn,
+#t_mytags_top #t_mytags_submitCategories_btn {
+    float: right;
+}
+
+#t_mytags_top #t_mytags_search {
+    border: 1px solid white;
+    height: 31px;
+    line-height: 31px;
+    margin: 5.5px 10px 0 0;
+    background-color: transparent;
+    color: white;
+    padding-left: 5px;
+    float: left;
+    margin-left: 50px;
+    width: calc(100% - 560px);
+    min-width: 100px;
+}
+
+#t_mytags_bottom #t_allCategories #t_allCategories_tool,
+#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_tool {
+    height: 25px;
+    background-color: #41454c;
+}
+
+#t_mytags_bottom .mytags_allCheck_div {
+    border-right: 1px solid white;
+    border-top: 1px solid white;
+    height: 24px;
+    line-height: 24px;
+    width: 80px;
+    float: left;
+    text-align: center;
+    color: white;
+}
+
+#t_mytags_bottom p {
+    height: 24px;
+    line-height: 24px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    border-top: 1px solid white;
+    text-align: center;
+    color: white;
+}
+
+#t_mytags_bottom #mytags_left_all_collapse,
+#t_mytags_bottom #mytags_left_all_expand,
+#t_mytags_bottom #mytags_right_all_collapse,
+#t_mytags_bottom #mytags_right_all_expand {
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+    height: 24px;
+    line-height: 24px;
+    width: 50.5px;
+    float: right;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+}
+
+#t_mytags_bottom #t_allCategories #t_allCategories_window,
+#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window {
+    height: 325px;
+}
+
+#t_mytags_bottom #t_allCategories_window h4,
+#t_mytags_bottom #t_favoriteCategories_window h4 {
+    color: #fadfc0;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px;
+}
+
+#t_mytags_bottom #t_allCategories_window h4 span,
+#t_mytags_bottom #t_favoriteCategories_window h4 span {
+    border: 1px solid #fadfc0;
+    cursor: pointer;
+    width: 10px;
+    display: inline-block;
+    text-align: center;
+    height: 10px;
+    line-height: 7px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#t_mytags_bottom #t_allCategories_window h4 span:hover,
+#t_mytags_bottom #t_favoriteCategories_window h4 span:hover {
+    transform: scale(1.2);
+}
+
+#t_mytags_bottom .mytags_item_wrapper {
+    border: 1px solid #fadfc0;
+    margin: 10px 0 10px 10px;
+    display: inline-block;
+    padding: 2px 5px;
+    color: #fadfc0;
+}
+
+#t_mytags_bottom .mytags_item_wrapper,
+#t_mytags_bottom .mytags_item_wrapper input,
+#t_mytags_bottom .mytags_item_wrapper label {
+    cursor: pointer;
+}
+
+#t_mytags_bottom .mytags_item_wrapper label {
+    line-height: 20px;
+}
+
+#t_mytags_bottom #t_mytags_allcategory_loading_div,
+#t_mytags_bottom #t_mytags_favoritecategory_loading_div {
+    height: 325px;
+    width: 100%;
+    line-height: 325px;
+    text-align: center;
+    font-size: 20px;
+}
+
+
+#t_mytags_top #clear_search_btn,
+#t_mytags_top #t_mytags_extend_btn,
+#t_mytags_top #t_mytags_submitCategories_btn,
+#t_mytags_top #t_mytags_clodToFavorite_btn,
+#t_mytags_bottom #mytags_left_all_collapse,
+#t_mytags_bottom #mytags_left_all_expand,
+#t_mytags_bottom #mytags_right_all_collapse,
+#t_mytags_bottom #mytags_right_all_expand,
+#t_mytags_bottom .mytags_allCheck_div,
+#t_mytags_bottom p,
+#t_mytags_bottom .mytags_item_wrapper {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#t_mytags_top #clear_search_btn:hover,
+#t_mytags_top #t_mytags_extend_btn:hover,
+#t_mytags_top #t_mytags_submitCategories_btn:hover,
+#t_mytags_top #t_mytags_clodToFavorite_btn:hover,
+#t_mytags_bottom #mytags_left_all_collapse:hover,
+#t_mytags_bottom #mytags_left_all_expand:hover,
+#t_mytags_bottom #mytags_right_all_collapse:hover,
+#t_mytags_bottom #mytags_right_all_expand:hover,
+#t_mytags_bottom .mytags_allCheck_div:hover,
+#t_mytags_bottom .mytags_item_wrapper:hover {
+    background-color: rgba(255, 246, 246, 0.397);
+}
+
+.t_mytagsPage_outer #tagset_outer div:nth-child(1) {
+    width: 184px;
+}
+
+.t_mytagsPage_outer #tagset_outer div:nth-child(3) {
+    width: 86px;
+}
+
+.t_mytagsPage_outer #tagset_outer div:nth-child(6) {
+    padding-left: 50px;
+}
