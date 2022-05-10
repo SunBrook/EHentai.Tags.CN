@@ -2658,6 +2658,12 @@ func_eh_ex(() => {
 		color: white;
 	}
 	
+	#t_mytags_bottom .mytags_allCheck_div,
+	#t_mytags_bottom .mytags_allCheck_div input[type="checkbox"],
+	#t_mytags_bottom .mytags_allCheck_div label {
+		cursor: pointer;
+	}
+	
 	#t_mytags_bottom p {
 		height: 24px;
 		line-height: 24px;
@@ -2667,6 +2673,18 @@ func_eh_ex(() => {
 		border-top: 1px solid white;
 		text-align: center;
 		color: white;
+	}
+	
+	#t_mytags_bottom #allCategories_allCheck:indeterminate::after,
+	#t_mytags_bottom #favoriteCategories_allCheck:indeterminate::after {
+		display: block;
+		content: "";
+		width: 7px;
+		height: 3px;
+		background-color: #0075FF;
+		border-radius: 2px;
+		margin-left: 3px;
+		margin-top: 5px;
 	}
 	
 	#t_mytags_bottom #mytags_left_all_collapse,
@@ -2682,11 +2700,31 @@ func_eh_ex(() => {
 		cursor: pointer;
 		text-align: center;
 		color: white;
+		cursor: pointer;
 	}
 	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window {
 		height: 325px;
+		overflow-y: auto;
+	}
+	
+	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar,
+	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar {
+		width: 10px;
+		height: 1px;
+	}
+	
+	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-track,
+	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-track {
+		background-color: #2d2e32;
+		border-radius: 10px;
+	}
+	
+	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-thumb,
+	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-thumb {
+		background-color: #a5a5a5;
+		border-radius: 10px;
 	}
 	
 	#t_mytags_bottom #t_allCategories_window h4,
@@ -2694,18 +2732,19 @@ func_eh_ex(() => {
 		color: #fadfc0;
 		font-weight: bold;
 		margin: 0;
-		padding: 5px;
+		margin-top: 10px;
+		padding-left: 10px;
 	}
 	
 	#t_mytags_bottom #t_allCategories_window h4 span,
 	#t_mytags_bottom #t_favoriteCategories_window h4 span {
 		border: 1px solid #fadfc0;
 		cursor: pointer;
-		width: 10px;
+		width: 12px;
 		display: inline-block;
 		text-align: center;
-		height: 10px;
-		line-height: 7px;
+		height: 12px;
+		line-height: 12px;
 		font-weight: 500;
 		cursor: pointer;
 	}
@@ -2717,14 +2756,15 @@ func_eh_ex(() => {
 	
 	#t_mytags_bottom .mytags_item_wrapper {
 		border: 1px solid #fadfc0;
-		margin: 10px 0 10px 10px;
+		border-radius: 5px;
+		margin: 10px 0 0 10px;
 		display: inline-block;
 		padding: 2px 5px;
 		color: #fadfc0;
 	}
 	
 	#t_mytags_bottom .mytags_item_wrapper,
-	#t_mytags_bottom .mytags_item_wrapper input,
+	#t_mytags_bottom .mytags_item_wrapper input[type="checkbox"],
 	#t_mytags_bottom .mytags_item_wrapper label {
 		cursor: pointer;
 	}
@@ -2753,7 +2793,9 @@ func_eh_ex(() => {
 	#t_mytags_bottom #mytags_right_all_expand,
 	#t_mytags_bottom .mytags_allCheck_div,
 	#t_mytags_bottom p,
-	#t_mytags_bottom .mytags_item_wrapper {
+	#t_mytags_bottom .mytags_item_wrapper,
+	#t_mytags_bottom #t_allCategories_window h4 span,
+	#t_mytags_bottom #t_favoriteCategories_window h4 span {
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
@@ -2783,6 +2825,10 @@ func_eh_ex(() => {
 	
 	.t_mytagsPage_outer #tagset_outer div:nth-child(6) {
 		padding-left: 50px;
+	}
+	
+	.hide {
+		display: none !important;
 	}`;
 	styleInject(category_style);
 });

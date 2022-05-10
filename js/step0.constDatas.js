@@ -186,6 +186,7 @@ const table_Settings_key_NewsPageTranslate = "f_newsPageTranslate";
 const table_Settings_key_FrontPageSearchMode = "f_frontPageSearchMode";
 const table_Settings_key_TosPageTranslate = "f_tosPageTranslate";
 const table_Settings_key_MyTagsAllCategory_Html = "f_myTagsAllCategoryHtml";
+const table_Settings_key_MyTagsFavoriteCategory_Html = "f_myTagsFavoriteCategoryHtml";
 
 // fetishList 全部类别 - 父子信息表
 const table_fetishListSubItems = "t_fetishListSubItems";
