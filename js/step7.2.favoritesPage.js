@@ -54,7 +54,7 @@ function favoritePage() {
     var searchInput = searchInputDiv.children[0];
     searchInput.setAttribute("placeholder", "搜索关键字");
     searchInput.oninput = function () {
-        var inputValue = searchInput.value.toLowerCase();
+        var inputValue = trimStartEnd(searchInput.value.toLowerCase());
         favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput);
     }
 

@@ -1,7 +1,5 @@
 //#region step7.10.mytagsPage.js 我的标签
-
-var searchKeyDict = {};
-
+var myTagsFavoritePsEnDict = {};
 function mytagsPage() {
     // 添加类方便修改样式
     var outer = document.getElementById("outer");
@@ -65,19 +63,9 @@ function mytagsCategoryWindow() {
     <div id="t_mytags_bottom">
         <div id="t_allCategories">
             <div id="t_allCategories_window">
-                <div id="t_mytags_allcategory_loading_div">💕 请等待一小会儿，马上就好 💕</div>
-                <h4>语言
-                    <span data-category="Language" class="category_extend category_extend_fetish">-</span>
-                </h4>
-                <div id="items_div_Language">
-                    <span class="mytags_item_wrapper">
-                        <input type="checkbox" value="language:chinese" id="allCate_language:chinese">
-                        <label for="allCate_language:chinese">中文</label>
-                    </span>
-                    <span class="mytags_item_wrapper">
-                        <input type="checkbox" value="language:english" id="allCate_language:english">
-                        <label for="allCate_language:english">英文</label>
-                    </span>
+                <div id="t_mytags_allcategory_seachItems_div"></div>
+                <div id="t_mytags_allcategory_allItems_div">
+                    <div id="t_mytags_allcategory_loading_div">💕 请等待一小会儿，马上就好 💕</div>
                 </div>
             </div>
             <div id="t_allCategories_tool">
@@ -93,19 +81,9 @@ function mytagsCategoryWindow() {
         <div id="t_split_line"></div>
         <div id="t_favoriteCategories">
             <div id="t_favoriteCategories_window">
-                <div id="t_mytags_favoritecategory_loading_div">💕 请等待一小会儿，马上就好 💕</div>
-                <h4>语言
-                    <span data-category="Language" class="category_extend category_extend_fetish">-</span>
-                </h4>
-                <div id="items_div_Language">
-                    <span class="mytags_item_wrapper">
-                        <input type="checkbox" value="language:chinese" id="favoriteCate_language:chinese">
-                        <label for="favoriteCate_language:chinese">中文</label>
-                    </span>
-                    <span class="mytags_item_wrapper">
-                        <input type="checkbox" value="language:english" id="favoriteCate_language:english">
-                        <label for="favoriteCate_language:english">英文</label>
-                    </span>
+                <div id="t_mytags_favoritecategory_seachItems_div"></div>
+                <div id="t_mytags_favoritecategory_allItems_div">
+                    <div id="t_mytags_favoritecategory_loading_div">💕 请等待一小会儿，马上就好 💕</div>
                 </div>
             </div>
             <div id="t_favoriteCategories_tool">
@@ -122,6 +100,7 @@ function mytagsCategoryWindow() {
     </div>
 </div>
 <div id="t_mytags_data_update_tip"></div>`;
+
     var outer = document.getElementById("outer");
     var div = document.createElement("div");
     div.innerHTML = mainHtml;
@@ -139,14 +118,16 @@ function mytagsCategoryWindowEvents() {
     var bottomDiv = document.getElementById("t_mytags_bottom");
 
 
-    // 全部类别：数据展示div、全选按钮、展开按钮、折叠按钮
-    var allCategoriesWindow = document.getElementById("t_allCategories_window");
+    // 全部类别：数据展示div、搜索候选区div、全选按钮、展开按钮、折叠按钮
+    var allCategoriesWindow = document.getElementById("t_mytags_allcategory_allItems_div");
+    var allCatrgoriesSearchDiv = document.getElementById("t_mytags_allcategory_seachItems_div");
     var allCategoriesAllCheckBox = document.getElementById("allCategories_allCheck");
     var leftAllCollapseBtn = document.getElementById("mytags_left_all_collapse");
     var leftAllExpandBtn = document.getElementById("mytags_left_all_expand");
 
-    // 本地收藏：数据展示div、全选按钮、展开按钮、折叠按钮
-    var favoriteCategoriesWindow = document.getElementById("t_favoriteCategories_window");
+    // 本地收藏：数据展示div、搜索候选区div、全选按钮、展开按钮、折叠按钮
+    var favoriteCategoriesWindow = document.getElementById("t_mytags_favoritecategory_allItems_div");
+    var favoriteCategoriesSearchDiv = document.getElementById("t_mytags_favoritecategory_seachItems_div");
     var favoriteCategoriesAllCheckBox = document.getElementById("favoriteCategories_allCheck");
     var rightAllCollapseBtn = document.getElementById("mytags_right_all_collapse");
     var rightAllExpandBtn = document.getElementById("mytags_right_all_expand");
@@ -161,7 +142,7 @@ function mytagsCategoryWindowEvents() {
 
     // 输入框
     searchInput.oninput = function () {
-        searchOnInput(searchInput, bottomDiv);
+        searchOnInput(searchInput, allCatrgoriesSearchDiv, allCategoriesWindow, favoriteCategoriesSearchDiv, favoriteCategoriesWindow);
     }
 
     // 清空按钮
@@ -172,11 +153,13 @@ function mytagsCategoryWindowEvents() {
 
     // 全部类别：全部折叠
     leftAllCollapseBtn.onclick = function () {
+        mytagAllTotalExtend(allCatrgoriesSearchDiv, "+", "none");
         mytagAllTotalExtend(allCategoriesWindow, "+", "none");
     }
 
     // 全部类别：全部取消
     leftAllExpandBtn.onclick = function () {
+        mytagAllTotalExtend(allCatrgoriesSearchDiv, "-", "block");
         mytagAllTotalExtend(allCategoriesWindow, "-", "block");
     }
 
@@ -187,11 +170,13 @@ function mytagsCategoryWindowEvents() {
 
     // 收藏：全部折叠
     rightAllCollapseBtn.onclick = function () {
+        mytagFavoriteTotalExtend(favoriteCategoriesSearchDiv, "+", "none");
         mytagFavoriteTotalExtend(favoriteCategoriesWindow, "+", "none");
     }
 
     // 收藏：全部展开
     rightAllExpandBtn.onclick = function () {
+        mytagFavoriteTotalExtend(favoriteCategoriesSearchDiv, "-", "block");
         mytagFavoriteTotalExtend(favoriteCategoriesWindow, "-", "block");
     }
 
@@ -227,6 +212,13 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
             if (result && result.value) {
                 // 存在html，直接更新html
                 favoriteCategoriesWindow.innerHTML = result.value;
+                var favoriteAllCheckboxs = favoriteCategoriesWindow.querySelectorAll('input[type="checkbox"]');
+                for (const i in favoriteAllCheckboxs) {
+                    if (Object.hasOwnProperty.call(favoriteAllCheckboxs, i)) {
+                        const checkbox = favoriteAllCheckboxs[i];
+                        myTagsFavoritePsEnDict[checkbox.value] = 0;
+                    }
+                }
                 mytagFavoriteSpanExtend(favoriteCategoriesWindow);
                 mytagItemsCheckbox(favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
             } else {
@@ -239,6 +231,7 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
                     readAll(table_favoriteSubItems, (k, v) => {
                         if (parentDict[v.parent_en]) {
                             favoriteDict[k] = v;
+                            myTagsFavoritePsEnDict[v.ps_en] = 0;
                         }
                     }, () => {
                         if (!checkDictNull(favoriteDict)) {
@@ -296,14 +289,6 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
                 if (result && result.value) {
                     // 存在html，直接更新html
                     allCategoriesWindow.innerHTML = result.value;
-                    var categoryItems = document.getElementsByClassName("mytags_item_wrapper");
-                    for (const i in categoryItems) {
-                        if (Object.hasOwnProperty.call(categoryItems, i)) {
-                            const wrapper = categoryItems[i];
-                            searchKeyDict[wrapper.dataset.search_key] = wrapper.title;
-                        }
-                    }
-
                     mytagAllSpanExtend(allCategoriesWindow);
                     mytagItemsCheckbox(allCategoriesWindow, allCategoriesAllCheckBox);
                     func_compelete();
@@ -312,7 +297,6 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
                     var ehTagDict = {};
                     readAll(table_EhTagSubItems, (k, v) => {
                         ehTagDict[k] = v;
-                        searchKeyDict[v.search_key] = v.ps_en;
                     }, () => {
                         if (!checkDictNull(ehTagDict)) {
                             // 存在数据，生成全部类别html
@@ -331,7 +315,7 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
                                         ehtagListHtml += `<div id="all_items_div_${v.parent_en}">`;
                                     }
                                     // 添加子级
-                                    ehtagListHtml += `<span class="mytags_item_wrapper" id="all_span_${v.ps_en}" data-search_key="${v.search_key}" title="${v.ps_en}">
+                                    ehtagListHtml += `<span class="mytags_item_wrapper" id="all_span_${v.ps_en}" title="${v.ps_en}">
                                         <input type="checkbox" value="${v.ps_en}" id="allCate_${v.ps_en}">
                                         <label for="allCate_${v.ps_en}">${v.sub_zh}</label>
                                     </span>`;
@@ -370,7 +354,6 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
         // 尝试生成数据，并检查更新全部类别
         mytagTryGetAllTagsCategory(() => {
             checkUdpateEhtagData(() => {
-                searchKeyDict = {};
                 mytagTryGetAllTagsCategory(() => { });
             }, () => { });
         });
@@ -400,6 +383,35 @@ function mytagAllSpanExtend(allCategoriesWindow) {
         }
     }
 }
+
+// 单个全部类别折叠按钮，收藏
+function mytagAllSearchSpanExtend(allCategoriesWindow) {
+    var allh4Spans = allCategoriesWindow.querySelectorAll("span.category_extend");
+    for (const i in allh4Spans) {
+        if (Object.hasOwnProperty.call(allh4Spans, i)) {
+            const span = allh4Spans[i];
+            span.onclick = function () {
+                var expandDiv = document.getElementById(`search_all_items_div_${span.dataset.category}`);
+                var displayDiv = document.getElementById(`all_items_div_${span.dataset.category}`);
+                if (span.innerText == "-") {
+                    // 需要折叠
+                    expandDiv.style.display = "none";
+                    span.innerText = "+";
+                    displayDiv.style.display = "none";
+                    displayDiv.previousElementSibling.children[0].innerText = "+";
+                } else {
+                    // 需要展开
+                    expandDiv.style.display = "block";
+                    span.innerText = "-";
+                    displayDiv.style.display = "block";
+                    displayDiv.previousElementSibling.children[0].innerText = "-";
+                }
+            }
+        }
+    }
+}
+
+
 
 // 全部类别全部折叠或者展开
 function mytagAllTotalExtend(allCategoriesWindow, innerText, display) {
@@ -512,59 +524,163 @@ function mytagTotalCheckboxClick(categoriesWindow, categoriesAllCheckBox) {
 }
 
 // 输入时候选
-function searchOnInput(searchInput, bottomDiv) {
+function searchOnInput(searchInput, allCatrgoriesSearchDiv, allCategoriesWindow, favoriteCategoriesSearchDiv, favoriteCategoriesWindow) {
+    var inputValue = trimStartEnd(searchInput.value.toLowerCase());
+    if (inputValue == "") {
+        allCatrgoriesSearchDiv.innerHTML = "";
+        favoriteCategoriesSearchDiv.innerHTML = "";
+        allCatrgoriesSearchDiv.style.display = "none";
+        allCategoriesWindow.style.display = "block";
+        favoriteCategoriesSearchDiv.style.display = "none";
+        favoriteCategoriesWindow.style.display = "block";
+    }
 
-    var searchContent = trimStartEnd(searchInput.value);
-    if (searchContent != "") {
-        for (const searchKey in searchKeyDict) {
-            if (Object.hasOwnProperty.call(searchKeyDict, searchKey)) {
-                const ps_en = searchKeyDict[searchKey];
-                var allSpanItem = document.getElementById('all_span_' + ps_en);
-                var favoriteSpanItem = document.getElementById('favorite_span_' + ps_en);
-                if (searchKey.indexOf(searchContent) != -1) {
-                    // 匹配成功
-                    if (allSpanItem) {
-                        allSpanItem.classList.remove("hide");
+    // 从 EhTag 中模糊搜索，绑定数据
+    readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, inputValue, foundArrays => {
+        allCatrgoriesSearchDiv.style.display = "block";
+        allCategoriesWindow.style.display = "none";
+        favoriteCategoriesSearchDiv.style.display = "block";
+        favoriteCategoriesWindow.style.display = "none";
+        allCatrgoriesSearchDiv.innerHTML = "";
+        favoriteCategoriesSearchDiv.innerHTML = "";
+
+        if (inputValue == "") {
+            allCatrgoriesSearchDiv.style.display = "none";
+            allCategoriesWindow.style.display = "block";
+            favoriteCategoriesSearchDiv.style.display = "none";
+            favoriteCategoriesWindow.style.display = "block";
+        } else if (foundArrays.length > 0) {
+
+            ehtagSearchDivInit(foundArrays);
+            favoriteSearchDivInit(foundArrays);
+        }
+    });
+
+    function ehtagSearchDivInit(foundArrays) {
+        // 生成 EhTag 候选html
+        var ehtagListHtml = ``;
+        var lastParentEn = ``;
+        for (const k in foundArrays) {
+            if (Object.hasOwnProperty.call(foundArrays, k)) {
+                const v = foundArrays[k];
+                if (v.parent_en != lastParentEn) {
+                    if (lastParentEn != '') {
+                        ehtagListHtml += `</div>`;
                     }
-                    if (favoriteSpanItem){
-                        favoriteSpanItem.classList.remove("hide");
-                    }
-                } else {
-                    // 匹配失败
-                    if (allSpanItem) {
-                        allSpanItem.classList.add("hide");
-                    }
-                    if (favoriteSpanItem){
-                        favoriteSpanItem.classList.add("hide");
-                    }
+                    lastParentEn = v.parent_en;
+                    // 新建父级
+                    ehtagListHtml += `<h4> ${v.parent_zh} <span data-category="${v.parent_en}" class="category_extend category_extend_mytags">-</span></h4>`;
+                    ehtagListHtml += `<div id="search_all_items_div_${v.parent_en}">`;
+                }
+                // 添加子级
+                ehtagListHtml += `<span class="mytags_item_wrapper" id="search_all_span_${v.ps_en}" title="${v.ps_en}">
+                                        <input type="checkbox" value="${v.ps_en}" id="search_allCate_${v.ps_en}">
+                                        <label for="search_allCate_${v.ps_en}">${v.sub_zh}</label>
+                                    </span>`;
+            }
+        }
+        // 读完后操作
+        if (ehtagListHtml != ``) {
+            ehtagListHtml += `</div>`;
+        }
+
+        // 页面附加html
+        allCatrgoriesSearchDiv.innerHTML = ehtagListHtml;
+
+        // 同步隐藏的折叠按钮，改为展开
+        var extendDivs = allCatrgoriesSearchDiv.querySelectorAll("div");
+        for (const i in extendDivs) {
+            if (Object.hasOwnProperty.call(extendDivs, i)) {
+                const div = extendDivs[i];
+                var displayDivId = div.id.replace("search_", "");
+                var displayDiv = document.getElementById(displayDivId);
+                if (displayDiv.style.display == "none") {
+                    displayDiv.style.display = "block";
+                    var h4 = displayDiv.previousElementSibling;
+                    h4.children[0].innerText = "-";
                 }
             }
         }
 
-        // // 显示匹配的标签，隐藏不匹配元素
-        // for (const i in categoryItems) {
-        //     if (Object.hasOwnProperty.call(categoryItems, i)) {
-        //         const wrapper = categoryItems[i];
-        //         if (wrapper.dataset.search_key.indexOf(searchContent) != -1) {
-        //             // 匹配成功
-        //             wrapper.classList.remove("hide");
-        //         } else {
-        //             // 匹配失败
-        //             wrapper.classList.add("hide");
-        //         }
-        //     }
-        // }
-    } else {
-        // 用户没有有效输入，隐藏元素全部显示
-        var hideItems = bottomDiv.querySelectorAll("hide");
-        for (const i in hideItems) {
-            if (Object.hasOwnProperty.call(hideItems, i)) {
-                const hideItem = hideItems[i];
-                hideItem.classList.remove("hide");
+        // 展开折叠事件，需要同步展示按钮列表的折叠
+        mytagAllSearchSpanExtend(allCatrgoriesSearchDiv);
+
+
+        // 读取 当前选中勾选值，并设置勾选，绑定勾选事件
+        var checkboxs = allCatrgoriesSearchDiv.querySelectorAll('input[type="checkbox"]');
+        for (const i in checkboxs) {
+            if (Object.hasOwnProperty.call(checkboxs, i)) {
+                const checkbox = checkboxs[i];
+                var displayCheckboxId = checkbox.id.replace("search_", "");
+                var displayCheckbox = document.getElementById(displayCheckboxId);
+                checkbox.checked = displayCheckbox.checked;
+                checkbox.onclick = displayCheckbox.click();
             }
         }
+
     }
+
+    function favoriteSearchDivInit(foundArrays) {
+        // 匹配过滤存在的收藏数据
+
+        // 生成收藏候选html
+
+
+        // 读取 当前选中勾选值，并设置勾选，绑定勾选事件
+    }
+
+
+
+
+    // 输入关联数据，清除候选，然后从indexeddb中ehtag查出匹配的记录
+    // 1. 根据记录甚至全部标签中匹配的生成html，对应标签是否选中与当前页面的标签关联，包含事件关联
+    // 2. 根据记录对应的ps_en查询用户收藏是否存在，如果存在，也收藏匹配的html，对应标签是否选中与当前页面的标签关联，包含事件关联
+    // 清除关联信息，清空候选列表，显示全部
+
+
+
+    console.log('开始执行');
+    // var searchContent = trimStartEnd(searchInput.value);
+    // if (searchContent != "") {
+    //     for (const searchKey in searchKeyDict) {
+    //         if (Object.hasOwnProperty.call(searchKeyDict, searchKey)) {
+    //             const ps_en = searchKeyDict[searchKey];
+    //             var allSpanItem = document.getElementById('all_span_' + ps_en);
+    //             var favoriteSpanItem = document.getElementById('favorite_span_' + ps_en);
+    //             if (searchKey.indexOf(searchContent) != -1) {
+    //                 // 匹配成功
+    //                 if (allSpanItem) {
+    //                     allSpanItem.classList.remove("hide");
+    //                 }
+    //                 if (favoriteSpanItem) {
+    //                     favoriteSpanItem.classList.remove("hide");
+    //                 }
+    //             } else {
+    //                 // 匹配失败
+    //                 if (allSpanItem) {
+    //                     allSpanItem.classList.add("hide");
+    //                 }
+    //                 if (favoriteSpanItem) {
+    //                     favoriteSpanItem.classList.add("hide");
+    //                 }
+    //             }
+    //         }
+    //     }
+    // } else {
+    //     // 用户没有有效输入，隐藏元素全部显示
+    //     var hideItems = bottomDiv.querySelectorAll("span.hide");
+    //     for (const i in hideItems) {
+    //         if (Object.hasOwnProperty.call(hideItems, i)) {
+    //             const hideItem = hideItems[i];
+    //             hideItem.classList.remove("hide");
+    //         }
+    //     }
+    // }
+
+    console.log('执行完毕');
 }
+
+
 
 
 

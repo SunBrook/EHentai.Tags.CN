@@ -202,7 +202,7 @@ searchInput.onmouseout = function () {
 
 // 输入框输入时候选
 userInput.oninput = function () {
-    var inputValue = userInput.value.toLowerCase();
+    var inputValue = trimStartEnd(userInput.value.toLowerCase());
     userInputOnInputEvent(inputValue);
 }
 
@@ -213,7 +213,7 @@ function userInputOnInputEvent(inputValue) {
     var tempDiv = document.createElement("div");
     userInputRecommendDiv.appendChild(tempDiv);
 
-    if (!inputValue) {
+    if (inputValue == "") {
         userInputRecommendDiv.style.display = "none";
         return;
     }
