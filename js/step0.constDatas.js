@@ -629,4 +629,10 @@ const detailPage_warnContentDict = {
 
 //#endregion
 
+//#region 我的标签默认值
+
+const mytagsWeight = 10;
+
+//#endregion
+
 //#endregion

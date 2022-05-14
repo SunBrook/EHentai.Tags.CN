@@ -1,5 +1,5 @@
 //#region step7.10.mytagsPage.js 我的标签
-var myTagsFavoritePsEnDict = {};
+
 function mytagsPage() {
     // 添加类方便修改样式
     var outer = document.getElementById("outer");
@@ -52,13 +52,15 @@ function mytagsPage() {
 
 // 我的标签插件布局
 function mytagsCategoryWindow() {
+
+    // 编辑主插件
     var mainHtml = `<div id="t_mytags_div">
     <div id="t_mytags_top">
         <div id="t_mytags_extend_btn">展开 / 折叠</div>
-        <input type="text" id="t_mytags_search" placeholder="请输入关键字进行搜索" />
+        <input type="text" id="t_mytags_search" placeholder="请输入关键字进行搜索，等待搜索完毕后勾选" />
         <div id="clear_search_btn">清空</div>
-        <div id="t_mytags_clodToFavorite_btn" title="账号的标签，同步到本地收藏列表">账号 -> 收藏</div>
-        <div id="t_mytags_submitCategories_btn" title="下方勾选的标签，同步添加到账号标签中">勾选 -> 账号</div>
+        <div id="t_mytags_clodToFavorite_btn" title="账号的标签，同步到本地收藏列表">标签：账号 -> 收藏</div>
+        <div id="t_mytags_submitCategories_btn" title="下方勾选的标签，同步添加到账号标签中">标签：勾选 -> 账号</div>
     </div>
     <div id="t_mytags_bottom">
         <div id="t_allCategories">
@@ -99,6 +101,83 @@ function mytagsCategoryWindow() {
     var div = document.createElement("div");
     div.innerHTML = mainHtml;
     outer.insertBefore(div, outer.children[0]);
+
+    // 标签：勾选 -> 账号 弹框
+    var uploadFormHtml = `<div id="upload_tag_form_top">勾选的标签，添加到账号</div>
+    <div id="upload_tag_form_close" title="关闭">X</div>
+    <div id="upload_tag_form_middle">
+        <div id="upload_tag_form_middle_left">
+            <div class="upload_tag_form_item">
+                <label class="checkbox_label">标签行为：</label>
+                <div id="checkboxDiv">
+                    <input type="checkbox" id="tag_watched">
+                    <label for="tag_watched">偏好页面，包含标签的作品</label>
+                    <input type="checkbox" id="tag_hidden">
+                    <label for="tag_hidden">网站隐藏，含有标签的作品</label>
+                </div>
+                <div id="behavior_reset_btn">恢复默认</div>
+            </div>
+            <div class="upload_tag_form_item">
+                <label class="color_label">标签颜色：</label>
+                <input type="color" id="tag_color" />
+                <div id="tag_color_val">默认颜色</div>
+                <div id="tag_color_reset_btn">恢复默认</div>
+            </div>
+            <div class="upload_tag_form_item">
+                <label class="weight_label">标签权重：</label>
+                <input type="text" id="tag_weight">
+                <div id="weight_reset_btn">恢复默认</div>
+            </div>
+        </div>
+        <div id="upload_tag_form_middle_split"></div>
+        <div id="upload_tag_form_middle_right">
+            <div id="uploadForm_tags_div"></div>
+            <div id="checkTags_reset_btn">恢复全部标签</div>
+        </div>
+    </div>
+    <div id="upload_tag_form_bottom">
+        <div id="upload_save_btn">保存 √</div>
+        <div id="upload_cancel_btn">取消 X</div>
+    </div>`;
+    var uploadFormDiv = document.createElement("div");
+    uploadFormDiv.innerHTML = uploadFormHtml;
+    uploadFormDiv.id = "upload_tag_form";
+    uploadFormDiv.style.display = "none";
+    outer.insertBefore(uploadFormDiv, outer.children[0]);
+
+    // 拖拽事件
+    var x = 0, y = 0;
+    var left = 0, top = 0;
+    var isMouseDown = false;
+    var uploadTagFromTop = document.getElementById("upload_tag_form_top");
+    uploadTagFromTop.onmousedown = function (e) {
+        // 获取坐标xy
+        x = e.clientX;
+        y = e.clientY;
+
+        // 获取左和头的偏移量
+        left = uploadFormDiv.offsetLeft;
+        top = uploadFormDiv.offsetTop;
+
+        // 鼠标按下
+        isMouseDown = true;
+    }
+
+    uploadTagFromTop.onmouseup = function () {
+        isMouseDown = false;
+    }
+
+    window.onmousemove = function (e) {
+        if (isMouseDown) {
+            var nLeft = e.clientX - (x - left);
+            var nTop = e.clientY - (y - top);
+            uploadFormDiv.style.left = `${nLeft}px`;
+            uploadFormDiv.style.top = `${nTop}px`;
+        }
+
+    }
+
+
 }
 
 // 我的标签插件逻辑实现
@@ -110,7 +189,6 @@ function mytagsCategoryWindowEvents() {
     var submitCategoriesBtn = document.getElementById("t_mytags_submitCategories_btn");
     var clodToFavoriteBtn = document.getElementById("t_mytags_clodToFavorite_btn");
     var bottomDiv = document.getElementById("t_mytags_bottom");
-
 
     // 全部类别：数据展示div、全选按钮、展开按钮、折叠按钮
     var allCategoriesWindow = document.getElementById("t_allCategories_window");
@@ -124,6 +202,23 @@ function mytagsCategoryWindowEvents() {
     var rightAllCollapseBtn = document.getElementById("mytags_right_all_collapse");
     var rightAllExpandBtn = document.getElementById("mytags_right_all_expand");
 
+    // 标签 勾选->账号，弹框
+    var uploadTagFormDiv = document.getElementById("upload_tag_form");
+    var uploadTagFormCloseBtn = document.getElementById("upload_tag_form_close");
+    var uploadTagFormCheckBoxTagWatched = document.getElementById("tag_watched");
+    var uploadTagFormCheckBoxTagHidden = document.getElementById("tag_hidden");
+    var uploadTagFormBehaviorResetBtn = document.getElementById("behavior_reset_btn");
+    var uploadTagFormColorInput = document.getElementById("tag_color");
+    var uploadTagFormColorLabel = document.getElementById("tag_color_val");
+    var uploadTagFormColorResetBtn = document.getElementById("tag_color_reset_btn");
+    var uploadTagFormWeightInput = document.getElementById("tag_weight");
+    var uploadTagFormWeightBtn = document.getElementById("weight_reset_btn");
+    var uploadTagFormTagsDiv = document.getElementById("uploadForm_tags_div");
+    var uploadTagFormTagsResetBtn = document.getElementById("checkTags_reset_btn");
+    var uploadTagFormSubmitBtn = document.getElementById("upload_save_btn");
+    var uploadTagFormCancelBtn = document.getElementById("upload_cancel_btn");
+
+
     // 展示数据填充
     mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
 
@@ -134,18 +229,14 @@ function mytagsCategoryWindowEvents() {
 
     // 输入框
     searchInput.oninput = function () {
-        searchOnInput(searchInput, bottomDiv, allCategoriesWindow, favoriteCategoriesWindow);
+        searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
     }
 
     // 清空按钮
     clearBtn.onclick = function () {
         searchInput.value = "";
-        searchOnInput(searchInput, bottomDiv, allCategoriesWindow, favoriteCategoriesWindow);
+        searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
     }
-
-    // 勾选->账号
-
-    // 账号->收藏
 
     // 全部类别：全部折叠
     leftAllCollapseBtn.onclick = function () {
@@ -177,6 +268,34 @@ function mytagsCategoryWindowEvents() {
         mytagTotalCheckboxClick(favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
     }
 
+    // 标签：勾选->账号
+    submitCategoriesBtn.onclick = function () {
+        uploadTagFormDivShow(bottomDiv, submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn);
+    };
+
+    // 偏好点击事件、隐藏点击事件、重置点击
+
+    // 标签颜色选择事件、重置点击
+
+    // 权重重置点击
+
+    // 恢复全部标签点击
+
+    // 提交按钮点击
+
+    // 取消按钮点击、关闭按钮点击
+    uploadTagFormCloseBtn.onclick = function () {
+        uploadTagFormDivHidden(submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn);
+    }
+    uploadTagFormCancelBtn.onclick = function () {
+        uploadTagFormDivHidden(submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn);
+    }
+
+
+
+    // 标签：账号->收藏
+
+
     // TODO 收藏时更新我的标签收藏 HTML，接收收藏的同步消息，用于更新标签收藏 html
 }
 
@@ -206,7 +325,6 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
                 for (const i in favoriteAllCheckboxs) {
                     if (Object.hasOwnProperty.call(favoriteAllCheckboxs, i)) {
                         const checkbox = favoriteAllCheckboxs[i];
-                        myTagsFavoritePsEnDict[checkbox.value] = 0;
                     }
                 }
                 mytagFavoriteSpanExtend(favoriteCategoriesWindow);
@@ -221,7 +339,6 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
                     readAll(table_favoriteSubItems, (k, v) => {
                         if (parentDict[v.parent_en]) {
                             favoriteDict[k] = v;
-                            myTagsFavoritePsEnDict[v.ps_en] = 0;
                         }
                     }, () => {
                         if (!checkDictNull(favoriteDict)) {
@@ -242,7 +359,7 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
                                     }
                                     // 添加子级
                                     favoritesListHtml += `<span class="mytags_item_wrapper" id="favorite_span_${v.ps_en}" title="${v.ps_en}">
-                                    <input type="checkbox" value="${v.ps_en}" id="favoriteCate_${v.ps_en}" data-visible="1" />
+                                    <input type="checkbox" value="${v.ps_en}" id="favoriteCate_${v.ps_en}" data-visible="1" data-parent_zh="${v.parent_zh}" data-sub_zh="${v.sub_zh}" />
                                     <label for="favoriteCate_${v.ps_en}">${v.sub_zh}</label>
                                 </span>`;
                                 }
@@ -306,7 +423,7 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
                                     }
                                     // 添加子级
                                     ehtagListHtml += `<span class="mytags_item_wrapper" id="all_span_${v.ps_en}" title="${v.ps_en}">
-                                        <input type="checkbox" value="${v.ps_en}" id="allCate_${v.ps_en}" data-visible="1" />
+                                        <input type="checkbox" value="${v.ps_en}" id="allCate_${v.ps_en}" data-visible="1" data-parent_zh="${v.parent_zh}" data-sub_zh="${v.sub_zh}" />
                                         <label for="allCate_${v.ps_en}">${v.sub_zh}</label>
                                     </span>`;
                                 }
@@ -506,8 +623,26 @@ function mytagTotalCheckboxClick(categoriesWindow, categoriesAllCheckBox) {
     categoriesAllCheckBox.indeterminate = false;
 }
 
+// 更新全反选状态 (全部类别或者收藏)
+function mytagUpdateAllCheckboxStatus(categoriesWindow, categoriesAllCheckBox) {
+    var allcheckboxs = categoriesWindow.querySelectorAll('input[type="checkbox"][data-visible="1"]');
+    var checkedboxs = categoriesWindow.querySelectorAll('input[type="checkbox"][data-visible="1"]:checked');
+    if (checkedboxs.length == 0) {
+        categoriesAllCheckBox.checked = false;
+        categoriesAllCheckBox.indeterminate = false;
+    } else {
+        if (allcheckboxs.length == checkedboxs.length) {
+            categoriesAllCheckBox.checked = true;
+            categoriesAllCheckBox.indeterminate = false;
+        } else {
+            categoriesAllCheckBox.checked = false;
+            categoriesAllCheckBox.indeterminate = true;
+        }
+    }
+}
+
 // 输入时候选
-function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, favoriteCategoriesWindow) {
+function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox) {
     var inputValue = trimStartEnd(searchInput.value.toLowerCase());
 
     // 从 EhTag 中模糊搜索，绑定数据
@@ -528,6 +663,9 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, favoriteCate
                     checkbox.dataset.visible = 1;
                 }
             }
+
+            mytagUpdateAllCheckboxStatus(allCategoriesWindow, allCategoriesAllCheckBox);
+            mytagUpdateAllCheckboxStatus(favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
 
         } else if (foundArrays.length > 0) {
 
@@ -584,7 +722,7 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, favoriteCate
                     // 当前父子级不包含搜索项
                     parentDiv.classList.add("hide");
                     h4.classList.add("hide");
-                    var checkboxs = parentDiv.querySelector('input[type="checkbox"]');
+                    var checkboxs = parentDiv.querySelectorAll('input[type="checkbox"]');
                     for (const i in checkboxs) {
                         if (Object.hasOwnProperty.call(checkboxs, i)) {
                             const checkbox = checkboxs[i];
@@ -594,6 +732,7 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, favoriteCate
                 }
             }
         }
+        mytagUpdateAllCheckboxStatus(allCategoriesWindow, allCategoriesAllCheckBox);
     }
 
     function favoriteSearch(psenDict) {
@@ -644,7 +783,7 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, favoriteCate
                         // 当前父子级不包含搜索项
                         parentDiv.classList.add("hide");
                         h4.classList.add("hide");
-                        var checkboxs = parentDiv.querySelector('input[type="checkbox"]');
+                        var checkboxs = parentDiv.querySelectorAll('input[type="checkbox"]');
                         for (const i in checkboxs) {
                             if (Object.hasOwnProperty.call(checkboxs, i)) {
                                 const checkbox = checkboxs[i];
@@ -654,12 +793,122 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, favoriteCate
                     }
                 }
             }
+            mytagUpdateAllCheckboxStatus(favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
         });
     }
 }
 
+// 标签：勾选 -> 账号 显示弹框
+function uploadTagFormDivShow(bottomDiv, submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn) {
+    var checkedboxs = bottomDiv.querySelectorAll('input[type="checkbox"][data-visible="1"]:checked');
+    if (checkedboxs.length == 0) {
+        alert("请从 全部类别 或 本地收藏 中 勾选标签");
+        return;
+    }
 
+    submitCategoriesBtn.style.display = "none";
+    uploadTagFormDiv.style.display = "block";
 
+    var checkTagsDict = {};
+    for (const i in checkedboxs) {
+        if (Object.hasOwnProperty.call(checkedboxs, i)) {
+            const tag = checkedboxs[i];
+            if (!checkTagsDict[tag.value]) {
+                var ps_enArray = tag.value.split(":");
+                checkTagsDict[tag.value] = {
+                    ps_en: tag.value,
+                    parent_en: ps_enArray[0],
+                    sub_en: ps_enArray[1],
+                    parent_zh: tag.dataset.parent_zh,
+                    sub_zh: tag.dataset.sub_zh
+                };
+            }
+        }
+    }
+
+    // 存在可用的收藏标签
+    var fromTagsListHtml = ``;
+    var lastParentEn = ``;
+    for (const k in checkTagsDict) {
+        if (Object.hasOwnProperty.call(checkTagsDict, k)) {
+            const v = checkTagsDict[k];
+            if (v.parent_en != lastParentEn) {
+                if (lastParentEn != '') {
+                    fromTagsListHtml += `</div>`;
+                }
+                lastParentEn = v.parent_en;
+                // 新建父级
+                fromTagsListHtml += `<h4> ${v.parent_zh} <span data-category="${v.parent_en}">-</span></h4>`;
+                fromTagsListHtml += `<div id="checkTags_items_div_${v.parent_en}">`;
+            }
+            // 添加子级
+            fromTagsListHtml += `<span class="checkTags_item" id="checkTags_${v.ps_en}" title="${v.ps_en}" data-value="${v.ps_en}" data-parent_en="${v.parent_en}" data-visible="1">${v.sub_zh} X</span>`;
+        }
+    }
+    // 读完后操作
+    if (fromTagsListHtml != ``) {
+        fromTagsListHtml += `</div>`;
+    }
+
+    // 页面附加 html
+    uploadTagFormTagsDiv.innerHTML = fromTagsListHtml;
+
+    // 添加展开折叠事件
+    var h4spans = uploadTagFormTagsDiv.querySelectorAll("h4>span");
+    for (const i in h4spans) {
+        if (Object.hasOwnProperty.call(h4spans, i)) {
+            const span = h4spans[i];
+            span.onclick = function () {
+                var expandDiv = document.getElementById(`checkTags_items_div_${span.dataset.category}`);
+                if (span.innerText == "-") {
+                    // 折叠
+                    expandDiv.style.display = "none";
+                    span.innerText = "+";
+                } else {
+                    // 展开
+                    expandDiv.style.display = "block";
+                    span.innerText = "-";
+                }
+            }
+        }
+    }
+
+    // 添加选中标签后隐藏事件
+    var checkTagsItems = uploadTagFormTagsDiv.querySelectorAll("span.checkTags_item");
+    for (const i in checkTagsItems) {
+        if (Object.hasOwnProperty.call(checkTagsItems, i)) {
+            const tag = checkTagsItems[i];
+            tag.onclick = function () {
+                tag.dataset.visible = 0;
+                tag.classList.add("hide");
+                var parentDiv = document.getElementById(`checkTags_items_div_${tag.dataset.parent_en}`);
+                // 尝试取一个没有隐藏的，如果没有取到说明全部隐藏了
+                var avisibleSub = parentDiv.querySelector('span[data-visible="1"]');
+                if (!avisibleSub) {
+                    // 隐藏父级，并查询是否全部都隐藏了，如果都隐藏了就显示 恢复全部标签 按钮
+                    parentDiv.classList.add("hide");
+                    parentDiv.previousElementSibling.classList.add("hide");
+                    var tagsGetAVisibleSub = uploadTagFormTagsDiv.querySelector('span[data-visible="1"]');
+                    if (!tagsGetAVisibleSub) {
+                        // 显示 恢复全部标签 按钮
+                        uploadTagFormTagsDiv.style.display = "none";
+                        uploadTagFormTagsResetBtn.style.display = "block";
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 标签：勾选 -> 账号 关闭弹框
+function uploadTagFormDivHidden(submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn) {
+    submitCategoriesBtn.style.display = "block";
+    uploadTagFormDiv.style.display = "none";
+    uploadTagFormTagsDiv.innerHTML = '';
+    uploadTagFormTagsDiv.style.display = "block";
+    uploadTagFormTagsResetBtn.style.display = "block";
+
+}
 
 
 

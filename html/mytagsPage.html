@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="../css/ex.css">
 </head>
 
-<body style="margin: 0;padding: 0;background-color: #4F535B;">
+<body class="t_mytagsPage_outer" style="margin: 0;padding: 0;background-color: #4F535B;">
     <div id="t_mytags_div">
         <div id="t_mytags_top">
             <div id="t_mytags_extend_btn">展开 / 折叠</div>
-            <input type="text" id="t_mytags_search" placeholder="请输入关键字进行搜索" />
+            <input type="text" id="t_mytags_search" placeholder="请输入关键字进行搜索，等待搜索完毕后勾选" />
             <div id="clear_search_btn">清空</div>
-            <div id="t_mytags_clodToFavorite_btn" title="账号的标签，同步到本地收藏列表">账号 -> 收藏</div>
-            <div id="t_mytags_submitCategories_btn" title="下方勾选的标签，同步添加到账号标签中">勾选 -> 账号</div>
+            <div id="t_mytags_clodToFavorite_btn" title="账号的标签，同步到本地收藏列表">标签：账号 -> 收藏</div>
+            <div id="t_mytags_submitCategories_btn" title="下方勾选的标签，同步添加到账号标签中">标签：勾选 -> 账号</div>
         </div>
         <div id="t_mytags_bottom">
             <div id="t_allCategories">
@@ -76,6 +76,55 @@
         </div>
     </div>
     <div id="t_mytags_data_update_tip"></div>
+
+    <div id="upload_tag_form">
+        <div id="upload_tag_form_top">标签：勾选 -> 账号</div>
+        <div id="upload_tag_form_close" title="关闭">X</div>
+        <div id="upload_tag_form_middle">
+            <div id="upload_tag_form_middle_left">
+                <div class="upload_tag_form_item">
+                    <label class="checkbox_label">标签行为：</label>
+                    <div id="checkboxDiv">
+                        <input type="checkbox" id="tag_watched">
+                        <label for="tag_watched">偏好页面，包含标签的作品</label>
+                        <input type="checkbox" id="tag_hidden">
+                        <label for="tag_hidden">网站隐藏，含有标签的作品</label>
+                    </div>
+                    <div id="behavior_reset_btn">恢复默认</div>
+                </div>
+                <div class="upload_tag_form_item">
+                    <label class="color_label">标签颜色：</label>
+                    <input type="color" id="tag_color" />
+                    <div id="tag_color_val">默认颜色</div>
+                    <div id="tag_color_reset_btn">恢复默认</div>
+                </div>
+                <div class="upload_tag_form_item">
+                    <label class="weight_label">标签权重：</label>
+                    <input type="text" id="tag_weight">
+                    <div id="weight_reset_btn">恢复默认</div>
+                </div>
+            </div>
+            <div id="upload_tag_form_middle_split"></div>
+            <div id="upload_tag_form_middle_right">
+                <div id="uploadForm_tags_div">
+                    <h4>语言 <span data-category="Language">-</span></h4>
+                    <div id="checkTags_items_div_Language">
+                        <span class="checkTags_item" id="checkTags_language:chinese" data-value="language:chinese">中文
+                            X</span>
+                        <span class="checkTags_item" id="checkTags_language:english" data-value="language:english">英文
+                            X</span>
+                    </div>
+                </div>
+                <div id="checkTags_reset_btn">恢复全部标签</div>
+            </div>
+        </div>
+        <div id="upload_tag_form_bottom">
+            <div id="upload_save_btn">保存 √</div>
+            <div id="upload_cancel_btn">取消 X</div>
+        </div>
+    </div>
+
+
 </body>
 
 </html>
