@@ -97,4 +97,15 @@ function setBgLowImage(base64) {
 function removeBgLowImage() {
     localStorage.removeItem(dbBgLowImageBase64);
 }
+
+// 我的标签上传到账号剩余数量
+function getMyTagsUploadingRemainderCount() {
+    return localStorage.getItem(dbMyTagsUploadingRemainderCount);
+}
+function setMyTagsUploadingRemainderCount(uploadingRemainderCount) {
+    return localStorage.setItem(dbMyTagsUploadingRemainderCount, uploadingRemainderCount);
+}
+function removeMyTagsUploadingRemainderCount() {
+    localStorage.removeItem(dbMyTagsUploadingRemainderCount);
+}
 //#endregion

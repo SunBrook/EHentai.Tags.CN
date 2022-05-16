@@ -1,5 +1,7 @@
 //#region step0.constDatas.js 数据字典
 
+const webOrigin = window.location.origin;
+
 //#region 头部菜单
 
 const fontMenusData = {
@@ -151,6 +153,9 @@ const dbFrontPageSearchMode = "dbfrontPageSearchMode";
 // 存储有损压缩图片
 const dbBgLowImageBase64 = "dbBgLowImageBase64";
 
+// 我的标签，标签：勾选->账号
+const dbMyTagsUploadingRemainderCount = "dbMyTagsUploadingRemainderCount";
+
 //#endregion
 
 //#region indexedDB 数据表、索引、键
@@ -187,6 +192,7 @@ const table_Settings_key_FrontPageSearchMode = "f_frontPageSearchMode";
 const table_Settings_key_TosPageTranslate = "f_tosPageTranslate";
 const table_Settings_key_MyTagsAllCategory_Html = "f_myTagsAllCategoryHtml";
 const table_Settings_key_MyTagsFavoriteCategory_Html = "f_myTagsFavoriteCategoryHtml";
+const table_Settings_key_MyTagsUploadTags = "f_myTagsUploadTags";
 
 // fetishList 全部类别 - 父子信息表
 const table_fetishListSubItems = "t_fetishListSubItems";
@@ -629,9 +635,10 @@ const detailPage_warnContentDict = {
 
 //#endregion
 
-//#region 我的标签默认值
+//#region 我的标签
 
-const mytagsWeight = 10;
+const mytagDefaultWeight = 10;
+const mytagDefaultColor = "#000000";
 
 //#endregion
 

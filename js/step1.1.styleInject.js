@@ -2946,24 +2946,20 @@ func_eh_ex(() => {
 	}
 	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="color"],
-	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="text"] {
+	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="range"] {
 		float: left;
-		width: 80px;
+		width: 100px;
 		height: 30px;
 		margin-top: 5px;
 	}
 	
-	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item #tag_weight {
-		width: 147px;
-		text-align: center;
-		height: 24px;
-	}
-	
-	.t_mytagsPage_outer #upload_tag_form #tag_color_val {
+	.t_mytagsPage_outer #upload_tag_form #tag_color_val,
+	.t_mytagsPage_outer #upload_tag_form #tag_weight_val {
 		float: left;
 		height: 40px;
 		line-height: 40px;
-		margin-left: 27px;
+		text-align: center;
+		width: 80px;
 	}
 	
 	.t_mytagsPage_outer #upload_tag_form #checkboxDiv {
@@ -3111,6 +3107,101 @@ func_eh_ex(() => {
 	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn:hover {
 		background-color: rgba(255, 246, 246, 0.397);
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing {
+		border: 2px solid white;
+		background-color: #40454b;
+		color: white;
+		padding: 0 20px;
+		width: 300px;
+		height: 300px;
+		position: absolute;
+		top: calc(50vh - 150px);
+		left: calc(50vw - 150px);
+		z-index: 99;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		display: none;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing:hover {
+		border-color: yellow;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_top {
+		height: 60px;
+		line-height: 60px;
+		width: calc(100% - 40px);
+		position: absolute;
+		top: 0;
+		cursor: move;
+		text-align: center;
+		font-weight: bold;
+		font-size: 18px;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1 {
+		margin-top: 80px;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1,
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_2 {
+		text-align: center;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #tip_pause {
+		color: yellow;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #tip_continue {
+		color: lightgreen;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder {
+		margin-top: 20px;
+		text-align: center;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder #upload_remainder_count {
+		font-size: 30px;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn,
+	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
+		border: 1px solid black;
+		width: 100px;
+		height: 30px;
+		text-align: center;
+		line-height: 30px;
+		padding: 0 10px;
+		cursor: pointer;
+		margin: 30px auto;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn {
+		background-color: darkred;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn:hover {
+		background-color: red;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
+		background-color: darkslateblue;
+		display: none;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn:hover {
+		background-color: slateblue;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing .upload_ing_success {
+		font-size: 20px;
+		font-weight: bold;
+		color: lightgreen;
 	}`;
 	styleInject(category_style);
 });

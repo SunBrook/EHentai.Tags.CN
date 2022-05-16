@@ -100,7 +100,8 @@
                 </div>
                 <div class="upload_tag_form_item">
                     <label class="weight_label">标签权重：</label>
-                    <input type="text" id="tag_weight">
+                    <input id="tag_weight" type="range" max="99" min="-99" id="range" step="1" value="10">
+                    <div id="tag_weight_val">10</div>
                     <div id="weight_reset_btn">恢复默认</div>
                 </div>
             </div>
@@ -122,6 +123,15 @@
             <div id="upload_save_btn">保存 √</div>
             <div id="upload_cancel_btn">取消 X</div>
         </div>
+    </div>
+
+    <div id="upload_tag_ing">
+        <div id="upload_tag_ing_top">标签：勾选 -> 账号</div>
+        <p id="upload_tag_ing_tips_1">鼠标移入方框，<span id="tip_pause">暂停</span></p>
+        <p id="upload_tag_ing_tips_2">鼠标移出方框，<span id="tip_continue">继续</span></p>
+        <p id="upload_tag_remainder">剩余 <strong id="upload_remainder_count">120</strong> 个</p>
+        <div id="upload_ing_stop_btn">中止操作 X</div>
+        <div id="upload_ing_window_close_btn">关闭窗口 X</div>
     </div>
 
 

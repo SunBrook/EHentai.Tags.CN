@@ -1,53 +1,162 @@
 //#region step7.10.mytagsPage.js 我的标签
 
+var myTagUploadingGetReady = false;
+var myTagUploadingPause = false;
+var myTagCurrentIsWatchChecked = false;
+var myTagCurrentIsHiddenChecked = false;
+var myTagCurrentColor = "";
+var myTagCurrentWeight = mytagDefaultWeight;
+var myTagCurrentTag = "";
+
 function mytagsPage() {
     // 添加类方便修改样式
     var outer = document.getElementById("outer");
     outer.classList.add("t_mytagsPage_outer");
 
-    // 查询是否存在上传的标签，如果存在这弹窗
-
-
-
-
     // 新建插件布局
     mytagsCategoryWindow();
 
+    // 查询是否存在上传的标签，如果存在就弹窗提示
+    var uploadingDiv = document.getElementById("upload_tag_ing");
+    var uploadingRemainder = document.getElementById("upload_tag_remainder");
+    var uploadingRemainderCount = document.getElementById("upload_remainder_count");
+    var uploadingStopBtn = document.getElementById("upload_ing_stop_btn");
+    var uploadingCloseWindowBtn = document.getElementById("upload_ing_window_close_btn");
+
+    var remainderCount = getMyTagsUploadingRemainderCount();
+    if (remainderCount > 0) {
+        uploadingRemainderCount.innerText = remainderCount;
+        uploadingDiv.style.display = "block";
+    }
+
+    if (uploadingDiv.style.borderColor == "yellow") {
+        myTagUploadingPause = true;
+    }
+
+    uploadingDiv.onmouseenter = function () {
+        myTagUploadingPause = true;
+    }
+
+    uploadingDiv.onmouseleave = function () {
+        myTagUploadingPause = false;
+        if (myTagUploadingGetReady) {
+            // 勾选 -> 账户 继续
+            myTagUploadTagsIng(myTagCurrentIsWatchChecked, myTagCurrentIsHiddenChecked, myTagCurrentColor, myTagCurrentWeight, myTagCurrentTag);
+        }
+    }
+
+    uploadingStopBtn.onclick = function () {
+        remove(table_Settings, table_Settings_key_MyTagsUploadTags, () => {
+            uploadingRemainder.innerText = "操作完成";
+            uploadingRemainder.classList.add("upload_ing_success");
+            uploadingStopBtn.style.display = "none";
+            uploadingCloseWindowBtn.style.display = "block";
+        }, () => {
+            uploadingRemainder = "操作失败，请重试";
+        });
+    }
+
+    uploadingCloseWindowBtn.onclick = function () {
+        uploadingDiv.style.display = "none";
+    }
+
+
+    indexDbInit(() => {
+        read(table_Settings, table_Settings_key_MyTagsUploadTags, result => {
+            if (result && result.value) {
+                if (result.value.newTagsArray.length > 0) {
+                    var userTagsDict = myTagGetUserTagsDict();
+                    var newTagsArray = result.value.newTagsArray;
+                    var shiftOneTag = newTagsArray.shift();
+                    while (newTagsArray.length > 0 && userTagsDict[shiftOneTag]) {
+                        shiftOneTag = newTagsArray.shift();
+                    }
+                    if (!userTagsDict[shiftOneTag]) {
+                        // 当前取出的值不匹配
+                        var remainderCount = newTagsArray.length + 1;
+                        uploadingRemainderCount.innerText = remainderCount;
+                        uploadingDiv.style.display = "block";
+
+
+                        // 更新存储
+                        var settings_myTagsUploadTags = {
+                            item: table_Settings_key_MyTagsUploadTags,
+                            value: {
+                                isWatchChecked: result.value.isWatchChecked,
+                                isHiddenChecked: result.value.isHiddenChecked,
+                                tagColor: result.value.tagColor,
+                                tagWeight: result.value.tagWeight,
+                                newTagsArray
+                            }
+                        };
+
+                        myTagCurrentIsWatchChecked = result.value.isWatchChecked;
+                        myTagCurrentIsHiddenChecked = result.value.isHiddenChecked;
+                        myTagCurrentColor = result.value.tagColor;
+                        myTagCurrentWeight = result.value.tagWeight;
+                        myTagCurrentTag = shiftOneTag;
+
+                        update(table_Settings, settings_myTagsUploadTags, () => {
+                            setMyTagsUploadingRemainderCount(remainderCount - 1);
+                            // 执行添加操作
+                            myTagUploadingGetReady = true;
+                            if (!myTagUploadingPause) {
+                                myTagUploadTagsIng(myTagCurrentIsWatchChecked, myTagCurrentIsHiddenChecked, myTagCurrentColor, myTagCurrentWeight, myTagCurrentTag);
+                            }
+                            mytagPartTwo();
+                        }, () => {
+                            setMyTagsUploadingRemainderCount(remainderCount - 1);
+                            myTagUploadingGetReady = true;
+                            if (!myTagUploadingPause) {
+                                myTagUploadTagsIng(myTagCurrentIsWatchChecked, myTagCurrentIsHiddenChecked, myTagCurrentColor, myTagCurrentWeight, myTagCurrentTag);
+                            }
+                            mytagPartTwo();
+                        });
+                    } else {
+                        // 值已经取完，操作完成
+                        remove(table_Settings, table_Settings_key_MyTagsUploadTags, () => {
+                            removeMyTagsUploadingRemainderCount();
+                            uploadingRemainder.innerText = "操作完成";
+                            uploadingRemainder.classList.add("upload_ing_success");
+                            uploadingStopBtn.style.display = "none";
+                            uploadingCloseWindowBtn.style.display = "block";
+                            uploadingDiv.style.display = "block";
+                            mytagPartTwo();
+                        }, () => {
+                            removeMyTagsUploadingRemainderCount();
+                            mytagPartTwo();
+                        });
+                    }
+                } else {
+                    // 刚好同步完成
+                    remove(table_Settings, table_Settings_key_MyTagsUploadTags, () => {
+                        removeMyTagsUploadingRemainderCount();
+                        uploadingRemainder.innerText = "操作完成";
+                        uploadingRemainder.classList.add("upload_ing_success");
+                        uploadingStopBtn.style.display = "none";
+                        uploadingCloseWindowBtn.style.display = "block";
+                        uploadingDiv.style.display = "block";
+                        mytagPartTwo();
+                    }, () => {
+                        removeMyTagsUploadingRemainderCount();
+                        mytagPartTwo();
+                    });
+                }
+            } else {
+                mytagPartTwo();
+            }
+        }, () => {
+            mytagPartTwo();
+        });
+    });
+}
+
+// 同步完成后的阶段操作
+function mytagPartTwo() {
     // 插件逻辑实现
     mytagsCategoryWindowEvents();
-
     // 底部页面翻译
-
-
-
-    // var valueArray = ["other:3d", "group:imomuya honpo"];
-    // localStorage.setItem("mytags", JSON.stringify(valueArray));
-
-    // 加个遮罩，提示进度，鼠标移入暂停操作
-    // var items = localStorage.getItem("mytags");
-    // if (items) {
-    //     var itemArray = JSON.parse(items);
-    //     if (itemArray.length > 0) {
-    //         var item0 = itemArray.shift();
-    //         localStorage.setItem("mytags", JSON.stringify(itemArray));
-
-    //         var tagname_new = document.getElementById("tagname_new");
-    //         var tagsave_0 = document.getElementById("tagsave_0");
-    //         tagname_new.value = item0;
-    //         tagsave_0.removeAttribute("disabled");
-    //         tagsave_0.click();
-    //     }
-    // }
-
-    // var valueArray = ["other:3d", "group:imomuya honpo"];
-    // var tagname_new = document.getElementById("tagname_new");
-    // var tagsave_0 = document.getElementById("tagsave_0");
-
-    // for (let i = 0; i < valueArray.length; i++) {
-    //     tagname_new.value = valueArray[i];
-    //     tagsave_0.removeAttribute("disabled");
-    //     tagsave_0.click();
-    // }
+    mytagsBottomTranslate();
 }
 
 // 我的标签插件布局
@@ -125,7 +234,8 @@ function mytagsCategoryWindow() {
             </div>
             <div class="upload_tag_form_item">
                 <label class="weight_label">标签权重：</label>
-                <input type="text" id="tag_weight">
+                <input id="tag_weight" type="range" max="99" min="-99" id="range" step="1" value="${mytagDefaultWeight}">
+                <div id="tag_weight_val">${mytagDefaultWeight}</div>
                 <div id="weight_reset_btn">恢复默认</div>
             </div>
         </div>
@@ -167,6 +277,40 @@ function mytagsCategoryWindow() {
         isMouseDown = false;
     }
 
+    // 标签：勾选 -> 账号 ING 弹框
+    var uploadIngHtml = `<div id="upload_tag_ing_top">标签：勾选 -> 账号</div>
+    <p id="upload_tag_ing_tips_1">鼠标移入方框，<span id="tip_pause">暂停</span></p>
+    <p id="upload_tag_ing_tips_2">鼠标移出方框，<span id="tip_continue">继续</span></p>
+    <p id="upload_tag_remainder">剩余 <strong id="upload_remainder_count"></strong> 个</p>
+    <div id="upload_ing_stop_btn">中止操作 X</div><div id="upload_ing_window_close_btn">关闭窗口 X</div>`;
+
+    var uploadIngDiv = document.createElement("div");
+    uploadIngDiv.innerHTML = uploadIngHtml;
+    uploadIngDiv.id = "upload_tag_ing";
+    outer.insertBefore(uploadIngDiv, outer.children[0]);
+
+    // 拖拽事件
+    var x1 = 0, y1 = 0;
+    var left1 = 0, top1 = 0;
+    var isMouseDown1 = false;
+    var uploadTagIngTop = document.getElementById("upload_tag_ing_top");
+    uploadTagIngTop.onmousedown = function (e) {
+        // 获取坐标xy
+        x1 = e.clientX;
+        y1 = e.clientY;
+
+        // 获取左和头的偏移量
+        left1 = uploadIngDiv.offsetLeft;
+        top1 = uploadIngDiv.offsetTop;
+
+        // 鼠标按下
+        isMouseDown1 = true;
+    }
+
+    uploadTagIngTop.onmouseup = function () {
+        isMouseDown1 = false;
+    }
+
     window.onmousemove = function (e) {
         if (isMouseDown) {
             var nLeft = e.clientX - (x - left);
@@ -175,8 +319,13 @@ function mytagsCategoryWindow() {
             uploadFormDiv.style.top = `${nTop}px`;
         }
 
+        if (isMouseDown1) {
+            var nLeft = e.clientX - (x1 - left1);
+            var nTop = e.clientY - (y1 - top1);
+            uploadIngDiv.style.left = `${nLeft}px`;
+            uploadIngDiv.style.top = `${nTop}px`;
+        }
     }
-
 
 }
 
@@ -212,12 +361,15 @@ function mytagsCategoryWindowEvents() {
     var uploadTagFormColorLabel = document.getElementById("tag_color_val");
     var uploadTagFormColorResetBtn = document.getElementById("tag_color_reset_btn");
     var uploadTagFormWeightInput = document.getElementById("tag_weight");
+    var uploadTagFormWeightLabel = document.getElementById("tag_weight_val");
     var uploadTagFormWeightBtn = document.getElementById("weight_reset_btn");
     var uploadTagFormTagsDiv = document.getElementById("uploadForm_tags_div");
     var uploadTagFormTagsResetBtn = document.getElementById("checkTags_reset_btn");
     var uploadTagFormSubmitBtn = document.getElementById("upload_save_btn");
     var uploadTagFormCancelBtn = document.getElementById("upload_cancel_btn");
 
+
+    //#region 主插件
 
     // 展示数据填充
     mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
@@ -268,20 +420,54 @@ function mytagsCategoryWindowEvents() {
         mytagTotalCheckboxClick(favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
     }
 
-    // 标签：勾选->账号
+    // 勾选->账号
     submitCategoriesBtn.onclick = function () {
         uploadTagFormDivShow(bottomDiv, submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn);
     };
 
-    // 偏好点击事件、隐藏点击事件、重置点击
+    //#endregion
+
+    //#region 标签：勾选->账号
+
+    // 偏好点击事件、隐藏点击事件、行为重置点击
+    uploadTagFormCheckBoxTagWatched.onclick = function () {
+        mytagCheckBoxTagWatchedClick(uploadTagFormCheckBoxTagHidden);
+    }
+    uploadTagFormCheckBoxTagHidden.onclick = function () {
+        mytagCheckBoxTagHiddenClick(uploadTagFormCheckBoxTagWatched);
+    }
+    uploadTagFormBehaviorResetBtn.onclick = function () {
+        mytagBehaviorReset(uploadTagFormCheckBoxTagWatched, uploadTagFormCheckBoxTagHidden);
+    }
 
     // 标签颜色选择事件、重置点击
+    uploadTagFormColorInput.onchange = function () {
+        mytagColorChange(uploadTagFormColorInput, uploadTagFormColorLabel);
+    }
+    uploadTagFormColorResetBtn.onclick = function () {
+        mytagColorReset(uploadTagFormColorInput, uploadTagFormColorLabel);
+    }
+
+    // 权重选择事件
+    uploadTagFormWeightInput.oninput = function () {
+        mytagWeightChange(uploadTagFormWeightInput, uploadTagFormWeightLabel);
+    }
 
     // 权重重置点击
+    uploadTagFormWeightBtn.onclick = function () {
+        mytagWeightReset(uploadTagFormWeightInput, uploadTagFormWeightLabel);
+    }
 
     // 恢复全部标签点击
+    uploadTagFormTagsResetBtn.onclick = function () {
+        mytagUploadTagFormTagsReset(uploadTagFormTagsResetBtn, uploadTagFormTagsDiv);
+    }
 
     // 提交按钮点击
+    uploadTagFormSubmitBtn.onclick = function () {
+        mytagUploadSubmit(uploadTagFormTagsDiv, uploadTagFormDiv, submitCategoriesBtn,
+            uploadTagFormCheckBoxTagWatched, uploadTagFormCheckBoxTagHidden, uploadTagFormColorInput, uploadTagFormWeightInput);
+    }
 
     // 取消按钮点击、关闭按钮点击
     uploadTagFormCloseBtn.onclick = function () {
@@ -291,13 +477,18 @@ function mytagsCategoryWindowEvents() {
         uploadTagFormDivHidden(submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn);
     }
 
+    //#endregion
 
 
-    // 标签：账号->收藏
 
+    // TODO 标签：账号->收藏
+
+    // TODO 底部翻译
 
     // TODO 收藏时更新我的标签收藏 HTML，接收收藏的同步消息，用于更新标签收藏 html
 }
+
+//#region mytag 主插件方法
 
 // 展开折叠插件窗口功能
 function windowSlideUpDown(bottomDiv) {
@@ -798,7 +989,11 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategorie
     }
 }
 
-// 标签：勾选 -> 账号 显示弹框
+//#endregion
+
+//#region mytag 标签：勾选 -> 账号
+
+// 显示弹框
 function uploadTagFormDivShow(bottomDiv, submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn) {
     var checkedboxs = bottomDiv.querySelectorAll('input[type="checkbox"][data-visible="1"]:checked');
     if (checkedboxs.length == 0) {
@@ -808,6 +1003,7 @@ function uploadTagFormDivShow(bottomDiv, submitCategoriesBtn, uploadTagFormDiv, 
 
     submitCategoriesBtn.style.display = "none";
     uploadTagFormDiv.style.display = "block";
+    uploadTagFormTagsResetBtn.style.display = "none";
 
     var checkTagsDict = {};
     for (const i in checkedboxs) {
@@ -900,7 +1096,7 @@ function uploadTagFormDivShow(bottomDiv, submitCategoriesBtn, uploadTagFormDiv, 
     }
 }
 
-// 标签：勾选 -> 账号 关闭弹框
+// 关闭弹框
 function uploadTagFormDivHidden(submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn) {
     submitCategoriesBtn.style.display = "block";
     uploadTagFormDiv.style.display = "none";
@@ -910,6 +1106,185 @@ function uploadTagFormDivHidden(submitCategoriesBtn, uploadTagFormDiv, uploadTag
 
 }
 
+// 恢复全部标签
+function mytagUploadTagFormTagsReset(uploadTagFormTagsResetBtn, uploadTagFormTagsDiv) {
+    uploadTagFormTagsDiv.style.display = "block";
+    uploadTagFormTagsResetBtn.style.display = "none";
 
+    var tagHides = uploadTagFormTagsDiv.querySelectorAll(".hide");
+    for (const i in tagHides) {
+        if (Object.hasOwnProperty.call(tagHides, i)) {
+            const tagHide = tagHides[i];
+            tagHide.classList.remove("hide");
+        }
+    }
+
+    var spanVisibles = uploadTagFormTagsDiv.querySelectorAll('span[data-visible="0"]');
+    for (const i in spanVisibles) {
+        if (Object.hasOwnProperty.call(spanVisibles, i)) {
+            const span = spanVisibles[i];
+            span.dataset.visible = 1;
+        }
+    }
+}
+
+// 偏好点击事件
+function mytagCheckBoxTagWatchedClick(uploadTagFormCheckBoxTagHidden) {
+    if (uploadTagFormCheckBoxTagHidden.checked) {
+        uploadTagFormCheckBoxTagHidden.checked = false;
+    }
+}
+
+// 隐藏点击事件
+function mytagCheckBoxTagHiddenClick(uploadTagFormCheckBoxTagWatched) {
+    if (uploadTagFormCheckBoxTagWatched.checked) {
+        uploadTagFormCheckBoxTagWatched.checked = false;
+    }
+}
+
+// 行为重置点击
+function mytagBehaviorReset(uploadTagFormCheckBoxTagWatched, uploadTagFormCheckBoxTagHidden) {
+    uploadTagFormCheckBoxTagWatched.checked = false;
+    uploadTagFormCheckBoxTagHidden.checked = false;
+}
+
+// 标签颜色改变
+function mytagColorChange(uploadTagFormColorInput, uploadTagFormColorLabel) {
+    uploadTagFormColorLabel.innerText = uploadTagFormColorInput.value;
+}
+
+// 标签颜色重置
+function mytagColorReset(uploadTagFormColorInput, uploadTagFormColorLabel) {
+    uploadTagFormColorInput.value = mytagDefaultColor;
+    uploadTagFormColorLabel.innerText = "默认颜色";
+}
+
+// 标签权重选择
+function mytagWeightChange(uploadTagFormWeightInput, uploadTagFormWeightLabel) {
+    uploadTagFormWeightLabel.innerText = uploadTagFormWeightInput.value;
+}
+
+// 标签权重重置
+function mytagWeightReset(uploadTagFormWeightInput, uploadTagFormWeightLabel) {
+    uploadTagFormWeightInput.value = mytagDefaultWeight;
+    uploadTagFormWeightLabel.innerText = mytagDefaultWeight;
+}
+
+// 标签上传
+function mytagUploadSubmit(uploadTagFormTagsDiv, uploadTagFormDiv, submitCategoriesBtn,
+    uploadTagFormCheckBoxTagWatched, uploadTagFormCheckBoxTagHidden, uploadTagFormColorInput, uploadTagFormWeightInput) {
+    // 判断是否选中标签，没有选中标签提示选中
+    var checkedTags = uploadTagFormTagsDiv.querySelectorAll('span.checkTags_item[data-visible="1"]');
+    if (checkedTags.length == 0) {
+        alert("请恢复全部标签");
+        return;
+    }
+
+    // 读取用户账号标签，比对当前选中标签，过滤得到新增标签
+    var userTagsDict = myTagGetUserTagsDict();
+
+    var newTagsArray = [];
+    for (const i in checkedTags) {
+        if (Object.hasOwnProperty.call(checkedTags, i)) {
+            const checkTag = checkedTags[i];
+            var checkValue = checkTag.dataset.value;
+            if (!userTagsDict[checkValue]) {
+                newTagsArray.push(checkValue);
+            }
+        }
+    }
+
+    if (newTagsArray.length == 0) {
+        // 没有需要新增的标签
+        uploadTagFormDiv.style.display = "none";
+        submitCategoriesBtn.style.display = "block";
+
+        setTimeout(function () {
+            submitCategoriesBtn.innerText = "同步完成";
+        }, 250);
+        setTimeout(function () {
+            submitCategoriesBtn.innerText = "标签：账号 -> 收藏";
+        }, 500);
+
+        return;
+    }
+
+    // 读取标签行为、颜色、权重
+    var isWatchChecked = uploadTagFormCheckBoxTagWatched.checked;
+    var isHiddenChecked = uploadTagFormCheckBoxTagHidden.checked;
+    var tagColor = uploadTagFormColorInput.value == mytagDefaultColor ? "" : uploadTagFormColorInput.value;
+    var tagWeight = uploadTagFormWeightInput.value;
+
+
+
+    // 保存到配置表中，每次打开页面读取并提交
+    indexDbInit(() => {
+        var settings_myTagsUploadTags = {
+            item: table_Settings_key_MyTagsUploadTags,
+            value: {
+                isWatchChecked,
+                isHiddenChecked,
+                tagColor,
+                tagWeight,
+                newTagsArray
+            }
+        };
+
+        update(table_Settings, settings_myTagsUploadTags, () => {
+            uploadTagFormDiv.style.display = "none";
+            submitCategoriesBtn.style.display = "block";
+            submitCategoriesBtn.innerText = "同步中...";
+            var tag = newTagsArray.shift();
+            setMyTagsUploadingRemainderCount(newTagsArray.length + 1);
+            myTagUploadTagsIng(isWatchChecked, isHiddenChecked, tagColor, tagWeight, tag);
+        }, () => {
+            alert("操作失败，请重试");
+        });
+    })
+
+}
+
+// 单个同步勾选标签到账号中
+function myTagUploadTagsIng(isWatchChecked, isHiddenChecked, tagColor, tagWeight, tag) {
+    var tagnameNew = document.getElementById("tagname_new");
+    tagnameNew.value = tag;
+    var tagwatch = document.getElementById("tagwatch_0");
+    tagwatch.checked = isWatchChecked;
+    var taghide = document.getElementById("taghide_0");
+    taghide.checked = isHiddenChecked;
+    var tagcolor = document.getElementById("tagcolor_0");
+    tagcolor.value = tagColor;
+    var tagweight = document.getElementById("tagweight_0");
+    tagweight.value = tagWeight;
+    var submitBtn = document.getElementById("tagsave_0");
+    submitBtn.removeAttribute("disabled");
+    submitBtn.click();
+}
+
+// 获取页面中账号标签
+function myTagGetUserTagsDict() {
+    var userTagsDict = {};
+    var usertagsOuter = document.getElementById("usertags_outer");
+    var userTagLinks = usertagsOuter.querySelectorAll("a");
+    var replaceTxt = `${webOrigin}/tag/`;
+    for (const i in userTagLinks) {
+        if (Object.hasOwnProperty.call(userTagLinks, i)) {
+            const a = userTagLinks[i];
+            var psEn = a.href.replace(replaceTxt, "").replace("+", " ");
+            userTagsDict[psEn] = 1;
+        }
+    }
+    return userTagsDict;
+}
+
+//#endregion
+
+//#region 底部页面翻译
+
+function mytagsBottomTranslate() {
+
+}
+
+//#endregion
 
 //#endregion
