@@ -3148,8 +3148,17 @@ func_eh_ex(() => {
 	}
 	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1,
-	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_2 {
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_2,
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_error {
 		text-align: center;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_error {
+		margin-bottom: -20px;
+		display: none;
+		color: red;
+		font-size: 17px;
+		font-weight: bold;
 	}
 	
 	.t_mytagsPage_outer #upload_tag_ing #tip_pause {
@@ -3160,9 +3169,17 @@ func_eh_ex(() => {
 		color: lightgreen;
 	}
 	
-	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder {
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder,
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
 		margin-top: 20px;
 		text-align: center;
+	}
+	
+	.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
+		font-size: 20px;
+		font-weight: bold;
+		color: lightgreen;
+		display: none;
 	}
 	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder #upload_remainder_count {
@@ -3196,12 +3213,6 @@ func_eh_ex(() => {
 	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn:hover {
 		background-color: slateblue;
-	}
-	
-	.t_mytagsPage_outer #upload_tag_ing .upload_ing_success {
-		font-size: 20px;
-		font-weight: bold;
-		color: lightgreen;
 	}`;
 	styleInject(category_style);
 });

@@ -385,6 +385,11 @@ function detailPageRightButtons() {
 
         function batchAddFavoriteAndMessage() {
             batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteDict, favoriteCount, () => {
+                // 更新我的标签收藏
+                updateMyTagFavoriteTagHtml(() => {
+                    setDbSyncMessage(sync_mytagsFavoriteTagUpdate);
+                }, () => { });
+
                 // 读取收藏表，更新收藏列表html
                 var favoritesListHtml = ``;
                 var lastParentEn = ``;

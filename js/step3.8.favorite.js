@@ -154,6 +154,11 @@ function firstUpdateFavoriteSubItems(favoriteSubItems, foundTotalCount) {
         console.log('批量添加本地收藏表完成');
         // 稳妥起见，更新完之后再删除本地的原始收藏列表
         remove(table_Settings, table_Settings_key_FavoriteList, () => { }, () => { });
+
+        // 更新我的标签收藏
+        updateMyTagFavoriteTagHtml(() => {
+            setDbSyncMessage(sync_mytagsFavoriteTagUpdate);
+        }, () => { });
     });
 
     // 生成 html 和 同步
@@ -394,6 +399,11 @@ addFavoritesBtn.onclick = function () {
 
                     }
                 }
+
+                // 更新我的标签收藏
+                updateMyTagFavoriteTagHtml(() => {
+                    setDbSyncMessage(sync_mytagsFavoriteTagUpdate);
+                }, () => { });
 
                 // 获取html并更新收藏html
                 saveFavoriteListHtml(favoriteListDiv.innerHTML, () => {
@@ -714,6 +724,12 @@ favoriteSave.onclick = function () {
     var t = setInterval(() => {
         if (removeTotalCount == removeIndex) {
             t && clearInterval(t);
+
+            // 更新我的标签收藏
+            updateMyTagFavoriteTagHtml(() => {
+                setDbSyncMessage(sync_mytagsFavoriteTagUpdate);
+            }, () => { });
+
             // 更新收藏折叠
             updateFavoriteExtend();
         }
@@ -849,6 +865,11 @@ favoriteClear.onclick = function () {
 
         // 清空收藏数据
         clearTable(table_favoriteSubItems, () => { });
+
+        // 更新我的标签收藏
+        updateMyTagFavoriteTagHtml(() => {
+            setDbSyncMessage(sync_mytagsFavoriteTagUpdate);
+        }, () => { });
 
         // 清空收藏折叠
         remove(table_Settings, table_Settings_Key_FavoriteList_Extend, () => { }, () => { });

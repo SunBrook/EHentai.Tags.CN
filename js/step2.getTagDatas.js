@@ -574,6 +574,9 @@ function checkUpdateData(func_needUpdate, func_none) {
                 batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
                     complete7 = true;
                     console.log("批量添加完成");
+                    updateMyTagAllTagHtml(() => { 
+                        setDbSyncMessage(sync_mytagsAllTagUpdate);
+                     }, () => { });
                 });
             });
 
@@ -1278,6 +1281,91 @@ function initUserSettings(func_compelete) {
                 func_compelete();
             }
         }, 50);
+    })
+}
+
+// 读取和更新我的标签，收藏标签
+function updateMyTagFavoriteTagHtml(func_complete, func_error) {
+    indexDbInit(() => {
+        var parentDict = {}; // 用于过滤可用收藏的父级
+        var favoriteDict = {}; // 可用的收藏标签
+        readAll(table_detailParentItems, (k, v) => {
+            parentDict[k] = v;
+        }, () => {
+            readAll(table_favoriteSubItems, (k, v) => {
+                if (parentDict[v.parent_en]) {
+                    favoriteDict[k] = v;
+                }
+            }, () => {
+                if (!checkDictNull(favoriteDict)) {
+                    // 存在可用的收藏标签
+                    var favoritesTagListHtml = mytagsBuildFavoriteTagHtml(favoriteDict);
+
+                    // 存储收藏 html
+                    var settings_myTagsFavoriteCategory_html = {
+                        item: table_Settings_key_MyTagsFavoriteCategory_Html,
+                        value: favoritesTagListHtml
+                    };
+                    update(table_Settings, settings_myTagsFavoriteCategory_html, () => { func_complete(); }, () => { func_error(); });
+                } else {
+                    // 可用的收藏标签为空
+                    remove(table_Settings, table_Settings_key_MyTagsFavoriteCategory_Html, () => { func_complete(); }, () => { func_error(); });
+                }
+            });
+        });
+    })
+}
+
+// 读取和更新我的标签，全部标签
+function updateMyTagAllTagHtml(func_complete, func_error) {
+    indexDbInit(() => {
+        var ehTagDict = {};
+        readAll(table_EhTagSubItems, (k, v) => {
+            ehTagDict[k] = v;
+        }, () => {
+            if (!checkDictNull(ehTagDict)) {
+                // 存在数据，生成全部类别html
+                var ehtagListHtml = ``;
+                var lastParentEn = ``;
+                for (const k in ehTagDict) {
+                    if (Object.hasOwnProperty.call(ehTagDict, k)) {
+                        const v = ehTagDict[k];
+                        if (v.parent_en != lastParentEn) {
+                            if (lastParentEn != '') {
+                                ehtagListHtml += `</div>`;
+                            }
+                            lastParentEn = v.parent_en;
+                            // 新建父级
+                            ehtagListHtml += `<h4> ${v.parent_zh} <span data-category="${v.parent_en}" class="category_extend category_extend_mytags">-</span></h4>`;
+                            ehtagListHtml += `<div id="all_items_div_${v.parent_en}">`;
+                        }
+                        // 添加子级
+                        ehtagListHtml += `<span class="mytags_item_wrapper" id="all_span_${v.ps_en}" title="${v.ps_en}">
+                                        <input type="checkbox" value="${v.ps_en}" id="allCate_${v.ps_en}" data-visible="1" data-parent_zh="${v.parent_zh}" data-sub_zh="${v.sub_zh}" />
+                                        <label for="allCate_${v.ps_en}">${v.sub_zh}</label>
+                                    </span>`;
+                    }
+                }
+                // 读完后操作
+                if (ehtagListHtml != ``) {
+                    ehtagListHtml += `</div>`;
+                }
+
+                // 保存全部html数据
+                var settings_myTagsAllCategory_html = {
+                    item: table_Settings_key_MyTagsAllCategory_Html,
+                    value: ehtagListHtml
+                };
+                update(table_Settings, settings_myTagsAllCategory_html, () => { func_complete(); }, () => { func_error(); });
+            } else {
+                // 不存在数据，删除 ehtag 版本号信息，等待删除完毕
+                remove(table_Settings, table_Settings_key_EhTagVersion, () => {
+                    func_complete();
+                }, () => {
+                    func_error();
+                });
+            }
+        });
     })
 }
 

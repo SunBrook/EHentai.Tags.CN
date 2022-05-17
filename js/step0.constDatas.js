@@ -233,6 +233,8 @@ const sync_newsPage_topImage_visible = "syncNewsPageTopImageVisible";
 const sync_googleTranslate_newsPage_news = "syncGoogleTranslateNewsPageNews";
 const sync_frontPageSearchMode = "syncFrontPageSearchMode";
 const sync_googleTranslate_tosPage = "syncGoogleTranslateTosPage";
+const sync_mytagsAllTagUpdate = "syncMyTagsAllTagUpdate";
+const sync_mytagsFavoriteTagUpdate = "syncMyTagsFavoriteTagUpdate";
 
 //#endregion
 
