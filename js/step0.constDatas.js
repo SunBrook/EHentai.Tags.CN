@@ -641,6 +641,11 @@ const detailPage_warnContentDict = {
 
 const mytagDefaultWeight = 10;
 const mytagDefaultColor = "#000000";
+const mytagMsgRenameDict = {
+	"Name contains invalid characters.": "名称包含无效字符。",
+	"Invalid tagset name": "名称无效",
+	"Name must be less than 20 characters.": "名称必须少于 20 个字符。"
+}
 
 //#endregion
 

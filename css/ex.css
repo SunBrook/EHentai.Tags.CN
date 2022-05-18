@@ -1857,3 +1857,12 @@ table .gtw {
 .t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn:hover {
     background-color: slateblue;
 }
+
+.t_mytagsPage_outer #usertags_outer>div>div:nth-child(6)>input {
+    margin-left: 6px
+}
+
+.t_mytagsPage_outer .tagcolor,
+#tagcolor {
+    width: 99px;
+}
