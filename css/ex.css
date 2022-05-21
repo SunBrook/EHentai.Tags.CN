@@ -1211,7 +1211,6 @@ table .gtw {
 #t_mytags_div #t_mytags_top {
     height: 49px;
     width: 100%;
-    border-bottom: 1px solid white;
 }
 
 #t_mytags_div #t_mytags_bottom {
@@ -1457,7 +1456,7 @@ table .gtw {
 }
 
 .t_mytagsPage_outer #tagset_outer div:nth-child(1) {
-    width: 184px;
+    width: 180px;
 }
 
 .t_mytagsPage_outer #tagset_outer div:nth-child(3) {
@@ -1858,6 +1857,10 @@ table .gtw {
     background-color: slateblue;
 }
 
+.t_mytagsPage_outer #usertags_outer>div:hover {
+    background-color: rgba(255, 246, 246, 0.1);
+}
+
 .t_mytagsPage_outer #usertags_outer>div>div:nth-child(6)>input {
     margin-left: 6px
 }
@@ -1865,4 +1868,24 @@ table .gtw {
 .t_mytagsPage_outer .tagcolor,
 #tagcolor {
     width: 99px;
+}
+
+.t_mytagsPage_outer #usertag_form #usertags_outer {
+    width: 850px;
+    overflow-y: auto;
+}
+
+.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+}
+
+.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar-track {
+    background-color: #2d2e32;
+    border-radius: 10px;
+}
+
+.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar-thumb {
+    background-color: #a5a5a5;
+    border-radius: 10px;
 }

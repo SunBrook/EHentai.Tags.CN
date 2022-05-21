@@ -13,6 +13,23 @@ function mytagsPage() {
     var outer = document.getElementById("outer");
     outer.classList.add("t_mytagsPage_outer");
 
+    // 设置中间标签的高度
+    var usertagsMassDiv = document.getElementById("usertags_mass");
+    var usertagsOuterDiv = document.getElementById("usertags_outer");
+    var foldHeight = 191;
+    if (usertagsMassDiv) {
+        foldHeight += 42;
+    }
+    usertagsOuterDiv.style.height = `calc(100vh - ${foldHeight}px)`;
+
+    // 根据是否存在滚动条，来调整新增标签的位置
+    mytagsAlignAll();
+
+    // 浏览器窗口大小改变也需要调整大小
+    window.onresize = function(){
+        mytagsAlignAll();
+    }
+
     // 新建插件布局
     mytagsCategoryWindow();
 
@@ -43,7 +60,7 @@ function mytagsPage() {
 
     uploadingDiv.onmouseleave = function () {
         myTagUploadingPause = false;
-        if (uploadingCloseWindowBtn.style.display == "none" && myTagUploadingGetReady) {
+        if (uploadingCloseWindowBtn.style.display != "block" && myTagUploadingGetReady) {
             // 勾选 -> 账户 继续
             myTagUploadTagsIng(myTagCurrentIsWatchChecked, myTagCurrentIsHiddenChecked, myTagCurrentColor, myTagCurrentWeight, myTagCurrentTag);
         }
@@ -167,6 +184,17 @@ function mytagsPage() {
             mytagPartTwo();
         });
     });
+}
+
+// 展开折叠或者屏幕大小改变时，对齐标签列表
+function mytagsAlignAll() {
+    var tagsetOuterFirstDiv = document.getElementById("tagset_outer").children[0];
+    var usertagsOuterDiv = document.getElementById("usertags_outer");
+    if (divHasScrollBar(usertagsOuterDiv)) {
+        tagsetOuterFirstDiv.style.width = "180px";
+    } else {
+        tagsetOuterFirstDiv.style.width = "184px";
+    }
 }
 
 // 同步完成后的阶段操作
@@ -579,12 +607,35 @@ function mytagsCategoryWindowEvents() {
 
 // 展开折叠插件窗口功能
 function windowSlideUpDown(bottomDiv) {
+    // 计算编辑好标签列表的高度
+    // 展开后，剩余高度 100vh - 其他高度
+    var usertagsMassDiv = document.getElementById("usertags_mass");
+    var usertagsOuterDiv = document.getElementById("usertags_outer");
+
+
     if (bottomDiv.dataset.visible == 1) {
         bottomDiv.dataset.visible = 0;
-        slideUp(bottomDiv, 15, () => { });
+
+        var foldHeight = 191;
+        if (usertagsMassDiv) {
+            foldHeight += 42;
+        }
+        slideUp(bottomDiv, 15, () => {
+            usertagsOuterDiv.style.height = `calc(100vh - ${foldHeight}px)`;
+            mytagsAlignAll();
+        });
     } else {
         bottomDiv.dataset.visible = 1;
-        slideDown(bottomDiv, 350, 15, () => { });
+
+        var expendHeight = 541;
+        if (usertagsMassDiv) {
+            expendHeight += 42;
+        }
+
+        usertagsOuterDiv.style.height = `calc(100vh - ${expendHeight}px)`;
+        slideDown(bottomDiv, 350, 15, () => {
+            mytagsAlignAll();
+        });
     }
 }
 
@@ -1588,7 +1639,7 @@ function mytagsBottomTranslate() {
     // 方案标签的默认颜色
     var solutionColorInput = tagsetOuter.children[4].children[0];
     solutionColorInput.title = "标签方案的标签默认颜色，如果不填，则使用默认颜色";
-    solutionColorInput.setAttribute("placeholder", "颜色 #default");
+    solutionColorInput.setAttribute("placeholder", "# 标签颜色");
 
     // 方案保存按钮
     var solutionSaveBtn = tagsetOuter.children[5].children[0];
@@ -1600,19 +1651,30 @@ function mytagsBottomTranslate() {
         for (let i = 0; i < mytagsDivs.children.length; i++) {
             const tagDiv = mytagsDivs.children[i];
             var id = tagDiv.id.replace("usertag_", "");
-            var alink = tagDiv.children[0].children[0];
-            var replaceTxt = `${webOrigin}/tag/`;
-            var psEn = alink.href.replace(replaceTxt, "").replace(/\+/g, " ");
+            if (id == "0") {
+                // 第一列，可以新增
+                var aInput = tagDiv.children[0].children[0].children[0];
+                aInput.setAttribute("placeholder", "请输入一个标签名称，用来设置偏好或者隐藏");
+                // 翻译保存按钮
+                var aSaveBtn = tagDiv.children[6].children[0];
+                aSaveBtn.value = "保存";
+            } else {
+                // 添加好的标签，需要翻译
+                var alink = tagDiv.children[0].children[0];
+                var replaceTxt = `${webOrigin}/tag/`;
+                var psEn = alink.href.replace(replaceTxt, "").replace(/\+/g, " ");
 
-            function translatePsEn(psEn, alink) {
-                read(table_EhTagSubItems, psEn, result => {
-                    if (result) {
-                        alink.children[0].innerText = `${result.parent_zh} : ${result.sub_zh}`;
-                    }
-                }, () => { });
+                function translatePsEn(psEn, alink) {
+                    read(table_EhTagSubItems, psEn, result => {
+                        if (result) {
+                            alink.children[0].innerText = `${result.parent_zh} : ${result.sub_zh}`;
+                        }
+                    }, () => { });
+                }
+
+                translatePsEn(psEn, alink);
             }
 
-            translatePsEn(psEn, alink);
 
             // 偏好
             var watchLabel = tagDiv.children[1].children[0];
@@ -1633,31 +1695,9 @@ function mytagsBottomTranslate() {
                 mytagSaveBtnTranslate(e.target.dataset.id);
             });
 
-            // 默认颜色
-            var tagColorBtn = tagDiv.children[3].children[0];
-            tagColorBtn.dataset.id = id;
-            var classListArray = [];
-            for (let i = 0; i < tagColorBtn.classList.length; i++) {
-                classListArray.push(tagColorBtn.classList[i]);
-            }
-            for (const i in classListArray) {
-                if (Object.hasOwnProperty.call(classListArray, i)) {
-                    const btnClass = classListArray[i];
-                    tagColorBtn.classList.remove(btnClass);
-                }
-            }
-
-            var newClass = `"jscolor {onFineChange:'update_tagcolor_copy(${id},this,false)',valueElement:null,value:'000000'}"`
-            tagColorBtn.classList.add(newClass);
-
             var tagColorInput = tagDiv.children[4].children[0];
             tagColorInput.title = "标签默认颜色，如果不填，则使用默认颜色";
-            tagColorInput.setAttribute("placeholder", "颜色 #default");
-            tagColorInput.onkeyup = function () {
-                update_tagcolor_copy(1076, this.value, '');
-            }
-
-
+            tagColorInput.setAttribute("placeholder", "# 标签颜色");
 
 
             // 权重
@@ -1669,11 +1709,82 @@ function mytagsBottomTranslate() {
             });
         }
 
+        var script = document.createElement('script');
+        script.innerHTML = `function update_tagcolor(d, b, f) {
+                var c = d > -1 ? "_" + d : "";
+                var a = (b + "")
+                    .replace("#", "")
+                    .toUpperCase();
+                if (a.length > 6) {
+                    a = a.substring(0, 6)
+                }
+                if (valid_colorcode(a)) {
+                    document.getElementById("tagcolor" + c)
+                        .value = "#" + a;
+                    if (f !== false) {
+                        document.getElementById("colorsetter" + c)
+                            .jscolor.fromString(a)
+                    }
+                    if (f === false || f !== a) {
+                        allow_tagsave(d);
+                        var saveBtn = document.getElementById("tagsave_" + d);
+                        if (saveBtn) {
+                            saveBtn.value = "保存";
+                        }
+                        if (d > 0) {
+                            update_tagpreview(d)
+                        }
+                    }
+                } else {
+                    if (a == "") {
+                        document.getElementById("colorsetter" + c)
+                            .jscolor.fromString(default_color);
+                        if (f !== a) {
+                            allow_tagsave(d);
+                            var saveBtn = document.getElementById("tagsave_" + d);
+                            if (saveBtn) {
+                                saveBtn.value = "保存";
+                            }
+                        }
+                        if (d > 0) {
+                            update_tagpreview(d)
+                        }
+                    }
+                }
+                if (a !== "" && !valid_colorcode(a)) {
+                    var e = document.getElementById("tagsave" + c);
+                    if (e != undefined) {
+                        e.disabled = "disabled";
+                        e.title = "The specified color code is not valid";
+                        document.getElementById("tagcolor" + c)
+                            .style.borderColor = "#FF0000"
+                    }
+                }
+            }`;
+        document.head.appendChild(script);
     }
 
-
-
-
+    // 底部翻译
+    var mytagsBottomDiv = document.getElementById("usertags_mass");
+    if (mytagsBottomDiv) {
+        var actionTxt = mytagsBottomDiv.children[3];
+        actionTxt.innerHTML = "操作：";
+        var actionOptions = mytagsBottomDiv.children[2].children[0].children;
+        for (const i in actionOptions) {
+            if (Object.hasOwnProperty.call(actionOptions, i)) {
+                const option = actionOptions[i];
+                if (option.innerText == "Delete Selected") {
+                    option.innerText = "删除选中";
+                } else {
+                    // 预料之外的下拉项
+                    translatePageElement(options);
+                }
+            }
+        }
+        var deleteBtn = mytagsBottomDiv.children[1].children[0];
+        deleteBtn.value = "确认删除";
+        deleteBtn.onclick = do_usertags_mass_copy;
+    }
 
 }
 
@@ -1681,52 +1792,6 @@ function mytagSaveBtnTranslate(id) {
     var saveBtn = document.getElementById(`tagsave_${id}`);
     if (saveBtn) {
         saveBtn.value = "保存";
-    }
-}
-
-function update_tagcolor_copy(d, b, f) {
-    var c = d > -1 ? "_" + d : "";
-    var a = (b + "")
-        .replace("#", "")
-        .toUpperCase();
-    if (a.length > 6) {
-        a = a.substring(0, 6)
-    }
-    if (valid_colorcode(a)) {
-        document.getElementById("tagcolor" + c)
-            .value = "#" + a;
-        if (f !== false) {
-            document.getElementById("colorsetter" + c)
-                .jscolor.fromString(a)
-        }
-        if (f === false || f !== a) {
-            allow_tagsave(d);
-            mytagSaveBtnTranslate(d);
-            if (d > 0) {
-                update_tagpreview(d)
-            }
-        }
-    } else {
-        if (a == "") {
-            document.getElementById("colorsetter" + c)
-                .jscolor.fromString(default_color);
-            if (f !== a) {
-                allow_tagsave(d);
-                mytagSaveBtnTranslate(d);
-            }
-            if (d > 0) {
-                update_tagpreview(d)
-            }
-        }
-    }
-    if (a !== "" && !valid_colorcode(a)) {
-        var e = document.getElementById("tagsave" + c);
-        if (e != undefined) {
-            e.disabled = "disabled";
-            e.title = "The specified color code is not valid";
-            document.getElementById("tagcolor" + c)
-                .style.borderColor = "#FF0000"
-        }
     }
 }
 
@@ -1738,6 +1803,23 @@ function do_tagset_rename_copy() {
         do_tagset_post("rename")
     }
 }
+
+function do_usertags_mass_copy() {
+    var a = count_selected_usertags();
+    if (a < 1) {
+        alert("请先勾选标签")
+    } else {
+        var b = parseInt(document.getElementById("usertag_target")
+            .value);
+        if (b == 0) {
+            if (!confirm(`确认从方案 "${tagset_name}" 中删除 ${a} 项标签?`)) {
+                return
+            }
+        }
+        do_usertags_post("mass")
+    }
+}
+
 
 //#endregion
 

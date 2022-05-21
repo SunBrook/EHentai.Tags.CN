@@ -304,4 +304,9 @@ function trimEnd(str) {
     return str.replace(/(\s*$)/g, "");
 }
 
+// 判断某div是否存在滚动条
+function divHasScrollBar(div) {
+    return (div.scrollHeight > div.clientHeight) || (div.offsetHeight > div.clientHeight);
+}
+
 //#endregion

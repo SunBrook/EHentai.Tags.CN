@@ -1349,3 +1349,704 @@ table .gtw {
 .t_tosPage_stuffbox {
     padding: 10px !important;
 }
+
+#t_mytags_div {
+    width: calc(100% - 2px);
+    border: 1px solid #5c0d11;
+    margin-bottom: 10px;
+}
+
+#t_mytags_data_update_tip {
+    width: 100px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 10px;
+    position: absolute;
+    margin-top: 5px;
+    display: none;
+    background-color: #34353b;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#t_mytags_div #t_mytags_top {
+    height: 49px;
+    width: 100%;
+}
+
+#t_mytags_div #t_mytags_bottom {
+    height: 0;
+    overflow-y: hidden;
+}
+
+#t_mytags_div #t_mytags_bottom #t_split_line {
+    border-left: 1px solid #5c0d11;
+    height: 100%;
+    float: left;
+}
+
+#t_mytags_div #t_mytags_bottom #t_allCategories,
+#t_mytags_div #t_mytags_bottom #t_favoriteCategories {
+    width: calc(50% - 0.5px);
+    height: 100%;
+    float: left;
+}
+
+#t_mytags_top #clear_search_btn,
+#t_mytags_top #t_mytags_extend_btn,
+#t_mytags_top #t_mytags_submitCategories_btn,
+#t_mytags_top #t_mytags_clodToFavorite_btn {
+    border: 1px solid #5c0d11;
+    height: 35px;
+    line-height: 35px;
+    margin: 5.5px 10px 0 0;
+    cursor: pointer;
+    text-align: center;
+    color: #5c0d11;
+}
+
+#t_mytags_top #t_mytags_extend_btn {
+    float: left;
+    margin-left: 10px;
+}
+
+#t_mytags_top #t_mytags_extend_btn,
+#t_mytags_top #t_mytags_submitCategories_btn,
+#t_mytags_top #t_mytags_clodToFavorite_btn {
+    width: 130px;
+}
+
+#t_mytags_top #clear_search_btn {
+    width: 50px;
+    float: left;
+    margin-left: -11px;
+    text-align: center;
+    color: #5c0d11;
+}
+
+#t_mytags_top #t_mytags_clodToFavorite_btn,
+#t_mytags_top #t_mytags_submitCategories_btn {
+    float: right;
+}
+
+#t_mytags_top #t_mytags_search {
+    border: 1px solid #5c0d11;
+    height: 31px;
+    line-height: 31px;
+    margin: 5.5px 10px 0 0;
+    background-color: transparent;
+    color: #5c0d11;
+    padding-left: 5px;
+    float: left;
+    margin-left: 26px;
+    width: calc(100% - 560px);
+    min-width: 100px;
+}
+
+#t_mytags_bottom #t_allCategories #t_allCategories_tool,
+#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_tool {
+    height: 25px;
+}
+
+#t_mytags_bottom .mytags_allCheck_div {
+    border-right: 1px solid #5c0d11;
+    border-top: 1px solid #5c0d11;
+    height: 24px;
+    line-height: 24px;
+    width: 80px;
+    float: left;
+    text-align: center;
+    color: #5c0d11;
+}
+
+#t_mytags_bottom .mytags_allCheck_div,
+#t_mytags_bottom .mytags_allCheck_div input[type="checkbox"],
+#t_mytags_bottom .mytags_allCheck_div label {
+    cursor: pointer;
+}
+
+#t_mytags_bottom p {
+    height: 24px;
+    line-height: 24px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    border-top: 1px solid #5c0d11;
+    text-align: center;
+    color: #5c0d11;
+}
+
+#t_mytags_bottom #allCategories_allCheck:indeterminate::after,
+#t_mytags_bottom #favoriteCategories_allCheck:indeterminate::after {
+    display: block;
+    content: "";
+    width: 7px;
+    height: 3px;
+    background-color: #0075FF;
+    border-radius: 2px;
+    margin-left: 3px;
+    margin-top: 5px;
+}
+
+#t_mytags_bottom #mytags_left_all_collapse,
+#t_mytags_bottom #mytags_left_all_expand,
+#t_mytags_bottom #mytags_right_all_collapse,
+#t_mytags_bottom #mytags_right_all_expand {
+    border-left: 1px solid #5c0d11;
+    border-top: 1px solid #5c0d11;
+    height: 24px;
+    line-height: 24px;
+    width: 50.5px;
+    float: right;
+    cursor: pointer;
+    text-align: center;
+    color: #5c0d11;
+    cursor: pointer;
+}
+
+#t_mytags_bottom #t_allCategories #t_allCategories_window,
+#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window {
+    height: 325px;
+    overflow-y: auto;
+}
+
+#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar,
+#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+}
+
+#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-track,
+#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-thumb,
+#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-thumb {
+    background-color: #b5a297;
+    border-radius: 10px;
+}
+
+#t_mytags_bottom #t_allCategories_window h4,
+#t_mytags_bottom #t_favoriteCategories_window h4 {
+    color: #5c0d11;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+#t_mytags_bottom #t_allCategories_window h4 span,
+#t_mytags_bottom #t_favoriteCategories_window h4 span {
+    border: 1px solid #5c0d11;
+    width: 12px;
+    display: inline-block;
+    text-align: center;
+    height: 12px;
+    line-height: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#t_mytags_bottom #t_allCategories_window h4 span:hover,
+#t_mytags_bottom #t_favoriteCategories_window h4 span:hover {
+    transform: scale(1.2);
+}
+
+#t_mytags_bottom .mytags_item_wrapper {
+    border: 1px solid #5c0d11;
+    border-radius: 5px;
+    margin: 10px 0 0 10px;
+    display: inline-block;
+    padding: 2px 5px;
+    color: #5c0d11;
+}
+
+#t_mytags_bottom .mytags_item_wrapper,
+#t_mytags_bottom .mytags_item_wrapper input[type="checkbox"],
+#t_mytags_bottom .mytags_item_wrapper label {
+    cursor: pointer;
+}
+
+#t_mytags_bottom .mytags_item_wrapper label {
+    line-height: 20px;
+}
+
+#t_mytags_bottom #t_mytags_allcategory_loading_div,
+#t_mytags_bottom #t_mytags_favoritecategory_loading_div {
+    height: 325px;
+    width: 100%;
+    line-height: 325px;
+    text-align: center;
+    font-size: 20px;
+}
+
+
+#t_mytags_top #clear_search_btn,
+#t_mytags_top #t_mytags_extend_btn,
+#t_mytags_top #t_mytags_submitCategories_btn,
+#t_mytags_top #t_mytags_clodToFavorite_btn,
+#t_mytags_bottom #mytags_left_all_collapse,
+#t_mytags_bottom #mytags_left_all_expand,
+#t_mytags_bottom #mytags_right_all_collapse,
+#t_mytags_bottom #mytags_right_all_expand,
+#t_mytags_bottom .mytags_allCheck_div,
+#t_mytags_bottom p,
+#t_mytags_bottom .mytags_item_wrapper,
+#t_mytags_bottom #t_allCategories_window h4 span,
+#t_mytags_bottom #t_favoriteCategories_window h4 span {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#t_mytags_top #clear_search_btn:hover,
+#t_mytags_top #t_mytags_extend_btn:hover,
+#t_mytags_top #t_mytags_submitCategories_btn:hover,
+#t_mytags_top #t_mytags_clodToFavorite_btn:hover,
+#t_mytags_bottom #mytags_left_all_collapse:hover,
+#t_mytags_bottom #mytags_left_all_expand:hover,
+#t_mytags_bottom #mytags_right_all_collapse:hover,
+#t_mytags_bottom #mytags_right_all_expand:hover,
+#t_mytags_bottom .mytags_allCheck_div:hover,
+#t_mytags_bottom .mytags_item_wrapper:hover {
+    background-color: rgba(255, 246, 246, 0.397);
+}
+
+.t_mytagsPage_outer #tagset_outer div:nth-child(1) {
+    width: 180px;
+}
+
+.t_mytagsPage_outer #tagset_outer div:nth-child(3) {
+    width: 86px;
+}
+
+.t_mytagsPage_outer #tagset_outer div:nth-child(6) {
+    padding-left: 50px;
+}
+
+.hide {
+    display: none !important;
+}
+
+.t_mytagsPage_outer #upload_tag_form {
+    border: 2px solid #5c0d11;
+    background-color: #e3e0d1;
+    color: #5c0d11;
+    width: 800px;
+    height: 400px;
+    position: absolute;
+    top: calc(50vh - 200px);
+    left: calc(50vw - 400px);
+    z-index: 99;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_top {
+    height: 30px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    cursor: move;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_close {
+    float: right;
+    cursor: pointer;
+    text-align: center;
+    border-left: 2px solid #5c0d11;
+    border-bottom: 2px solid #5c0d11;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 17px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle {
+    height: 320px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_left,
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_right {
+    height: 280px;
+    padding: 20px 10px 0 20px;
+    width: calc(50% - 30.5px);
+    float: left;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_split {
+    width: 0;
+    margin-top: 20px;
+    height: 280px;
+    border-left: 1px solid #5c0d11;
+    float: left;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom {
+    height: 30px;
+    width: 100%;
+}
+
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item {
+    font-size: 10px;
+    height: 40px;
+    margin-bottom: 40px;
+    margin-top: 25px;
+}
+
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item:first-child {
+    height: 60px;
+}
+
+
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label {
+    height: 30px;
+    line-height: 30px;
+}
+
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label {
+    width: 88px;
+    height: 60px;
+    line-height: 60px;
+    float: left;
+    text-align: center;
+}
+
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label,
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.color_label,
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.weight_label {
+    width: 88px;
+    height: 40px;
+    line-height: 40px;
+    float: left;
+    text-align: center;
+}
+
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label {
+    height: 60px;
+    line-height: 60px;
+}
+
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.color_label,
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.weight_label {
+    height: 40px;
+    line-height: 40px;
+}
+
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="color"],
+.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="range"] {
+    float: left;
+    width: 100px;
+    height: 30px;
+    margin-top: 5px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #tag_color_val,
+.t_mytagsPage_outer #upload_tag_form #tag_weight_val {
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 80px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #checkboxDiv {
+    width: 170px;
+    height: 80px;
+    float: left;
+}
+
+.t_mytagsPage_outer #upload_tag_form #checkboxDiv input {
+    position: relative;
+    top: 2px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn,
+.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn,
+.t_mytagsPage_outer #upload_tag_form #weight_reset_btn {
+    border: 1px solid #5c0d11;
+    padding: 2px 10px;
+    width: 50px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    float: right;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn:hover,
+.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn:hover,
+.t_mytagsPage_outer #upload_tag_form #weight_reset_btn:hover {
+    background-color: rgba(255, 246, 246, 0.397);
+}
+
+.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn {
+    margin-top: 10px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn,
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn {
+    width: 100px;
+    border: 1px solid black;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    float: left;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn {
+    margin-left: 275px;
+    background-color: darkgreen;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn:hover {
+    background-color: green;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn {
+    margin-left: 50px;
+    background-color: darkslateblue;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn:hover {
+    background-color: slateblue;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div {
+    height: 260px;
+    overflow-y: auto;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar-thumb {
+    background-color: #b5a297;
+    border-radius: 10px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 {
+    margin: 0;
+    margin-top: 10px;
+    color: #fadfc0;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 span {
+    border: 1px solid #fadfc0;
+    cursor: pointer;
+    width: 12px;
+    display: inline-block;
+    text-align: center;
+    height: 12px;
+    line-height: 12px;
+    font-weight: 500;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 span:hover {
+    transform: scale(1.2);
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right .checkTags_item {
+    display: inline-block;
+    padding: 0 5px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 10px;
+    background-color: #f5cc9c;
+    cursor: pointer;
+    border: 1px solid #f5cc9c;
+    color: black;
+    margin: 0 10px 10px 0;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right .checkTags_item:hover {
+    border: 1px solid red;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn {
+    color: #fadfc0;
+    border: 1px solid #f5cc9c;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    width: 150px;
+    margin: 105px auto;
+    cursor: pointer;
+    display: none;
+}
+
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn:hover {
+    background-color: rgba(255, 246, 246, 0.397);
+}
+
+.t_mytagsPage_outer #upload_tag_ing {
+    border: 2px solid #5c0d11;
+    background-color: #40454b;
+    color: #5c0d11;
+    padding: 0 20px;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: calc(50vh - 150px);
+    left: calc(50vw - 150px);
+    z-index: 99;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: none;
+}
+
+.t_mytagsPage_outer #upload_tag_ing:hover {
+    border-color: yellow;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_top {
+    height: 60px;
+    line-height: 60px;
+    width: calc(100% - 40px);
+    position: absolute;
+    top: 0;
+    cursor: move;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1 {
+    margin-top: 80px;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1,
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_2,
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_error {
+    text-align: center;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_error {
+    margin-bottom: -20px;
+    display: none;
+    color: red;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #tip_pause {
+    color: yellow;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #tip_continue {
+    color: lightgreen;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder,
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
+    font-size: 20px;
+    font-weight: bold;
+    color: lightgreen;
+    display: none;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder #upload_remainder_count {
+    font-size: 30px;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn,
+.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
+    border: 1px solid black;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    padding: 0 10px;
+    cursor: pointer;
+    margin: 30px auto;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn {
+    background-color: darkred;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn:hover {
+    background-color: red;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
+    background-color: darkslateblue;
+    display: none;
+}
+
+.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn:hover {
+    background-color: slateblue;
+}
+
+.t_mytagsPage_outer #usertags_outer>div:hover {
+    background-color: rgba(255, 246, 246, 0.1);
+}
+
+.t_mytagsPage_outer #usertags_outer>div>div:nth-child(6)>input {
+    margin-left: 6px
+}
+
+.t_mytagsPage_outer .tagcolor,
+#tagcolor {
+    width: 99px;
+}
+
+.t_mytagsPage_outer #usertag_form #usertags_outer {
+    width: 850px;
+    overflow-y: auto;
+}
+
+.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar {
+    width: 10px;
+    height: 1px;
+}
+
+.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar-thumb {
+    background-color: #b5a297;
+    border-radius: 10px;
+}
