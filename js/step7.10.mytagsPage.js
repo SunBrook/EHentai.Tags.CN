@@ -16,7 +16,7 @@ function mytagsPage() {
     // 设置中间标签的高度
     var usertagsMassDiv = document.getElementById("usertags_mass");
     var usertagsOuterDiv = document.getElementById("usertags_outer");
-    var foldHeight = 191;
+    var foldHeight = 193;
     if (usertagsMassDiv) {
         foldHeight += 42;
     }
@@ -616,24 +616,24 @@ function windowSlideUpDown(bottomDiv) {
     if (bottomDiv.dataset.visible == 1) {
         bottomDiv.dataset.visible = 0;
 
-        var foldHeight = 191;
+        var foldHeight = 193;
         if (usertagsMassDiv) {
             foldHeight += 42;
         }
-        slideUp(bottomDiv, 15, () => {
+        slideUp(bottomDiv, 10, () => {
             usertagsOuterDiv.style.height = `calc(100vh - ${foldHeight}px)`;
             mytagsAlignAll();
         });
     } else {
         bottomDiv.dataset.visible = 1;
 
-        var expendHeight = 541;
+        var expendHeight = 543;
         if (usertagsMassDiv) {
             expendHeight += 42;
         }
 
         usertagsOuterDiv.style.height = `calc(100vh - ${expendHeight}px)`;
-        slideDown(bottomDiv, 350, 15, () => {
+        slideDown(bottomDiv, 350, 10, () => {
             mytagsAlignAll();
         });
     }

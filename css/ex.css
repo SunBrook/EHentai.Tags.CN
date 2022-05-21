@@ -1629,6 +1629,7 @@ table .gtw {
     cursor: pointer;
 }
 
+.t_mytagsPage_outer #upload_tag_form #upload_tag_form_close:hover,
 .t_mytagsPage_outer #upload_tag_form #behavior_reset_btn:hover,
 .t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn:hover,
 .t_mytagsPage_outer #upload_tag_form #weight_reset_btn:hover {

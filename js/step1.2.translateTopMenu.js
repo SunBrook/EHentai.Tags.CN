@@ -34,6 +34,22 @@ function topMenuTranslateZh() {
 	}
 }
 
+// 头部二级菜单翻译
+function topSubMenuTranslateZh() {
+	var lb = document.getElementById("lb");
+	if (lb) {
+		var alinks = lb.querySelectorAll("a");
+		for (const i in alinks) {
+			if (Object.hasOwnProperty.call(alinks, i)) {
+				const link = alinks[i];
+				if (myMainPageSubPageDict[link.innerText]) {
+					link.innerText = myMainPageSubPageDict[link.innerText];
+				}
+			}
+		}
+	}
+}
+
 function bottomMenuTranslateZh() {
 	var dp = document.getElementsByClassName("dp");
 	if (dp.length > 0) {
@@ -41,7 +57,7 @@ function bottomMenuTranslateZh() {
 		for (const i in alinks) {
 			if (Object.hasOwnProperty.call(alinks, i)) {
 				const alink = alinks[i];
-				if (bottomMenusData[alink.innerText]){
+				if (bottomMenusData[alink.innerText]) {
 					alink.innerText = bottomMenusData[alink.innerText];
 				}
 			}

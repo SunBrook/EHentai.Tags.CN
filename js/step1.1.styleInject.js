@@ -1795,6 +1795,7 @@ func_eh_ex(() => {
 		cursor: pointer;
 	}
 	
+	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_close:hover,
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #weight_reset_btn:hover {
@@ -1809,6 +1810,7 @@ func_eh_ex(() => {
 		width: 100%;
 		height: 30px;
 		text-align: center;
+		color: white;
 	}
 	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn,
@@ -1863,13 +1865,13 @@ func_eh_ex(() => {
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 {
 		margin: 0;
 		margin-top: 10px;
-		color: #fadfc0;
+		color: #5c0d11;
 		font-weight: bold;
 		margin-bottom: 10px;
 	}
 	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 span {
-		border: 1px solid #fadfc0;
+		border: 1px solid #5c0d11;
 		cursor: pointer;
 		width: 12px;
 		display: inline-block;
@@ -1901,8 +1903,8 @@ func_eh_ex(() => {
 	}
 	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn {
-		color: #fadfc0;
-		border: 1px solid #f5cc9c;
+		color: #5c0d11;
+		border: 1px solid #5c0d11;
 		text-align: center;
 		height: 50px;
 		line-height: 50px;
@@ -1918,7 +1920,7 @@ func_eh_ex(() => {
 	
 	.t_mytagsPage_outer #upload_tag_ing {
 		border: 2px solid #5c0d11;
-		background-color: #40454b;
+		background-color: #e3e0d1;
 		color: #5c0d11;
 		padding: 0 20px;
 		width: 300px;
@@ -1969,11 +1971,11 @@ func_eh_ex(() => {
 	}
 	
 	.t_mytagsPage_outer #upload_tag_ing #tip_pause {
-		color: yellow;
+		color: darkorange;
 	}
 	
 	.t_mytagsPage_outer #upload_tag_ing #tip_continue {
-		color: lightgreen;
+		color: darkgreen;
 	}
 	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder,
@@ -1985,7 +1987,7 @@ func_eh_ex(() => {
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
 		font-size: 20px;
 		font-weight: bold;
-		color: lightgreen;
+		color: darkgreen;
 		display: none;
 	}
 	
@@ -1995,6 +1997,7 @@ func_eh_ex(() => {
 	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn,
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
+		color: white;
 		border: 1px solid black;
 		width: 100px;
 		height: 30px;
@@ -2023,7 +2026,7 @@ func_eh_ex(() => {
 	}
 	
 	.t_mytagsPage_outer #usertags_outer>div:hover {
-		background-color: rgba(255, 246, 246, 0.1);
+		background-color: #e3e0d1b3;
 	}
 	
 	.t_mytagsPage_outer #usertags_outer>div>div:nth-child(6)>input {
@@ -3687,6 +3690,7 @@ func_eh_ex(() => {
 		cursor: pointer;
 	}
 	
+	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_close:hover,
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #weight_reset_btn:hover {

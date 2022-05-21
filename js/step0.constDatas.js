@@ -649,4 +649,22 @@ const mytagMsgRenameDict = {
 
 //#endregion
 
+//#region 头部二级菜单
+
+//我的主页 - 小分支页面名称
+const myMainPageSubPageDict = {
+	"Overview": "总览",
+	"My Stats": "我的统计",
+	"My Settings": "我的设置",
+	"My Tags": "我的标签",
+	"Hentai@Home": "變態之家",
+	"Donations": "捐赠",
+	"Hath Perks": "Hath 权限",
+	"Hath Exchange": "Hath 交易",
+	"GP Exchange": "GP 交易",
+	"Credit Log": "消费记录",
+	"Karma Log": "Karma 记录",
+}
+//#endregion
+
 //#endregion
