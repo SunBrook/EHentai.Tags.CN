@@ -26,7 +26,7 @@ function mytagsPage() {
     mytagsAlignAll();
 
     // 浏览器窗口大小改变也需要调整大小
-    window.onresize = function(){
+    window.onresize = function () {
         mytagsAlignAll();
     }
 
@@ -131,14 +131,14 @@ function mytagsPage() {
                             // 执行添加操作
                             myTagUploadingGetReady = true;
                             if (!myTagUploadingPause) {
-                                myTagUploadTagsIng(myTagCurrentIsWatchChecked, myTagCurrentIsHiddenChecked, myTagCurrentColor, myTagCurrentWeight, myTagCurrentTag);
+                                myTagUploadTagsIng(myTagCurrentIsWatchChecked, myTagCurrentIsHiddenChecked, myTagCurrentColor, myTagCurrentWeight, myTagCurrentTag, settings_myTagsUploadTags);
                             }
                             mytagPartTwo();
                         }, () => {
                             setMyTagsUploadingRemainderCount(remainderCount - 1);
                             myTagUploadingGetReady = true;
                             if (!myTagUploadingPause) {
-                                myTagUploadTagsIng(myTagCurrentIsWatchChecked, myTagCurrentIsHiddenChecked, myTagCurrentColor, myTagCurrentWeight, myTagCurrentTag);
+                                myTagUploadTagsIng(myTagCurrentIsWatchChecked, myTagCurrentIsHiddenChecked, myTagCurrentColor, myTagCurrentWeight, myTagCurrentTag, settings_myTagsUploadTags);
                             }
                             mytagPartTwo();
                         });
@@ -1387,7 +1387,8 @@ function mytagUploadSubmit(uploadTagFormTagsDiv, uploadTagFormDiv, submitCategor
 
             setMyTagsUploadingRemainderCount(newTagsArray.length);
             var tag = newTagsArray.shift();
-            myTagUploadTagsIng(isWatchChecked, isHiddenChecked, tagColor, tagWeight, tag);
+
+            myTagUploadTagsIng(isWatchChecked, isHiddenChecked, tagColor, tagWeight, tag, settings_myTagsUploadTags);
         }, () => {
             alert("操作失败，请重试");
         });
@@ -1396,7 +1397,7 @@ function mytagUploadSubmit(uploadTagFormTagsDiv, uploadTagFormDiv, submitCategor
 }
 
 // 单个同步勾选标签到账号中
-function myTagUploadTagsIng(isWatchChecked, isHiddenChecked, tagColor, tagWeight, tag) {
+function myTagUploadTagsIng(isWatchChecked, isHiddenChecked, tagColor, tagWeight, tag, tagsValue) {
     var tagnameNew = document.getElementById("tagname_new");
     if (tagnameNew) {
         tagnameNew.value = tag;
@@ -1412,7 +1413,12 @@ function myTagUploadTagsIng(isWatchChecked, isHiddenChecked, tagColor, tagWeight
         submitBtn.removeAttribute("disabled");
         submitBtn.click();
     } else {
-        // 账号标签名额用完
+        // 账号标签名额用完，回滚无效的消耗标签
+        if (tagsValue) {
+            tagsValue.value.newTagsArray.push(tag);
+            update(table_Settings, tagsValue, () => { }, () => { });
+            setMyTagsUploadingRemainderCount(tagsValue.value.newTagsArray.length);
+        }
         var uploadTagError = document.getElementById("upload_tag_error");
         uploadTagError.innerText = "账号标签名额已用完，无法继续添加，请中止操作";
         uploadTagError.style.display = "block";
@@ -1777,7 +1783,7 @@ function mytagsBottomTranslate() {
                     option.innerText = "删除选中";
                 } else {
                     // 预料之外的下拉项
-                    translatePageElement(options);
+                    translatePageElement(option);
                 }
             }
         }
