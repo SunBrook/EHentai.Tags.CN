@@ -13365,7 +13365,7 @@ function recursionTranslate(element) {
 //TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
 //TODO 首页显示已收藏的标签
 //TODO 首页背景
-
+//TODO 检查其他bug问题
 
 //#region main.js 主方法
 
