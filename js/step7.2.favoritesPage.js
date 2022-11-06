@@ -5,6 +5,9 @@ function favoritePage() {
     // 跨域
     crossDomain();
 
+    // 新版分页
+    TranslateNewPagingLinks();
+
     // 标题添加类 t_favorite_ido，方便添加样式
     var ido = document.getElementsByClassName("ido");
     if (ido.length > 0) {
@@ -41,8 +44,7 @@ function favoritePage() {
     var form = searchDiv.children[0];
     var searchInputDiv = form.children[1];
     searchInputDiv.classList.add("searchInputDiv");
-    var searchFilterDiv = form.children[2];
-    searchFilterDiv.classList.add("searchFilterDiv");
+
 
     // 输入候选
     var inputRecommendDiv = document.createElement("div");
@@ -64,18 +66,27 @@ function favoritePage() {
     var clearBtn = searchInputDiv.children[2];
     clearBtn.value = " 清空 ";
 
-    var filterTds = searchFilterDiv.querySelectorAll("td");
-    var filterHead = filterTds[0];
-    filterHead.innerText = "搜索包含：";
 
-    var filterName = filterTds[1];
-    filterName.children[0].lastChild.textContent = "作品名称";
+    func_eh_ex(() => {
+        // e-hentai
+        var searchFilterDiv = form.children[2];
+        searchFilterDiv.classList.add("searchFilterDiv");
 
-    var filterTag = filterTds[2];
-    filterTag.children[0].lastChild.textContent = "标签";
+        var filterTds = searchFilterDiv.querySelectorAll("td");
+        var filterHead = filterTds[0];
+        filterHead.innerText = "搜索包含：";
 
-    var filterNote = filterTds[3];
-    filterNote.children[0].lastChild.textContent = "备注";
+        var filterName = filterTds[1];
+        filterName.children[0].lastChild.textContent = "作品名称";
+
+        var filterTag = filterTds[2];
+        filterTag.children[0].lastChild.textContent = "标签";
+
+        var filterNote = filterTds[3];
+        filterNote.children[0].lastChild.textContent = "备注";
+
+    }, () => { });
+
 
     // 展示总数量
     var ip = document.getElementsByClassName("ip");
@@ -135,32 +146,85 @@ function favoritePage() {
         }
     }
 
-    var bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
+    let bottomConfirmBtn;
+    func_eh_ex(() => {
+        // e-hentai
+        bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
+    }, () => {
+        // exhentai
+        bottomConfirmBtn = ido[0].children[2].children[4].children[0].children[0].children[1].children[0];
+    });
     if (bottomConfirmBtn.value == "Confirm") {
         bottomConfirmBtn.value = "确 认";
         bottomConfirmBtn.style.width = "60px";
     }
 
     // 排序翻译、搜索行数翻译（包含没有搜索结果）
-    var orderDiv = ido[0].children[2].children[0];
-    orderDiv.firstChild.textContent = "作品排序：";
-    switch (orderDiv.children[0].innerText) {
-        case "Favorited":
-            orderDiv.children[0].innerText = "收藏时间";
-            break;
-        case "Posted":
-            orderDiv.children[0].innerText = "发布时间";
-            break;
-    }
+    let favorite_orderDiv;
+    func_eh_ex(() => {
+        // e-hentai
+        favorite_orderDiv = ido[0].children[2].children[0];
+        favorite_orderDiv.firstChild.textContent = "作品排序：";
+        switch (favorite_orderDiv.children[0].innerText) {
+            case "Favorited":
+                favorite_orderDiv.children[0].innerText = "收藏时间";
+                break;
+            case "Posted":
+                favorite_orderDiv.children[0].innerText = "发布时间";
+                break;
+        }
 
-    switch (orderDiv.children[1].innerText) {
-        case "Use Favorited":
-            orderDiv.children[1].innerText = " 按收藏时间排序 ";
-            break;
-        case "Use Posted":
-            orderDiv.children[1].innerText = " 按发布时间排序 ";
-            break;
-    }
+        switch (favorite_orderDiv.children[1].innerText) {
+            case "Use Favorited":
+                favorite_orderDiv.children[1].innerText = " 按收藏时间排序 ";
+                break;
+            case "Use Posted":
+                favorite_orderDiv.children[1].innerText = " 按发布时间排序 ";
+                break;
+        }
+    }, () => {
+        // exhentai
+        // 排序名称
+        var favorite_orderDiv = dms.children[0];
+        favorite_orderDiv.childNodes[0].nodeValue = "作品排序：";
+
+        var selects = dms.querySelectorAll("select");
+
+        // 排序方式
+        var order_select = selects[0];
+        if (order_select.length > 0) {
+            var selectElement = order_select;
+            var options = selectElement.options;
+            for (const i in options) {
+                if (Object.hasOwnProperty.call(options, i)) {
+                    const option = options[i];
+                    switch (option.innerText) {
+                        case "Favorited Time":
+                            option.innerText = "收藏时间";
+                            break;
+                        case "Published Time":
+                            option.innerText = "发布时间";
+                            break;
+                    }
+                }
+            }
+        }
+
+        // 页面视图
+        var pageShow_select = selects[1];
+        if (pageShow_select.length > 0) {
+            var selectElement = pageShow_select;
+            var options = selectElement.options;
+            for (const i in options) {
+                if (Object.hasOwnProperty.call(options, i)) {
+                    const option = options[i];
+                    option.innerText = dropData[option.innerText] ?? option.innerText;
+                }
+            }
+        }
+
+    })
+
 
     // 作品类型翻译
     bookTypeTranslate();
@@ -189,8 +253,27 @@ function favoritePage() {
 
     translateDiv.appendChild(translateLabel);
     translateCheckbox.addEventListener("click", translateMainPageTitle);
-    var dms = document.getElementById("dms");
-    dms.insertBefore(translateDiv, dms.lastChild);
+
+    func_eh_ex(() => {
+        // e-hentai
+        var dms = document.getElementById("dms");
+        dms.insertBefore(translateDiv, dms.lastChild);
+    }, () => {
+        // exhentai
+        var favForm = document.getElementsByTagName("form")[1];
+        favForm.insertBefore(translateDiv, favForm.firstChild);
+
+        // 样式调整
+        translateDiv.style.marginTop = "-43px";
+        translateDiv.style.position = "absolute";
+        translateDiv.style.right = "16px";
+        translateDiv.style.backgroundColor = "#34353b";
+        translateDiv.style.padding = "8px 15px";
+        translateDiv.style.border = "1px solid #8d8d8d";
+        translateDiv.style.borderRadius = "3px";
+        translateDiv.style.cursor = "pointer";
+    });
+
 
     indexDbInit(() => {
         // 读取是否选中

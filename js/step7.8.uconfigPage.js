@@ -539,8 +539,8 @@ function uconfigPageGalleryComments(titleH2) {
     p.innerText = "1. 评论排序方式：";
     var commentOrderItems = p.nextElementSibling.children;
     commentOrderItems[0].children[0].childNodes[2].data = " 最古老的评论";
-    commentOrderItems[0].children[0].childNodes[2].data = " 最新的评论";
-    commentOrderItems[0].children[0].childNodes[2].data = " 按评论的分数";
+    commentOrderItems[1].children[0].childNodes[2].data = " 最新的评论";
+    commentOrderItems[2].children[0].childNodes[2].data = " 按评论的分数";
 
     var commentNoteDiv = commentOrderDiv.nextElementSibling;
     var commentNoteP = commentNoteDiv.children[0];

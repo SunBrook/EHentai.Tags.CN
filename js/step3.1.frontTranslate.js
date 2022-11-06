@@ -1,5 +1,21 @@
 //#region step3.1.frontTranslate.js 首页谷歌翻译
 
+// TODO
+let dms;
+
+func_eh_ex(() => {
+	//e-hentai
+	dms = document.getElementById("dms");
+}, () => {
+	//exhentai
+	var searchnav = document.getElementsByClassName("searchnav");
+	if (searchnav.length > 0) {
+		dms = searchnav[0];
+		dms.id = "dms";
+	}
+});
+
+
 // 首页谷歌翻译：标签
 function translateMainPageTitle() {
 	var isChecked = document.getElementById("googleTranslateCheckbox").checked;
@@ -144,7 +160,10 @@ function tableTagTranslate() {
 	}
 
 	// 父项:子项，偶尔出现单个子项
-	var dms = document.getElementById("dms");
+	// TODO
+
+
+	// var dms = document.getElementById("dms");
 	if (dms) {
 		var select = dms.querySelectorAll("select");
 		var rightSelect = select[0];
@@ -193,6 +212,8 @@ function tableTagTranslate() {
 			}
 		}
 	}
+
+
 
 
 	// 子项
@@ -289,40 +310,80 @@ function mainPageTranslate() {
 
 	// 展示总数量
 	var ip = document.getElementsByClassName("ip");
-	if (ip.length > 0) {
-		if (webHost == "exhentai.org") {
-			if (ip.length > 0) {
-				var ipElement = ip[ip.length - 1];
-				ipElement.innerText = ipElement.innerText.replace("Showing", "共")
-					.replace("results", "条记录").replace("result", "条记录")
-					.replace(". Your filters excluded", "，本页面你的过滤排除了")
-					.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
-			}
-
-			if (ip.length > 1) {
-				var ipTagElement = ip[ip.length - 2];
-				var strongText = ipTagElement.children[0];
-				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
-				ipTagElement.children[1].innerText = "我的标签";
-			}
-		} else if (webHost == "e-hentai.org") {
-			if (ip.length > 1) {
-				var ipElement = ip[ip.length - 2];
-				ipElement.innerText = ipElement.innerText.replace("Showing", "共")
-					.replace("results", "条记录").replace("result", "条记录")
-					.replace(". Your filters excluded", "，本页面你的过滤排除了")
-					.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
-			}
-
-			if (ip.length > 2) {
-				var ipTagElement = ip[ip.length - 3];
-				var strongText = ipTagElement.children[0];
-				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
-				ipTagElement.children[1].innerText = "我的标签";
-			}
+	func_eh_ex(() => {
+		// e-hentai.org
+		if (ip.length > 1) {
+			var ipElement = ip[ip.length - 2];
+			ipElement.innerText = ipElement.innerText.replace("Showing", "共")
+				.replace("results", "条记录").replace("result", "条记录")
+				.replace(". Your filters excluded", "，本页面你的过滤排除了")
+				.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
 		}
 
-	}
+		if (ip.length > 2) {
+			var ipTagElement = ip[ip.length - 3];
+			var strongText = ipTagElement.children[0];
+			strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+			ipTagElement.children[1].innerText = "我的标签";
+		}
+	}, () => {
+		// exhentai.org
+		if (window.location.pathname == "/") {
+			// 首页
+			document.getElementsByClassName("searchtext")[0].lastChild.innerText =
+				document.getElementsByClassName("searchtext")[0].lastChild.innerText
+					.replace("Found", "共找到")
+					.replace("results", "条记录")
+					.replace("result", "条记录");
+		}
+		else {
+			// 其他页面
+			if (ip.length > 0) {
+				var ipTagElement = ip[ip.length - 1];
+				var strongText = ipTagElement.children[0];
+				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+				ipTagElement.children[1].innerText = "我的标签";
+				if (document.getElementsByClassName("searchtext")[0].lastChild.innerText == "Found many results.") {
+					document.getElementsByClassName("searchtext")[0].lastChild.innerText = "找到许多结果.";
+				} else {
+					translatePageElementEN(document.getElementsByClassName("searchtext")[0].lastChild);
+				}
+			}
+		}
+	});
+
+
+	// 错误信息
+	func_eh_ex(() => { }, () => {
+		// exhentai
+		var searchwarn = document.getElementsByClassName("searchwarn");
+		if (searchwarn.length > 0) {
+			var p = searchwarn[0].lastChild;
+			if (p.children.length > 0) {
+				var strongText = p.children[0].innerText;
+				if (p.innerText.replace(strongText, "") == "The keyword  is short and will be searched as an exact tag only.") {
+					// 直接翻译
+					p.innerText = p.innerText
+						.replace("The keyword", "搜索关键字")
+						.replace("is short and will be searched as an exact tag only.", "很短，当前仅作为精准标签进行搜索。");
+				}
+				else {
+					translatePageElementEN(p);
+				}
+			}
+			else {
+				if (p.innerText == "The provided date is invalid or outside the range of posted galleries.") {
+					p.innerText = "提供的日期无效或超出已发布画廊的范围。";
+				}
+				else {
+					translatePageElementEN(p);
+				}
+
+			}
+		}
+	});
+
+
 
 	// 预览下拉框
 	var dms = document.getElementById("dms");
@@ -383,7 +444,38 @@ function mainPageTranslate() {
 	translateDiv.appendChild(translateLabel);
 	translateCheckbox.addEventListener("click", translateMainPageTitle);
 	var dms = document.getElementById("dms");
-	dms.insertBefore(translateDiv, dms.lastChild);
+	var beforeDiv = dms.parentNode.firstChild;
+	beforeDiv.insertBefore(translateDiv, beforeDiv.lastChild);
+
+	// TODO
+	func_eh_ex(() => {
+		// e-hentai
+		translateDiv.style.marginTop = "0 !important";
+		translateDiv.style.float = "lfet";
+		translateDiv.style.position = "absolute";
+		translateDiv.style.left = "10px";
+		translateDiv.style.padding = "7px 15px";
+		translateDiv.style.border = "1px solid #8d8d8d";
+		translateDiv.style.borderRadius = "3px";
+		translateDiv.style.cursor = "pointer";
+		translateLabel.style.cursor = "pointer";
+	}, () => {
+		// exhentai
+		translateDiv.style.marginTop = "0 !important";
+		translateDiv.style.float = "lfet";
+		translateDiv.style.position = "absolute";
+		translateDiv.style.left = "10px";
+		translateDiv.style.backgroundColor = "#34353b";
+		translateDiv.style.padding = "10px 15px";
+		translateDiv.style.border = "1px solid #8d8d8d";
+		translateDiv.style.borderRadius = "3px";
+		translateDiv.style.cursor = "pointer";
+		translateLabel.style.cursor = "pointer";
+	});
+
+
+
+
 
 	// 读取是否选中
 	read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {

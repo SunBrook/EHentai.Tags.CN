@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         ExHentai 中文标签助手_测试版_beta
-// @namespace    ExHentai 中文标签助手_DYZYFTS
+// @name         ExHentai 中文标签助手
+// @namespace    ExHentai 中文标签助手_DYZYFTS_beta
 // @license		 MIT
 // @compatible  firefox >= 60
 // @compatible  edge >= 16
@@ -334,7 +334,6 @@ function divHasScrollBar(div) {
 }
 
 //#endregion
-
 
 //#region step0.constDatas.js 数据字典
 
@@ -1132,7 +1131,6 @@ function func_eh_ex(ehFunc, exFunc) {
 
 //#endregion
 
-
 //#region step1.1.styleInject.js 样式注入
 func_eh_ex(() => {
 	// e-hentai 样式 eh.css
@@ -1157,32 +1155,32 @@ func_eh_ex(() => {
 		user-select: none;
 		display: none;
 	}
-
+	
 	#searchbox #data_update_tip {
 		top: 0;
 		left: 0;
 	}
-
+	
 	#gd2 #data_update_tip,
 	.t_favorite_ido #data_update_tip {
 		top: 2px;
 		right: 15px;
 	}
-
+	
 	.t_popular_toppane {
 		padding: 10px 0;
 	}
-
+	
 	.t_popular_dms div select {
 		margin-top: -6px;
 	}
-
+	
 	.t_popular_toppane #data_update_tip {
 		top: 16px;
 		left: 180px;
 	}
-
-
+	
+	
 	#searchbox #div_fontColor_btn,
 	#searchbox #div_background_btn,
 	#searchbox #div_top_visible_btn,
@@ -1201,23 +1199,23 @@ func_eh_ex(() => {
 		margin-top: -1px;
 		margin-right: -1px;
 	}
-
+	
 	#searchbox #div_fontColor_btn {
 		right: 210px;
 	}
-
+	
 	#searchbox #div_background_btn {
 		right: 140px;
 	}
-
+	
 	#searchbox #div_top_visible_btn {
 		right: 70px;
 	}
-
+	
 	#searchbox #div_searchMode_btn {
 		right: 0;
 	}
-
+	
 	#searchbox #div_fontColor_btn:hover,
 	#searchbox #div_background_btn:hover,
 	#searchbox #div_top_visible_btn:hover,
@@ -1225,7 +1223,7 @@ func_eh_ex(() => {
 		background-color: #5c0d12a1;
 		color: #e3e0d1;
 	}
-
+	
 	#div_ee8413b2 {
 		padding-right: 3px;
 		text-align: left;
@@ -1234,7 +1232,7 @@ func_eh_ex(() => {
 		z-index: 3;
 		background-color: #e3e0d1;
 	}
-
+	
 	#div_ee8413b2 #category_loading_div {
 		height: 527px;
 		width: 100%;
@@ -1242,12 +1240,12 @@ func_eh_ex(() => {
 		text-align: center;
 		font-size: 20px;
 	}
-
+	
 	#div_ee8413b2_bg::before {
 		background-size: 100%;
 		opacity: 0.5;
 	}
-
+	
 	#div_ee8413b2_bg {
 		z-index: -9999;
 		overflow: hidden;
@@ -1255,7 +1253,7 @@ func_eh_ex(() => {
 		width: 100%;
 		height: 100%;
 	}
-
+	
 	#div_ee8413b2_bg::before {
 		content: '';
 		position: absolute;
@@ -1264,9 +1262,9 @@ func_eh_ex(() => {
 		bottom: 0;
 		left: 0;
 		filter: blur(2px);
-
+	
 	}
-
+	
 	#div_ee8413b2 #background_form,
 	#div_ee8413b2 #frontPage_listFontColor {
 		border: 1px solid #5c0d12;
@@ -1278,17 +1276,17 @@ func_eh_ex(() => {
 		padding-top: 30px;
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #background_form {
 		left: calc(50% - 170px);
 		top: 100px;
 	}
-
+	
 	#div_ee8413b2 #frontPage_listFontColor {
 		left: calc(50% - 255px);
 		top: 190px;
 	}
-
+	
 	#div_ee8413b2 #background_form #background_form_top,
 	#div_ee8413b2 #frontPage_listFontColor #frontPage_listFontColor_top {
 		height: 30px;
@@ -1297,11 +1295,11 @@ func_eh_ex(() => {
 		top: 0;
 		cursor: move;
 	}
-
+	
 	#div_ee8413b2 #background_form #bg_upload_file {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #background_form #background_form_close,
 	#div_ee8413b2 #frontPage_listFontColor #frontPage_listFontColor_close {
 		float: right;
@@ -1318,13 +1316,13 @@ func_eh_ex(() => {
 		font-size: 17px;
 		color: #5c0d12;
 	}
-
+	
 	#div_ee8413b2 #background_form .background_form_item,
 	#div_ee8413b2 #frontPage_listFontColor .frontPage_listFontColor_item {
 		padding: 15px 0 15px 40px;
 		min-height: 30px;
 	}
-
+	
 	#div_ee8413b2 #background_form label,
 	#div_ee8413b2 #frontPage_listFontColor label {
 		float: left;
@@ -1332,7 +1330,7 @@ func_eh_ex(() => {
 		line-height: 30px;
 		min-width: 90px;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_save_btn,
 	#div_ee8413b2 #background_form #bgImg_clear_btn,
 	#div_ee8413b2 #background_form #bgImg_cancel_btn,
@@ -1351,53 +1349,53 @@ func_eh_ex(() => {
 		float: left;
 		color: #e3e0d1;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_clear_btn,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_clear_btn {
 		background-color: darkred;
 		margin-right: 8px;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_clear_btn:hover,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_clear_btn:hover {
 		background-color: red;
 	}
-
-
+	
+	
 	#div_ee8413b2 #background_form #bgImg_save_btn,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_save_btn {
 		background-color: darkgreen;
 		margin-right: 8px;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_save_btn:hover,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_save_btn:hover {
 		background-color: green;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_cancel_btn,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_cancel_btn {
 		background-color: darkslateblue;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_cancel_btn:hover,
 	#div_ee8413b2 #frontPage_listFontColor #bgImg_cancel_btn:hover {
 		background-color: slateblue;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgUploadBtn {
 		width: 100px;
 		margin-left: 5px;
 		background-color: #5c0d12;
 	}
-
+	
 	#div_ee8413b2 #background_form #background_form_close:hover,
 	#div_ee8413b2 #background_form #bgUploadBtn:hover,
 	#div_ee8413b2 #frontPage_listFontColor #frontPage_listFontColor_close:hover {
 		background-color: #5c0d12a1;
 		color: #e3e0d1;
 	}
-
+	
 	#div_ee8413b2 #background_form #opacity_range,
 	#div_ee8413b2 #background_form #mask_range,
 	#div_ee8413b2 #frontPage_listFontColor #parent_color,
@@ -1405,13 +1403,13 @@ func_eh_ex(() => {
 	#div_ee8413b2 #frontPage_listFontColor #sub_hover_color {
 		float: left;
 	}
-
+	
 	#div_ee8413b2 #background_form #opacity_range,
 	#div_ee8413b2 #background_form #mask_range {
 		height: 27px;
 		margin-right: 10px;
 	}
-
+	
 	#div_ee8413b2 #frontPage_listFontColor #parent_color,
 	#div_ee8413b2 #frontPage_listFontColor #sub_color,
 	#div_ee8413b2 #frontPage_listFontColor #sub_hover_color {
@@ -1419,7 +1417,7 @@ func_eh_ex(() => {
 		width: 80px;
 		margin: 0 12px;
 	}
-
+	
 	#div_ee8413b2 #background_form #opacity_val,
 	#div_ee8413b2 #background_form #mask_val,
 	#div_ee8413b2 #frontPage_listFontColor #parent_color_val,
@@ -1430,19 +1428,19 @@ func_eh_ex(() => {
 		line-height: 30px;
 		text-align: center;
 	}
-
+	
 	#div_ee8413b2 #background_form #opacity_val,
 	#div_ee8413b2 #background_form #mask_val {
 		width: 50px;
 	}
-
+	
 	#div_ee8413b2 #frontPage_listFontColor #parent_color_val,
 	#div_ee8413b2 #frontPage_listFontColor #sub_color_val,
 	#div_ee8413b2 #frontPage_listFontColor #sub_hover_color_val {
 		width: 80px;
 	}
-
-
+	
+	
 	#div_ee8413b2 #background_form #background_form_close,
 	#div_ee8413b2 #background_form #bgImg_save_btn,
 	#div_ee8413b2 #background_form #bgImg_clear_btn,
@@ -1457,7 +1455,7 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper {
 		width: calc(100% - 20px);
 		min-height: 50px;
@@ -1465,7 +1463,7 @@ func_eh_ex(() => {
 		margin: 0 auto;
 		padding: 10px;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #search_close {
 		border: 1px solid #5c0d12;
 		border-left: 0;
@@ -1479,15 +1477,15 @@ func_eh_ex(() => {
 		cursor: pointer;
 		overflow: hidden;
 	}
-
-
+	
+	
 	/* 头部按钮 */
-
+	
 	#div_ee8413b2 #search_wrapper #search_top {
 		width: 100%;
 		height: 50px;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_all_button,
 	#div_ee8413b2 #search_top #category_favorites_button {
 		width: 100px;
@@ -1500,11 +1498,11 @@ func_eh_ex(() => {
 		cursor: pointer;
 		font-size: 18px;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_favorites_button {
 		border-left: 0;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_addFavorites_button {
 		width: 100px;
 		height: 48px;
@@ -1517,7 +1515,7 @@ func_eh_ex(() => {
 		font-size: 18px;
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_addFavorites_button_disabled {
 		width: 100px;
 		height: 48px;
@@ -1530,7 +1528,7 @@ func_eh_ex(() => {
 		font-size: 18px;
 		color: #5c0d1245;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_search_input {
 		width: calc(100% - 392px);
 		height: 48px;
@@ -1538,7 +1536,7 @@ func_eh_ex(() => {
 		float: left;
 		margin: 0 10px 0 40px;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info {
 		width: calc(100% - 104px);
 		height: 48px;
@@ -1546,7 +1544,7 @@ func_eh_ex(() => {
 		padding: 0 4px;
 		overflow-y: auto;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info #user_input {
 		border: 0;
 		outline: none;
@@ -1558,27 +1556,27 @@ func_eh_ex(() => {
 		caret-color: black;
 		color: black;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info #user_input_enter {
 		margin-left: -15px;
 		cursor: pointer;
 		display: inline-block;
 		color: #e3e0d1;
 	}
-
+	
 	.user_input_null_backcolor {
 		background-color: #f5cc9c80 !important;
 	}
-
+	
 	.user_input_value_backColor {
 		background-color: #f5cc9c !important;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info #user_input:focus,
 	#div_ee8413b2 #category_search_input #input_info #user_input:hover {
 		background-color: #f5cc9c !important;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info .input_item,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list .f_edit_item {
 		display: inline-block;
@@ -1591,22 +1589,22 @@ func_eh_ex(() => {
 		border: 1px solid #f5cc9c;
 		color: black;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info .input_item {
 		margin-right: 4px;
 		margin-top: 4px;
 	}
-
+	
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list .f_edit_item {
 		margin-left: 5px;
 		padding: 4px 6px;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info .input_item:hover,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list .f_edit_item:hover {
 		border: 1px solid red;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_enter_button,
 	#div_ee8413b2 #category_search_input #input_clear {
 		width: 47px;
@@ -1617,23 +1615,23 @@ func_eh_ex(() => {
 		font-size: 18px;
 		text-align: center;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_clear {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_enter_button {
 		border-left: 1px solid #5c0d12;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_clear {
 		border-left: 0;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #display_div {
 		overflow: hidden;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #category_favorites_div,
 	#div_ee8413b2 #search_wrapper #category_all_div {
 		width: calc(100% - 2px);
@@ -1641,17 +1639,17 @@ func_eh_ex(() => {
 		margin-top: 10px;
 		overflow: hidden;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #category_all_div,
 	#div_ee8413b2 #search_wrapper #category_favorites_div {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #favorites_list .favorite_items_div,
 	#div_ee8413b2 #favorites_edit_list .favorite_edit_items_div {
 		padding-bottom: 20px;
 	}
-
+	
 	#div_ee8413b2 #category_all_div h4,
 	#div_ee8413b2 #favorites_list h4,
 	#div_ee8413b2 #favorites_edit_list h4 {
@@ -1659,7 +1657,7 @@ func_eh_ex(() => {
 		margin: 10px;
 		color: #5c0d11;
 	}
-
+	
 	#div_ee8413b2 #category_all_div .c_item,
 	#div_ee8413b2 #category_favorites_div #favorites_list .c_item {
 		margin: 3px 3px 3px 10px;
@@ -1668,12 +1666,12 @@ func_eh_ex(() => {
 		display: inline-block;
 		color: #5c0d11;
 	}
-
+	
 	#div_ee8413b2 #category_all_div .c_item:hover,
 	#div_ee8413b2 #category_favorites_div #favorites_list .c_item:hover {
 		color: #ff4500;
 	}
-
+	
 	#div_ee8413b2 #category_all_div .category_extend,
 	#div_ee8413b2 #favorites_list .favorite_extend,
 	#div_ee8413b2 #favorites_edit_list .favorite_edit_clear {
@@ -1688,23 +1686,23 @@ func_eh_ex(() => {
 		cursor: pointer;
 		color: #5c0d11;
 	}
-
+	
 	.chooseTab {
 		background-color: #5c0d12;
 		color: #e3e0d1;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_editor,
 	#div_ee8413b2 #category_all_div #category_list {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_editor,
 	#div_ee8413b2 #category_favorites_div #favorites_editor {
 		width: 100%;
 		height: 25px;
 	}
-
+	
 	#div_ee8413b2 #category_editor #all_expand,
 	#div_ee8413b2 #category_editor #all_collapse,
 	#div_ee8413b2 #favorites_editor #favorites_all_collapse,
@@ -1722,7 +1720,7 @@ func_eh_ex(() => {
 		line-height: 24px;
 		cursor: pointer;
 	}
-
+	
 	#div_ee8413b2 #favorites_editor #favorites_export,
 	#div_ee8413b2 #favorites_editor #favorites_recover {
 		border-bottom: 1px solid #5c0d12;
@@ -1734,11 +1732,11 @@ func_eh_ex(() => {
 		line-height: 24px;
 		cursor: pointer;
 	}
-
+	
 	#div_ee8413b2 #favorites_editor #favorite_upload_files {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend {
 		width: calc(100% - 48px);
 		margin-left: -1px;
@@ -1749,7 +1747,7 @@ func_eh_ex(() => {
 		overflow-y: auto;
 		position: relative;
 	}
-
+	
 	.t_favorite_ido #category_user_input_recommend {
 		border: 1px solid #5c0d12;
 		border-top: 0;
@@ -1762,7 +1760,7 @@ func_eh_ex(() => {
 		width: 100%;
 		overflow-y: auto;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items,
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items {
 		font-size: 15px;
@@ -1773,57 +1771,57 @@ func_eh_ex(() => {
 		line-height: 20px;
 		overflow: auto;
 	}
-
+	
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:first-child {
 		border-top: 1px solid #5c0d12;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:first-child {
 		border-top: 1px solid #5c0d12;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:not(:first-child),
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:not(:first-child) {
 		border-top: 1px dashed #85868b;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:hover,
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:hover {
 		background-color: #c5c3b8;
 	}
-
+	
 	#div_ee8413b2 #search_top #search_close,
 	#div_ee8413b2 #favorites_editor #favorites_save,
 	#div_ee8413b2 #favorites_editor #favorites_cancel {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_favorites_div #favorites_list,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list {
 		min-height: 90px;
 	}
-
+	
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_list .category_items_div {
 		padding-bottom: 20px;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_list h4,
 	#div_ee8413b2 #category_favorites_div #favorites_list h4,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list h4 {
 		font-size: 16px;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_list,
 	#div_ee8413b2 #category_favorites_div #favorites_list,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list {
 		height: 500px;
 		overflow-y: auto;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar,
 	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar,
@@ -1834,7 +1832,7 @@ func_eh_ex(() => {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar-track,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar-track,
 	#div_ee8413b2 #category_all_div #category_list::-webkit-scrollbar-track,
@@ -1844,7 +1842,7 @@ func_eh_ex(() => {
 	.torrents_detail_info #etd p::-webkit-scrollbar-track {
 		border-radius: 10px;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar-thumb,
 	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-thumb,
@@ -1855,7 +1853,7 @@ func_eh_ex(() => {
 		background-color: #b5a297;
 		border-radius: 10px;
 	}
-
+	
 	#div_ee8413b2 #category_loading_div,
 	#div_ee8413b2 #search_top #search_close,
 	#div_ee8413b2 #search_top #category_all_button,
@@ -1883,7 +1881,7 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #search_close:hover,
 	#div_ee8413b2 #search_top #category_all_button:hover,
 	#div_ee8413b2 #search_top #category_favorites_button:hover,
@@ -1903,7 +1901,7 @@ func_eh_ex(() => {
 		background-color: #5c0d12a1;
 		color: #e3e0d1;
 	}
-
+	
 	#div_ee8413b2 #category_list .category_extend:hover,
 	#div_ee8413b2 #favorites_list .favorite_extend:hover,
 	#div_ee8413b2 #favorites_edit_list .favorite_edit_clear:hover,
@@ -1911,7 +1909,7 @@ func_eh_ex(() => {
 	#div_ee8413b2 #favorites_list .c_item:hover {
 		transform: scale(2);
 	}
-
+	
 	#dms #googleTranslateDiv,
 	.t_popular_toppane #googleTranslateDiv,
 	.t_toplist_ido #googleTranslateDiv,
@@ -1926,40 +1924,40 @@ func_eh_ex(() => {
 		border: 1px solid #8d8d8d;
 		border-radius: 3px;
 	}
-
+	
 	#dms #googleTranslateDiv {
 		margin-top: -13px;
 	}
-
+	
 	.t_favorite_ido #dms #googleTranslateDiv {
 		margin-top: -42px;
 		right: 16px;
 	}
-
+	
 	.t_popular_toppane #googleTranslateDiv {
 		margin-top: -30px;
 	}
-
+	
 	.t_toplist_ido #googleTranslateDiv {
 		top: 40px;
 		right: 10px;
 	}
-
+	
 	.t_toplist_bookrage #googleTranslateDiv {
 		top: 11px;
 		left: 5px;
 	}
-
+	
 	.t_torrentsPage_ido #googleTranslateDiv {
 		top: 105px;
 	}
-
+	
 	.t_tosPage_stuffbox #googleTranslateDiv {
 		width: 78px;
 		float: right;
 		position: relative;
 	}
-
+	
 	#dms #translateLabel,
 	.t_popular_toppane #translateLabel,
 	.t_toplist_ido #translateLabel {
@@ -1968,7 +1966,7 @@ func_eh_ex(() => {
 		font-size: 13px;
 		padding-left: 2px;
 	}
-
+	
 	#dms,
 	#dms #googleTranslateCheckbox,
 	#dms #translateLabel,
@@ -1982,15 +1980,15 @@ func_eh_ex(() => {
 	.t_tosPage_stuffbox #translateLabel {
 		cursor: pointer;
 	}
-
+	
 	.div_ee8413b2_category_checked {
 		background-color: darkred !important;
 	}
-
+	
 	.div_ee8413b2_category_checked a {
 		color: white;
 	}
-
+	
 	#gd5 #googleTranslateDiv,
 	.t_toplist_ido #googleTranslateDiv {
 		background-color: #edebdf;
@@ -2001,7 +1999,7 @@ func_eh_ex(() => {
 		border-radius: 3px;
 		margin-bottom: 15px;
 	}
-
+	
 	#gd5 #googleTranslateDiv #translateLabel,
 	.t_toplist_ido #googleTranslateDiv #translateLabel {
 		padding-left: 5px;
@@ -2009,7 +2007,7 @@ func_eh_ex(() => {
 		font-size: 13px;
 		padding-left: 2px;
 	}
-
+	
 	#gd5 #googleTranslateDiv,
 	#gd5 #googleTranslateDiv #googleTranslateCheckbox,
 	#gd5 #googleTranslateDiv #translateLabel,
@@ -2017,7 +2015,7 @@ func_eh_ex(() => {
 	.t_tosPage_stuffbox #googleTranslateDiv {
 		cursor: pointer;
 	}
-
+	
 	#div_ee8413b2_detail_clearBtn,
 	#div_ee8413b2_detail_addFavoriteBtn,
 	#div_ee8413b2_detail_searchBtn {
@@ -2036,7 +2034,7 @@ func_eh_ex(() => {
 		margin-bottom: 15px;
 		display: none;
 	}
-
+	
 	#gd5 #googleTranslateDiv:hover,
 	#div_ee8413b2_detail_clearBtn:hover,
 	#div_ee8413b2_detail_addFavoriteBtn:hover,
@@ -2047,91 +2045,91 @@ func_eh_ex(() => {
 	.t_tosPage_stuffbox #googleTranslateDiv:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	#nb {
 		font-size: 17px;
 		padding-top: 8px;
 	}
-
+	
 	#nb>div {
 		background-image: none;
 	}
-
+	
 	#nb div a:hover {
 		color: red;
 	}
-
+	
 	#dms>div>select {
 		left: -87px;
 		width: 206px;
 	}
-
+	
 	table.itg>tbody>tr>th {
 		text-align: center;
 		font-size: 13px;
 	}
-
+	
 	table td.tc {
 		min-width: 30px;
 	}
-
+	
 	table.itg tr:not(:first-child):hover {
 		background-color: #e0ded3;
 	}
-
+	
 	table.itg tr:first-child:hover,
 	div.itg .gl1t:hover {
 		background-color: #e0ded3;
 	}
-
+	
 	div#gdf a {
 		text-decoration: underline;
 	}
-
+	
 	.glname table td.tc,
 	#taglist table td.tc {
 		min-width: 50px;
 	}
-
+	
 	#taglist::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	#taglist::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
-
+	
 	#taglist::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
 	}
-
+	
 	#gmid #gd5 .g3,
 	#gmid #gd5 .g2 {
 		padding-bottom: 10px;
 	}
-
+	
 	table .gt,
 	table .gtl,
 	table .gtw {
 		height: 18px;
 		line-height: 18px;
 	}
-
+	
 	.headMenu_check {
 		border-top: 2px solid #070101;
 		padding-top: 6px !important;
 		margin-top: -8px;
 	}
-
+	
 	.t_toplist_ido h2 {
 		padding: 20px 0 10px 0;
 		border-bottom: 1px dashed #5c0d12;
 		font-size: 1.5em;
 	}
-
+	
 	.t_favorite_ido .nosel {
 		border-radius: 10px;
 		margin-top: 20px !important;
@@ -2141,38 +2139,38 @@ func_eh_ex(() => {
 		border: 1px solid #C2C1C1;
 		background-color: #e3e0d1;
 	}
-
+	
 	.t_favorite_ido .nosel .fp:last-child {
 		background-color: #e3e0d1;
 		top: -87px;
 	}
-
+	
 	.t_favorite_ido .nosel .fp:last-child:hover,
 	.t_favorite_ido .nosel .fps {
 		background-color: #edebdf !important;
 	}
-
+	
 	.t_favorite_ido .favorite_null {
 		color: #c3bfbf;
 	}
-
+	
 	.t_favorite_ido .searchDiv {
 		width: 855px !important;
 		height: 30px;
 		margin: 0 auto !important;
 		padding: 10px 0 30px 0;
 	}
-
+	
 	.t_favorite_ido .searchDiv .searchInputDiv {
 		float: left;
 	}
-
+	
 	.t_favorite_ido .searchDiv .searchFilterDiv {
 		float: right;
 		width: 310px !important;
 		padding-right: 0 !important;
 	}
-
+	
 	.t_favorite_ido .searchDiv .searchFilterDiv td {
 		width: auto !important;
 		height: 30px;
@@ -2180,12 +2178,12 @@ func_eh_ex(() => {
 		line-height: 30px;
 		text-align: left;
 	}
-
+	
 	.t_favorite_ido .searchDiv .searchFilterDiv td label {
 		height: 30px;
 		line-height: 30px;
 	}
-
+	
 	.gm #h1Origin_copy {
 		font-size: 10pt;
 		padding: 0 0 2px;
@@ -2193,7 +2191,7 @@ func_eh_ex(() => {
 		color: #b8b8b8;
 		border-bottom: 1px solid #000000;
 	}
-
+	
 	.gm #h1Origin_copy {
 		font-size: 10pt;
 		padding: 0 0 2px;
@@ -2201,48 +2199,48 @@ func_eh_ex(() => {
 		color: #9F8687;
 		border-bottom: 1px solid #5C0D12;
 	}
-
+	
 	.gm #h1Title_copy {
 		font-size: 12pt;
 		padding: 0 0 2px;
 		margin: 3px 15px;
 	}
-
+	
 	.torrents_detail_info,
 	.torrents_detail_index {
 		min-height: 535px;
 		height: auto !important;
 	}
-
+	
 	.t_torrentsPage_ido #torrentform {
 		width: 660px;
 		margin: 20px auto;
 		height: 50px;
 	}
-
+	
 	.t_torrentsPage_ido #focusme {
 		float: left;
 	}
-
+	
 	.t_torrentsPage_ido #torrentform p {
 		float: left;
 		margin-top: 5px;
 	}
-
+	
 	.torrents_detail_info table:nth-child(3) {
 		margin-left: 15% !important;
 	}
-
+	
 	.torrents_detail_info a {
 		text-decoration: underline !important;
 	}
-
+	
 	.torrents_detail_info #etd p {
 		height: 214px;
 		padding: 0 1px;
 		overflow-y: auto;
 	}
-
+	
 	.torrents_detail_info #etd #googleTranslateDiv {
 		background-color: #dbd3a8;
 		display: inline-block;
@@ -2251,21 +2249,21 @@ func_eh_ex(() => {
 		margin-top: 2px;
 		cursor: pointer;
 	}
-
+	
 	.torrents_detail_index form table tr td:nth-child(4),
 	.torrents_detail_index form table tr td:nth-child(5) {
 		text-align: center;
 	}
-
+	
 	.t_newspage_souter #nb {
 		min-height: 29px;
 		max-height: 29px;
 	}
-
+	
 	.t_newspage_souter #nb a {
 		font-size: 17px;
 	}
-
+	
 	.t_newspage_souter #imgHiddenBtn {
 		width: 100px;
 		float: right;
@@ -2282,12 +2280,12 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	/* 新闻头部图片边框 */
 	.t_newspage_souter .hiddenTopImgBorder {
 		height: 0;
 	}
-
+	
 	.t_newspage_souter #googleTranslateDiv {
 		width: 120px;
 		margin-top: -8px;
@@ -2303,15 +2301,15 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	.t_newspage_souter #googleTranslateDiv #translateLabel {
 		cursor: pointer;
 	}
-
+	
 	.t_newspage_souter #botm {
 		overflow: hidden;
 	}
-
+	
 	.t_newspage_souter .title_extend {
 		position: relative;
 		top: -3px;
@@ -2330,85 +2328,85 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	.t_newspage_souter .title_extend:hover {
 		transform: scale(1.5);
 	}
-
+	
 	.t_newspage_souter .nwo h2 {
 		margin-top: 7px;
 	}
-
+	
 	.t_newspage_souter .nwo h2 div {
 		margin-bottom: 6px;
 	}
-
+	
 	.t_uconfigPage_outer #profile_outer div#profile_select {
 		display: inline-block;
 	}
-
+	
 	.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(1),
 	.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(3) {
 		width: auto;
 	}
-
+	
 	.t_uconfigPage_outer #profile_outer div#profile_action {
 		float: right;
 		padding-top: 3px;
 	}
-
+	
 	.t_uconfigPage_outer .span_pixel {
 		position: relative;
 		top: 2px;
 	}
-
+	
 	.t_uconfigPage_outer form h2 {
 		font-size: 18px;
 		margin-top: 30px;
 	}
-
+	
 	.t_uconfigPage_outer form #contentForm_wrapper {
 		height: calc(100vh - 168px);
 		overflow: auto;
 		margin: 5px 0;
 		padding: 0 10px;
 	}
-
+	
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-track {
 		border-radius: 10px;
 	}
-
+	
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
 		background-color: #b5a297;
 		border-radius: 10px;
 	}
-
+	
 	.t_frontpage_ido #searchbox .nopm {
 		margin-top: 10px;
 	}
-
+	
 	.t_frontpage_ido #searchbox .nopm input[type="button"],
 	.t_frontpage_ido #searchbox .nopm input[type="submit"] {
 		width: 70px;
 	}
-
+	
 	.t_frontpage_ido #advdiv {
 		width: 598px;
 		margin: auto;
 		margin-top: 11px;
 	}
-
+	
 	.t_frontpage_ido #advdiv,
 	.t_frontpage_ido #fsdiv {
 		padding: 10px 0;
 		border: 1px ridge #5c0d12;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend {
 		border: 1px solid #5c0d12;
 		border-top: 0;
@@ -2420,7 +2418,7 @@ func_eh_ex(() => {
 		width: 100%;
 		overflow-y: auto;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items {
 		font-size: 15px;
 		padding: 5px;
@@ -2430,44 +2428,44 @@ func_eh_ex(() => {
 		line-height: 20px;
 		overflow: auto;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:first-child {
 		border-top: 1px solid #5c0d12;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:not(:first-child) {
 		border-top: 1px dashed #85868b;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:hover {
 		background-color: #c5c3b8;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-track {
 		border-radius: 10px;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-thumb {
 		background-color: #b5a297;
 		border-radius: 10px;
 	}
-
+	
 	.t_detail_comment .comment_span {
 		margin-right: 10px;
 		float: left;
 	}
-
+	
 	.t_detail_comment .comment_span,
 	.t_detail_comment .comment_span input,
 	.t_detail_comment .comment_span label {
 		cursor: pointer;
 	}
-
+	
 	#eventpane #eventpane_close_btn {
 		width: 30px;
 		height: 30px;
@@ -2483,17 +2481,17 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	.t_tosPage_stuffbox {
 		padding: 10px !important;
 	}
-
+	
 	#t_mytags_div {
 		width: calc(100% - 2px);
 		border: 1px solid #5c0d11;
 		margin-bottom: 10px;
 	}
-
+	
 	#t_mytags_data_update_tip {
 		width: 100px;
 		height: 20px;
@@ -2510,30 +2508,30 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	#t_mytags_div #t_mytags_top {
 		height: 49px;
 		width: 100%;
 	}
-
+	
 	#t_mytags_div #t_mytags_bottom {
 		height: 0;
 		overflow-y: hidden;
 	}
-
+	
 	#t_mytags_div #t_mytags_bottom #t_split_line {
 		border-left: 1px solid #5c0d11;
 		height: 100%;
 		float: left;
 	}
-
+	
 	#t_mytags_div #t_mytags_bottom #t_allCategories,
 	#t_mytags_div #t_mytags_bottom #t_favoriteCategories {
 		width: calc(50% - 0.5px);
 		height: 100%;
 		float: left;
 	}
-
+	
 	#t_mytags_top #clear_search_btn,
 	#t_mytags_top #t_mytags_extend_btn,
 	#t_mytags_top #t_mytags_submitCategories_btn,
@@ -2546,18 +2544,18 @@ func_eh_ex(() => {
 		text-align: center;
 		color: #5c0d11;
 	}
-
+	
 	#t_mytags_top #t_mytags_extend_btn {
 		float: left;
 		margin-left: 10px;
 	}
-
+	
 	#t_mytags_top #t_mytags_extend_btn,
 	#t_mytags_top #t_mytags_submitCategories_btn,
 	#t_mytags_top #t_mytags_clodToFavorite_btn {
 		width: 130px;
 	}
-
+	
 	#t_mytags_top #clear_search_btn {
 		width: 50px;
 		float: left;
@@ -2565,12 +2563,12 @@ func_eh_ex(() => {
 		text-align: center;
 		color: #5c0d11;
 	}
-
+	
 	#t_mytags_top #t_mytags_clodToFavorite_btn,
 	#t_mytags_top #t_mytags_submitCategories_btn {
 		float: right;
 	}
-
+	
 	#t_mytags_top #t_mytags_search {
 		border: 1px solid #5c0d11;
 		height: 31px;
@@ -2584,12 +2582,12 @@ func_eh_ex(() => {
 		width: calc(100% - 560px);
 		min-width: 100px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_tool,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_tool {
 		height: 25px;
 	}
-
+	
 	#t_mytags_bottom .mytags_allCheck_div {
 		border-right: 1px solid #5c0d11;
 		border-top: 1px solid #5c0d11;
@@ -2600,13 +2598,13 @@ func_eh_ex(() => {
 		text-align: center;
 		color: #5c0d11;
 	}
-
+	
 	#t_mytags_bottom .mytags_allCheck_div,
 	#t_mytags_bottom .mytags_allCheck_div input[type="checkbox"],
 	#t_mytags_bottom .mytags_allCheck_div label {
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_bottom p {
 		height: 24px;
 		line-height: 24px;
@@ -2617,7 +2615,7 @@ func_eh_ex(() => {
 		text-align: center;
 		color: #5c0d11;
 	}
-
+	
 	#t_mytags_bottom #allCategories_allCheck:indeterminate::after,
 	#t_mytags_bottom #favoriteCategories_allCheck:indeterminate::after {
 		display: block;
@@ -2629,7 +2627,7 @@ func_eh_ex(() => {
 		margin-left: 3px;
 		margin-top: 5px;
 	}
-
+	
 	#t_mytags_bottom #mytags_left_all_collapse,
 	#t_mytags_bottom #mytags_left_all_expand,
 	#t_mytags_bottom #mytags_right_all_collapse,
@@ -2645,30 +2643,30 @@ func_eh_ex(() => {
 		color: #5c0d11;
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window {
 		height: 325px;
 		overflow-y: auto;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-track,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-track {
 		border-radius: 10px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-thumb,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-thumb {
 		background-color: #b5a297;
 		border-radius: 10px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories_window h4,
 	#t_mytags_bottom #t_favoriteCategories_window h4 {
 		color: #5c0d11;
@@ -2677,7 +2675,7 @@ func_eh_ex(() => {
 		margin-top: 10px;
 		padding-left: 10px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories_window h4 span,
 	#t_mytags_bottom #t_favoriteCategories_window h4 span {
 		border: 1px solid #5c0d11;
@@ -2689,12 +2687,12 @@ func_eh_ex(() => {
 		font-weight: 500;
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories_window h4 span:hover,
 	#t_mytags_bottom #t_favoriteCategories_window h4 span:hover {
 		transform: scale(1.2);
 	}
-
+	
 	#t_mytags_bottom .mytags_item_wrapper {
 		border: 1px solid #5c0d11;
 		border-radius: 5px;
@@ -2703,17 +2701,17 @@ func_eh_ex(() => {
 		padding: 2px 5px;
 		color: #5c0d11;
 	}
-
+	
 	#t_mytags_bottom .mytags_item_wrapper,
 	#t_mytags_bottom .mytags_item_wrapper input[type="checkbox"],
 	#t_mytags_bottom .mytags_item_wrapper label {
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_bottom .mytags_item_wrapper label {
 		line-height: 20px;
 	}
-
+	
 	#t_mytags_bottom #t_mytags_allcategory_loading_div,
 	#t_mytags_bottom #t_mytags_favoritecategory_loading_div {
 		height: 325px;
@@ -2722,8 +2720,8 @@ func_eh_ex(() => {
 		text-align: center;
 		font-size: 20px;
 	}
-
-
+	
+	
 	#t_mytags_top #clear_search_btn,
 	#t_mytags_top #t_mytags_extend_btn,
 	#t_mytags_top #t_mytags_submitCategories_btn,
@@ -2742,7 +2740,7 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	#t_mytags_top #clear_search_btn:hover,
 	#t_mytags_top #t_mytags_extend_btn:hover,
 	#t_mytags_top #t_mytags_submitCategories_btn:hover,
@@ -2755,23 +2753,23 @@ func_eh_ex(() => {
 	#t_mytags_bottom .mytags_item_wrapper:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	.t_mytagsPage_outer #tagset_outer div:nth-child(1) {
 		width: 180px;
 	}
-
+	
 	.t_mytagsPage_outer #tagset_outer div:nth-child(3) {
 		width: 86px;
 	}
-
+	
 	.t_mytagsPage_outer #tagset_outer div:nth-child(6) {
 		padding-left: 50px;
 	}
-
+	
 	.hide {
 		display: none !important;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form {
 		border: 2px solid #5c0d11;
 		background-color: #e3e0d1;
@@ -2787,7 +2785,7 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_top {
 		height: 30px;
 		width: 100%;
@@ -2799,7 +2797,7 @@ func_eh_ex(() => {
 		font-weight: bold;
 		font-size: 16px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_close {
 		float: right;
 		cursor: pointer;
@@ -2814,13 +2812,13 @@ func_eh_ex(() => {
 		top: 0;
 		font-size: 17px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle {
 		height: 320px;
 		width: 100%;
 		margin-top: 30px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_left,
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_right {
 		height: 280px;
@@ -2828,7 +2826,7 @@ func_eh_ex(() => {
 		width: calc(50% - 30.5px);
 		float: left;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_split {
 		width: 0;
 		margin-top: 20px;
@@ -2836,29 +2834,29 @@ func_eh_ex(() => {
 		border-left: 1px solid #5c0d11;
 		float: left;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom {
 		height: 30px;
 		width: 100%;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item {
 		font-size: 10px;
 		height: 40px;
 		margin-bottom: 40px;
 		margin-top: 25px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item:first-child {
 		height: 60px;
 	}
-
-
+	
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label {
 		height: 30px;
 		line-height: 30px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label {
 		width: 88px;
 		height: 60px;
@@ -2866,7 +2864,7 @@ func_eh_ex(() => {
 		float: left;
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label,
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.color_label,
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.weight_label {
@@ -2876,18 +2874,18 @@ func_eh_ex(() => {
 		float: left;
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label {
 		height: 60px;
 		line-height: 60px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.color_label,
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.weight_label {
 		height: 40px;
 		line-height: 40px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="color"],
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="range"] {
 		float: left;
@@ -2895,7 +2893,7 @@ func_eh_ex(() => {
 		height: 30px;
 		margin-top: 5px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #tag_color_val,
 	.t_mytagsPage_outer #upload_tag_form #tag_weight_val {
 		float: left;
@@ -2904,18 +2902,18 @@ func_eh_ex(() => {
 		text-align: center;
 		width: 80px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #checkboxDiv {
 		width: 170px;
 		height: 80px;
 		float: left;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #checkboxDiv input {
 		position: relative;
 		top: 2px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn,
 	.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn,
 	.t_mytagsPage_outer #upload_tag_form #weight_reset_btn {
@@ -2929,25 +2927,25 @@ func_eh_ex(() => {
 		margin-right: 15px;
 		cursor: pointer;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_close:hover,
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #weight_reset_btn:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn {
 		margin-top: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom {
 		width: 100%;
 		height: 30px;
 		text-align: center;
 		color: white;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn,
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn {
 		width: 100px;
@@ -2959,44 +2957,44 @@ func_eh_ex(() => {
 		font-size: 10px;
 		cursor: pointer;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn {
 		margin-left: 275px;
 		background-color: darkgreen;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn:hover {
 		background-color: green;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn {
 		margin-left: 50px;
 		background-color: darkslateblue;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn:hover {
 		background-color: slateblue;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div {
 		height: 260px;
 		overflow-y: auto;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar-track {
 		border-radius: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar-thumb {
 		background-color: #b5a297;
 		border-radius: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 {
 		margin: 0;
 		margin-top: 10px;
@@ -3004,7 +3002,7 @@ func_eh_ex(() => {
 		font-weight: bold;
 		margin-bottom: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 span {
 		border: 1px solid #5c0d11;
 		cursor: pointer;
@@ -3015,11 +3013,11 @@ func_eh_ex(() => {
 		line-height: 12px;
 		font-weight: 500;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 span:hover {
 		transform: scale(1.2);
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right .checkTags_item {
 		display: inline-block;
 		padding: 0 5px;
@@ -3032,11 +3030,11 @@ func_eh_ex(() => {
 		color: black;
 		margin: 0 10px 10px 0;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right .checkTags_item:hover {
 		border: 1px solid red;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn {
 		color: #5c0d11;
 		border: 1px solid #5c0d11;
@@ -3048,11 +3046,11 @@ func_eh_ex(() => {
 		cursor: pointer;
 		display: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing {
 		border: 2px solid #5c0d11;
 		background-color: #e3e0d1;
@@ -3070,11 +3068,11 @@ func_eh_ex(() => {
 		user-select: none;
 		display: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing:hover {
 		border-color: yellow;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_top {
 		height: 60px;
 		line-height: 60px;
@@ -3086,17 +3084,17 @@ func_eh_ex(() => {
 		font-weight: bold;
 		font-size: 18px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1 {
 		margin-top: 80px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1,
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_2,
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_error {
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_error {
 		margin-bottom: -20px;
 		display: none;
@@ -3104,32 +3102,32 @@ func_eh_ex(() => {
 		font-size: 17px;
 		font-weight: bold;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #tip_pause {
 		color: darkorange;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #tip_continue {
 		color: darkgreen;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder,
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
 		margin-top: 20px;
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
 		font-size: 20px;
 		font-weight: bold;
 		color: darkgreen;
 		display: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder #upload_remainder_count {
 		font-size: 30px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn,
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
 		color: white;
@@ -3142,51 +3140,51 @@ func_eh_ex(() => {
 		cursor: pointer;
 		margin: 30px auto;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn {
 		background-color: darkred;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn:hover {
 		background-color: red;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
 		background-color: darkslateblue;
 		display: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn:hover {
 		background-color: slateblue;
 	}
-
+	
 	.t_mytagsPage_outer #usertags_outer>div:hover {
 		background-color: #e3e0d1b3;
 	}
-
+	
 	.t_mytagsPage_outer #usertags_outer>div>div:nth-child(6)>input {
 		margin-left: 6px
 	}
-
+	
 	.t_mytagsPage_outer .tagcolor,
 	#tagcolor {
 		width: 99px;
 	}
-
+	
 	.t_mytagsPage_outer #usertag_form #usertags_outer {
 		width: 850px;
 		overflow-y: auto;
 	}
-
+	
 	.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar-track {
 		border-radius: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar-thumb {
 		background-color: #b5a297;
 		border-radius: 10px;
@@ -3212,31 +3210,31 @@ func_eh_ex(() => {
 		user-select: none;
 		display: none;
 	}
-
+	
 	#searchbox #data_update_tip {
 		top: 0;
 		left: 0;
 	}
-
+	
 	#gd2 #data_update_tip,
 	.t_favorite_ido #data_update_tip {
 		top: 2px;
 		right: 15px;
 	}
-
+	
 	.t_popular_toppane {
 		padding: 10px 0;
 	}
-
+	
 	.t_popular_dms div select {
 		margin-top: -6px;
 	}
-
+	
 	.t_popular_toppane #data_update_tip {
 		top: 16px;
 		left: 180px;
 	}
-
+	
 	#searchbox #div_fontColor_btn,
 	#searchbox #div_background_btn,
 	#searchbox #div_top_visible_btn,
@@ -3252,30 +3250,30 @@ func_eh_ex(() => {
 		cursor: pointer;
 		font-size: 10px;
 	}
-
+	
 	#searchbox #div_fontColor_btn {
 		right: 210px;
 	}
-
+	
 	#searchbox #div_background_btn {
 		right: 140px;
 	}
-
+	
 	#searchbox #div_top_visible_btn {
 		right: 70px;
 	}
-
+	
 	#searchbox #div_searchMode_btn {
 		right: 0;
 	}
-
+	
 	#searchbox #div_fontColor_btn:hover,
 	#searchbox #div_background_btn:hover,
 	#searchbox #div_top_visible_btn:hover,
 	#searchbox #div_searchMode_btn:hover {
 		background-color: #43464e;
 	}
-
+	
 	#div_ee8413b2 {
 		padding-right: 3px;
 		text-align: left;
@@ -3284,7 +3282,7 @@ func_eh_ex(() => {
 		z-index: 3;
 		background-color: #40454B;
 	}
-
+	
 	#div_ee8413b2 #category_loading_div {
 		height: 527px;
 		width: 100%;
@@ -3292,12 +3290,12 @@ func_eh_ex(() => {
 		text-align: center;
 		font-size: 20px;
 	}
-
+	
 	#div_ee8413b2_bg::before {
 		background-size: 100%;
 		opacity: 0.5;
 	}
-
+	
 	#div_ee8413b2_bg {
 		z-index: -9999;
 		overflow: hidden;
@@ -3305,7 +3303,7 @@ func_eh_ex(() => {
 		width: 100%;
 		height: 100%;
 	}
-
+	
 	#div_ee8413b2_bg::before {
 		content: '';
 		position: absolute;
@@ -3314,10 +3312,10 @@ func_eh_ex(() => {
 		bottom: 0;
 		left: 0;
 		filter: blur(2px);
-
+	
 	}
-
-
+	
+	
 	#div_ee8413b2 #background_form,
 	#div_ee8413b2 #frontPage_listFontColor {
 		border: 1px solid white;
@@ -3329,17 +3327,17 @@ func_eh_ex(() => {
 		padding-top: 30px;
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #background_form {
 		left: calc(50% - 170px);
 		top: 100px;
 	}
-
+	
 	#div_ee8413b2 #frontPage_listFontColor {
 		left: calc(50% - 255px);
 		top: 190px;
 	}
-
+	
 	#div_ee8413b2 #background_form #background_form_top,
 	#div_ee8413b2 #frontPage_listFontColor #frontPage_listFontColor_top {
 		height: 30px;
@@ -3348,11 +3346,11 @@ func_eh_ex(() => {
 		top: 0;
 		cursor: move;
 	}
-
+	
 	#div_ee8413b2 #background_form #bg_upload_file {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #background_form #background_form_close,
 	#div_ee8413b2 #frontPage_listFontColor #frontPage_listFontColor_close {
 		float: right;
@@ -3368,13 +3366,13 @@ func_eh_ex(() => {
 		top: 0;
 		font-size: 17px;
 	}
-
+	
 	#div_ee8413b2 #background_form .background_form_item,
 	#div_ee8413b2 #frontPage_listFontColor .frontPage_listFontColor_item {
 		padding: 15px 0 15px 40px;
 		min-height: 30px;
 	}
-
+	
 	#div_ee8413b2 #background_form label,
 	#div_ee8413b2 #frontPage_listFontColor label {
 		float: left;
@@ -3382,7 +3380,7 @@ func_eh_ex(() => {
 		line-height: 30px;
 		min-width: 90px;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_save_btn,
 	#div_ee8413b2 #background_form #bgImg_clear_btn,
 	#div_ee8413b2 #background_form #bgImg_cancel_btn,
@@ -3400,51 +3398,51 @@ func_eh_ex(() => {
 		cursor: pointer;
 		float: left;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_clear_btn,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_clear_btn {
 		background-color: darkred;
 		margin-right: 8px;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_clear_btn:hover,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_clear_btn:hover {
 		background-color: red;
 	}
-
-
+	
+	
 	#div_ee8413b2 #background_form #bgImg_save_btn,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_save_btn {
 		background-color: darkgreen;
 		margin-right: 8px;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_save_btn:hover,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_save_btn:hover {
 		background-color: green;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_cancel_btn,
 	#div_ee8413b2 #frontPage_listFontColor #listFontColor_cancel_btn {
 		background-color: darkslateblue;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgImg_cancel_btn:hover,
 	#div_ee8413b2 #frontPage_listFontColor #bgImg_cancel_btn:hover {
 		background-color: slateblue;
 	}
-
+	
 	#div_ee8413b2 #background_form #bgUploadBtn {
 		width: 100px;
 		margin-left: 5px;
 	}
-
+	
 	#div_ee8413b2 #background_form #background_form_close:hover,
 	#div_ee8413b2 #background_form #bgUploadBtn:hover,
 	#div_ee8413b2 #frontPage_listFontColor #frontPage_listFontColor_close:hover {
 		background-color: #4e4e4e;
 	}
-
+	
 	#div_ee8413b2 #background_form #opacity_range,
 	#div_ee8413b2 #background_form #mask_range,
 	#div_ee8413b2 #frontPage_listFontColor #parent_color,
@@ -3452,13 +3450,13 @@ func_eh_ex(() => {
 	#div_ee8413b2 #frontPage_listFontColor #sub_hover_color {
 		float: left;
 	}
-
+	
 	#div_ee8413b2 #background_form #opacity_range,
 	#div_ee8413b2 #background_form #mask_range {
 		height: 27px;
 		margin-right: 10px;
 	}
-
+	
 	#div_ee8413b2 #frontPage_listFontColor #parent_color,
 	#div_ee8413b2 #frontPage_listFontColor #sub_color,
 	#div_ee8413b2 #frontPage_listFontColor #sub_hover_color {
@@ -3466,7 +3464,7 @@ func_eh_ex(() => {
 		width: 80px;
 		margin: 0 12px;
 	}
-
+	
 	#div_ee8413b2 #background_form #opacity_val,
 	#div_ee8413b2 #background_form #mask_val,
 	#div_ee8413b2 #frontPage_listFontColor #parent_color_val,
@@ -3477,19 +3475,19 @@ func_eh_ex(() => {
 		line-height: 30px;
 		text-align: center;
 	}
-
+	
 	#div_ee8413b2 #background_form #opacity_val,
 	#div_ee8413b2 #background_form #mask_val {
 		width: 50px;
 	}
-
+	
 	#div_ee8413b2 #frontPage_listFontColor #parent_color_val,
 	#div_ee8413b2 #frontPage_listFontColor #sub_color_val,
 	#div_ee8413b2 #frontPage_listFontColor #sub_hover_color_val {
 		width: 80px;
 	}
-
-
+	
+	
 	#div_ee8413b2 #background_form #background_form_close,
 	#div_ee8413b2 #background_form #bgImg_save_btn,
 	#div_ee8413b2 #background_form #bgImg_clear_btn,
@@ -3504,7 +3502,7 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper {
 		width: calc(100% - 20px);
 		min-height: 50px;
@@ -3513,7 +3511,7 @@ func_eh_ex(() => {
 		padding: 10px;
 		color: #F1F1F1;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #search_close {
 		border: 1px solid #f1f1f1;
 		border-left: 0;
@@ -3527,15 +3525,15 @@ func_eh_ex(() => {
 		cursor: pointer;
 		overflow: hidden;
 	}
-
-
+	
+	
 	/* 头部按钮 */
-
+	
 	#div_ee8413b2 #search_wrapper #search_top {
 		width: 100%;
 		height: 50px;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_all_button,
 	#div_ee8413b2 #search_top #category_favorites_button {
 		width: 100px;
@@ -3548,11 +3546,11 @@ func_eh_ex(() => {
 		cursor: pointer;
 		font-size: 18px;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_favorites_button {
 		border-left: 0;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_addFavorites_button {
 		width: 100px;
 		height: 48px;
@@ -3565,7 +3563,7 @@ func_eh_ex(() => {
 		font-size: 18px;
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_addFavorites_button_disabled {
 		width: 100px;
 		height: 48px;
@@ -3578,7 +3576,7 @@ func_eh_ex(() => {
 		font-size: 18px;
 		color: #f1f1f145;
 	}
-
+	
 	#div_ee8413b2 #search_top #category_search_input {
 		width: calc(100% - 392px);
 		height: 48px;
@@ -3586,7 +3584,7 @@ func_eh_ex(() => {
 		float: left;
 		margin: 0 10px 0 40px;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info {
 		width: calc(100% - 104px);
 		height: 48px;
@@ -3594,7 +3592,7 @@ func_eh_ex(() => {
 		padding: 0 4px;
 		overflow-y: auto;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info #user_input {
 		border: 0;
 		outline: none;
@@ -3606,27 +3604,27 @@ func_eh_ex(() => {
 		caret-color: black;
 		color: black;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info #user_input_enter {
 		margin-left: -15px;
 		cursor: pointer;
 		display: inline-block;
 		color: #40454b;
 	}
-
+	
 	.user_input_null_backcolor {
 		background-color: #f5cc9c80 !important;
 	}
-
+	
 	.user_input_value_backColor {
 		background-color: #f5cc9c !important;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info #user_input:focus,
 	#div_ee8413b2 #category_search_input #input_info #user_input:hover {
 		background-color: #f5cc9c !important;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info .input_item,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list .f_edit_item {
 		display: inline-block;
@@ -3639,22 +3637,22 @@ func_eh_ex(() => {
 		border: 1px solid #f5cc9c;
 		color: black;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info .input_item {
 		margin-right: 4px;
 		margin-top: 4px;
 	}
-
+	
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list .f_edit_item {
 		margin-left: 5px;
 		padding: 4px 6px;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info .input_item:hover,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list .f_edit_item:hover {
 		border: 1px solid red;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_enter_button,
 	#div_ee8413b2 #category_search_input #input_clear {
 		width: 47px;
@@ -3665,23 +3663,23 @@ func_eh_ex(() => {
 		font-size: 18px;
 		text-align: center;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_clear {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_enter_button {
 		border-left: 1px solid #F1F1F1;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_clear {
 		border-left: 0;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #display_div {
 		overflow: hidden;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #category_favorites_div,
 	#div_ee8413b2 #search_wrapper #category_all_div {
 		width: calc(100% - 2px);
@@ -3689,17 +3687,17 @@ func_eh_ex(() => {
 		margin-top: 10px;
 		overflow: hidden;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #category_all_div,
 	#div_ee8413b2 #search_wrapper #category_favorites_div {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #favorites_list .favorite_items_div,
 	#div_ee8413b2 #favorites_edit_list .favorite_edit_items_div {
 		padding-bottom: 20px;
 	}
-
+	
 	#div_ee8413b2 #category_all_div h4,
 	#div_ee8413b2 #favorites_list h4,
 	#div_ee8413b2 #favorites_edit_list h4 {
@@ -3707,7 +3705,7 @@ func_eh_ex(() => {
 		margin: 10px;
 		color: #fadfc0;
 	}
-
+	
 	#div_ee8413b2 #category_all_div .c_item,
 	#div_ee8413b2 #category_favorites_div #favorites_list .c_item {
 		margin: 3px 3px 3px 10px;
@@ -3716,12 +3714,12 @@ func_eh_ex(() => {
 		display: inline-block;
 		color: #F5CC9C;
 	}
-
+	
 	#div_ee8413b2 #category_all_div .c_item:hover,
 	#div_ee8413b2 #category_favorites_div #favorites_list .c_item:hover {
 		color: gold;
 	}
-
+	
 	#div_ee8413b2 #category_all_div .category_extend,
 	#div_ee8413b2 #favorites_list .favorite_extend,
 	#div_ee8413b2 #favorites_edit_list .favorite_edit_clear {
@@ -3736,23 +3734,23 @@ func_eh_ex(() => {
 		cursor: pointer;
 		color: #fadfc0;
 	}
-
+	
 	.chooseTab {
 		background-color: #7b7e85c2;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_editor,
 	#div_ee8413b2 #category_all_div #category_list {
 		display: none;
 	}
-
-
+	
+	
 	#div_ee8413b2 #category_all_div #category_editor,
 	#div_ee8413b2 #category_favorites_div #favorites_editor {
 		width: 100%;
 		height: 25px;
 	}
-
+	
 	#div_ee8413b2 #category_editor #all_expand,
 	#div_ee8413b2 #category_editor #all_collapse,
 	#div_ee8413b2 #favorites_editor #favorites_all_collapse,
@@ -3770,7 +3768,7 @@ func_eh_ex(() => {
 		line-height: 24px;
 		cursor: pointer;
 	}
-
+	
 	#div_ee8413b2 #favorites_editor #favorites_export,
 	#div_ee8413b2 #favorites_editor #favorites_recover {
 		border-bottom: 1px solid #F1F1F1;
@@ -3782,11 +3780,11 @@ func_eh_ex(() => {
 		line-height: 24px;
 		cursor: pointer;
 	}
-
+	
 	#div_ee8413b2 #favorites_editor #favorite_upload_files {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend {
 		width: calc(100% - 48px);
 		margin-left: -1px;
@@ -3797,7 +3795,7 @@ func_eh_ex(() => {
 		overflow-y: auto;
 		position: relative;
 	}
-
+	
 	.t_favorite_ido #category_user_input_recommend {
 		border: 1px solid #C2C1C1;
 		border-top: 0;
@@ -3810,7 +3808,7 @@ func_eh_ex(() => {
 		width: 100%;
 		overflow-y: auto;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items,
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items {
 		font-size: 15px;
@@ -3821,57 +3819,57 @@ func_eh_ex(() => {
 		line-height: 20px;
 		overflow: auto;
 	}
-
+	
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:first-child {
 		border-top: 1px solid #C2C1C1;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:first-child {
 		border-top: 1px solid #f1f1f1;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:not(:first-child),
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:not(:first-child) {
 		border-top: 1px dashed #85868b;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:hover,
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:hover {
 		background-color: #7b7e85c2;
 	}
-
+	
 	#div_ee8413b2 #search_top #search_close,
 	#div_ee8413b2 #favorites_editor #favorites_save,
 	#div_ee8413b2 #favorites_editor #favorites_cancel {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_favorites_div #favorites_list,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list {
 		min-height: 90px;
 	}
-
+	
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list {
 		display: none;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_list .category_items_div {
 		padding-bottom: 20px;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_list h4,
 	#div_ee8413b2 #category_favorites_div #favorites_list h4,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list h4 {
 		font-size: 16px;
 	}
-
+	
 	#div_ee8413b2 #category_all_div #category_list,
 	#div_ee8413b2 #category_favorites_div #favorites_list,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list {
 		height: 500px;
 		overflow-y: auto;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar,
 	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar,
@@ -3882,7 +3880,7 @@ func_eh_ex(() => {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar-track,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar-track,
 	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-track,
@@ -3890,7 +3888,7 @@ func_eh_ex(() => {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
-
+	
 	#div_ee8413b2 #category_search_input #input_info::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar-thumb,
 	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-thumb,
@@ -3901,7 +3899,7 @@ func_eh_ex(() => {
 		background-color: #a5a5a5;
 		border-radius: 10px;
 	}
-
+	
 	#div_ee8413b2 #category_loading_div,
 	#div_ee8413b2 #search_top #search_close,
 	#div_ee8413b2 #search_top #category_all_button,
@@ -3929,7 +3927,7 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	#div_ee8413b2 #search_wrapper #search_close:hover,
 	#div_ee8413b2 #search_top #category_all_button:hover,
 	#div_ee8413b2 #search_top #category_favorites_button:hover,
@@ -3948,7 +3946,7 @@ func_eh_ex(() => {
 	#div_ee8413b2 #favorites_editor #favorites_recover:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	#div_ee8413b2 #category_list .category_extend:hover,
 	#div_ee8413b2 #favorites_list .favorite_extend:hover,
 	#div_ee8413b2 #favorites_edit_list .favorite_edit_clear:hover,
@@ -3956,7 +3954,7 @@ func_eh_ex(() => {
 	#div_ee8413b2 #favorites_list .c_item:hover {
 		transform: scale(2);
 	}
-
+	
 	#dms #googleTranslateDiv,
 	.t_popular_toppane #googleTranslateDiv,
 	.t_torrentsPage_ido #googleTranslateDiv {
@@ -3969,24 +3967,24 @@ func_eh_ex(() => {
 		border: 1px solid #8d8d8d;
 		border-radius: 3px;
 	}
-
+	
 	#dms #googleTranslateDiv {
 		margin-top: -13px;
 	}
-
+	
 	.t_favorite_ido #dms #googleTranslateDiv {
 		margin-top: -42px;
 		right: 16px;
 	}
-
+	
 	.t_popular_toppane #googleTranslateDiv {
 		margin-top: -30px;
 	}
-
+	
 	.t_torrentsPage_ido #googleTranslateDiv {
 		top: 105px;
 	}
-
+	
 	#dms #translateLabel,
 	.t_popular_toppane #translateLabel {
 		padding-left: 5px;
@@ -3994,7 +3992,7 @@ func_eh_ex(() => {
 		font-size: 13px;
 		padding-left: 2px;
 	}
-
+	
 	#dms,
 	#dms #googleTranslateCheckbox,
 	#dms #translateLabel,
@@ -4004,11 +4002,11 @@ func_eh_ex(() => {
 	.t_torrentsPage_ido #translateLabel {
 		cursor: pointer;
 	}
-
+	
 	.div_ee8413b2_category_checked {
 		background-color: darkred !important;
 	}
-
+	
 	#gd5 #googleTranslateDiv {
 		background-color: #34353b;
 		padding: 2px 3px 6px 7px;
@@ -4018,20 +4016,20 @@ func_eh_ex(() => {
 		border-radius: 3px;
 		margin-bottom: 15px;
 	}
-
+	
 	#gd5 #googleTranslateDiv #translateLabel {
 		padding-left: 5px;
 		font-weight: bold;
 		font-size: 13px;
 		padding-left: 2px;
 	}
-
+	
 	#gd5 #googleTranslateDiv,
 	#gd5 #googleTranslateDiv #googleTranslateCheckbox,
 	#gd5 #googleTranslateDiv #translateLabel {
 		cursor: pointer;
 	}
-
+	
 	#div_ee8413b2_detail_clearBtn,
 	#div_ee8413b2_detail_addFavoriteBtn,
 	#div_ee8413b2_detail_searchBtn {
@@ -4050,7 +4048,7 @@ func_eh_ex(() => {
 		margin-bottom: 15px;
 		display: none;
 	}
-
+	
 	#gd5 #googleTranslateDiv:hover,
 	#div_ee8413b2_detail_clearBtn:hover,
 	#div_ee8413b2_detail_addFavoriteBtn:hover,
@@ -4059,84 +4057,84 @@ func_eh_ex(() => {
 	.t_torrentsPage_ido #googleTranslateDiv:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	#nb {
 		font-size: 17px;
 		padding-top: 8px;
 	}
-
+	
 	#nb>div {
 		background-image: none;
 	}
-
+	
 	#nb div a:hover {
 		color: gold;
 	}
-
+	
 	#dms>div>select {
 		left: -87px;
 		width: 206px;
 	}
-
+	
 	table.itg>tbody>tr>th {
 		text-align: center;
 		font-size: 13px;
 	}
-
+	
 	table td.tc {
 		min-width: 30px;
 	}
-
+	
 	table.itg tr:not(:first-child):hover {
 		background-color: #4f535b;
 	}
-
+	
 	table.itg tr:first-child:hover,
 	div.itg .gl1t:hover {
 		background-color: #4f535b;
 	}
-
+	
 	div#gdf a {
 		text-decoration: underline;
 	}
-
+	
 	.glname table td.tc,
 	#taglist table td.tc {
 		min-width: 50px;
 	}
-
+	
 	#taglist::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	#taglist::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
-
+	
 	#taglist::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
 	}
-
+	
 	#gmid #gd5 .g2 {
 		padding-bottom: 15px;
 	}
-
+	
 	table .gt,
 	table .gtl,
 	table .gtw {
 		height: 18px;
 		line-height: 18px;
 	}
-
+	
 	.headMenu_check {
 		border-top: 2px solid #f1f1f1;
 		padding-top: 6px !important;
 		margin-top: -8px;
 	}
-
+	
 	.t_favorite_ido .nosel {
 		border-radius: 10px;
 		margin-top: 20px !important;
@@ -4146,38 +4144,38 @@ func_eh_ex(() => {
 		border: 1px solid #C2C1C1;
 		background-color: #34353b;
 	}
-
+	
 	.t_favorite_ido .nosel .fp:last-child {
 		background-color: #34353b;
 		top: -87px;
 	}
-
+	
 	.t_favorite_ido .nosel .fp:last-child:hover,
 	.t_favorite_ido .nosel .fps {
 		background-color: #43464e !important;
 	}
-
+	
 	.t_favorite_ido .favorite_null {
 		color: #c3bfbf;
 	}
-
+	
 	.t_favorite_ido .searchDiv {
 		width: 855px !important;
 		height: 30px;
 		margin: 0 auto !important;
 		padding: 10px 0 30px 0;
 	}
-
+	
 	.t_favorite_ido .searchDiv .searchInputDiv {
 		float: left;
 	}
-
+	
 	.t_favorite_ido .searchDiv .searchFilterDiv {
 		float: right;
 		width: 310px !important;
 		padding-right: 0 !important;
 	}
-
+	
 	.t_favorite_ido .searchDiv .searchFilterDiv td {
 		width: auto !important;
 		height: 30px;
@@ -4185,12 +4183,12 @@ func_eh_ex(() => {
 		line-height: 30px;
 		text-align: left;
 	}
-
+	
 	.t_favorite_ido .searchDiv .searchFilterDiv td label {
 		height: 30px;
 		line-height: 30px;
 	}
-
+	
 	.gm #h1Origin_copy {
 		font-size: 10pt;
 		padding: 0 0 2px;
@@ -4198,48 +4196,48 @@ func_eh_ex(() => {
 		color: #b8b8b8;
 		border-bottom: 1px solid #000000;
 	}
-
+	
 	.gm #h1Title_copy {
 		font-size: 12pt;
 		padding: 0 0 2px;
 		margin: 3px 15px;
 	}
-
+	
 	.torrents_detail_info,
 	.torrents_detail_index {
 		min-height: 535px;
 		height: auto !important;
 	}
-
+	
 	.t_torrentsPage_ido #torrentform {
 		width: 660px;
 		margin: 20px auto;
 		height: 50px;
 	}
-
+	
 	.t_torrentsPage_ido #focusme {
 		float: left;
 	}
-
+	
 	.t_torrentsPage_ido #torrentform p {
 		float: left;
 		margin-top: 5px;
 	}
-
+	
 	.torrents_detail_info table:nth-child(3) {
 		margin-left: 15% !important;
 	}
-
+	
 	.torrents_detail_info a {
 		text-decoration: underline !important;
 	}
-
+	
 	.torrents_detail_info #etd p {
 		height: 214px;
 		padding: 0 1px;
 		overflow-y: auto;
 	}
-
+	
 	.torrents_detail_info #etd #googleTranslateDiv {
 		background-color: #4f535b;
 		display: inline-block;
@@ -4248,79 +4246,79 @@ func_eh_ex(() => {
 		margin-top: 2px;
 		cursor: pointer;
 	}
-
+	
 	.torrents_detail_index form table tr td:nth-child(4),
 	.torrents_detail_index form table tr td:nth-child(5) {
 		text-align: center;
 	}
-
+	
 	.t_uconfigPage_outer #profile_outer div#profile_select {
 		display: inline-block;
 	}
-
+	
 	.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(1),
 	.t_uconfigPage_outer #profile_outer #profile_select>div:nth-child(3) {
 		width: auto;
 	}
-
+	
 	.t_uconfigPage_outer #profile_outer div#profile_action {
 		float: right;
 		padding-top: 3px;
 	}
-
+	
 	.t_uconfigPage_outer .span_pixel {
 		position: relative;
 		top: 2px;
 	}
-
+	
 	.t_uconfigPage_outer form h2 {
 		font-size: 18px;
 		margin-top: 30px;
 	}
-
+	
 	.t_uconfigPage_outer form #contentForm_wrapper {
 		height: calc(100vh - 145px);
 		overflow: auto;
 		margin: 5px 0;
 		padding: 0 10px;
 	}
-
+	
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
-
+	
 	.t_uconfigPage_outer form #contentForm_wrapper::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
 	}
-
+	
 	.t_frontpage_ido #searchbox .nopm {
 		margin-top: 10px;
 	}
-
+	
 	.t_frontpage_ido #searchbox .nopm input[type="button"],
 	.t_frontpage_ido #searchbox .nopm input[type="submit"] {
 		width: 70px;
 	}
-
+	
 	.t_frontpage_ido #advdiv {
 		width: 598px;
 		margin: auto;
 		border: 2px ridge #3c3c3c;
 		margin-top: 11px;
 	}
-
+	
 	.t_frontpage_ido #advdiv,
 	.t_frontpage_ido #fsdiv {
 		padding: 10px 0;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend {
 		border: 1px solid #C2C1C1;
 		border-top: 0;
@@ -4332,7 +4330,7 @@ func_eh_ex(() => {
 		width: 100%;
 		overflow-y: auto;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items {
 		font-size: 15px;
 		padding: 5px;
@@ -4342,51 +4340,51 @@ func_eh_ex(() => {
 		line-height: 20px;
 		overflow: auto;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:first-child {
 		border-top: 1px solid #C2C1C1;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:not(:first-child) {
 		border-top: 1px dashed #85868b;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend .category_user_input_recommend_items:hover {
 		background-color: #7b7e85c2;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
-
+	
 	.t_frontpage_ido .nopm #category_user_input_recommend::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
 	}
-
+	
 	.t_detail_comment .comment_span {
 		margin-right: 10px;
 		float: left;
 	}
-
+	
 	.t_detail_comment .comment_span,
 	.t_detail_comment .comment_span input,
 	.t_detail_comment .comment_span label {
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_div {
 		width: calc(100% - 2px);
 		border: 1px solid white;
 		margin-bottom: 10px;
 	}
-
+	
 	#t_mytags_data_update_tip {
 		width: 100px;
 		height: 20px;
@@ -4403,30 +4401,30 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	#t_mytags_div #t_mytags_top {
 		height: 49px;
 		width: 100%;
 	}
-
+	
 	#t_mytags_div #t_mytags_bottom {
 		height: 0;
 		overflow-y: hidden;
 	}
-
+	
 	#t_mytags_div #t_mytags_bottom #t_split_line {
 		border-left: 1px solid white;
 		height: 100%;
 		float: left;
 	}
-
+	
 	#t_mytags_div #t_mytags_bottom #t_allCategories,
 	#t_mytags_div #t_mytags_bottom #t_favoriteCategories {
 		width: calc(50% - 0.5px);
 		height: 100%;
 		float: left;
 	}
-
+	
 	#t_mytags_top #clear_search_btn,
 	#t_mytags_top #t_mytags_extend_btn,
 	#t_mytags_top #t_mytags_submitCategories_btn,
@@ -4439,18 +4437,18 @@ func_eh_ex(() => {
 		text-align: center;
 		color: white;
 	}
-
+	
 	#t_mytags_top #t_mytags_extend_btn {
 		float: left;
 		margin-left: 10px;
 	}
-
+	
 	#t_mytags_top #t_mytags_extend_btn,
 	#t_mytags_top #t_mytags_submitCategories_btn,
 	#t_mytags_top #t_mytags_clodToFavorite_btn {
 		width: 130px;
 	}
-
+	
 	#t_mytags_top #clear_search_btn {
 		width: 50px;
 		float: left;
@@ -4458,12 +4456,12 @@ func_eh_ex(() => {
 		text-align: center;
 		color: white;
 	}
-
+	
 	#t_mytags_top #t_mytags_clodToFavorite_btn,
 	#t_mytags_top #t_mytags_submitCategories_btn {
 		float: right;
 	}
-
+	
 	#t_mytags_top #t_mytags_search {
 		border: 1px solid white;
 		height: 31px;
@@ -4477,13 +4475,13 @@ func_eh_ex(() => {
 		width: calc(100% - 560px);
 		min-width: 100px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_tool,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_tool {
 		height: 25px;
 		background-color: #41454c;
 	}
-
+	
 	#t_mytags_bottom .mytags_allCheck_div {
 		border-right: 1px solid white;
 		border-top: 1px solid white;
@@ -4494,13 +4492,13 @@ func_eh_ex(() => {
 		text-align: center;
 		color: white;
 	}
-
+	
 	#t_mytags_bottom .mytags_allCheck_div,
 	#t_mytags_bottom .mytags_allCheck_div input[type="checkbox"],
 	#t_mytags_bottom .mytags_allCheck_div label {
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_bottom p {
 		height: 24px;
 		line-height: 24px;
@@ -4511,7 +4509,7 @@ func_eh_ex(() => {
 		text-align: center;
 		color: white;
 	}
-
+	
 	#t_mytags_bottom #allCategories_allCheck:indeterminate::after,
 	#t_mytags_bottom #favoriteCategories_allCheck:indeterminate::after {
 		display: block;
@@ -4523,7 +4521,7 @@ func_eh_ex(() => {
 		margin-left: 3px;
 		margin-top: 5px;
 	}
-
+	
 	#t_mytags_bottom #mytags_left_all_collapse,
 	#t_mytags_bottom #mytags_left_all_expand,
 	#t_mytags_bottom #mytags_right_all_collapse,
@@ -4539,31 +4537,31 @@ func_eh_ex(() => {
 		color: white;
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window {
 		height: 325px;
 		overflow-y: auto;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-track,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-thumb,
 	#t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories_window h4,
 	#t_mytags_bottom #t_favoriteCategories_window h4 {
 		color: #fadfc0;
@@ -4572,7 +4570,7 @@ func_eh_ex(() => {
 		margin-top: 10px;
 		padding-left: 10px;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories_window h4 span,
 	#t_mytags_bottom #t_favoriteCategories_window h4 span {
 		border: 1px solid #fadfc0;
@@ -4584,12 +4582,12 @@ func_eh_ex(() => {
 		font-weight: 500;
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_bottom #t_allCategories_window h4 span:hover,
 	#t_mytags_bottom #t_favoriteCategories_window h4 span:hover {
 		transform: scale(1.2);
 	}
-
+	
 	#t_mytags_bottom .mytags_item_wrapper {
 		border: 1px solid #fadfc0;
 		border-radius: 5px;
@@ -4598,17 +4596,17 @@ func_eh_ex(() => {
 		padding: 2px 5px;
 		color: #fadfc0;
 	}
-
+	
 	#t_mytags_bottom .mytags_item_wrapper,
 	#t_mytags_bottom .mytags_item_wrapper input[type="checkbox"],
 	#t_mytags_bottom .mytags_item_wrapper label {
 		cursor: pointer;
 	}
-
+	
 	#t_mytags_bottom .mytags_item_wrapper label {
 		line-height: 20px;
 	}
-
+	
 	#t_mytags_bottom #t_mytags_allcategory_loading_div,
 	#t_mytags_bottom #t_mytags_favoritecategory_loading_div {
 		height: 325px;
@@ -4617,8 +4615,8 @@ func_eh_ex(() => {
 		text-align: center;
 		font-size: 20px;
 	}
-
-
+	
+	
 	#t_mytags_top #clear_search_btn,
 	#t_mytags_top #t_mytags_extend_btn,
 	#t_mytags_top #t_mytags_submitCategories_btn,
@@ -4637,7 +4635,7 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	#t_mytags_top #clear_search_btn:hover,
 	#t_mytags_top #t_mytags_extend_btn:hover,
 	#t_mytags_top #t_mytags_submitCategories_btn:hover,
@@ -4650,23 +4648,23 @@ func_eh_ex(() => {
 	#t_mytags_bottom .mytags_item_wrapper:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	.t_mytagsPage_outer #tagset_outer div:nth-child(1) {
 		width: 180px;
 	}
-
+	
 	.t_mytagsPage_outer #tagset_outer div:nth-child(3) {
 		width: 86px;
 	}
-
+	
 	.t_mytagsPage_outer #tagset_outer div:nth-child(6) {
 		padding-left: 50px;
 	}
-
+	
 	.hide {
 		display: none !important;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form {
 		border: 2px solid white;
 		background-color: #40454b;
@@ -4682,7 +4680,7 @@ func_eh_ex(() => {
 		-ms-user-select: none;
 		user-select: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_top {
 		height: 30px;
 		width: 100%;
@@ -4694,7 +4692,7 @@ func_eh_ex(() => {
 		font-weight: bold;
 		font-size: 16px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_close {
 		float: right;
 		cursor: pointer;
@@ -4709,13 +4707,13 @@ func_eh_ex(() => {
 		top: 0;
 		font-size: 17px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle {
 		height: 320px;
 		width: 100%;
 		margin-top: 30px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_left,
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_right {
 		height: 280px;
@@ -4723,7 +4721,7 @@ func_eh_ex(() => {
 		width: calc(50% - 30.5px);
 		float: left;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle #upload_tag_form_middle_split {
 		width: 0;
 		margin-top: 20px;
@@ -4731,29 +4729,29 @@ func_eh_ex(() => {
 		border-left: 1px solid white;
 		float: left;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom {
 		height: 30px;
 		width: 100%;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item {
 		font-size: 10px;
 		height: 40px;
 		margin-bottom: 40px;
 		margin-top: 25px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item:first-child {
 		height: 60px;
 	}
-
-
+	
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label {
 		height: 30px;
 		line-height: 30px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label {
 		width: 88px;
 		height: 60px;
@@ -4761,7 +4759,7 @@ func_eh_ex(() => {
 		float: left;
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label,
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.color_label,
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.weight_label {
@@ -4771,18 +4769,18 @@ func_eh_ex(() => {
 		float: left;
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.checkbox_label {
 		height: 60px;
 		line-height: 60px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.color_label,
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item label.weight_label {
 		height: 40px;
 		line-height: 40px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="color"],
 	.t_mytagsPage_outer #upload_tag_form .upload_tag_form_item input[type="range"] {
 		float: left;
@@ -4790,7 +4788,7 @@ func_eh_ex(() => {
 		height: 30px;
 		margin-top: 5px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #tag_color_val,
 	.t_mytagsPage_outer #upload_tag_form #tag_weight_val {
 		float: left;
@@ -4799,18 +4797,18 @@ func_eh_ex(() => {
 		text-align: center;
 		width: 80px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #checkboxDiv {
 		width: 170px;
 		height: 80px;
 		float: left;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #checkboxDiv input {
 		position: relative;
 		top: 2px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn,
 	.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn,
 	.t_mytagsPage_outer #upload_tag_form #weight_reset_btn {
@@ -4824,24 +4822,24 @@ func_eh_ex(() => {
 		margin-right: 15px;
 		cursor: pointer;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_close:hover,
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #weight_reset_btn:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn {
 		margin-top: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom {
 		width: 100%;
 		height: 30px;
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn,
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn {
 		width: 100px;
@@ -4853,45 +4851,45 @@ func_eh_ex(() => {
 		font-size: 10px;
 		cursor: pointer;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn {
 		margin-left: 275px;
 		background-color: darkgreen;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_save_btn:hover {
 		background-color: green;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn {
 		margin-left: 50px;
 		background-color: darkslateblue;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_bottom #upload_cancel_btn:hover {
 		background-color: slateblue;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div {
 		height: 260px;
 		overflow-y: auto;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #uploadForm_tags_div::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 {
 		margin: 0;
 		margin-top: 10px;
@@ -4899,7 +4897,7 @@ func_eh_ex(() => {
 		font-weight: bold;
 		margin-bottom: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 span {
 		border: 1px solid #fadfc0;
 		cursor: pointer;
@@ -4910,11 +4908,11 @@ func_eh_ex(() => {
 		line-height: 12px;
 		font-weight: 500;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right h4 span:hover {
 		transform: scale(1.2);
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right .checkTags_item {
 		display: inline-block;
 		padding: 0 5px;
@@ -4927,11 +4925,11 @@ func_eh_ex(() => {
 		color: black;
 		margin: 0 10px 10px 0;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right .checkTags_item:hover {
 		border: 1px solid red;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn {
 		color: #fadfc0;
 		border: 1px solid #f5cc9c;
@@ -4943,11 +4941,11 @@ func_eh_ex(() => {
 		cursor: pointer;
 		display: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing {
 		border: 2px solid white;
 		background-color: #40454b;
@@ -4965,11 +4963,11 @@ func_eh_ex(() => {
 		user-select: none;
 		display: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing:hover {
 		border-color: yellow;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_top {
 		height: 60px;
 		line-height: 60px;
@@ -4981,17 +4979,17 @@ func_eh_ex(() => {
 		font-weight: bold;
 		font-size: 18px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1 {
 		margin-top: 80px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_1,
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_ing_tips_2,
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_error {
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_error {
 		margin-bottom: -20px;
 		display: none;
@@ -4999,32 +4997,32 @@ func_eh_ex(() => {
 		font-size: 17px;
 		font-weight: bold;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #tip_pause {
 		color: yellow;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #tip_continue {
 		color: lightgreen;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder,
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
 		margin-top: 20px;
 		text-align: center;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_success {
 		font-size: 20px;
 		font-weight: bold;
 		color: lightgreen;
 		display: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_tag_remainder #upload_remainder_count {
 		font-size: 30px;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn,
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
 		border: 1px solid black;
@@ -5036,52 +5034,52 @@ func_eh_ex(() => {
 		cursor: pointer;
 		margin: 30px auto;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn {
 		background-color: darkred;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_stop_btn:hover {
 		background-color: red;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn {
 		background-color: darkslateblue;
 		display: none;
 	}
-
+	
 	.t_mytagsPage_outer #upload_tag_ing #upload_ing_window_close_btn:hover {
 		background-color: slateblue;
 	}
-
+	
 	.t_mytagsPage_outer #usertags_outer>div:hover {
 		background-color: rgba(255, 246, 246, 0.1);
 	}
-
+	
 	.t_mytagsPage_outer #usertags_outer>div>div:nth-child(6)>input {
 		margin-left: 6px
 	}
-
+	
 	.t_mytagsPage_outer .tagcolor,
 	#tagcolor {
 		width: 99px;
 	}
-
+	
 	.t_mytagsPage_outer #usertag_form #usertags_outer {
 		width: 850px;
 		overflow-y: auto;
 	}
-
+	
 	.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar {
 		width: 10px;
 		height: 1px;
 	}
-
+	
 	.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar-track {
 		background-color: #2d2e32;
 		border-radius: 10px;
 	}
-
+	
 	.t_mytagsPage_outer #usertag_form #usertags_outer::-webkit-scrollbar-thumb {
 		background-color: #a5a5a5;
 		border-radius: 10px;
@@ -5090,7 +5088,6 @@ func_eh_ex(() => {
 });
 
 //#endregion
-
 
 //#region step1.2.translateTopBottomMenu.js 头部菜单、底部菜单翻译
 
@@ -5160,102 +5157,6 @@ function bottomMenuTranslateZh() {
 }
 
 //#endregion
-
-//#region step1.3.newPaging 新版本分页功能翻译
-
-function TranslateNewPagingLinks() {
-    var ufirst = document.getElementById("ufirst");
-    if (ufirst) {
-        ufirst.innerText = "最新";
-    }
-    var dfirst = document.getElementById("dfirst");
-    if (dfirst) {
-        dfirst.innerText = "最新";
-    }
-
-    var uprev = document.getElementById("uprev");
-    if (uprev) {
-        uprev.innerText = "← 新页";
-    }
-    var dprev = document.getElementById("dprev");
-    if (dprev) {
-        dprev.innerText = "← 新页";
-    }
-
-    var unext = document.getElementById("unext");
-    if (unext) {
-        unext.innerText = "旧页 →"
-    }
-    var dnext = document.getElementById("dnext");
-    if (dnext) {
-        dnext.innerText = "旧页 →"
-    }
-
-    var ulast = document.getElementById("ulast");
-    if (ulast) {
-        ulast.innerText = "最旧";
-    }
-    var dlast = document.getElementById("dlast");
-    if (dlast) {
-        dlast.innerText = "最旧";
-    }
-
-
-    var ujump = document.getElementById("ujump");
-    if (ujump) {
-        ujump.innerText = "跳转/搜索";
-    }
-    var djump = document.getElementById("djump");
-    if (djump) {
-        djump.innerText = "跳转/搜索";
-    }
-
-    
-    // ujump.addEventListener("click",function(){
-    //     copy_enable_jump_mode('u');
-    // });
-    
-    // function copy_enable_jump_mode(a) {
-    //     document.getElementById(a + "jumpbox").innerHTML = '<input type="text" name="jump" id="' + a + 'jump" size="10" maxlength="10" placeholder="日期或范围" title="输入年份例如后面括号内容可以省略 2022，或者年月(20)22-11，或者年月日(20)22-11-11， 来查询。\n另外一种方式是向前/后跳转指定的周数，月数，年数,1周填写1w，2个月填写2m，3年填写3y，然后点击旁边的连接进行查询" onchange="copy_update_jump_mode(\'' + a + "')\" onkeyup=\"copy_update_jump_mode('" + a + "')\" />";
-    //     document.getElementById(a + "jump").focus()
-    // }
-
-}
-
-function copy_update_jump_mode(e) {
-    var d = document.getElementById(e + "jump").value;
-    var c = document.getElementById(e + "prev");
-    var b = document.getElementById(e + "next");
-    var a = false;
-    if (d != undefined && d != "") {
-        if (matchseek.test(d) || (matchyear.test(d) && parseInt(d) > 2006 && parseInt(d) < 2100)) {
-            c.innerHTML = "← 搜索";
-            b.innerHTML = "搜索 →";
-            c.href = prevurl + "&seek=" + d;
-            b.href = nexturl + "&seek=" + d;
-            a = true
-        } else {
-            if (matchjump.test(d)) {
-                c.innerHTML = "← 跳转";
-                b.innerHTML = "跳转 →";
-                c.href = prevurl + "&jump=" + d;
-                b.href = nexturl + "&jump=" + d;
-                a = true
-            }
-        }
-    }
-    if (!a) {
-        c.innerHTML = "← 新页";
-        b.innerHTML = "旧页 →";
-        c.href = prevurl;
-        b.href = nexturl
-    }
-}
-
-
-
-//#endregion
-
 
 //#region step2.getTagDatas.js 获取标签数据
 
@@ -5332,22 +5233,19 @@ function indexDbInit(func_start_use) {
 	} else {
 		request.onsuccess = function () {
 			db = request.result;
-			console.log("数据库打开成功", db);
 			func_start_use();
 		}
 	}
 }
 
 request.onerror = function (event) {
-	console.log("数据库打开报错", event);
 }
 
 request.onupgradeneeded = function (event) {
 	db = event.target.result;
-	console.log("升级数据库", db);
 
 	// 对象仓库 Settings
-	//
+	// 
 	// EhTag子菜单
 
 	// 设置表
@@ -5389,7 +5287,6 @@ function read(tableName, key, func_success, func_error) {
 	var request = objectStore.get(key);
 
 	request.onerror = function (event) {
-		console.log('读取事务失败', event);
 		func_error();
 	}
 
@@ -5406,7 +5303,6 @@ function readAll(tableName, func_success, func_end) {
 			func_success(cursor.key, cursor.value);
 			cursor.continue();
 		} else {
-			console.log('没有更多数据了');
 			func_end();
 		}
 	}
@@ -5422,7 +5318,6 @@ function readByIndex(tableName, indexName, indexValue, func_success, func_none) 
 		if (result) {
 			func_success(result);
 		} else {
-			console.log('没找到');
 			func_none();
 		}
 	}
@@ -5478,12 +5373,10 @@ function add(tableName, data, func_success, func_error) {
 		.add(data);
 
 	request.onsuccess = function (event) {
-		console.log('数据写入成功', event);
 		func_success(event);
 	}
 
 	request.onerror = function (event) {
-		console.log('数据写入失败', event);
 		func_error(event);
 	}
 }
@@ -5516,12 +5409,10 @@ function update(tableName, data, func_success, func_error) {
 		.put(data);
 
 	request.onsuccess = function (event) {
-		console.log("数据更新成功", event);
 		func_success();
 	}
 
 	request.onerror = function (event) {
-		console.log("数据更新失败");
 		func_error(event);
 	}
 }
@@ -5531,11 +5422,9 @@ function remove(tableName, key, func_success, func_error) {
 		.objectStore(tableName)
 		.delete(key);
 	request.onsuccess = function (event) {
-		console.log("数据删除成功", event);
 		func_success();
 	}
 	request.onerror = function (event) {
-		console.log('数据删除失败', event);
 		func_error(event);
 	}
 }
@@ -5596,7 +5485,6 @@ function fetishListDataInit(update_func, local_func) {
 			}
 		});
 	}, error => {
-		console.log('error', error);
 	})
 }
 
@@ -5615,7 +5503,6 @@ function ehTagDataInit(update_func, local_func) {
 		});
 
 	}, error => {
-		console.log('error', error);
 	});
 }
 
@@ -5709,7 +5596,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete1 = true;
 				batchAdd(table_fetishListSubItems, table_fetishListSubItems_key, newData.data, newData.count, () => {
 					complete2 = true;
-					console.log('批量添加完成');
 				});
 			});
 
@@ -5764,7 +5650,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete3 = true;
 			complete4 = true;
 			complete5 = true;
-			console.log('fet', "没有新数据");
 		});
 
 		// 如果 EhTag 版本更新，这尝试更新用户收藏（可能没有翻译过的标签进行翻译）
@@ -5832,7 +5717,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete6 = true;
 				batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
 					complete7 = true;
-					console.log("批量添加完成");
 					updateMyTagAllTagHtml(() => {
 						setDbSyncMessage(sync_mytagsAllTagUpdate);
 					}, () => { });
@@ -5842,7 +5726,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			// 批量添加详情页父级信息
 			batchAdd(table_detailParentItems, table_detailParentItems_key, detailDict, detailDictCount, () => {
 				complete8 = true;
-				console.log("批量添加完成");
 			});
 
 			var settings_ehTag_parentEnArray = {
@@ -5898,7 +5781,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete9 = true;
 			complete10 = true;
 			complete11 = true;
-			console.log('ehtag', "没有新数据");
 		});
 
 		// 用户收藏更新
@@ -5960,7 +5842,7 @@ function checkUpdateData(func_needUpdate, func_none) {
 								}
 
 								// 添加子级
-								favoritesListHtml += `<span class="c_item c_item_favorite" title="${item.sub_zh} [${item.sub_en}]&#10;&#13;${item.sub_desc}" data-item="${item.sub_en}"
+								favoritesListHtml += `<span class="c_item c_item_favorite" title="${item.sub_zh} [${item.sub_en}]&#10;&#13;${item.sub_desc}" data-item="${item.sub_en}" 
                                                 data-parent_en="${item.parent_en}" data-parent_zh="${item.parent_zh}" data-sub_desc="${item.sub_desc}">${item.sub_zh}</span>`;
 							}
 						}
@@ -6129,14 +6011,12 @@ function checkUdpateEhtagData(func_needUpdate, func_none) {
 			complete6 = true;
 			batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
 				complete7 = true;
-				console.log("批量添加完成");
 			});
 		});
 
 		// 批量添加详情页父级信息
 		batchAdd(table_detailParentItems, table_detailParentItems_key, detailDict, detailDictCount, () => {
 			complete8 = true;
-			console.log("批量添加完成");
 		});
 
 		var settings_ehTag_parentEnArray = {
@@ -6192,7 +6072,6 @@ function checkUdpateEhtagData(func_needUpdate, func_none) {
 		complete9 = true;
 		complete10 = true;
 		complete11 = true;
-		console.log('ehtag', "没有新数据");
 	});
 
 	// 用户收藏更新
@@ -6254,7 +6133,7 @@ function checkUdpateEhtagData(func_needUpdate, func_none) {
 							}
 
 							// 添加子级
-							favoritesListHtml += `<span class="c_item c_item_favorite" title="${item.sub_zh} [${item.sub_en}]&#10;&#13;${item.sub_desc}" data-item="${item.sub_en}"
+							favoritesListHtml += `<span class="c_item c_item_favorite" title="${item.sub_zh} [${item.sub_en}]&#10;&#13;${item.sub_desc}" data-item="${item.sub_en}" 
                                             data-parent_en="${item.parent_en}" data-parent_zh="${item.parent_zh}" data-sub_desc="${item.sub_desc}">${item.sub_zh}</span>`;
 						}
 					}
@@ -6630,7 +6509,6 @@ function updateMyTagAllTagHtml(func_complete, func_error) {
 
 //#endregion
 
-
 //#region step3.0.frontTopTranslate.js 首页头部翻译
 
 function frontTopOldSearchTranslate() {
@@ -6641,13 +6519,6 @@ function frontTopOldSearchTranslate() {
     var fSerach = document.getElementById("f_search");
 
     fSerach.parentNode.className = "nopm";
-
-    func_eh_ex(() => { }, () => {
-        // exhentai
-        fSerach.parentNode.nextSibling.className = "nopm";
-    });
-
-
     var nopms = document.getElementsByClassName("nopm");
 
     fSerach.setAttribute("placeholder", "搜索关键字");
@@ -6701,7 +6572,7 @@ function frontTopOldSearchTranslate() {
         // TODO
         func_eh_ex(() => {
             frontPageTranslateFileSearchResult(fileSearchResultDiv);
-        }, () => {
+         }, () => {
             // frontPageTranslateFileSearchResult(fileSearchResultDiv);
         });
 
@@ -6716,44 +6587,44 @@ function copyModify_show_advsearch_pane(b) {
     b.innerHTML = "隐藏高级选项";
     c.style.display = "";
     c.innerHTML = `<input type="hidden" id="advsearch" name="advsearch" value="1" />
-    <table class="itss" style="margin: 0 auto; width: 90%;">
+    <table class="itss">
         <tr>
-            <td class="ic4" style="text-align: left;">
+            <td class="ic4">
                 <input id="adv11" type="checkbox" name="f_sname" checked="checked" />
                 <label for="adv11">搜索作品名称</label>
             </td>
-            <td class="ic4" style="position: relative; left: 11%;text-align: center;"><input id="adv12" type="checkbox" name="f_stags" checked="checked" />
+            <td class="ic4"><input id="adv12" type="checkbox" name="f_stags" checked="checked" />
                 <label for="adv12">搜索标签</label>
             </td>
-            <td class="ic2" style="text-align: right;"><input id="adv13" type="checkbox" name="f_sdesc" colspan="2" />
+            <td class="ic2"><input id="adv13" type="checkbox" name="f_sdesc" colspan="2" />
                 <label for="adv13">搜索描述</label>
             </td>
         </tr>
         <tr>
-            <td class="ic2" colspan="2" style="text-align: left;"><input id="adv31" type="checkbox" name="f_sh" />
+            <td class="ic2" colspan="2"><input id="adv31" type="checkbox" name="f_sh" />
                 <label for="adv31">搜索已经删除的作品</label>
             </td>
-            <td class="ic2" colspan="2" style="text-align: right;"><input id="adv16" type="checkbox" name="f_sto" />
+            <td class="ic2" colspan="2"><input id="adv16" type="checkbox" name="f_sto" />
                 <label for="adv16">只显示有种子的作品</label>
             </td>
         </tr>
         <tr>
-            <td class="ic2" colspan="2" style="text-align: left;">
+            <td class="ic2" colspan="2">
                 <input id="adv21" type="checkbox" name="f_sdt1" />
                 <label for="adv21">搜索低权重的标签</label>
             </td>
-            <td class="ic2" colspan="2" style="text-align: right;">
+            <td class="ic2" colspan="2">
                 <input id="adv22" type="checkbox" name="f_sdt2" />
                 <label for="adv22">搜索被否决的标签</label>
             </td>
         </tr>
         <tr>
-            <td class="ic2" colspan="2" style="text-align: left;">搜索
+            <td class="ic2" colspan="2">搜索
                 <input type="text" id="f_spf" name="f_spf" value="" size="4" maxlength="4" style="width:30px" /> 至
                 <input type="text" id="f_spt" name="f_spt" value="" size="4" maxlength="4" style="width:30px" />
                 页
             </td>
-            <td class="ic2" colspan="2" style="text-align: right;"><input id="adv32" type="checkbox" name="f_sr" />
+            <td class="ic2" colspan="2"><input id="adv32" type="checkbox" name="f_sr" />
                 <label for="adv32">评分不低于：</label> <select id="adv42" class="imr" name="f_srdd">
                     <option value="2">2 星</option>
                     <option value="3">3 星</option>
@@ -6763,7 +6634,7 @@ function copyModify_show_advsearch_pane(b) {
             </td>
         </tr>
         <tr>
-            <td class="ic1" colspan="4" style="text-align: center;">默认禁用筛选：
+            <td class="ic1" colspan="4">默认禁用筛选：
                 <input id="adv51" type="checkbox" name="f_sfl" />
                 <label for="adv51">语言</label>
                 <input id="adv52" type="checkbox" name="f_sfu" />
@@ -6884,19 +6755,15 @@ function frontPageTranslateFileSearchResult(fileSearchResultDiv) {
 
 //#endregion
 
-
-
-
-
 //#region step3.1.frontTranslate.js 首页谷歌翻译
 
 // TODO
 let dms;
 
-func_eh_ex(() => {
+func_eh_ex(()=>{
 	//e-hentai
 	dms = document.getElementById("dms");
-}, () => {
+},()=>{
 	//exhentai
 	var searchnav = document.getElementsByClassName("searchnav");
 	if (searchnav.length > 0) {
@@ -7200,80 +7067,40 @@ function mainPageTranslate() {
 
 	// 展示总数量
 	var ip = document.getElementsByClassName("ip");
-	func_eh_ex(() => {
-		// e-hentai.org
-		if (ip.length > 1) {
-			var ipElement = ip[ip.length - 2];
-			ipElement.innerText = ipElement.innerText.replace("Showing", "共")
-				.replace("results", "条记录").replace("result", "条记录")
-				.replace(". Your filters excluded", "，本页面你的过滤排除了")
-				.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
-		}
-
-		if (ip.length > 2) {
-			var ipTagElement = ip[ip.length - 3];
-			var strongText = ipTagElement.children[0];
-			strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
-			ipTagElement.children[1].innerText = "我的标签";
-		}
-	}, () => {
-		// exhentai.org
-		if (window.location.pathname == "/") {
-			// 首页
-			document.getElementsByClassName("searchtext")[0].lastChild.innerText =
-				document.getElementsByClassName("searchtext")[0].lastChild.innerText
-					.replace("Found", "共找到")
-					.replace("results", "条记录")
-					.replace("result", "条记录");
-		}
-		else {
-			// 其他页面
+	if (ip.length > 0) {
+		if (webHost == "exhentai.org") {
 			if (ip.length > 0) {
-				var ipTagElement = ip[ip.length - 1];
+				var ipElement = ip[ip.length - 1];
+				ipElement.innerText = ipElement.innerText.replace("Showing", "共")
+					.replace("results", "条记录").replace("result", "条记录")
+					.replace(". Your filters excluded", "，本页面你的过滤排除了")
+					.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
+			}
+
+			if (ip.length > 1) {
+				var ipTagElement = ip[ip.length - 2];
 				var strongText = ipTagElement.children[0];
 				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
 				ipTagElement.children[1].innerText = "我的标签";
-				if (document.getElementsByClassName("searchtext")[0].lastChild.innerText == "Found many results.") {
-					document.getElementsByClassName("searchtext")[0].lastChild.innerText = "找到许多结果.";
-				} else {
-					translatePageElementEN(document.getElementsByClassName("searchtext")[0].lastChild);
-				}
+			}
+		} else if (webHost == "e-hentai.org") {
+			if (ip.length > 1) {
+				var ipElement = ip[ip.length - 2];
+				ipElement.innerText = ipElement.innerText.replace("Showing", "共")
+					.replace("results", "条记录").replace("result", "条记录")
+					.replace(". Your filters excluded", "，本页面你的过滤排除了")
+					.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
+			}
+
+			if (ip.length > 2) {
+				var ipTagElement = ip[ip.length - 3];
+				var strongText = ipTagElement.children[0];
+				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+				ipTagElement.children[1].innerText = "我的标签";
 			}
 		}
-	});
 
-
-	// 错误信息
-	func_eh_ex(() => { }, () => {
-		// exhentai
-		var searchwarn = document.getElementsByClassName("searchwarn");
-		if (searchwarn.length > 0) {
-			var p = searchwarn[0].lastChild;
-			if (p.children.length > 0) {
-				var strongText = p.children[0].innerText;
-				if (p.innerText.replace(strongText, "") == "The keyword  is short and will be searched as an exact tag only.") {
-					// 直接翻译
-					p.innerText = p.innerText
-						.replace("The keyword", "搜索关键字")
-						.replace("is short and will be searched as an exact tag only.", "很短，当前仅作为精准标签进行搜索。");
-				}
-				else {
-					translatePageElementEN(p);
-				}
-			}
-			else {
-				if (p.innerText == "The provided date is invalid or outside the range of posted galleries.") {
-					p.innerText = "提供的日期无效或超出已发布画廊的范围。";
-				}
-				else {
-					translatePageElementEN(p);
-				}
-
-			}
-		}
-	});
-
-
+	}
 
 	// 预览下拉框
 	var dms = document.getElementById("dms");
@@ -7338,7 +7165,7 @@ function mainPageTranslate() {
 	beforeDiv.insertBefore(translateDiv, beforeDiv.lastChild);
 
 	// TODO
-	func_eh_ex(() => {
+	func_eh_ex(()=>{
 		// e-hentai
 		translateDiv.style.marginTop = "0 !important";
 		translateDiv.style.float = "lfet";
@@ -7349,7 +7176,7 @@ function mainPageTranslate() {
 		translateDiv.style.borderRadius = "3px";
 		translateDiv.style.cursor = "pointer";
 		translateLabel.style.cursor = "pointer";
-	}, () => {
+	},()=>{
 		// exhentai
 		translateDiv.style.marginTop = "0 !important";
 		translateDiv.style.float = "lfet";
@@ -7363,7 +7190,7 @@ function mainPageTranslate() {
 		translateLabel.style.cursor = "pointer";
 	});
 
-
+	
 
 
 
@@ -7406,7 +7233,6 @@ function frontPageTitleTranslate() {
 }
 
 //#endregion
-
 
 //#region step3.2.frontPageTopStyle 首页头部搜索显示隐藏
 
@@ -7626,9 +7452,7 @@ function fsdivShow() {
 
 //#endregion
 
-
-
-//#region step3.3.frontPageHtml.js 首页HTML
+//#region step3.3.frontPageHtml.js 首页HTML 
 
 // 首页代码
 const category_html = `
@@ -7747,8 +7571,6 @@ function frontPageHtml() {
 }
 
 //#endregion
-
-
 
 //#region step4.1.detailTranslate.js 详情页翻译
 
@@ -7892,7 +7714,7 @@ function detailPageTranslate() {
 
 			var c2 = c1.children[0];
 
-			// Posted on 04 May 2022, 11:21 by:
+			// Posted on 04 May 2022, 11:21 by:   
 			var c3 = c2.querySelector("div.c3");
 			var postTime = trimEnd(c3.childNodes[0].data.replace("Posted on ", "").replace("by:", ""));
 			var postTimeArray = postTime.split(",");
@@ -8308,8 +8130,6 @@ function recursionDetailPageWarnTranslate(element) {
 
 //#endregion
 
-
-
 //#region step4.2.detailbtn.js 详情页主要按钮功能
 
 // 详情页选中的标签信息
@@ -8377,8 +8197,6 @@ function translateDetailPageTitleDisplay() {
 				txtArray.push(cstr);
 			}
 
-			console.log(txtArray);
-			console.log(signDictArray);
 
 			var totalCount = txtArray.length;
 			var indexCount = 0;
@@ -8412,7 +8230,6 @@ function translateDetailPageTitleDisplay() {
 			}, 50);
 
 			function translateCompelete() {
-				console.log(translateDict);
 				if (signDictArray.length == 0 && txtArray.length > 0) {
 					// 纯文字
 					var str = '';
@@ -8464,7 +8281,7 @@ function translateDetailPageTitleDisplay() {
 							}
 						}
 					} else {
-						// 文字在前
+						// 文字在前 
 						while (signIndex < signDictArray.length ||
 							translateIndex < txtArray.length) {
 							// 符号索引间隔是否为1
@@ -8718,7 +8535,7 @@ function detailPageRightButtons() {
 					}
 
 					// 添加子级
-					favoritesListHtml += `<span class="c_item c_item_favorite" title="[${v.sub_en}] ${v.sub_desc}" data-item="${v.sub_en}"
+					favoritesListHtml += `<span class="c_item c_item_favorite" title="[${v.sub_en}] ${v.sub_desc}" data-item="${v.sub_en}" 
                     data-parent_en="${v.parent_en}" data-parent_zh="${v.parent_zh}">${v.sub_zh}</span>`;
 				}, () => {
 					// 读完后操作
@@ -8943,8 +8760,6 @@ function detailTryUseOldData() {
 
 //#endregion
 
-
-
 //#region 7.4.2.torrentsDetailPages.js 种子详情页
 
 function torrentsDetailPages() {
@@ -9098,7 +8913,6 @@ function DataSyncTranslateTorrentDetailInfoCommand() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_torrentDetailInfo_command:
 					updateGoogleTorrentDetailInfoCommand();
@@ -9170,15 +8984,12 @@ function closeWindow() {
 
 //#endregion
 
-
-
 //#region step5.3.datasync.common.translateTitle.js 热门页数据同步
 
 function DataSyncCommonTranslateTitle() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_frontPage_title:
 					updateGoogleTranslateFrontPageTitle();
@@ -9208,567 +9019,472 @@ function DataSyncCommonTranslateTitle() {
 
 function popularPage() {
 
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 新版分页
-	TranslateNewPagingLinks();
+	// 头部标题改成中文
+	var ihTitle = document.getElementsByClassName("ih");
+	if (ihTitle.length > 0) {
+		ihTitle[0].innerText = "近期热门作品";
+	}
 
-    // 头部标题改成中文
-    var ihTitle = document.getElementsByClassName("ih");
-    if (ihTitle.length > 0) {
-        ihTitle[0].innerText = "近期热门作品";
-    }
+	var toppane = document.getElementById("toppane");
+	toppane.classList.add("t_popular_toppane"); // 添加样式避免干扰其他页面
 
-    var toppane = document.getElementById("toppane");
-    toppane.classList.add("t_popular_toppane"); // 添加样式避免干扰其他页面
+	// 标题机翻
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	translateDiv.appendChild(translateCheckbox);
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻 : 标题";
 
-    // 标题机翻
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    translateDiv.appendChild(translateCheckbox);
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻 : 标题";
+	translateDiv.appendChild(translateLabel);
+	translateCheckbox.addEventListener("click", translateMainPageTitle);
+	toppane.insertBefore(translateDiv, toppane.lastChild);
 
-    translateDiv.appendChild(translateLabel);
-    translateCheckbox.addEventListener("click", translateMainPageTitle);
-    toppane.insertBefore(translateDiv, toppane.lastChild);
-
-    // 按钮位置调整
-    func_eh_ex(() => { }, () => {
-        // exhentai 需要调整
-        translateDiv.style.marginTop = "0";
-    });
-
-    // 头部添加词库升级提示
-    var dataUpdateDiv = document.createElement("div");
-    dataUpdateDiv.id = "data_update_tip";
-    var dataUpdateText = document.createTextNode("词库升级中...");
-    dataUpdateDiv.appendChild(dataUpdateText);
-    toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
+	// 头部添加词库升级提示
+	var dataUpdateDiv = document.createElement("div");
+	dataUpdateDiv.id = "data_update_tip";
+	var dataUpdateText = document.createTextNode("词库升级中...");
+	dataUpdateDiv.appendChild(dataUpdateText);
+	toppane.insertBefore(dataUpdateDiv, toppane.lastChild);
 
 
-    // 翻译下拉折叠菜单
-    var dms = document.getElementById("dms");
-    dms.classList.add("t_popular_dms"); // 添加样式避免干扰其他页面
-    dropDownlistTranslate();
+	// 翻译下拉折叠菜单
+	var dms = document.getElementById("dms");
+	dms.classList.add("t_popular_dms"); // 添加样式避免干扰其他页面
+	dropDownlistTranslate();
 
-    // 表头翻译
-    tableHeadTranslate();
+	// 表头翻译
+	tableHeadTranslate();
 
-    // 作品类型翻译
-    bookTypeTranslate();
+	// 作品类型翻译
+	bookTypeTranslate();
 
-    // 作品篇幅
-    tableBookPages();
+	// 作品篇幅
+	tableBookPages();
 
-    indexDbInit(() => {
-        // 谷歌机翻标题
-        read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                translateMainPageTitleDisplay();
-            }
-        }, () => { });
+	indexDbInit(() => {
+		// 谷歌机翻标题
+		read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				translateMainPageTitleDisplay();
+			}
+		}, () => { });
 
-        // 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
-        // 表格标签翻译
-        otherPageTryUseOldDataAndTranslateTag();
-    });
+		// 检查是否存在旧数据，如果存在优先使用旧数据，然后检查更新
+		// 表格标签翻译
+		otherPageTryUseOldDataAndTranslateTag();
+	});
 
-    // 同步谷歌机翻标题
-    DataSyncCommonTranslateTitle();
+	// 同步谷歌机翻标题
+	DataSyncCommonTranslateTitle();
 
 
 
 }
 
 function otherPageTryUseOldDataAndTranslateTag() {
-    // 验证数据完整性
-    checkDataIntact(() => {
-        // 判断是否存在旧数据
-        var fetishHasValue = false;
-        var ehTagHasValue = false;
-        var complete1 = false;
-        var complete2 = false;
+	// 验证数据完整性
+	checkDataIntact(() => {
+		// 判断是否存在旧数据
+		var fetishHasValue = false;
+		var ehTagHasValue = false;
+		var complete1 = false;
+		var complete2 = false;
 
-        checkTableEmpty(table_fetishListSubItems, () => {
-            // 数据为空
-            complete1 = true;
-        }, () => {
-            // 存在数据
-            fetishHasValue = true;
-            complete1 = true;
-        });
+		checkTableEmpty(table_fetishListSubItems, () => {
+			// 数据为空
+			complete1 = true;
+		}, () => {
+			// 存在数据
+			fetishHasValue = true;
+			complete1 = true;
+		});
 
-        checkTableEmpty(table_EhTagSubItems, () => {
-            // 数据为空
-            complete2 = true;
-        }, () => {
-            // 存在数据
-            ehTagHasValue = true;
-            complete2 = true;
-        });
+		checkTableEmpty(table_EhTagSubItems, () => {
+			// 数据为空
+			complete2 = true;
+		}, () => {
+			// 存在数据
+			ehTagHasValue = true;
+			complete2 = true;
+		});
 
-        var t = setInterval(() => {
-            if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
-                t && clearInterval(t);
-                // 存在数据
-                tableTagTranslate();
-                // 检查更新
-                checkUpdateData(() => {
-                    // 存在更新
-                    tableTagTranslate();
-                }, () => { });
-            } else if (complete1 && complete2) {
-                t && clearInterval(t);
-                // 不存在数据
-                checkUpdateData(() => {
-                    // 存在更新
-                    tableTagTranslate();
-                }, () => {
-                    tableTagTranslate();
-                });
-            }
-        }, 10);
-    });
+		var t = setInterval(() => {
+			if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+				t && clearInterval(t);
+				// 存在数据
+				tableTagTranslate();
+				// 检查更新
+				checkUpdateData(() => {
+					// 存在更新
+					tableTagTranslate();
+				}, () => { });
+			} else if (complete1 && complete2) {
+				t && clearInterval(t);
+				// 不存在数据
+				checkUpdateData(() => {
+					// 存在更新
+					tableTagTranslate();
+				}, () => {
+					tableTagTranslate();
+				});
+			}
+		}, 10);
+	});
 }
 
 
 //#endregion
-
-
 
 //#region step7.2.favoritePage.js 收藏列表
 
 function favoritePage() {
 
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 新版分页
-    TranslateNewPagingLinks();
+	// 标题添加类 t_favorite_ido，方便添加样式
+	var ido = document.getElementsByClassName("ido");
+	if (ido.length > 0) {
+		ido[0].classList.add("t_favorite_ido");
+	}
 
-    // 标题添加类 t_favorite_ido，方便添加样式
-    var ido = document.getElementsByClassName("ido");
-    if (ido.length > 0) {
-        ido[0].classList.add("t_favorite_ido");
-    }
+	// 标题直接删除
+	var h1 = document.getElementsByTagName("h1");
+	if (h1.length > 0) {
+		var pageTitle = h1[0];
+		pageTitle.parentNode.removeChild(pageTitle);
+	}
 
-    // 标题直接删除
-    var h1 = document.getElementsByTagName("h1");
-    if (h1.length > 0) {
-        var pageTitle = h1[0];
-        pageTitle.parentNode.removeChild(pageTitle);
-    }
+	// 显示全部按钮改名
+	var favoriteBtns = document.getElementsByClassName("fp");
+	if (favoriteBtns.length > 0) {
+		var showAllFavorites = favoriteBtns[favoriteBtns.length - 1];
+		showAllFavorites.innerText = "点我显示：全部收藏";
 
-    // 显示全部按钮改名
-    var favoriteBtns = document.getElementsByClassName("fp");
-    if (favoriteBtns.length > 0) {
-        var showAllFavorites = favoriteBtns[favoriteBtns.length - 1];
-        showAllFavorites.innerText = "点我显示：全部收藏";
+		// 没有收藏的列表字体颜色稍微暗一点
+		for (let i = 0; i < favoriteBtns.length - 1; i++) {
+			const favoriteBtn = favoriteBtns[i];
+			var favoriteCount = favoriteBtn.children[0].innerText;
+			if (favoriteCount == "0") {
+				favoriteBtn.classList.add("favorite_null");
+			}
+		}
 
-        // 没有收藏的列表字体颜色稍微暗一点
-        for (let i = 0; i < favoriteBtns.length - 1; i++) {
-            const favoriteBtn = favoriteBtns[i];
-            var favoriteCount = favoriteBtn.children[0].innerText;
-            if (favoriteCount == "0") {
-                favoriteBtn.classList.add("favorite_null");
-            }
-        }
+	}
 
-    }
+	// 搜索按钮清空按钮翻译，筛选文本框排成一行
+	var searchDiv = ido[0].children[1];
+	searchDiv.classList.add("searchDiv");
+	var form = searchDiv.children[0];
+	var searchInputDiv = form.children[1];
+	searchInputDiv.classList.add("searchInputDiv");
+	var searchFilterDiv = form.children[2];
+	searchFilterDiv.classList.add("searchFilterDiv");
 
-    // 搜索按钮清空按钮翻译，筛选文本框排成一行
-    var searchDiv = ido[0].children[1];
-    searchDiv.classList.add("searchDiv");
-    var form = searchDiv.children[0];
-    var searchInputDiv = form.children[1];
-    searchInputDiv.classList.add("searchInputDiv");
+	// 输入候选
+	var inputRecommendDiv = document.createElement("div");
+	inputRecommendDiv.id = "category_user_input_recommend";
+	var searchForm = document.getElementsByTagName("form")[0];
+	searchForm.insertBefore(inputRecommendDiv, searchForm.lastChild);
 
+	// 搜索框、搜索按钮、搜索选项翻译
+	var searchInput = searchInputDiv.children[0];
+	searchInput.setAttribute("placeholder", "搜索关键字");
+	searchInput.oninput = function () {
+		var inputValue = trimStartEnd(searchInput.value.toLowerCase());
+		favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput);
+	}
 
-    // 输入候选
-    var inputRecommendDiv = document.createElement("div");
-    inputRecommendDiv.id = "category_user_input_recommend";
-    var searchForm = document.getElementsByTagName("form")[0];
-    searchForm.insertBefore(inputRecommendDiv, searchForm.lastChild);
+	var searchBtn = searchInputDiv.children[1];
+	searchBtn.value = " 搜索收藏 ";
 
-    // 搜索框、搜索按钮、搜索选项翻译
-    var searchInput = searchInputDiv.children[0];
-    searchInput.setAttribute("placeholder", "搜索关键字");
-    searchInput.oninput = function () {
-        var inputValue = trimStartEnd(searchInput.value.toLowerCase());
-        favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput);
-    }
+	var clearBtn = searchInputDiv.children[2];
+	clearBtn.value = " 清空 ";
 
-    var searchBtn = searchInputDiv.children[1];
-    searchBtn.value = " 搜索收藏 ";
+	var filterTds = searchFilterDiv.querySelectorAll("td");
+	var filterHead = filterTds[0];
+	filterHead.innerText = "搜索包含：";
 
-    var clearBtn = searchInputDiv.children[2];
-    clearBtn.value = " 清空 ";
+	var filterName = filterTds[1];
+	filterName.children[0].lastChild.textContent = "作品名称";
 
+	var filterTag = filterTds[2];
+	filterTag.children[0].lastChild.textContent = "标签";
 
-    func_eh_ex(() => {
-        // e-hentai
-        var searchFilterDiv = form.children[2];
-        searchFilterDiv.classList.add("searchFilterDiv");
+	var filterNote = filterTds[3];
+	filterNote.children[0].lastChild.textContent = "备注";
 
-        var filterTds = searchFilterDiv.querySelectorAll("td");
-        var filterHead = filterTds[0];
-        filterHead.innerText = "搜索包含：";
+	// 展示总数量
+	var ip = document.getElementsByClassName("ip");
+	if (ip.length > 0) {
+		var ipElement = ip[0];
+		var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
+		ipElement.innerText = `共 ${totalCount} 条记录`;
+	}
 
-        var filterName = filterTds[1];
-        filterName.children[0].lastChild.textContent = "作品名称";
+	// 头部添加词库升级提示
+	var dataUpdateDiv = document.createElement("div");
+	dataUpdateDiv.id = "data_update_tip";
+	var dataUpdateText = document.createTextNode("词库升级中...");
+	dataUpdateDiv.appendChild(dataUpdateText);
+	ido[0].insertBefore(dataUpdateDiv, ido[0].lastChild);
 
-        var filterTag = filterTds[2];
-        filterTag.children[0].lastChild.textContent = "标签";
+	// 预览下拉框
+	var dms = document.getElementById("dms");
+	if (!dms) {
 
-        var filterNote = filterTds[3];
-        filterNote.children[0].lastChild.textContent = "备注";
+		// 隐藏排序和底部操作框
+		var orderDiv = ido[0].children[2].children[0];
+		orderDiv.style.display = "none";
+		var nullBottomDiv = ido[0].children[3].children[1];
+		nullBottomDiv.style.display = "none";
 
-    }, () => { });
+		// 没有搜索到记录
+		var nullInfo = ido[0].children[3].children[0];
+		if (nullInfo) {
+			translatePageElement(nullInfo);
+		}
 
+		indexDbInit(() => {
+			// 没搜索到也要保留搜索候选功能
+			otherPageTryUseOldDataAndTranslateTag();
+		});
 
-    // 展示总数量
-    var ip = document.getElementsByClassName("ip");
-    if (ip.length > 0) {
-        var ipElement = ip[0];
-        var totalCount = ipElement.innerText.replace("Showing ", "").replace(" results", "");
-        ipElement.innerText = `共 ${totalCount} 条记录`;
-    }
+		return;
+	}
 
-    // 头部添加词库升级提示
-    var dataUpdateDiv = document.createElement("div");
-    dataUpdateDiv.id = "data_update_tip";
-    var dataUpdateText = document.createTextNode("词库升级中...");
-    dataUpdateDiv.appendChild(dataUpdateText);
-    ido[0].insertBefore(dataUpdateDiv, ido[0].lastChild);
+	// 翻译下拉菜单
+	dropDownlistTranslate();
 
-    // 预览下拉框
-    var dms = document.getElementById("dms");
-    if (!dms) {
+	// 底部删除选中、移动作品下拉框，确认按钮
+	var ddact = document.getElementById("ddact");
+	if (ddact) {
+		var options = ddact.querySelectorAll("option");
+		if (options.length > 0) {
+			if (options[0].innerText == "Delete Selected") {
+				options[0].innerText = "删除选中的作品";
+			}
+		}
 
-        // 隐藏排序和底部操作框
-        var orderDiv = ido[0].children[2].children[0];
-        orderDiv.style.display = "none";
-        var nullBottomDiv = ido[0].children[3].children[1];
-        nullBottomDiv.style.display = "none";
+		var optgroup = ddact.children[1];
+		if (optgroup.getAttribute("label") == "Change Category") {
+			optgroup.setAttribute("label", "作品迁移到以下收藏夹");
+		}
+	}
 
-        // 没有搜索到记录
-        var nullInfo = ido[0].children[3].children[0];
-        if (nullInfo) {
-            translatePageElement(nullInfo);
-        }
+	var bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
+	if (bottomConfirmBtn.value == "Confirm") {
+		bottomConfirmBtn.value = "确 认";
+		bottomConfirmBtn.style.width = "60px";
+	}
 
-        indexDbInit(() => {
-            // 没搜索到也要保留搜索候选功能
-            otherPageTryUseOldDataAndTranslateTag();
-        });
+	// 排序翻译、搜索行数翻译（包含没有搜索结果）
+	var orderDiv = ido[0].children[2].children[0];
+	orderDiv.firstChild.textContent = "作品排序：";
+	switch (orderDiv.children[0].innerText) {
+		case "Favorited":
+			orderDiv.children[0].innerText = "收藏时间";
+			break;
+		case "Posted":
+			orderDiv.children[0].innerText = "发布时间";
+			break;
+	}
 
-        return;
-    }
+	switch (orderDiv.children[1].innerText) {
+		case "Use Favorited":
+			orderDiv.children[1].innerText = " 按收藏时间排序 ";
+			break;
+		case "Use Posted":
+			orderDiv.children[1].innerText = " 按发布时间排序 ";
+			break;
+	}
 
-    // 翻译下拉菜单
-    dropDownlistTranslate();
+	// 作品类型翻译
+	bookTypeTranslate();
 
-    // 底部删除选中、移动作品下拉框，确认按钮
-    var ddact = document.getElementById("ddact");
-    if (ddact) {
-        var options = ddact.querySelectorAll("option");
-        if (options.length > 0) {
-            if (options[0].innerText == "Delete Selected") {
-                options[0].innerText = "删除选中的作品";
-            }
-        }
+	// 表头翻译
+	tableHeadTranslate();
 
-        var optgroup = ddact.children[1];
-        if (optgroup.getAttribute("label") == "Change Category") {
-            optgroup.setAttribute("label", "作品迁移到以下收藏夹");
-        }
-    }
-
-    let bottomConfirmBtn;
-    func_eh_ex(() => {
-        // e-hentai
-        bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
-    }, () => {
-        // exhentai
-        bottomConfirmBtn = ido[0].children[2].children[4].children[0].children[0].children[1].children[0];
-    });
-    if (bottomConfirmBtn.value == "Confirm") {
-        bottomConfirmBtn.value = "确 认";
-        bottomConfirmBtn.style.width = "60px";
-    }
-
-    // 排序翻译、搜索行数翻译（包含没有搜索结果）
-    let favorite_orderDiv;
-    func_eh_ex(() => {
-        // e-hentai
-        favorite_orderDiv = ido[0].children[2].children[0];
-        favorite_orderDiv.firstChild.textContent = "作品排序：";
-        switch (favorite_orderDiv.children[0].innerText) {
-            case "Favorited":
-                favorite_orderDiv.children[0].innerText = "收藏时间";
-                break;
-            case "Posted":
-                favorite_orderDiv.children[0].innerText = "发布时间";
-                break;
-        }
-
-        switch (favorite_orderDiv.children[1].innerText) {
-            case "Use Favorited":
-                favorite_orderDiv.children[1].innerText = " 按收藏时间排序 ";
-                break;
-            case "Use Posted":
-                favorite_orderDiv.children[1].innerText = " 按发布时间排序 ";
-                break;
-        }
-    }, () => {
-        // exhentai
-        // 排序名称
-        var favorite_orderDiv = dms.children[0];
-        favorite_orderDiv.childNodes[0].nodeValue = "作品排序：";
-
-        var selects = dms.querySelectorAll("select");
-
-        // 排序方式
-        var order_select = selects[0];
-        if (order_select.length > 0) {
-            var selectElement = order_select;
-            var options = selectElement.options;
-            for (const i in options) {
-                if (Object.hasOwnProperty.call(options, i)) {
-                    const option = options[i];
-                    switch (option.innerText) {
-                        case "Favorited Time":
-                            option.innerText = "收藏时间";
-                            break;
-                        case "Published Time":
-                            option.innerText = "发布时间";
-                            break;
-                    }
-                }
-            }
-        }
-
-        // 页面视图
-        var pageShow_select = selects[1];
-        if (pageShow_select.length > 0) {
-            var selectElement = pageShow_select;
-            var options = selectElement.options;
-            for (const i in options) {
-                if (Object.hasOwnProperty.call(options, i)) {
-                    const option = options[i];
-                    option.innerText = dropData[option.innerText] ?? option.innerText;
-                }
-            }
-        }
-
-    })
-
-
-    // 作品类型翻译
-    bookTypeTranslate();
-
-    // 表头翻译
-    tableHeadTranslate();
-
-    // 表格页数翻译
-    favoritePageTableBookPages();
+	// 表格页数翻译
+	favoritePageTableBookPages();
 
 
 
 
-    // 谷歌机翻标题
-    // 表格头部左侧添加勾选 谷歌机翻
-    var translateDiv = document.createElement("div");
-    translateDiv.id = "googleTranslateDiv";
-    var translateCheckbox = document.createElement("input");
-    translateCheckbox.setAttribute("type", "checkbox");
-    translateCheckbox.id = "googleTranslateCheckbox";
-    translateDiv.appendChild(translateCheckbox);
-    var translateLabel = document.createElement("label");
-    translateLabel.setAttribute("for", translateCheckbox.id);
-    translateLabel.id = "translateLabel";
-    translateLabel.innerText = "谷歌机翻 : 标题";
+	// 谷歌机翻标题
+	// 表格头部左侧添加勾选 谷歌机翻
+	var translateDiv = document.createElement("div");
+	translateDiv.id = "googleTranslateDiv";
+	var translateCheckbox = document.createElement("input");
+	translateCheckbox.setAttribute("type", "checkbox");
+	translateCheckbox.id = "googleTranslateCheckbox";
+	translateDiv.appendChild(translateCheckbox);
+	var translateLabel = document.createElement("label");
+	translateLabel.setAttribute("for", translateCheckbox.id);
+	translateLabel.id = "translateLabel";
+	translateLabel.innerText = "谷歌机翻 : 标题";
 
-    translateDiv.appendChild(translateLabel);
-    translateCheckbox.addEventListener("click", translateMainPageTitle);
+	translateDiv.appendChild(translateLabel);
+	translateCheckbox.addEventListener("click", translateMainPageTitle);
+	var dms = document.getElementById("dms");
+	dms.insertBefore(translateDiv, dms.lastChild);
 
-    func_eh_ex(() => {
-        // e-hentai
-        var dms = document.getElementById("dms");
-        dms.insertBefore(translateDiv, dms.lastChild);
-    }, () => {
-        // exhentai
-        var favForm = document.getElementsByTagName("form")[1];
-        favForm.insertBefore(translateDiv, favForm.firstChild);
+	indexDbInit(() => {
+		// 读取是否选中
+		read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
+			if (result && result.value) {
+				translateCheckbox.setAttribute("checked", true);
+				translateMainPageTitleDisplay();
+			}
+		}, () => { });
 
-        // 样式调整
-        translateDiv.style.marginTop = "-43px";
-        translateDiv.style.position = "absolute";
-        translateDiv.style.right = "16px";
-        translateDiv.style.backgroundColor = "#34353b";
-        translateDiv.style.padding = "8px 15px";
-        translateDiv.style.border = "1px solid #8d8d8d";
-        translateDiv.style.borderRadius = "3px";
-        translateDiv.style.cursor = "pointer";
-    });
+		// 表格标签翻译
+		otherPageTryUseOldDataAndTranslateTag();
+	});
 
-
-    indexDbInit(() => {
-        // 读取是否选中
-        read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
-            if (result && result.value) {
-                translateCheckbox.setAttribute("checked", true);
-                translateMainPageTitleDisplay();
-            }
-        }, () => { });
-
-        // 表格标签翻译
-        otherPageTryUseOldDataAndTranslateTag();
-    });
-
-    // 同步谷歌机翻标题
-    DataSyncCommonTranslateTitle();
+	// 同步谷歌机翻标题
+	DataSyncCommonTranslateTitle();
 }
 
 function favoritePageTableBookPages() {
-    var select = dms.querySelectorAll("select");
-    var rightSelect = select[0];
-    if (rightSelect.value == "e") {
-        // 标题 + 图片 + 标签
-        var gl3eDivs = document.getElementsByClassName("gl3e");
-        for (const i in gl3eDivs) {
-            if (Object.hasOwnProperty.call(gl3eDivs, i)) {
-                const gl3e = gl3eDivs[i];
-                var childLength = gl3e.children.length;
-                var pageDiv = gl3e.children[childLength - 3];
-                innerTextPageToYe(pageDiv);
-            }
-        }
-    }
+	var select = dms.querySelectorAll("select");
+	var rightSelect = select[0];
+	if (rightSelect.value == "e") {
+		// 标题 + 图片 + 标签
+		var gl3eDivs = document.getElementsByClassName("gl3e");
+		for (const i in gl3eDivs) {
+			if (Object.hasOwnProperty.call(gl3eDivs, i)) {
+				const gl3e = gl3eDivs[i];
+				var childLength = gl3e.children.length;
+				var pageDiv = gl3e.children[childLength - 3];
+				innerTextPageToYe(pageDiv);
+			}
+		}
+	}
 }
 
 function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInput) {
-    // 清空候选项
-    inputRecommendDiv.innerHTML = "";
-    inputRecommendDiv.style.display = "none";
-    var tempDiv = document.createElement("div");
-    inputRecommendDiv.appendChild(tempDiv);
+	// 清空候选项
+	inputRecommendDiv.innerHTML = "";
+	inputRecommendDiv.style.display = "none";
+	var tempDiv = document.createElement("div");
+	inputRecommendDiv.appendChild(tempDiv);
 
-    if (inputValue == "") {
-        return;
-    }
+	if (inputValue == "") {
+		return;
+	}
 
-    // 根据空格分隔，取最后一个
-    var inputArray = inputValue.split(" ");
-    var oldInputArray = inputArray.slice(0, inputArray.length - 1);
-    var oldInputValue = oldInputArray.join(" ");
-    if (oldInputValue != "") {
-        oldInputValue += " ";
-    }
-    var searchValue = inputArray[inputArray.length - 1];
+	// 根据空格分隔，取最后一个
+	var inputArray = inputValue.split(" ");
+	var oldInputArray = inputArray.slice(0, inputArray.length - 1);
+	var oldInputValue = oldInputArray.join(" ");
+	if (oldInputValue != "") {
+		oldInputValue += " ";
+	}
+	var searchValue = inputArray[inputArray.length - 1];
 
-    if (searchValue == "") {
-        inputRecommendDiv.style.display = "none";
-        return;
-    }
+	if (searchValue == "") {
+		inputRecommendDiv.style.display = "none";
+		return;
+	}
 
-    // 添加搜索候选
-    function addInputSearchItems(foundArrays) {
-        if (foundArrays.length > 0) {
-            inputRecommendDiv.style.display = "block";
-        }
-        for (const i in foundArrays) {
-            if (Object.hasOwnProperty.call(foundArrays, i)) {
-                const item = foundArrays[i];
-                var commendDiv = document.createElement("div");
-                commendDiv.classList.add("category_user_input_recommend_items");
-                commendDiv.title = item.sub_desc;
+	// 添加搜索候选
+	function addInputSearchItems(foundArrays) {
+		if (foundArrays.length > 0) {
+			inputRecommendDiv.style.display = "block";
+		}
+		for (const i in foundArrays) {
+			if (Object.hasOwnProperty.call(foundArrays, i)) {
+				const item = foundArrays[i];
+				var commendDiv = document.createElement("div");
+				commendDiv.classList.add("category_user_input_recommend_items");
+				commendDiv.title = item.sub_desc;
 
-                var chTextDiv = document.createElement("div");
-                chTextDiv.style.float = "left";
-                var chTextNode = document.createTextNode(`${item.parent_zh} : ${item.sub_zh}`);
-                chTextDiv.appendChild(chTextNode);
+				var chTextDiv = document.createElement("div");
+				chTextDiv.style.float = "left";
+				var chTextNode = document.createTextNode(`${item.parent_zh} : ${item.sub_zh}`);
+				chTextDiv.appendChild(chTextNode);
 
-                var enTextDiv = document.createElement("div");
-                enTextDiv.style.float = "right";
-                var enTextNode = document.createTextNode(`${item.parent_en} : ${item.sub_en}`);
-                enTextDiv.appendChild(enTextNode);
+				var enTextDiv = document.createElement("div");
+				enTextDiv.style.float = "right";
+				var enTextNode = document.createTextNode(`${item.parent_en} : ${item.sub_en}`);
+				enTextDiv.appendChild(enTextNode);
 
-                commendDiv.appendChild(chTextDiv);
-                commendDiv.appendChild(enTextDiv);
+				commendDiv.appendChild(chTextDiv);
+				commendDiv.appendChild(enTextDiv);
 
-                commendDiv.addEventListener("click", function () {
-                    var addNewItem = item.parent_en == "userCustom" ? `"${item.sub_en}"` : `"${item.parent_en}:${item.sub_en}" `;
-                    searchInput.value = `${oldInputValue}${addNewItem}`;
-                    searchInput.focus();
-                    inputRecommendDiv.innerHTML = "";
-                    inputRecommendDiv.style.display = "none";
-                });
-                tempDiv.appendChild(commendDiv);
-            }
-        }
+				commendDiv.addEventListener("click", function () {
+					var addNewItem = item.parent_en == "userCustom" ? `"${item.sub_en}"` : `"${item.parent_en}:${item.sub_en}" `;
+					searchInput.value = `${oldInputValue}${addNewItem}`;
+					searchInput.focus();
+					inputRecommendDiv.innerHTML = "";
+					inputRecommendDiv.style.display = "none";
+				});
+				tempDiv.appendChild(commendDiv);
+			}
+		}
 
-        if (tempDiv.innerHTML == "") {
-            inputRecommendDiv.style.display = "none";
-        }
-    }
+		if (tempDiv.innerHTML == "") {
+			inputRecommendDiv.style.display = "none";
+		}
+	}
 
-    // 从EhTag中模糊搜索，绑定数据
-    readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, searchValue, foundArrays => {
-        addInputSearchItems(foundArrays);
-    });
+	// 从EhTag中模糊搜索，绑定数据
+	readByCursorIndexFuzzy(table_EhTagSubItems, table_EhTagSubItems_index_searchKey, searchValue, foundArrays => {
+		addInputSearchItems(foundArrays);
+	});
 
-    // 从收藏中的用户自定义中模糊搜索，绑定数据
-    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "userCustom", customArray => {
-        if (customArray.length > 0) {
-            var foundArrays = [];
-            for (const i in customArray) {
-                if (Object.hasOwnProperty.call(customArray, i)) {
-                    const item = customArray[i];
-                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
-                    if (searchKey.indexOf(searchValue) != -1) {
-                        foundArrays.push(item);
-                    }
-                }
-            }
+	// 从收藏中的用户自定义中模糊搜索，绑定数据
+	readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "userCustom", customArray => {
+		if (customArray.length > 0) {
+			var foundArrays = [];
+			for (const i in customArray) {
+				if (Object.hasOwnProperty.call(customArray, i)) {
+					const item = customArray[i];
+					var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
+					if (searchKey.indexOf(searchValue) != -1) {
+						foundArrays.push(item);
+					}
+				}
+			}
 
-            if (foundArrays.length > 0) {
-                addInputSearchItems(foundArrays);
-            }
-        }
-    });
+			if (foundArrays.length > 0) {
+				addInputSearchItems(foundArrays);
+			}
+		}
+	});
 
-    // 从收藏中的上传者自定义中模糊搜索，绑定数据
-    readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray => {
-        if (uploaderArray.length > 0) {
-            var foundArrays = [];
-            for (const i in uploaderArray) {
-                if (Object.hasOwnProperty.call(uploaderArray, i)) {
-                    const item = uploaderArray[i];
-                    var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
-                    if (searchKey.indexOf(searchValue) != -1) {
-                        foundArrays.push(item);
-                    }
-                }
-            }
+	// 从收藏中的上传者自定义中模糊搜索，绑定数据
+	readByCursorIndex(table_favoriteSubItems, table_favoriteSubItems_index_parentEn, "uploader", uploaderArray => {
+		if (uploaderArray.length > 0) {
+			var foundArrays = [];
+			for (const i in uploaderArray) {
+				if (Object.hasOwnProperty.call(uploaderArray, i)) {
+					const item = uploaderArray[i];
+					var searchKey = `${item.parent_en},${item.parent_zh},${item.sub_en.toLowerCase()}`;
+					if (searchKey.indexOf(searchValue) != -1) {
+						foundArrays.push(item);
+					}
+				}
+			}
 
-            if (foundArrays.length > 0) {
-                addInputSearchItems(foundArrays);
-            }
-        }
-    });
+			if (foundArrays.length > 0) {
+				addInputSearchItems(foundArrays);
+			}
+		}
+	});
 }
 
 //#endregion
-
 
 //#region 7.3.watchedPage.js 偏好
 
@@ -10043,7 +9759,6 @@ function DataSyncTranslateTorrentDetailInfoCommand() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_torrentDetailInfo_command:
 					updateGoogleTorrentDetailInfoCommand();
@@ -10114,7 +9829,6 @@ function closeWindow() {
 }
 
 //#endregion
-
 
 //#region step7.5.toplistPage.js 排行榜
 
@@ -10510,10 +10224,6 @@ function toplistBookpages() {
 
 //#endregion
 
-
-
-
-
 //#region step7.6.myHomePage.js 我的主页 - 总览
 
 function myHomePage() {
@@ -10536,8 +10246,6 @@ function myHomePage() {
 }
 
 //#endregion
-
-
 
 //#region step7.7.newsPage.js
 
@@ -10713,7 +10421,6 @@ function newsPage() {
 	// 数据同步
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_newsPage_topImage_visible:
 					newsPageSyncTopImageVisible();
@@ -11018,602 +10725,597 @@ function newsPagesTranslateCommon(className, isChecked) {
 
 //#endregion
 
-
 //#region step7.8.uconfigPage.js 设置页面
 
 function uconfigPage() {
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 添加样式方便调整页面样式
-    var outer = document.getElementById("outer");
-    outer.classList.add("t_uconfigPage_outer");
+	// 添加样式方便调整页面样式
+	var outer = document.getElementById("outer");
+	outer.classList.add("t_uconfigPage_outer");
 
-    // eh 二级菜单翻译
-    func_eh_ex(() => {
-        var menu2 = document.getElementById("lb").children[2];
-        menu2.innerText = " 我的设置 ";
-    }, () => { });
+	// eh 二级菜单翻译
+	func_eh_ex(() => {
+		var menu2 = document.getElementById("lb").children[2];
+		menu2.innerText = " 我的设置 ";
+	}, () => { });
 
 
-    // 头部翻译
-    uconfigPageTopDiv();
+	// 头部翻译
+	uconfigPageTopDiv();
 
-    var contentForm = outer.querySelectorAll("form")[1];
-    var settingH2s = contentForm.querySelectorAll("h2");
+	var contentForm = outer.querySelectorAll("form")[1];
+	var settingH2s = contentForm.querySelectorAll("h2");
 
-    // Image Load Settings
-    uconfigPageImageLoadSettings(settingH2s[0]);
+	// Image Load Settings
+	uconfigPageImageLoadSettings(settingH2s[0]);
 
-    // Image Size Settings
-    uconfigImageSizeSettings(settingH2s[1]);
+	// Image Size Settings
+	uconfigImageSizeSettings(settingH2s[1]);
 
-    // Gallery Name Display
-    uconfigPageGalleryNameDisplay(settingH2s[2]);
+	// Gallery Name Display
+	uconfigPageGalleryNameDisplay(settingH2s[2]);
 
-    // Archiver Settings
-    uconfigPageArchiverSettings(settingH2s[3]);
+	// Archiver Settings
+	uconfigPageArchiverSettings(settingH2s[3]);
 
-    // Front Page Settings
-    uconfigPageFrontPageSettings(settingH2s[4]);
+	// Front Page Settings
+	uconfigPageFrontPageSettings(settingH2s[4]);
 
-    // Favorites
-    uconfigPageFavorites(settingH2s[5]);
+	// Favorites
+	uconfigPageFavorites(settingH2s[5]);
 
-    // Ratings
-    uconfigPageRatings(settingH2s[6]);
+	// Ratings
+	uconfigPageRatings(settingH2s[6]);
 
-    // Tag Namespaces
-    uconfigPageTagNamespaces(settingH2s[7]);
+	// Tag Namespaces
+	uconfigPageTagNamespaces(settingH2s[7]);
 
-    // Tag Filtering Threshold
-    uconfigPageTagFilteringThreshold(settingH2s[8]);
+	// Tag Filtering Threshold
+	uconfigPageTagFilteringThreshold(settingH2s[8]);
 
-    // Tag Watching Threshold
-    uconfigTagWatchingThreshold(settingH2s[9]);
+	// Tag Watching Threshold
+	uconfigTagWatchingThreshold(settingH2s[9]);
 
-    // Excluded Languages
-    uconfigTagExcludedLanguages(settingH2s[10]);
+	// Excluded Languages
+	uconfigTagExcludedLanguages(settingH2s[10]);
 
-    // Excluded Uploaders
-    uconfigPageExcludedUploaders(settingH2s[11]);
+	// Excluded Uploaders
+	uconfigPageExcludedUploaders(settingH2s[11]);
 
-    // Search Result Count
-    uconfigPageSearchResultCount(settingH2s[12]);
+	// Search Result Count
+	uconfigPageSearchResultCount(settingH2s[12]);
 
-    // Thumbnail Settings
-    uconfigPageThumbnailSettings(settingH2s[13]);
+	// Thumbnail Settings
+	uconfigPageThumbnailSettings(settingH2s[13]);
 
-    // Thumbnail Scaling
-    uconfigPageThumbnailScaling(settingH2s[14]);
+	// Thumbnail Scaling
+	uconfigPageThumbnailScaling(settingH2s[14]);
 
-    // Viewport Override
-    uconfigPageViewportOverride(settingH2s[15]);
+	// Viewport Override
+	uconfigPageViewportOverride(settingH2s[15]);
 
-    // Gallery Comments
-    uconfigPageGalleryComments(settingH2s[16]);
+	// Gallery Comments
+	uconfigPageGalleryComments(settingH2s[16]);
 
-    // Gallery Tags
-    uconfigPageGalleryTags(settingH2s[17]);
+	// Gallery Tags
+	uconfigPageGalleryTags(settingH2s[17]);
 
-    // Gallery Page Numbering
-    uconfigPageGalleryPageNumbering(settingH2s[18]);
+	// Gallery Page Numbering
+	uconfigPageGalleryPageNumbering(settingH2s[18]);
 
-    // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
-    uconfigPageReWrapperForm(contentForm);
+	// 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
+	uconfigPageReWrapperForm(contentForm);
 
-    // 保存更改
-    contentForm.lastElementChild.children[0].value = "保存修改";
+	// 保存更改
+	contentForm.lastElementChild.children[0].value = "保存修改";
 }
 
 // 头部翻译
 function uconfigPageTopDiv() {
-    var profileOuter = document.getElementById("profile_outer");
-    var profileForm = document.getElementById("profile_form");
-    var profileAction = document.getElementById("profile_action");
-    var profileName = document.getElementById("profile_name");
-    var select = profileForm.querySelectorAll("select")[0];
+	var profileOuter = document.getElementById("profile_outer");
+	var profileForm = document.getElementById("profile_form");
+	var profileAction = document.getElementById("profile_action");
+	var profileName = document.getElementById("profile_name");
+	var select = profileForm.querySelectorAll("select")[0];
 
-    var profileSelect = document.getElementById("profile_select");
-    var selectProfile = profileSelect.children[0];
-    var profileActionDiv = profileOuter.querySelector("div#profile_action");
-    if (profileActionDiv.children.length > 0) {
-        // 删除配置
-        var deletebtn = profileActionDiv.children[0];
-        deletebtn.value = "删除配置";
-        deletebtn.onclick = function () {
-            var selectedIndex = select.selectedIndex;
-            var selectText = select.options[selectedIndex].text;
-            if (confirm(`是否删除配置："${selectText}" ?`)) {
-                profileAction.value = "delete";
-                profileForm.submit();
-            }
-        }
+	var profileSelect = document.getElementById("profile_select");
+	var selectProfile = profileSelect.children[0];
+	var profileActionDiv = profileOuter.querySelector("div#profile_action");
+	if (profileActionDiv.children.length > 0) {
+		// 删除配置
+		var deletebtn = profileActionDiv.children[0];
+		deletebtn.value = "删除配置";
+		deletebtn.onclick = function () {
+			var selectedIndex = select.selectedIndex;
+			var selectText = select.options[selectedIndex].text;
+			if (confirm(`是否删除配置："${selectText}" ?`)) {
+				profileAction.value = "delete";
+				profileForm.submit();
+			}
+		}
 
-        // 设置为默认
-        var defaultBtn = profileActionDiv.children[1];
-        defaultBtn.value = "设为默认";
-        defaultBtn.onclick = function () {
-            var selectedIndex = select.selectedIndex;
-            var selectText = select.options[selectedIndex].text;
-            if (confirm(`将配置："${selectText}" 设为默认?`)) {
-                profileAction.value = "default";
-                profileForm.submit();
-            }
-        }
+		// 设置为默认
+		var defaultBtn = profileActionDiv.children[1];
+		defaultBtn.value = "设为默认";
+		defaultBtn.onclick = function () {
+			var selectedIndex = select.selectedIndex;
+			var selectText = select.options[selectedIndex].text;
+			if (confirm(`将配置："${selectText}" 设为默认?`)) {
+				profileAction.value = "default";
+				profileForm.submit();
+			}
+		}
 
-        selectProfile.innerText = "配置名称：";
-    } else {
-        selectProfile.innerText = "配置名称 [ 使用中 ] ：";
-    }
+		selectProfile.innerText = "配置名称：";
+	} else {
+		selectProfile.innerText = "配置名称 [ 使用中 ] ：";
+	}
 
-    var topbtnDiv = profileSelect.children[2];
-    var renameBtn = topbtnDiv.children[0];
-    renameBtn.value = "重命名";
+	var topbtnDiv = profileSelect.children[2];
+	var renameBtn = topbtnDiv.children[0];
+	renameBtn.value = "重命名";
 
-    var promptTips = "\r\n\r\n -- 建议 -- \r\n1. 请输入英文、数字，不支持中文等其他语种。\r\n2. 输入字符长度不能超过20。\r\n3. 尽量不要使用默认名称 \"Default Profile\"，如果使用该默认名称，在存在多个配置页情况下，设置默认配置页时，配置名称会互换。";
+	var promptTips = "\r\n\r\n -- 建议 -- \r\n1. 请输入英文、数字，不支持中文等其他语种。\r\n2. 输入字符长度不能超过20。\r\n3. 尽量不要使用默认名称 \"Default Profile\"，如果使用该默认名称，在存在多个配置页情况下，设置默认配置页时，配置名称会互换。";
 
-    renameBtn.onclick = function () {
-        var promptText = `重命名：请输入配置名称 ${promptTips}`;
-        var selectedIndex = select.selectedIndex;
-        var selectText = select.options[selectedIndex].text.replace(" (Default)", "");
-        var name = prompt(promptText, selectText);
-        if (name != null) {
-            profileAction.value = "rename";
-            profileName.value = name;
-            profileForm.submit();
-        }
-    }
+	renameBtn.onclick = function () {
+		var promptText = `重命名：请输入配置名称 ${promptTips}`;
+		var selectedIndex = select.selectedIndex;
+		var selectText = select.options[selectedIndex].text.replace(" (Default)", "");
+		var name = prompt(promptText, selectText);
+		if (name != null) {
+			profileAction.value = "rename";
+			profileName.value = name;
+			profileForm.submit();
+		}
+	}
 
-    if (topbtnDiv.children.length > 1) {
-        var createNewBtn = topbtnDiv.children[1];
-        createNewBtn.value = "新建配置";
-        createNewBtn.onclick = function () {
-            var promptText = `新建配置：请输入配置名称 ${promptTips}`;
-            var name = prompt(promptText, "New Profile");
-            if (name != null) {
-                profileAction.value = "create";
-                profileName.value = name;
-                profileForm.submit();
-            }
-        }
-    }
+	if (topbtnDiv.children.length > 1) {
+		var createNewBtn = topbtnDiv.children[1];
+		createNewBtn.value = "新建配置";
+		createNewBtn.onclick = function () {
+			var promptText = `新建配置：请输入配置名称 ${promptTips}`;
+			var name = prompt(promptText, "New Profile");
+			if (name != null) {
+				profileAction.value = "create";
+				profileName.value = name;
+				profileForm.submit();
+			}
+		}
+	}
 
-    // 错误提示
-    var msgDiv = document.getElementById("msg");
-    if (msgDiv) {
-        var msgText = msgDiv.innerText;
-        switch (msgText) {
-            case "Name must be less than 20 characters.":
-                msgDiv.innerText = "操作失败：字符长度不能超过20。";
-                func_eh_ex(() => {
-                    msgDiv.style.color = "red";
-                }, () => {
-                    msgDiv.style.color = "yellow";
-                });
-                break;
-            case "Name contains invalid characters.":
-                msgDiv.innerText = "操作失败：输入中存在非法字符。"
-                func_eh_ex(() => {
-                    msgDiv.style.color = "red";
-                }, () => {
-                    msgDiv.style.color = "yellow";
-                });
-                break;
-            case "Settings were updated":
-                msgDiv.innerText = "操作成功：设置已更新。"
-                msgDiv.style.color = "lightgreen";
-                func_eh_ex(() => {
-                    msgDiv.style.color = "black";
-                }, () => {
-                    msgDiv.style.color = "lightgreen";
-                });
-                break;
-            default:
-                msgDiv.innerText = `${msgDiv.innerText}`;
-                translatePageElementEN(msgDiv);
-                break;
-        }
-    }
+	// 错误提示
+	var msgDiv = document.getElementById("msg");
+	if (msgDiv) {
+		var msgText = msgDiv.innerText;
+		switch (msgText) {
+			case "Name must be less than 20 characters.":
+				msgDiv.innerText = "操作失败：字符长度不能超过20。";
+				func_eh_ex(() => {
+					msgDiv.style.color = "red";
+				}, () => {
+					msgDiv.style.color = "yellow";
+				});
+				break;
+			case "Name contains invalid characters.":
+				msgDiv.innerText = "操作失败：输入中存在非法字符。"
+				func_eh_ex(() => {
+					msgDiv.style.color = "red";
+				}, () => {
+					msgDiv.style.color = "yellow";
+				});
+				break;
+			case "Settings were updated":
+				msgDiv.innerText = "操作成功：设置已更新。"
+				msgDiv.style.color = "lightgreen";
+				func_eh_ex(() => {
+					msgDiv.style.color = "black";
+				}, () => {
+					msgDiv.style.color = "lightgreen";
+				});
+				break;
+			default:
+				msgDiv.innerText = `${msgDiv.innerText}`;
+				translatePageElementEN(msgDiv);
+				break;
+		}
+	}
 }
 
 // 图片加载设置
 function uconfigPageImageLoadSettings(titleH2) {
-    titleH2.innerText = "-- 图片加载设置 --";
+	titleH2.innerText = "-- 图片加载设置 --";
 
-    var loadSelectDiv = titleH2.nextElementSibling;
-    var p = loadSelectDiv.querySelector("p");
-    p.innerText = "1. 你是否希望通过 Hentai@Home 网络加载图片，如果可用的话？";
-    var inputItems = p.nextElementSibling.children;
-    inputItems[0].children[0].childNodes[2].data = " 所有客户端（推荐）";
-    inputItems[1].children[0].childNodes[2].data = " 仅使用默认端口的客户端（可能会更慢，请在防火墙或代理阻止非标准接口的流量时选择此项。）";
-    inputItems[2].children[0].childNodes[2].data = " 否 [ 现代 / HTTPS ]（仅限捐赠者，你将无法浏览尽可能多的页面，请在出现严重的问题时选择此项。）";
-    inputItems[3].children[0].childNodes[2].data = " 否 [ 传统 / HTTP ]（仅限捐赠者，默认情况下无法在新版浏览器中使用，建议在使用过时的浏览器时选择此项。）";
+	var loadSelectDiv = titleH2.nextElementSibling;
+	var p = loadSelectDiv.querySelector("p");
+	p.innerText = "1. 你是否希望通过 Hentai@Home 网络加载图片，如果可用的话？";
+	var inputItems = p.nextElementSibling.children;
+	inputItems[0].children[0].childNodes[2].data = " 所有客户端（推荐）";
+	inputItems[1].children[0].childNodes[2].data = " 仅使用默认端口的客户端（可能会更慢，请在防火墙或代理阻止非标准接口的流量时选择此项。）";
+	inputItems[2].children[0].childNodes[2].data = " 否 [ 现代 / HTTPS ]（仅限捐赠者，你将无法浏览尽可能多的页面，请在出现严重的问题时选择此项。）";
+	inputItems[3].children[0].childNodes[2].data = " 否 [ 传统 / HTTP ]（仅限捐赠者，默认情况下无法在新版浏览器中使用，建议在使用过时的浏览器时选择此项。）";
 
-    if (inputItems[2].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
-        inputItems[2].children[0].children[1].style.cursor = "not-allowed";
-        inputItems[2].children[0].style.cursor = "not-allowed";
-    }
+	if (inputItems[2].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
+		inputItems[2].children[0].children[1].style.cursor = "not-allowed";
+		inputItems[2].children[0].style.cursor = "not-allowed";
+	}
 
-    if (inputItems[3].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
-        inputItems[3].children[0].children[1].style.cursor = "not-allowed";
-        inputItems[3].children[0].style.cursor = "not-allowed";
-    }
+	if (inputItems[3].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
+		inputItems[3].children[0].children[1].style.cursor = "not-allowed";
+		inputItems[3].children[0].style.cursor = "not-allowed";
+	}
 
-    var countryDiv = loadSelectDiv.nextElementSibling;
-    var countryP = countryDiv.children[0];
-    var countryPStrong = countryP.querySelector("strong");
-    countryP.innerHTML = `2. 您似乎是从 <strong id="country_span">${countryPStrong.innerText}</strong> 浏览该网站或在该国家/地区使用 VPN 或代理，这意味着该网站将尝试从该一般地理区域的 H@H 客户端加载图像。如果这是不正确的，或者如果您出于任何原因想要使用不同的区域（例如，如果您使用的是拆分隧道 VPN），您可以在下面选择不同的国家/地区。`;
+	var countryDiv = loadSelectDiv.nextElementSibling;
+	var countryP = countryDiv.children[0];
+	var countryPStrong = countryP.querySelector("strong");
+	countryP.innerHTML = `2. 您似乎是从 <strong id="country_span">${countryPStrong.innerText}</strong> 浏览该网站或在该国家/地区使用 VPN 或代理，这意味着该网站将尝试从该一般地理区域的 H@H 客户端加载图像。如果这是不正确的，或者如果您出于任何原因想要使用不同的区域（例如，如果您使用的是拆分隧道 VPN），您可以在下面选择不同的国家/地区。`;
 
-    var countrySelectDiv = countryDiv.children[1];
-    countrySelectDiv.childNodes[0].data = "国家或地区：";
+	var countrySelectDiv = countryDiv.children[1];
+	countrySelectDiv.childNodes[0].data = "国家或地区：";
 
-    var countrySelect = countrySelectDiv.children[0];
-    var countryOptions = countrySelect.options;
-    for (const i in countryOptions) {
-        if (Object.hasOwnProperty.call(countryOptions, i)) {
-            const option = countryOptions[i];
-            switch (option.value) {
-                case "":
-                    option.innerText = "自动检测";
-                    break;
-                case "-":
-                    option.innerText = "-";
-                    break;
-                default:
-                    if (settingsPage_countryDict[option.value]) {
-                        var countryZH = settingsPage_countryDict[option.value];
-                        if (countryPStrong.innerText == option.innerText) {
-                            document.getElementById("country_span").innerText = countryZH;
-                        }
-                        option.innerText = `${countryZH} ${option.innerText}`;
-                    }
-                    break;
-            }
-        }
-    }
+	var countrySelect = countrySelectDiv.children[0];
+	var countryOptions = countrySelect.options;
+	for (const i in countryOptions) {
+		if (Object.hasOwnProperty.call(countryOptions, i)) {
+			const option = countryOptions[i];
+			switch (option.value) {
+				case "":
+					option.innerText = "自动检测";
+					break;
+				case "-":
+					option.innerText = "-";
+					break;
+				default:
+					if (settingsPage_countryDict[option.value]) {
+						var countryZH = settingsPage_countryDict[option.value];
+						if (countryPStrong.innerText == option.innerText) {
+							document.getElementById("country_span").innerText = countryZH;
+						}
+						option.innerText = `${countryZH} ${option.innerText}`;
+					}
+					break;
+			}
+		}
+	}
 
 
 }
 
 // 图片大小设置
 function uconfigImageSizeSettings(titleH2) {
-    titleH2.innerText = "-- 图片大小设置 --";
-    var imgResolutionDiv = titleH2.nextElementSibling;
-    var p = imgResolutionDiv.querySelector("p");
-    p.innerText = "1. 通常情况下，图片会被重新采样到 1280 像素的水平分辨率以供在线查看，您也可以选择以下重新采样分辨率。但是为了避免负载过高，高于 1280 像素将只供给于赞助者、特殊贡献者，以及 UID 小于 3,000,000 的用户。"
-    var resolutionRadios = p.nextElementSibling.children;
-    resolutionRadios[0].children[0].childNodes[2].data = "自动";
-    for (var i = 1; i < resolutionRadios.length; i++) {
-        const radioDiv = resolutionRadios[i];
-        var innerText = radioDiv.children[0].childNodes[2].data;
-        radioDiv.children[0].childNodes[2].data = innerText.replace("x", " 像素");
-        if (radioDiv.children[0].children[0].getAttribute("disabled") == "disabled") {
-            radioDiv.children[0].children[1].style.cursor = "not-allowed";
-            radioDiv.children[0].style.cursor = "not-allowed";
-        }
-    }
+	titleH2.innerText = "-- 图片大小设置 --";
+	var imgResolutionDiv = titleH2.nextElementSibling;
+	var p = imgResolutionDiv.querySelector("p");
+	p.innerText = "1. 通常情况下，图片会被重新采样到 1280 像素的水平分辨率以供在线查看，您也可以选择以下重新采样分辨率。但是为了避免负载过高，高于 1280 像素将只供给于赞助者、特殊贡献者，以及 UID 小于 3,000,000 的用户。"
+	var resolutionRadios = p.nextElementSibling.children;
+	resolutionRadios[0].children[0].childNodes[2].data = "自动";
+	for (var i = 1; i < resolutionRadios.length; i++) {
+		const radioDiv = resolutionRadios[i];
+		var innerText = radioDiv.children[0].childNodes[2].data;
+		radioDiv.children[0].childNodes[2].data = innerText.replace("x", " 像素");
+		if (radioDiv.children[0].children[0].getAttribute("disabled") == "disabled") {
+			radioDiv.children[0].children[1].style.cursor = "not-allowed";
+			radioDiv.children[0].style.cursor = "not-allowed";
+		}
+	}
 
-    var imgZoomDiv = imgResolutionDiv.nextElementSibling;
-    var imgZoomP = imgZoomDiv.children[0];
-    imgZoomP.innerText = "2. 虽然该网站会自动缩小图像以适应您的屏幕宽度，但您也可以手动限制图像的最大显示尺寸。就像自动缩放一样，这不会重新采样图像，因为调整大小是在浏览器端完成的。（0 = 无限制）";
-    var imgZoomTds = imgZoomP.nextElementSibling.querySelectorAll("td");
-    imgZoomTds[0].innerText = "水平缩放：";
-    imgZoomTds[1].childNodes[1].data = " 像素";
-    imgZoomTds[2].innerText = "垂直缩放：";
-    imgZoomTds[3].childNodes[1].data = " 像素";
+	var imgZoomDiv = imgResolutionDiv.nextElementSibling;
+	var imgZoomP = imgZoomDiv.children[0];
+	imgZoomP.innerText = "2. 虽然该网站会自动缩小图像以适应您的屏幕宽度，但您也可以手动限制图像的最大显示尺寸。就像自动缩放一样，这不会重新采样图像，因为调整大小是在浏览器端完成的。（0 = 无限制）";
+	var imgZoomTds = imgZoomP.nextElementSibling.querySelectorAll("td");
+	imgZoomTds[0].innerText = "水平缩放：";
+	imgZoomTds[1].childNodes[1].data = " 像素";
+	imgZoomTds[2].innerText = "垂直缩放：";
+	imgZoomTds[3].childNodes[1].data = " 像素";
 }
 
 // 作品标题显示
 function uconfigPageGalleryNameDisplay(titleH2) {
-    titleH2.innerText = "-- 作品标题显示 --";
-    var galleryTitleDiv = titleH2.nextElementSibling;
-    var p = galleryTitleDiv.querySelector("p");
-    p.innerText = "1. 很多作品都同时拥有 英文 / 日语罗马音标题 和 日文标题，你想默认显示哪一个？";
-    var galleryTitleRadios = p.nextElementSibling.children;
-    galleryTitleRadios[0].children[0].childNodes[2].data = " 默认标题";
-    galleryTitleRadios[1].children[0].childNodes[2].data = " 日语标题（如果有日语标题的情况下）";
+	titleH2.innerText = "-- 作品标题显示 --";
+	var galleryTitleDiv = titleH2.nextElementSibling;
+	var p = galleryTitleDiv.querySelector("p");
+	p.innerText = "1. 很多作品都同时拥有 英文 / 日语罗马音标题 和 日文标题，你想默认显示哪一个？";
+	var galleryTitleRadios = p.nextElementSibling.children;
+	galleryTitleRadios[0].children[0].childNodes[2].data = " 默认标题";
+	galleryTitleRadios[1].children[0].childNodes[2].data = " 日语标题（如果有日语标题的情况下）";
 }
 
 // 存档下载设置
 function uconfigPageArchiverSettings(titleH2) {
-    titleH2.innerText = "-- 存档下载设置 --";
-    var archiverDiv = titleH2.nextElementSibling;
-    var p = archiverDiv.querySelector("p");
-    p.innerText = "1. 存档下载的默认行为是手动选择存档（原始画质或压缩画质），然后复制下载链接或直接点击下载，您可以在此处更改设置。";
-    var archiverRadios = p.nextElementSibling.children;
-    archiverRadios[0].children[0].childNodes[2].data = "手动选择 - 画质，手动下载（默认）";
-    archiverRadios[1].children[0].childNodes[2].data = "手动选择 - 画质，自动下载";
-    archiverRadios[2].children[0].childNodes[2].data = "自动选择 - 原始画质，手动下载";
-    archiverRadios[3].children[0].childNodes[2].data = "自动选择 - 原始画质，自动下载";
-    archiverRadios[4].children[0].childNodes[2].data = "自动选择 - 压缩画质，手动下载";
-    archiverRadios[5].children[0].childNodes[2].data = "自动选择 - 压缩画质，自动下载";
+	titleH2.innerText = "-- 存档下载设置 --";
+	var archiverDiv = titleH2.nextElementSibling;
+	var p = archiverDiv.querySelector("p");
+	p.innerText = "1. 存档下载的默认行为是手动选择存档（原始画质或压缩画质），然后复制下载链接或直接点击下载，您可以在此处更改设置。";
+	var archiverRadios = p.nextElementSibling.children;
+	archiverRadios[0].children[0].childNodes[2].data = "手动选择 - 画质，手动下载（默认）";
+	archiverRadios[1].children[0].childNodes[2].data = "手动选择 - 画质，自动下载";
+	archiverRadios[2].children[0].childNodes[2].data = "自动选择 - 原始画质，手动下载";
+	archiverRadios[3].children[0].childNodes[2].data = "自动选择 - 原始画质，自动下载";
+	archiverRadios[4].children[0].childNodes[2].data = "自动选择 - 压缩画质，手动下载";
+	archiverRadios[5].children[0].childNodes[2].data = "自动选择 - 压缩画质，自动下载";
 }
 
 // 首页设置
 function uconfigPageFrontPageSettings(titleH2) {
-    titleH2.innerText = "-- 首页设置 --";
-    var displayWayDiv = titleH2.nextElementSibling;
-    var p = displayWayDiv.querySelector("p");
-    p.innerText = "1. 你想以哪种方式浏览首页?";
-    var displayWayRadios = p.nextElementSibling.children;
-    displayWayRadios[0].children[0].childNodes[2].data = "标题 + 悬浮图";
-    displayWayRadios[1].children[0].childNodes[2].data = "标题 + 悬浮图 + 账号收藏标签";
-    displayWayRadios[2].children[0].childNodes[2].data = "标题 + 悬浮图 + 标签";
-    displayWayRadios[3].children[0].childNodes[2].data = "标题 + 图片 + 标签";
-    displayWayRadios[4].children[0].childNodes[2].data = "标题 + 缩略图";
+	titleH2.innerText = "-- 首页设置 --";
+	var displayWayDiv = titleH2.nextElementSibling;
+	var p = displayWayDiv.querySelector("p");
+	p.innerText = "1. 你想以哪种方式浏览首页?";
+	var displayWayRadios = p.nextElementSibling.children;
+	displayWayRadios[0].children[0].childNodes[2].data = "标题 + 悬浮图";
+	displayWayRadios[1].children[0].childNodes[2].data = "标题 + 悬浮图 + 账号收藏标签";
+	displayWayRadios[2].children[0].childNodes[2].data = "标题 + 悬浮图 + 标签";
+	displayWayRadios[3].children[0].childNodes[2].data = "标题 + 图片 + 标签";
+	displayWayRadios[4].children[0].childNodes[2].data = "标题 + 缩略图";
 
-    var bookTypeFilterDiv = displayWayDiv.nextElementSibling;
-    var bookTypeFilterP = bookTypeFilterDiv.children[0];
-    bookTypeFilterP.innerText = "2. 你希望首页包含或排除哪些作品类型?";
-    var bookTypeFilterBtns = bookTypeFilterP.nextElementSibling.querySelectorAll("div.cs");
-    for (const i in bookTypeFilterBtns) {
-        if (Object.hasOwnProperty.call(bookTypeFilterBtns, i)) {
-            const bookType = bookTypeFilterBtns[i];
-            if (bookTypeData[bookType.innerText]) {
-                bookType.innerText = bookTypeData[bookType.innerText];
-            }
-        }
-    }
+	var bookTypeFilterDiv = displayWayDiv.nextElementSibling;
+	var bookTypeFilterP = bookTypeFilterDiv.children[0];
+	bookTypeFilterP.innerText = "2. 你希望首页包含或排除哪些作品类型?";
+	var bookTypeFilterBtns = bookTypeFilterP.nextElementSibling.querySelectorAll("div.cs");
+	for (const i in bookTypeFilterBtns) {
+		if (Object.hasOwnProperty.call(bookTypeFilterBtns, i)) {
+			const bookType = bookTypeFilterBtns[i];
+			if (bookTypeData[bookType.innerText]) {
+				bookType.innerText = bookTypeData[bookType.innerText];
+			}
+		}
+	}
 }
 
 // 收藏设置
 function uconfigPageFavorites(titleH2) {
-    titleH2.innerText = "-- 收藏设置 --";
-    var favoriteRenameDiv = titleH2.nextElementSibling;
-    var p = favoriteRenameDiv.querySelector("p");
-    p.innerText = "1. 重命名你的收藏夹名称";
-    var orderDiv = favoriteRenameDiv.nextElementSibling;
-    var orderP = orderDiv.children[0];
-    orderP.innerText = "2. 设置作品在收藏夹中的默认排序，需注意，2016年3月网站改版前没有记录收藏时间，会按作品的上传日期计算";
-    var orderRadios = orderP.nextElementSibling.children;
-    orderRadios[0].children[0].childNodes[2].data = "按作品更新时间排序";
-    orderRadios[1].children[0].childNodes[2].data = "按用户收藏时间排序";
+	titleH2.innerText = "-- 收藏设置 --";
+	var favoriteRenameDiv = titleH2.nextElementSibling;
+	var p = favoriteRenameDiv.querySelector("p");
+	p.innerText = "1. 重命名你的收藏夹名称";
+	var orderDiv = favoriteRenameDiv.nextElementSibling;
+	var orderP = orderDiv.children[0];
+	orderP.innerText = "2. 设置作品在收藏夹中的默认排序，需注意，2016年3月网站改版前没有记录收藏时间，会按作品的上传日期计算";
+	var orderRadios = orderP.nextElementSibling.children;
+	orderRadios[0].children[0].childNodes[2].data = "按作品更新时间排序";
+	orderRadios[1].children[0].childNodes[2].data = "按用户收藏时间排序";
 }
 
 // 评分设置
 function uconfigPageRatings(titleH2) {
-    titleH2.innerText = "-- 评分设置 --";
-    var rateingDiv = titleH2.nextElementSibling;
-    var p = rateingDiv.querySelector("p");
-    p.innerText = "1. 每个英文字母代表每颗星的颜色，请使用 R / G / B / Y（红 / 绿 / 蓝 / 黄）组合你的评分颜色。";
-    var rateinglabel = rateingDiv.querySelectorAll("td")[1];
-    rateinglabel.innerText = "默认设置下，作品的评分设置是 RRGGB，对应分数和颜色显示：2 星及以下显示红星，2.5 ~ 4 星显示为绿星，4.5 ~ 5 星显示为蓝星。你可以设置为其他颜色组合。";
+	titleH2.innerText = "-- 评分设置 --";
+	var rateingDiv = titleH2.nextElementSibling;
+	var p = rateingDiv.querySelector("p");
+	p.innerText = "1. 每个英文字母代表每颗星的颜色，请使用 R / G / B / Y（红 / 绿 / 蓝 / 黄）组合你的评分颜色。";
+	var rateinglabel = rateingDiv.querySelectorAll("td")[1];
+	rateinglabel.innerText = "默认设置下，作品的评分设置是 RRGGB，对应分数和颜色显示：2 星及以下显示红星，2.5 ~ 4 星显示为绿星，4.5 ~ 5 星显示为蓝星。你可以设置为其他颜色组合。";
 }
 
 // 标签组设置
 function uconfigPageTagNamespaces(titleH2) {
-    titleH2.innerText = "-- 标签组设置 --";
-    var searchTagFilterDiv = titleH2.nextElementSibling;
-    var p = searchTagFilterDiv.querySelector("p");
-    p.innerText = "1. 如果要从默认标签搜索中排除某些标签组，可以勾选以下标签组。请注意，这不会阻止在这些标签组中的标签的展示区出现，它只是在搜索标签时排除这些标签组。";
-    var tagGroupRadios = p.nextElementSibling.children;
-    tagGroupRadios[0].children[0].childNodes[2].data = "重新分类";
-    tagGroupRadios[1].children[0].childNodes[2].data = "语言";
-    tagGroupRadios[2].children[0].childNodes[2].data = "原作";
-    tagGroupRadios[3].children[0].childNodes[2].data = "角色";
-    tagGroupRadios[4].children[0].childNodes[2].data = "社团";
-    tagGroupRadios[5].children[0].childNodes[2].data = "艺术家";
-    tagGroupRadios[6].children[0].childNodes[2].data = "角色扮演";
-    tagGroupRadios[7].children[0].childNodes[2].data = "男性";
-    tagGroupRadios[8].children[0].childNodes[2].data = "女性";
-    tagGroupRadios[9].children[0].childNodes[2].data = "混合";
-    tagGroupRadios[10].children[0].childNodes[2].data = "其他";
+	titleH2.innerText = "-- 标签组设置 --";
+	var searchTagFilterDiv = titleH2.nextElementSibling;
+	var p = searchTagFilterDiv.querySelector("p");
+	p.innerText = "1. 如果要从默认标签搜索中排除某些标签组，可以勾选以下标签组。请注意，这不会阻止在这些标签组中的标签的展示区出现，它只是在搜索标签时排除这些标签组。";
+	var tagGroupRadios = p.nextElementSibling.children;
+	tagGroupRadios[0].children[0].childNodes[2].data = "重新分类";
+	tagGroupRadios[1].children[0].childNodes[2].data = "语言";
+	tagGroupRadios[2].children[0].childNodes[2].data = "原作";
+	tagGroupRadios[3].children[0].childNodes[2].data = "角色";
+	tagGroupRadios[4].children[0].childNodes[2].data = "社团";
+	tagGroupRadios[5].children[0].childNodes[2].data = "艺术家";
+	tagGroupRadios[6].children[0].childNodes[2].data = "角色扮演";
+	tagGroupRadios[7].children[0].childNodes[2].data = "男性";
+	tagGroupRadios[8].children[0].childNodes[2].data = "女性";
+	tagGroupRadios[9].children[0].childNodes[2].data = "混合";
+	tagGroupRadios[10].children[0].childNodes[2].data = "其他";
 }
 
 // 标签过滤阀值设置
 function uconfigPageTagFilteringThreshold(titleH2) {
-    titleH2.innerText = "-- 标签过滤阀值设置 --";
-    var tagFilterLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
-    tagFilterLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>负权重</strong> 来软过滤它们。一旦某个作品所有的标签权重之和 <strong>低于</strong> 设定值，此作品将从视图中被过滤。这个值的设定范围为 [ -9999 ~ 0 ] 。`
+	titleH2.innerText = "-- 标签过滤阀值设置 --";
+	var tagFilterLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
+	tagFilterLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>负权重</strong> 来软过滤它们。一旦某个作品所有的标签权重之和 <strong>低于</strong> 设定值，此作品将从视图中被过滤。这个值的设定范围为 [ -9999 ~ 0 ] 。`
 }
 
 // 标签订阅阀值设置
 function uconfigTagWatchingThreshold(titleH2) {
-    titleH2.innerText = "-- 标签订阅阀值设置 --";
-    var tagWatchingLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
-    tagWatchingLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>正权重</strong> 来关注它们。一旦某个作品所有的标签权重之和 <strong>高于</strong> 设定值，此作品将包含在菜单 [ 偏好 ] 的作品列表中。这个值的设定范围为 [ 0 ~ 9999 ] 。`
+	titleH2.innerText = "-- 标签订阅阀值设置 --";
+	var tagWatchingLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
+	tagWatchingLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>正权重</strong> 来关注它们。一旦某个作品所有的标签权重之和 <strong>高于</strong> 设定值，此作品将包含在菜单 [ 偏好 ] 的作品列表中。这个值的设定范围为 [ 0 ~ 9999 ] 。`
 }
 
 // 屏蔽语种
 function uconfigTagExcludedLanguages(titleH2) {
-    titleH2.innerText = "-- 屏蔽语种 --";
-    var filterLabelDiv = titleH2.nextElementSibling;
-    filterLabelDiv.children[0].innerText = "如果你希望从作品列表和搜索中隐藏某国语言的作品，请从下面的列表中选择它们。";
-    filterLabelDiv.children[1].innerText = "请注意，无论您的搜索查询如何，屏蔽语言的作品都不会被搜索出来。";
-    var languageTable = filterLabelDiv.children[2];
-    var ths = languageTable.querySelectorAll("th");
-    ths[1].innerText = "原始";
-    ths[2].innerText = "翻译";
-    ths[3].innerText = "重写";
-    ths[4].innerText = "全部";
-    var trs = languageTable.querySelectorAll("tr");
-    trs[1].children[0].innerText = "日语";
-    trs[2].children[0].innerText = "英语";
-    trs[3].children[0].innerText = "汉语";
-    trs[4].children[0].innerText = "荷兰语";
-    trs[5].children[0].innerText = "法语";
-    trs[6].children[0].innerText = "德语";
-    trs[7].children[0].innerText = "匈牙利语";
-    trs[8].children[0].innerText = "意大利语";
-    trs[9].children[0].innerText = "韩语";
-    trs[10].children[0].innerText = "波兰语";
-    trs[11].children[0].innerText = "葡萄牙语";
-    trs[12].children[0].innerText = "俄语";
-    trs[13].children[0].innerText = "西班牙语";
-    trs[14].children[0].innerText = "泰语";
-    trs[15].children[0].innerText = "越南语";
-    trs[16].children[0].innerText = "无语言";
-    trs[17].children[0].innerText = "其他";
+	titleH2.innerText = "-- 屏蔽语种 --";
+	var filterLabelDiv = titleH2.nextElementSibling;
+	filterLabelDiv.children[0].innerText = "如果你希望从作品列表和搜索中隐藏某国语言的作品，请从下面的列表中选择它们。";
+	filterLabelDiv.children[1].innerText = "请注意，无论您的搜索查询如何，屏蔽语言的作品都不会被搜索出来。";
+	var languageTable = filterLabelDiv.children[2];
+	var ths = languageTable.querySelectorAll("th");
+	ths[1].innerText = "原始";
+	ths[2].innerText = "翻译";
+	ths[3].innerText = "重写";
+	ths[4].innerText = "全部";
+	var trs = languageTable.querySelectorAll("tr");
+	trs[1].children[0].innerText = "日语";
+	trs[2].children[0].innerText = "英语";
+	trs[3].children[0].innerText = "汉语";
+	trs[4].children[0].innerText = "荷兰语";
+	trs[5].children[0].innerText = "法语";
+	trs[6].children[0].innerText = "德语";
+	trs[7].children[0].innerText = "匈牙利语";
+	trs[8].children[0].innerText = "意大利语";
+	trs[9].children[0].innerText = "韩语";
+	trs[10].children[0].innerText = "波兰语";
+	trs[11].children[0].innerText = "葡萄牙语";
+	trs[12].children[0].innerText = "俄语";
+	trs[13].children[0].innerText = "西班牙语";
+	trs[14].children[0].innerText = "泰语";
+	trs[15].children[0].innerText = "越南语";
+	trs[16].children[0].innerText = "无语言";
+	trs[17].children[0].innerText = "其他";
 }
 
 // 屏蔽上传者
 function uconfigPageExcludedUploaders(titleH2) {
-    titleH2.innerText = "-- 屏蔽上传者 --";
-    var fitlerUploaderDiv = titleH2.nextElementSibling;
-    fitlerUploaderDiv.children[0].innerText = "如果你希望从作品列表和搜索中隐藏某些上传者的作品，请将上传者的用户名添加到下方。每行输入一个用户名。";
-    fitlerUploaderDiv.children[1].innerText = "请注意，无论您的搜索查询如何，屏蔽上传者的作品都不会被搜索出来。";
-    var totalCount = fitlerUploaderDiv.children[3];
-    var usedCount = totalCount.children[0].innerText;
-    var allCount = totalCount.children[1].innerText;
-    totalCount.innerHTML = `可用容量：<strong>${usedCount}</strong> / <strong>${allCount}</strong>`;
+	titleH2.innerText = "-- 屏蔽上传者 --";
+	var fitlerUploaderDiv = titleH2.nextElementSibling;
+	fitlerUploaderDiv.children[0].innerText = "如果你希望从作品列表和搜索中隐藏某些上传者的作品，请将上传者的用户名添加到下方。每行输入一个用户名。";
+	fitlerUploaderDiv.children[1].innerText = "请注意，无论您的搜索查询如何，屏蔽上传者的作品都不会被搜索出来。";
+	var totalCount = fitlerUploaderDiv.children[3];
+	var usedCount = totalCount.children[0].innerText;
+	var allCount = totalCount.children[1].innerText;
+	totalCount.innerHTML = `可用容量：<strong>${usedCount}</strong> / <strong>${allCount}</strong>`;
 }
 
 // 搜索数量设置
 function uconfigPageSearchResultCount(titleH2) {
-    titleH2.innerText = "-- 搜索数量设置 --";
-    var searchCountDiv = titleH2.nextElementSibling;
-    var p = searchCountDiv.querySelector("p");
-    var commonText = "1. 对于首页、搜索页面 和 种子搜索页面，您希望每页有多少条结果？";
-    var otherText = p.innerText.replace("How many results would you like per page for the index/search page and torrent search pages? ", "");
-    if (otherText.length == 0) {
-        p.innerText = commonText;
-    } else {
-        if (otherText == "(Hath Perk: Paging Enlargement Required)") {
-            p.innerText = `${commonText}（需要解锁权限： Hath Perk 分页扩大）`;
-        } else {
-            p.innerText = `${commonText}${otherText}`;
-            translatePageElementEN(p);
-        }
-    }
+	titleH2.innerText = "-- 搜索数量设置 --";
+	var searchCountDiv = titleH2.nextElementSibling;
+	var p = searchCountDiv.querySelector("p");
+	var commonText = "1. 对于首页、搜索页面 和 种子搜索页面，您希望每页有多少条结果？";
+	var otherText = p.innerText.replace("How many results would you like per page for the index/search page and torrent search pages? ", "");
+	if (otherText.length == 0) {
+		p.innerText = commonText;
+	} else {
+		if (otherText == "(Hath Perk: Paging Enlargement Required)") {
+			p.innerText = `${commonText}（需要解锁权限： Hath Perk 分页扩大）`;
+		} else {
+			p.innerText = `${commonText}${otherText}`;
+			translatePageElementEN(p);
+		}
+	}
 
-    var searchCountRadios = p.nextElementSibling.children;
-    for (const i in searchCountRadios) {
-        if (Object.hasOwnProperty.call(searchCountRadios, i)) {
-            const radio = searchCountRadios[i];
-            var innerText = radio.children[0].childNodes[2].data;
-            radio.children[0].childNodes[2].data = innerText.replace("results", "条");
-            if (radio.children[0].children[0].getAttribute("disabled") == "disabled") {
-                radio.children[0].children[1].style.cursor = "not-allowed";
-                radio.children[0].style.cursor = "not-allowed";
-            }
-        }
-    }
+	var searchCountRadios = p.nextElementSibling.children;
+	for (const i in searchCountRadios) {
+		if (Object.hasOwnProperty.call(searchCountRadios, i)) {
+			const radio = searchCountRadios[i];
+			var innerText = radio.children[0].childNodes[2].data;
+			radio.children[0].childNodes[2].data = innerText.replace("results", "条");
+			if (radio.children[0].children[0].getAttribute("disabled") == "disabled") {
+				radio.children[0].children[1].style.cursor = "not-allowed";
+				radio.children[0].style.cursor = "not-allowed";
+			}
+		}
+	}
 
 }
 
 // 缩略图设置
 function uconfigPageThumbnailSettings(titleH2) {
-    titleH2.innerText = "-- 缩略图设置 --";
-    var thumbnailLoadWayDiv = titleH2.nextElementSibling;
-    var p = thumbnailLoadWayDiv.querySelector("p");
-    p.innerText = "1. 你希望鼠标悬停时显示的缩略图何时加载？";
-    var thumbnailLoadWayRadios = p.nextElementSibling.children;
-    thumbnailLoadWayRadios[0].children[0].childNodes[2].data = "鼠标悬停时（页面加载快，缩略图加载有延迟）";
-    thumbnailLoadWayRadios[1].children[0].childNodes[2].data = "页面加载时（页面加载需要更长的时间，但缩略图显示是无需等待的）";
+	titleH2.innerText = "-- 缩略图设置 --";
+	var thumbnailLoadWayDiv = titleH2.nextElementSibling;
+	var p = thumbnailLoadWayDiv.querySelector("p");
+	p.innerText = "1. 你希望鼠标悬停时显示的缩略图何时加载？";
+	var thumbnailLoadWayRadios = p.nextElementSibling.children;
+	thumbnailLoadWayRadios[0].children[0].childNodes[2].data = "鼠标悬停时（页面加载快，缩略图加载有延迟）";
+	thumbnailLoadWayRadios[1].children[0].childNodes[2].data = "页面加载时（页面加载需要更长的时间，但缩略图显示是无需等待的）";
 
-    var thumbnailDisplayDiv = thumbnailLoadWayDiv.nextElementSibling;
-    var thumbnailDisplayP = thumbnailDisplayDiv.children[0];
-    thumbnailDisplayP.innerText = "2. 作品详情页面缩略图设置";
-    var thumbnailDisplayTable = thumbnailDisplayP.nextElementSibling;
-    var trs = thumbnailDisplayTable.querySelectorAll("tr");
-    trs[0].children[0].innerText = "大小：";
-    var tdSizeNormal = trs[0].children[1].children[0].children[0].children[0];
-    if (tdSizeNormal.children[0].getAttribute("disabled") == "disabled") {
-        tdSizeNormal.children[1].style.cursor = "not-allowed";
-        tdSizeNormal.style.cursor = "not-allowed";
-    }
-    tdSizeNormal.childNodes[2].data = "普通";
+	var thumbnailDisplayDiv = thumbnailLoadWayDiv.nextElementSibling;
+	var thumbnailDisplayP = thumbnailDisplayDiv.children[0];
+	thumbnailDisplayP.innerText = "2. 作品详情页面缩略图设置";
+	var thumbnailDisplayTable = thumbnailDisplayP.nextElementSibling;
+	var trs = thumbnailDisplayTable.querySelectorAll("tr");
+	trs[0].children[0].innerText = "大小：";
+	var tdSizeNormal = trs[0].children[1].children[0].children[0].children[0];
+	if (tdSizeNormal.children[0].getAttribute("disabled") == "disabled") {
+		tdSizeNormal.children[1].style.cursor = "not-allowed";
+		tdSizeNormal.style.cursor = "not-allowed";
+	}
+	tdSizeNormal.childNodes[2].data = "普通";
 
-    var tdSizeLarge = trs[0].children[1].children[0].children[1].children[0];
-    if (tdSizeLarge.children[0].getAttribute("disabled") == "disabled") {
-        tdSizeLarge.children[1].style.cursor = "not-allowed";
-        tdSizeLarge.style.cursor = "not-allowed";
-    }
-    tdSizeLarge.childNodes[2].data = "大图";
+	var tdSizeLarge = trs[0].children[1].children[0].children[1].children[0];
+	if (tdSizeLarge.children[0].getAttribute("disabled") == "disabled") {
+		tdSizeLarge.children[1].style.cursor = "not-allowed";
+		tdSizeLarge.style.cursor = "not-allowed";
+	}
+	tdSizeLarge.childNodes[2].data = "大图";
 
-    trs[1].children[0].innerText = "行数：";
-    var rowsDivs = trs[1].children[1].children[0].children;
-    for (var i = 1; i < rowsDivs.length; i++) {
-        const rows = rowsDivs[i];
-        if (rows.children[0].children[0].getAttribute("disabled") == "disabled") {
-            rows.children[0].children[1].style.cursor = "not-allowed";
-            rows.children[0].style.cursor = "not-allowed";
-        }
-    }
+	trs[1].children[0].innerText = "行数：";
+	var rowsDivs = trs[1].children[1].children[0].children;
+	for (var i = 1; i < rowsDivs.length; i++) {
+		const rows = rowsDivs[i];
+		if (rows.children[0].children[0].getAttribute("disabled") == "disabled") {
+			rows.children[0].children[1].style.cursor = "not-allowed";
+			rows.children[0].style.cursor = "not-allowed";
+		}
+	}
 }
 
 // 缩略图缩放
 function uconfigPageThumbnailScaling(titleH2) {
-    titleH2.innerText = "-- 缩略图缩放 --";
-    var thumbScaleLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
-    thumbScaleLabel.innerText = "缩略图和扩展图库列表视图上的缩略图可以缩放到 75% 到 150% 之间的自定义值。";
+	titleH2.innerText = "-- 缩略图缩放 --";
+	var thumbScaleLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
+	thumbScaleLabel.innerText = "缩略图和扩展图库列表视图上的缩略图可以缩放到 75% 到 150% 之间的自定义值。";
 }
 
 // 移动端宽度设置
 function uconfigPageViewportOverride(titleH2) {
-    titleH2.innerText = "-- 移动端宽度设置 --";
-    var tds = titleH2.nextElementSibling.querySelectorAll("td");
-    tds[0].removeChild(tds[0].childNodes[1]);
-    var span = document.createElement("span");
-    span.classList.add("span_pixel");
-    span.innerText = "像素";
-    tds[0].appendChild(span);
-    tds[1].innerText = "允许您覆盖移动设备站点的虚拟宽度。这通常由您的设备根据其 DPI 自动确定。100% 缩略图比例的合理值介于 640 和 1400 之间。";
+	titleH2.innerText = "-- 移动端宽度设置 --";
+	var tds = titleH2.nextElementSibling.querySelectorAll("td");
+	tds[0].removeChild(tds[0].childNodes[1]);
+	var span = document.createElement("span");
+	span.classList.add("span_pixel");
+	span.innerText = "像素";
+	tds[0].appendChild(span);
+	tds[1].innerText = "允许您覆盖移动设备站点的虚拟宽度。这通常由您的设备根据其 DPI 自动确定。100% 缩略图比例的合理值介于 640 和 1400 之间。";
 }
 
 // 作品评论设置
 function uconfigPageGalleryComments(titleH2) {
-    titleH2.innerText = "-- 作品评论设置 --";
-    var commentOrderDiv = titleH2.nextElementSibling;
-    var p = commentOrderDiv.querySelector("p");
-    p.innerText = "1. 评论排序方式：";
-    var commentOrderItems = p.nextElementSibling.children;
-    commentOrderItems[0].children[0].childNodes[2].data = " 最古老的评论";
-    commentOrderItems[1].children[0].childNodes[2].data = " 最新的评论";
-    commentOrderItems[2].children[0].childNodes[2].data = " 按评论的分数";
+	titleH2.innerText = "-- 作品评论设置 --";
+	var commentOrderDiv = titleH2.nextElementSibling;
+	var p = commentOrderDiv.querySelector("p");
+	p.innerText = "1. 评论排序方式：";
+	var commentOrderItems = p.nextElementSibling.children;
+	commentOrderItems[0].children[0].childNodes[2].data = " 最古老的评论";
+	commentOrderItems[0].children[0].childNodes[2].data = " 最新的评论";
+	commentOrderItems[0].children[0].childNodes[2].data = " 按评论的分数";
 
-    var commentNoteDiv = commentOrderDiv.nextElementSibling;
-    var commentNoteP = commentNoteDiv.children[0];
-    commentNoteP.innerText = "2. 显示评论的投票数：";
-    var commentNotes = commentNoteDiv.children[1].children;
-    commentNotes[0].children[0].childNodes[2].data = "鼠标悬停或点击时";
-    commentNotes[1].children[0].childNodes[2].data = "总是显示";
+	var commentNoteDiv = commentOrderDiv.nextElementSibling;
+	var commentNoteP = commentNoteDiv.children[0];
+	commentNoteP.innerText = "2. 显示评论的投票数：";
+	var commentNotes = commentNoteDiv.children[1].children;
+	commentNotes[0].children[0].childNodes[2].data = "鼠标悬停或点击时";
+	commentNotes[1].children[0].childNodes[2].data = "总是显示";
 }
 
 // 我的标签设置
 function uconfigPageGalleryTags(titleH2) {
-    titleH2.innerText = "-- 我的标签设置 --";
-    var tagOrderDiv = titleH2.nextElementSibling;
-    var p = tagOrderDiv.querySelector("p");
-    p.innerText = "1. 标签排序方式：";
-    var tagOrderItems = p.nextElementSibling.children;
-    tagOrderItems[0].children[0].childNodes[2].data = " 按字母排序";
-    tagOrderItems[1].children[0].childNodes[2].data = " 按权重排序";
+	titleH2.innerText = "-- 我的标签设置 --";
+	var tagOrderDiv = titleH2.nextElementSibling;
+	var p = tagOrderDiv.querySelector("p");
+	p.innerText = "1. 标签排序方式：";
+	var tagOrderItems = p.nextElementSibling.children;
+	tagOrderItems[0].children[0].childNodes[2].data = " 按字母排序";
+	tagOrderItems[1].children[0].childNodes[2].data = " 按权重排序";
 }
 
 // 作品页面页码设置
 function uconfigPageGalleryPageNumbering(titleH2) {
-    titleH2.innerText = "-- 作品页面页码设置 --";
-    var galleryNumberDiv = titleH2.nextElementSibling;
-    var p = galleryNumberDiv.querySelector("p");
-    p.innerText = "1. 是否显示作品页码？";
-    var galleryNumberItems = p.nextElementSibling.children;
-    galleryNumberItems[0].children[0].childNodes[2].data = " 否";
-    galleryNumberItems[1].children[0].childNodes[2].data = " 是";
+	titleH2.innerText = "-- 作品页面页码设置 --";
+	var galleryNumberDiv = titleH2.nextElementSibling;
+	var p = galleryNumberDiv.querySelector("p");
+	p.innerText = "1. 是否显示作品页码？";
+	var galleryNumberItems = p.nextElementSibling.children;
+	galleryNumberItems[0].children[0].childNodes[2].data = " 否";
+	galleryNumberItems[1].children[0].childNodes[2].data = " 是";
 }
 
 // 重新包裹页面元素
 function uconfigPageReWrapperForm(contentForm) {
-    // 删除提交按钮
-    var submitBtn = contentForm.lastElementChild;
-    contentForm.removeChild(submitBtn);
-    // 包裹表单元素
-    var contentFormInnerHTML = contentForm.innerHTML;
-    var wrapperDiv = document.createElement("div");
-    wrapperDiv.id = "contentForm_wrapper";
-    wrapperDiv.innerHTML = contentFormInnerHTML;
-    contentForm.innerHTML = "";
-    contentForm.appendChild(wrapperDiv);
-    // 添加提交按钮
-    contentForm.appendChild(submitBtn);
+	// 删除提交按钮
+	var submitBtn = contentForm.lastElementChild;
+	contentForm.removeChild(submitBtn);
+	// 包裹表单元素
+	var contentFormInnerHTML = contentForm.innerHTML;
+	var wrapperDiv = document.createElement("div");
+	wrapperDiv.id = "contentForm_wrapper";
+	wrapperDiv.innerHTML = contentFormInnerHTML;
+	contentForm.innerHTML = "";
+	contentForm.appendChild(wrapperDiv);
+	// 添加提交按钮
+	contentForm.appendChild(submitBtn);
 }
 
 //#endregion
-
-
-
-
 
 //#region step7.9.tosPage.js 帮助页面
 
@@ -11661,7 +11363,6 @@ function tosPage() {
 	// 数据同步
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_tosPage:
 					tosPageTranslateSync();
@@ -12312,7 +12013,6 @@ function mytagsCategoryWindowEvents() {
     //#region 消息通知
     window.onstorage = function (e) {
         try {
-            console.log(e);
             switch (e.newValue) {
                 case sync_mytagsAllTagUpdate:
                     syncMytagsAllTagUpdate();
@@ -13261,7 +12961,6 @@ function mytagClodToFavorite(clodToFavoriteBtn, favoriteCategoriesWindow, favori
         var t = setInterval(() => {
             if (index == newTagFavoriteArray.length) {
                 t && clearInterval(t);
-                console.log(newTagFavoriteDict);
 
                 // 更新收藏表，更新收藏 html 和页面，添加通知
                 var complete1 = false;
@@ -13288,7 +12987,7 @@ function mytagClodToFavorite(clodToFavoriteBtn, favoriteCategoriesWindow, favori
                         }
 
                         // 添加子级
-                        favoritesListHtml += `<span class="c_item c_item_favorite" title="[${v.sub_en}] ${v.sub_desc}" data-item="${v.sub_en}"
+                        favoritesListHtml += `<span class="c_item c_item_favorite" title="[${v.sub_en}] ${v.sub_desc}" data-item="${v.sub_en}" 
                                     data-parent_en="${v.parent_en}" data-parent_zh="${v.parent_zh}">${v.sub_zh}</span>`;
                     }, () => {
                         if (favoritesListHtml != ``) {
@@ -13591,8 +13290,6 @@ function do_usertags_mass_copy() {
 
 //#endregion
 
-
-
 //#region step8.1.eventpane.js hentaivase 弹框
 
 function hentaiVaseDialog() {
@@ -13653,19 +13350,6 @@ function recursionTranslate(element) {
 }
 
 //#endregion
-
-
-
-
-//TODO 样式细化
-//TODO 悬浮显示预览图
-//TODO 上下键选择候选项
-//TODO 排行榜收藏上传者
-//TODO 收藏上传者，显示 收藏他/她 或者 取消收藏
-//TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
-//TODO 首页显示已收藏的标签
-//TODO 首页背景
-//TODO 检查其他bug问题
 
 //#region main.js 主方法
 
@@ -13771,9 +13455,6 @@ function mainPageCategory() {
 	// 跨域
 	crossDomain();
 
-	// 新版分页
-	TranslateNewPagingLinks();
-
 	// 最外层添加样式方便调整
 	var ido = document.getElementsByClassName("ido");
 	if (ido.length > 0) {
@@ -13795,17 +13476,15 @@ function mainPageCategory() {
 	// 直接从 localStroage 中取出有损图片先行展示，然后用无损图片替换
 	var bglowbase64 = getBgLowImage();
 	if (bglowbase64) {
-		console.log('有损图片附加');
 		var bg = `url(${bglowbase64}) 0 / cover`;
 		var style = document.createElement('style');
 		style.innerHTML = `#div_ee8413b2_bg::before{background:${bg}}`;
 		document.head.appendChild(style);
 	}
 
-	// 消息通知提前，只要数据改变就应该马上通知，方便快速其他页面快速反应
+	// 消息通知提前，只要数据改变就应该马上通知，方便快速其他页面快速反应	
 	// 初始化用户配置信息
 	initUserSettings(() => {
-		console.log('初始化用户配置信息完毕');
 
 		// 首页头部样式调整，补充事件
 		frontPageTopStyleStep02();
@@ -13971,7 +13650,6 @@ function mainPageCategory() {
 				reader.readAsDataURL(resultFile);
 				reader.onload = function (e) {
 					var fileContent = e.target.result;
-					console.log(fileContent);
 					t_imgBase64 = fileContent;
 					setListBackgroundImage(t_imgBase64);
 
@@ -14287,13 +13965,13 @@ function mainPageCategory() {
 		// 设置父级颜色效果
 		function setFontPrentColor(parentColor) {
 			var style = document.createElement('style');
-			style.innerHTML = `#div_ee8413b2 #category_all_div h4,
-    #div_ee8413b2 #favorites_list h4,
+			style.innerHTML = `#div_ee8413b2 #category_all_div h4, 
+    #div_ee8413b2 #favorites_list h4, 
     #div_ee8413b2 #favorites_edit_list h4
     {color:${parentColor}}
-
-    #div_ee8413b2 #category_all_div .category_extend,
-    #div_ee8413b2 #favorites_list .favorite_extend,
+    
+    #div_ee8413b2 #category_all_div .category_extend, 
+    #div_ee8413b2 #favorites_list .favorite_extend, 
     #div_ee8413b2 #favorites_edit_list .favorite_edit_clear
     {border: 1px solid ${parentColor}; color:${parentColor};}`;
 			document.head.appendChild(style);
@@ -14314,7 +13992,7 @@ function mainPageCategory() {
 		// 设置子级颜色效果
 		function setFontSubColor(subColor) {
 			var style = document.createElement('style');
-			style.innerHTML = `#div_ee8413b2 #category_all_div .c_item,
+			style.innerHTML = `#div_ee8413b2 #category_all_div .c_item, 
     #div_ee8413b2 #category_favorites_div #favorites_list .c_item
     {color:${subColor}}`;
 			document.head.appendChild(style);
@@ -14919,8 +14597,6 @@ function mainPageCategory() {
 			var item = document.getElementById(id);
 			var cateItem = item.dataset.item;
 			delete searchItemDict[cateItem];
-			console.log(cateItem);
-			console.log(searchItemDict);
 
 			if (checkDictNull(searchItemDict)) {
 				inputClearBtn.style.display = "none";
@@ -15010,7 +14686,6 @@ function mainPageCategory() {
 									}
 								}
 								else {
-									console.log(itemArray);
 									// 从恋物列表中查询，看是否存在
 									readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
 										if (fetishData) {
@@ -15037,8 +14712,6 @@ function mainPageCategory() {
 				var item = document.getElementById(id);
 				var cateItem = item.dataset.item;
 				delete searchItemDict[cateItem];
-				console.log(cateItem);
-				console.log(searchItemDict);
 
 				if (checkDictNull(searchItemDict)) {
 					inputClearBtn.style.display = "none";
@@ -15449,7 +15122,7 @@ function mainPageCategory() {
 						}
 
 						// 添加子级
-						favoritesListHtml += `<span class="c_item c_item_favorite" title="${item.sub_zh} [${item.sub_en}]&#10;&#13;${item.sub_desc}" data-item="${item.sub_en}"
+						favoritesListHtml += `<span class="c_item c_item_favorite" title="${item.sub_zh} [${item.sub_en}]&#10;&#13;${item.sub_desc}" data-item="${item.sub_en}" 
                         data-parent_en="${item.parent_en}" data-parent_zh="${item.parent_zh}" data-sub_desc="${item.sub_desc}">${item.sub_zh}</span>`;
 					}
 				}
@@ -15465,7 +15138,6 @@ function mainPageCategory() {
 			function firstUpdateFavoriteSubItems(favoriteSubItems, foundTotalCount) {
 				// 更新本地收藏表
 				batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteSubItems, foundTotalCount, () => {
-					console.log('批量添加本地收藏表完成');
 					// 稳妥起见，更新完之后再删除本地的原始收藏列表
 					remove(table_Settings, table_Settings_key_FavoriteList, () => { }, () => { });
 
@@ -16136,7 +15808,7 @@ function mainPageCategory() {
 					}
 
 					// 添加子级
-					favoritesListHtml += `<span class="c_item c_item_favorite" title="[${v.sub_en}] ${v.sub_desc}" data-item="${v.sub_en}"
+					favoritesListHtml += `<span class="c_item c_item_favorite" title="[${v.sub_en}] ${v.sub_desc}" data-item="${v.sub_en}" 
                     data-parent_en="${v.parent_en}" data-parent_zh="${v.parent_zh}">${v.sub_zh}</span>`;
 				}, () => {
 					// 读完后操作
@@ -16280,7 +15952,6 @@ function mainPageCategory() {
 
 			window.onstorage = function (e) {
 				try {
-					console.log(e);
 					switch (e.newValue) {
 						case sync_oldSearchTopVisible:
 							updatePageTopVisible();
@@ -16355,7 +16026,6 @@ function mainPageCategory() {
 					editToFavorite();
 
 					read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
-						console.log('r', result);
 						if (result && result.value) {
 							// 存在收藏 html
 							// 页面附加Html
@@ -16541,7 +16211,6 @@ function detailPage() {
 
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_detailPage_title:
 					updateGoogleTranslateDetailPageTitle();

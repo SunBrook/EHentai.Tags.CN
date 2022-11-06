@@ -1,21 +1,32 @@
 //#region step3.0.frontTopTranslate.js 首页头部翻译
 
 function frontTopOldSearchTranslate() {
-    var nopms = document.getElementsByClassName("nopm");
+
 
     // 搜索框 和 按钮翻译
-    var searchDiv = nopms[0];
+    // var searchDiv = nopms[0];
     var fSerach = document.getElementById("f_search");
+
+    fSerach.parentNode.className = "nopm";
+
+    func_eh_ex(() => { }, () => {
+        // exhentai
+        fSerach.parentNode.nextSibling.className = "nopm";
+    });
+
+
+    var nopms = document.getElementsByClassName("nopm");
+
     fSerach.setAttribute("placeholder", "搜索关键字");
     if (fSerach.value) {
         var searchValue = fSerach.value;
-        if (searchValue.charAt(searchValue.length - 1) != " "){
+        if (searchValue.charAt(searchValue.length - 1) != " ") {
             fSerach.value += " ";
         }
     }
-    var searchSubmitBtn = searchDiv.children[1];
+    var searchSubmitBtn = fSerach.nextSibling;
     searchSubmitBtn.value = "搜索";
-    var searchClearBtn = searchDiv.children[2];
+    var searchClearBtn = searchSubmitBtn.nextSibling;
     searchClearBtn.value = "清空";
 
     // 显示高级选项
@@ -54,7 +65,13 @@ function frontTopOldSearchTranslate() {
     } else {
         // 搜索图片结果
         var fileSearchResultDiv = nopms[0].nextElementSibling;
-        frontPageTranslateFileSearchResult(fileSearchResultDiv);
+        // TODO
+        func_eh_ex(() => {
+            frontPageTranslateFileSearchResult(fileSearchResultDiv);
+        }, () => {
+            // frontPageTranslateFileSearchResult(fileSearchResultDiv);
+        });
+
     }
 
 
@@ -66,44 +83,44 @@ function copyModify_show_advsearch_pane(b) {
     b.innerHTML = "隐藏高级选项";
     c.style.display = "";
     c.innerHTML = `<input type="hidden" id="advsearch" name="advsearch" value="1" />
-    <table class="itss">
+    <table class="itss" style="margin: 0 auto; width: 90%;">
         <tr>
-            <td class="ic4">
+            <td class="ic4" style="text-align: left;">
                 <input id="adv11" type="checkbox" name="f_sname" checked="checked" />
                 <label for="adv11">搜索作品名称</label>
             </td>
-            <td class="ic4"><input id="adv12" type="checkbox" name="f_stags" checked="checked" />
+            <td class="ic4" style="position: relative; left: 11%;text-align: center;"><input id="adv12" type="checkbox" name="f_stags" checked="checked" />
                 <label for="adv12">搜索标签</label>
             </td>
-            <td class="ic2"><input id="adv13" type="checkbox" name="f_sdesc" colspan="2" />
+            <td class="ic2" style="text-align: right;"><input id="adv13" type="checkbox" name="f_sdesc" colspan="2" />
                 <label for="adv13">搜索描述</label>
             </td>
         </tr>
         <tr>
-            <td class="ic2" colspan="2"><input id="adv31" type="checkbox" name="f_sh" />
+            <td class="ic2" colspan="2" style="text-align: left;"><input id="adv31" type="checkbox" name="f_sh" />
                 <label for="adv31">搜索已经删除的作品</label>
             </td>
-            <td class="ic2" colspan="2"><input id="adv16" type="checkbox" name="f_sto" />
+            <td class="ic2" colspan="2" style="text-align: right;"><input id="adv16" type="checkbox" name="f_sto" />
                 <label for="adv16">只显示有种子的作品</label>
             </td>
         </tr>
         <tr>
-            <td class="ic2" colspan="2">
+            <td class="ic2" colspan="2" style="text-align: left;">
                 <input id="adv21" type="checkbox" name="f_sdt1" />
                 <label for="adv21">搜索低权重的标签</label>
             </td>
-            <td class="ic2" colspan="2">
+            <td class="ic2" colspan="2" style="text-align: right;">
                 <input id="adv22" type="checkbox" name="f_sdt2" />
                 <label for="adv22">搜索被否决的标签</label>
             </td>
         </tr>
         <tr>
-            <td class="ic2" colspan="2">搜索
+            <td class="ic2" colspan="2" style="text-align: left;">搜索
                 <input type="text" id="f_spf" name="f_spf" value="" size="4" maxlength="4" style="width:30px" /> 至
                 <input type="text" id="f_spt" name="f_spt" value="" size="4" maxlength="4" style="width:30px" />
                 页
             </td>
-            <td class="ic2" colspan="2"><input id="adv32" type="checkbox" name="f_sr" />
+            <td class="ic2" colspan="2" style="text-align: right;"><input id="adv32" type="checkbox" name="f_sr" />
                 <label for="adv32">评分不低于：</label> <select id="adv42" class="imr" name="f_srdd">
                     <option value="2">2 星</option>
                     <option value="3">3 星</option>
@@ -113,7 +130,7 @@ function copyModify_show_advsearch_pane(b) {
             </td>
         </tr>
         <tr>
-            <td class="ic1" colspan="4">默认禁用筛选：
+            <td class="ic1" colspan="4" style="text-align: center;">默认禁用筛选：
                 <input id="adv51" type="checkbox" name="f_sfl" />
                 <label for="adv51">语言</label>
                 <input id="adv52" type="checkbox" name="f_sfu" />

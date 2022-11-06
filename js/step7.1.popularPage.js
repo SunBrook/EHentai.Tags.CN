@@ -3,7 +3,10 @@
 function popularPage() {
 
     // 跨域
-	crossDomain();
+    crossDomain();
+
+    // 新版分页
+	TranslateNewPagingLinks();
 
     // 头部标题改成中文
     var ihTitle = document.getElementsByClassName("ih");
@@ -29,6 +32,12 @@ function popularPage() {
     translateDiv.appendChild(translateLabel);
     translateCheckbox.addEventListener("click", translateMainPageTitle);
     toppane.insertBefore(translateDiv, toppane.lastChild);
+
+    // 按钮位置调整
+    func_eh_ex(() => { }, () => {
+        // exhentai 需要调整
+        translateDiv.style.marginTop = "0";
+    });
 
     // 头部添加词库升级提示
     var dataUpdateDiv = document.createElement("div");
