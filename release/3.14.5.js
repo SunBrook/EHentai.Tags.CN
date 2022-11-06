@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         ExHentai 中文标签助手_测试版_beta
+// @name         ExHentai 中文标签助手
 // @namespace    ExHentai 中文标签助手_DYZYFTS
 // @license		 MIT
 // @compatible  firefox >= 60
@@ -7,7 +7,7 @@
 // @compatible  chrome >= 61
 // @compatible  safari >= 11
 // @compatible  opera >= 48
-// @version      3.14.3
+// @version      3.14.5
 // @icon         http://exhentai.org/favicon.ico
 // @description  E-hentai + ExHentai 丰富的本地中文标签库 + 自定义管理收藏库，搜索时支持点击选择标签或者手动输入，页面翻译英文标签时支持本地标签库匹配和谷歌机翻。
 // @author       地狱天使
@@ -334,7 +334,6 @@ function divHasScrollBar(div) {
 }
 
 //#endregion
-
 
 //#region step0.constDatas.js 数据字典
 
@@ -1131,7 +1130,6 @@ function func_eh_ex(ehFunc, exFunc) {
 }
 
 //#endregion
-
 
 //#region step1.1.styleInject.js 样式注入
 func_eh_ex(() => {
@@ -5091,7 +5089,6 @@ func_eh_ex(() => {
 
 //#endregion
 
-
 //#region step1.2.translateTopBottomMenu.js 头部菜单、底部菜单翻译
 
 function topMenuTranslateZh() {
@@ -5256,7 +5253,6 @@ function copy_update_jump_mode(e) {
 
 //#endregion
 
-
 //#region step2.getTagDatas.js 获取标签数据
 
 //#region 恋物数据和ehTag数据
@@ -5332,19 +5328,16 @@ function indexDbInit(func_start_use) {
 	} else {
 		request.onsuccess = function () {
 			db = request.result;
-			console.log("数据库打开成功", db);
 			func_start_use();
 		}
 	}
 }
 
 request.onerror = function (event) {
-	console.log("数据库打开报错", event);
 }
 
 request.onupgradeneeded = function (event) {
 	db = event.target.result;
-	console.log("升级数据库", db);
 
 	// 对象仓库 Settings
 	//
@@ -5389,7 +5382,6 @@ function read(tableName, key, func_success, func_error) {
 	var request = objectStore.get(key);
 
 	request.onerror = function (event) {
-		console.log('读取事务失败', event);
 		func_error();
 	}
 
@@ -5406,7 +5398,6 @@ function readAll(tableName, func_success, func_end) {
 			func_success(cursor.key, cursor.value);
 			cursor.continue();
 		} else {
-			console.log('没有更多数据了');
 			func_end();
 		}
 	}
@@ -5422,7 +5413,6 @@ function readByIndex(tableName, indexName, indexValue, func_success, func_none) 
 		if (result) {
 			func_success(result);
 		} else {
-			console.log('没找到');
 			func_none();
 		}
 	}
@@ -5478,12 +5468,10 @@ function add(tableName, data, func_success, func_error) {
 		.add(data);
 
 	request.onsuccess = function (event) {
-		console.log('数据写入成功', event);
 		func_success(event);
 	}
 
 	request.onerror = function (event) {
-		console.log('数据写入失败', event);
 		func_error(event);
 	}
 }
@@ -5516,12 +5504,10 @@ function update(tableName, data, func_success, func_error) {
 		.put(data);
 
 	request.onsuccess = function (event) {
-		console.log("数据更新成功", event);
 		func_success();
 	}
 
 	request.onerror = function (event) {
-		console.log("数据更新失败");
 		func_error(event);
 	}
 }
@@ -5531,11 +5517,9 @@ function remove(tableName, key, func_success, func_error) {
 		.objectStore(tableName)
 		.delete(key);
 	request.onsuccess = function (event) {
-		console.log("数据删除成功", event);
 		func_success();
 	}
 	request.onerror = function (event) {
-		console.log('数据删除失败', event);
 		func_error(event);
 	}
 }
@@ -5596,7 +5580,6 @@ function fetishListDataInit(update_func, local_func) {
 			}
 		});
 	}, error => {
-		console.log('error', error);
 	})
 }
 
@@ -5615,7 +5598,6 @@ function ehTagDataInit(update_func, local_func) {
 		});
 
 	}, error => {
-		console.log('error', error);
 	});
 }
 
@@ -5709,7 +5691,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete1 = true;
 				batchAdd(table_fetishListSubItems, table_fetishListSubItems_key, newData.data, newData.count, () => {
 					complete2 = true;
-					console.log('批量添加完成');
 				});
 			});
 
@@ -5764,7 +5745,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete3 = true;
 			complete4 = true;
 			complete5 = true;
-			console.log('fet', "没有新数据");
 		});
 
 		// 如果 EhTag 版本更新，这尝试更新用户收藏（可能没有翻译过的标签进行翻译）
@@ -5832,7 +5812,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete6 = true;
 				batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
 					complete7 = true;
-					console.log("批量添加完成");
 					updateMyTagAllTagHtml(() => {
 						setDbSyncMessage(sync_mytagsAllTagUpdate);
 					}, () => { });
@@ -5842,7 +5821,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			// 批量添加详情页父级信息
 			batchAdd(table_detailParentItems, table_detailParentItems_key, detailDict, detailDictCount, () => {
 				complete8 = true;
-				console.log("批量添加完成");
 			});
 
 			var settings_ehTag_parentEnArray = {
@@ -5898,7 +5876,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete9 = true;
 			complete10 = true;
 			complete11 = true;
-			console.log('ehtag', "没有新数据");
 		});
 
 		// 用户收藏更新
@@ -6129,14 +6106,12 @@ function checkUdpateEhtagData(func_needUpdate, func_none) {
 			complete6 = true;
 			batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
 				complete7 = true;
-				console.log("批量添加完成");
 			});
 		});
 
 		// 批量添加详情页父级信息
 		batchAdd(table_detailParentItems, table_detailParentItems_key, detailDict, detailDictCount, () => {
 			complete8 = true;
-			console.log("批量添加完成");
 		});
 
 		var settings_ehTag_parentEnArray = {
@@ -6192,7 +6167,6 @@ function checkUdpateEhtagData(func_needUpdate, func_none) {
 		complete9 = true;
 		complete10 = true;
 		complete11 = true;
-		console.log('ehtag', "没有新数据");
 	});
 
 	// 用户收藏更新
@@ -6630,7 +6604,6 @@ function updateMyTagAllTagHtml(func_complete, func_error) {
 
 //#endregion
 
-
 //#region step3.0.frontTopTranslate.js 首页头部翻译
 
 function frontTopOldSearchTranslate() {
@@ -6698,7 +6671,6 @@ function frontTopOldSearchTranslate() {
     } else {
         // 搜索图片结果
         var fileSearchResultDiv = nopms[0].nextElementSibling;
-        // TODO
         func_eh_ex(() => {
             frontPageTranslateFileSearchResult(fileSearchResultDiv);
         }, () => {
@@ -6892,7 +6864,6 @@ function frontPageTranslateFileSearchResult(fileSearchResultDiv) {
 
 //#region step3.1.frontTranslate.js 首页谷歌翻译
 
-// TODO
 let dms;
 
 func_eh_ex(() => {
@@ -7052,7 +7023,6 @@ function tableTagTranslate() {
 	}
 
 	// 父项:子项，偶尔出现单个子项
-	// TODO
 
 
 	// var dms = document.getElementById("dms");
@@ -7341,7 +7311,6 @@ function mainPageTranslate() {
 	var beforeDiv = dms.parentNode.firstChild;
 	beforeDiv.insertBefore(translateDiv, beforeDiv.lastChild);
 
-	// TODO
 	func_eh_ex(() => {
 		// e-hentai
 		translateDiv.style.marginTop = "0 !important";
@@ -7410,7 +7379,6 @@ function frontPageTitleTranslate() {
 }
 
 //#endregion
-
 
 //#region step3.2.frontPageTopStyle 首页头部搜索显示隐藏
 
@@ -7630,8 +7598,6 @@ function fsdivShow() {
 
 //#endregion
 
-
-
 //#region step3.3.frontPageHtml.js 首页HTML
 
 // 首页代码
@@ -7751,8 +7717,6 @@ function frontPageHtml() {
 }
 
 //#endregion
-
-
 
 //#region step4.1.detailTranslate.js 详情页翻译
 
@@ -8312,8 +8276,6 @@ function recursionDetailPageWarnTranslate(element) {
 
 //#endregion
 
-
-
 //#region step4.2.detailbtn.js 详情页主要按钮功能
 
 // 详情页选中的标签信息
@@ -8381,8 +8343,6 @@ function translateDetailPageTitleDisplay() {
 				txtArray.push(cstr);
 			}
 
-			console.log(txtArray);
-			console.log(signDictArray);
 
 			var totalCount = txtArray.length;
 			var indexCount = 0;
@@ -8416,7 +8376,6 @@ function translateDetailPageTitleDisplay() {
 			}, 50);
 
 			function translateCompelete() {
-				console.log(translateDict);
 				if (signDictArray.length == 0 && txtArray.length > 0) {
 					// 纯文字
 					var str = '';
@@ -8947,8 +8906,6 @@ function detailTryUseOldData() {
 
 //#endregion
 
-
-
 //#region 7.4.2.torrentsDetailPages.js 种子详情页
 
 function torrentsDetailPages() {
@@ -9102,7 +9059,6 @@ function DataSyncTranslateTorrentDetailInfoCommand() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_torrentDetailInfo_command:
 					updateGoogleTorrentDetailInfoCommand();
@@ -9174,15 +9130,12 @@ function closeWindow() {
 
 //#endregion
 
-
-
 //#region step5.3.datasync.common.translateTitle.js 热门页数据同步
 
 function DataSyncCommonTranslateTitle() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_frontPage_title:
 					updateGoogleTranslateFrontPageTitle();
@@ -9345,8 +9298,6 @@ function otherPageTryUseOldDataAndTranslateTag() {
 
 
 //#endregion
-
-
 
 //#region step7.2.favoritePage.js 收藏列表
 
@@ -9773,7 +9724,6 @@ function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInpu
 
 //#endregion
 
-
 //#region 7.3.watchedPage.js 偏好
 
 // 与首页功能一同实现
@@ -10047,7 +9997,6 @@ function DataSyncTranslateTorrentDetailInfoCommand() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_torrentDetailInfo_command:
 					updateGoogleTorrentDetailInfoCommand();
@@ -10118,7 +10067,6 @@ function closeWindow() {
 }
 
 //#endregion
-
 
 //#region step7.5.toplistPage.js 排行榜
 
@@ -10514,10 +10462,6 @@ function toplistBookpages() {
 
 //#endregion
 
-
-
-
-
 //#region step7.6.myHomePage.js 我的主页 - 总览
 
 function myHomePage() {
@@ -10540,8 +10484,6 @@ function myHomePage() {
 }
 
 //#endregion
-
-
 
 //#region step7.7.newsPage.js
 
@@ -10717,7 +10659,6 @@ function newsPage() {
 	// 数据同步
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_newsPage_topImage_visible:
 					newsPageSyncTopImageVisible();
@@ -11021,7 +10962,6 @@ function newsPagesTranslateCommon(className, isChecked) {
 
 
 //#endregion
-
 
 //#region step7.8.uconfigPage.js 设置页面
 
@@ -11615,10 +11555,6 @@ function uconfigPageReWrapperForm(contentForm) {
 
 //#endregion
 
-
-
-
-
 //#region step7.9.tosPage.js 帮助页面
 
 function tosPage() {
@@ -11665,7 +11601,6 @@ function tosPage() {
 	// 数据同步
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_tosPage:
 					tosPageTranslateSync();
@@ -12316,7 +12251,6 @@ function mytagsCategoryWindowEvents() {
     //#region 消息通知
     window.onstorage = function (e) {
         try {
-            console.log(e);
             switch (e.newValue) {
                 case sync_mytagsAllTagUpdate:
                     syncMytagsAllTagUpdate();
@@ -13265,7 +13199,6 @@ function mytagClodToFavorite(clodToFavoriteBtn, favoriteCategoriesWindow, favori
         var t = setInterval(() => {
             if (index == newTagFavoriteArray.length) {
                 t && clearInterval(t);
-                console.log(newTagFavoriteDict);
 
                 // 更新收藏表，更新收藏 html 和页面，添加通知
                 var complete1 = false;
@@ -13595,8 +13528,6 @@ function do_usertags_mass_copy() {
 
 //#endregion
 
-
-
 //#region step8.1.eventpane.js hentaivase 弹框
 
 function hentaiVaseDialog() {
@@ -13657,19 +13588,6 @@ function recursionTranslate(element) {
 }
 
 //#endregion
-
-
-
-
-//TODO 样式细化
-//TODO 悬浮显示预览图
-//TODO 上下键选择候选项
-//TODO 排行榜收藏上传者
-//TODO 收藏上传者，显示 收藏他/她 或者 取消收藏
-//TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
-//TODO 首页显示已收藏的标签
-//TODO 首页背景
-//TODO 检查其他bug问题
 
 //#region main.js 主方法
 
@@ -13799,7 +13717,6 @@ function mainPageCategory() {
 	// 直接从 localStroage 中取出有损图片先行展示，然后用无损图片替换
 	var bglowbase64 = getBgLowImage();
 	if (bglowbase64) {
-		console.log('有损图片附加');
 		var bg = `url(${bglowbase64}) 0 / cover`;
 		var style = document.createElement('style');
 		style.innerHTML = `#div_ee8413b2_bg::before{background:${bg}}`;
@@ -13809,7 +13726,6 @@ function mainPageCategory() {
 	// 消息通知提前，只要数据改变就应该马上通知，方便快速其他页面快速反应
 	// 初始化用户配置信息
 	initUserSettings(() => {
-		console.log('初始化用户配置信息完毕');
 
 		// 首页头部样式调整，补充事件
 		frontPageTopStyleStep02();
@@ -13975,7 +13891,6 @@ function mainPageCategory() {
 				reader.readAsDataURL(resultFile);
 				reader.onload = function (e) {
 					var fileContent = e.target.result;
-					console.log(fileContent);
 					t_imgBase64 = fileContent;
 					setListBackgroundImage(t_imgBase64);
 
@@ -14923,8 +14838,6 @@ function mainPageCategory() {
 			var item = document.getElementById(id);
 			var cateItem = item.dataset.item;
 			delete searchItemDict[cateItem];
-			console.log(cateItem);
-			console.log(searchItemDict);
 
 			if (checkDictNull(searchItemDict)) {
 				inputClearBtn.style.display = "none";
@@ -15014,7 +14927,6 @@ function mainPageCategory() {
 									}
 								}
 								else {
-									console.log(itemArray);
 									// 从恋物列表中查询，看是否存在
 									readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
 										if (fetishData) {
@@ -15041,8 +14953,6 @@ function mainPageCategory() {
 				var item = document.getElementById(id);
 				var cateItem = item.dataset.item;
 				delete searchItemDict[cateItem];
-				console.log(cateItem);
-				console.log(searchItemDict);
 
 				if (checkDictNull(searchItemDict)) {
 					inputClearBtn.style.display = "none";
@@ -15469,7 +15379,6 @@ function mainPageCategory() {
 			function firstUpdateFavoriteSubItems(favoriteSubItems, foundTotalCount) {
 				// 更新本地收藏表
 				batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteSubItems, foundTotalCount, () => {
-					console.log('批量添加本地收藏表完成');
 					// 稳妥起见，更新完之后再删除本地的原始收藏列表
 					remove(table_Settings, table_Settings_key_FavoriteList, () => { }, () => { });
 
@@ -16284,7 +16193,6 @@ function mainPageCategory() {
 
 			window.onstorage = function (e) {
 				try {
-					console.log(e);
 					switch (e.newValue) {
 						case sync_oldSearchTopVisible:
 							updatePageTopVisible();
@@ -16359,7 +16267,6 @@ function mainPageCategory() {
 					editToFavorite();
 
 					read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
-						console.log('r', result);
 						if (result && result.value) {
 							// 存在收藏 html
 							// 页面附加Html
@@ -16545,7 +16452,6 @@ function detailPage() {
 
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_detailPage_title:
 					updateGoogleTranslateDetailPageTitle();

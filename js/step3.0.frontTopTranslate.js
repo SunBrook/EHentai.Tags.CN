@@ -189,35 +189,41 @@ function copyModify_hide_filesearch_pane(b) {
 function checkAdvSearchDiv(advanceLink) {
     var advdiv = document.getElementById("advdiv");
     if (advdiv.innerHTML) {
-        var trs = advdiv.querySelectorAll("tr");
-        trs[0].children[0].children[1].innerText = "搜索作品名称";
-        trs[0].children[1].children[1].innerText = "搜索标签";
-        trs[0].children[2].children[1].innerText = "搜索描述";
-        trs[1].children[0].children[1].innerText = "搜索已经删除的作品";
-        trs[1].children[1].children[1].innerText = "只显示有种子的作品";
-        trs[2].children[0].children[1].innerText = "搜索低权重的标签";
-        trs[2].children[1].children[1].innerText = "搜索被否决的标签";
+        func_eh_ex(() => {
+            // ehentai
+            var trs = advdiv.querySelectorAll("tr");
+            trs[0].children[0].children[1].innerText = "搜索作品名称";
+            trs[0].children[1].children[1].innerText = "搜索标签";
+            trs[0].children[2].children[1].innerText = "搜索描述";
+            trs[1].children[0].children[1].innerText = "搜索已经删除的作品";
+            trs[1].children[1].children[1].innerText = "只显示有种子的作品";
+            trs[2].children[0].children[1].innerText = "搜索低权重的标签";
+            trs[2].children[1].children[1].innerText = "搜索被否决的标签";
 
-        var tdPages = trs[3].children[0].childNodes;
-        tdPages[0].data = "搜索 ";
-        tdPages[2].data = " 至 ";
-        tdPages[4].data = " 页";
+            var tdPages = trs[3].children[0].childNodes;
+            tdPages[0].data = "搜索 ";
+            tdPages[2].data = " 至 ";
+            tdPages[4].data = " 页";
 
-        trs[3].children[1].children[1].innerText = "评分不低于：";
-        var tdOptions = trs[3].children[1].children[2].querySelectorAll("option");
-        for (const i in tdOptions) {
-            if (Object.hasOwnProperty.call(tdOptions, i)) {
-                const option = tdOptions[i];
-                option.innerText = option.innerText.replace("stars", "星");
+            trs[3].children[1].children[1].innerText = "评分不低于：";
+            var tdOptions = trs[3].children[1].children[2].querySelectorAll("option");
+            for (const i in tdOptions) {
+                if (Object.hasOwnProperty.call(tdOptions, i)) {
+                    const option = tdOptions[i];
+                    option.innerText = option.innerText.replace("stars", "星");
+                }
             }
-        }
 
-        trs[4].children[0].childNodes[0].data = "默认禁用筛选： ";
-        trs[4].children[0].children[1].innerText = "语言";
-        trs[4].children[0].children[3].innerText = "上传者";
-        trs[4].children[0].children[5].innerText = "标签";
+            trs[4].children[0].childNodes[0].data = "默认禁用筛选： ";
+            trs[4].children[0].children[1].innerText = "语言";
+            trs[4].children[0].children[3].innerText = "上传者";
+            trs[4].children[0].children[5].innerText = "标签";
 
-        advanceLink.innerText = "隐藏高级选项";
+            advanceLink.innerText = "隐藏高级选项";
+        }, () => {
+            // exhentai
+
+        });
     }
 }
 

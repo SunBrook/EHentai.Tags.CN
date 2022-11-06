@@ -330,11 +330,13 @@ function mainPageTranslate() {
 		// exhentai.org
 		if (window.location.pathname == "/") {
 			// 首页
-			document.getElementsByClassName("searchtext")[0].lastChild.innerText =
+			if (document.getElementsByClassName("searchtext").length > 0){
+				document.getElementsByClassName("searchtext")[0].lastChild.innerText =
 				document.getElementsByClassName("searchtext")[0].lastChild.innerText
 					.replace("Found", "共找到")
 					.replace("results", "条记录")
 					.replace("result", "条记录");
+			}
 		}
 		else {
 			// 其他页面
@@ -343,7 +345,7 @@ function mainPageTranslate() {
 				var strongText = ipTagElement.children[0];
 				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
 				ipTagElement.children[1].innerText = "我的标签";
-				if (document.getElementsByClassName("searchtext")[0].lastChild.innerText == "Found many results.") {
+				if (document.getElementsByClassName("searchtext").length > 0 && document.getElementsByClassName("searchtext")[0].lastChild.innerText == "Found many results.") {
 					document.getElementsByClassName("searchtext")[0].lastChild.innerText = "找到许多结果.";
 				} else {
 					translatePageElementEN(document.getElementsByClassName("searchtext")[0].lastChild);
