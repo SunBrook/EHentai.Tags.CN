@@ -51,38 +51,82 @@ function uconfigPage() {
     // Tag Watching Threshold
     uconfigTagWatchingThreshold(settingH2s[9]);
 
-    // Excluded Languages
-    uconfigTagExcludedLanguages(settingH2s[10]);
 
-    // Excluded Uploaders
-    uconfigPageExcludedUploaders(settingH2s[11]);
+    func_eh_ex(() => {
+        // e-hentai
 
-    // Search Result Count
-    uconfigPageSearchResultCount(settingH2s[12]);
+        // Excluded Languages
+        uconfigTagExcludedLanguages(settingH2s[10]);
 
-    // Thumbnail Settings
-    uconfigPageThumbnailSettings(settingH2s[13]);
+        // Excluded Uploaders
+        uconfigPageExcludedUploaders(settingH2s[11]);
 
-    // Thumbnail Scaling
-    uconfigPageThumbnailScaling(settingH2s[14]);
+        // Search Result Count
+        uconfigPageSearchResultCount(settingH2s[12]);
 
-    // Viewport Override
-    uconfigPageViewportOverride(settingH2s[15]);
+        // Thumbnail Settings
+        uconfigPageThumbnailSettings(settingH2s[13]);
 
-    // Gallery Comments
-    uconfigPageGalleryComments(settingH2s[16]);
+        // Thumbnail Scaling
+        uconfigPageThumbnailScaling(settingH2s[14]);
 
-    // Gallery Tags
-    uconfigPageGalleryTags(settingH2s[17]);
+        // Viewport Override
+        uconfigPageViewportOverride(settingH2s[15]);
 
-    // Gallery Page Numbering
-    uconfigPageGalleryPageNumbering(settingH2s[18]);
+        // Gallery Comments
+        uconfigPageGalleryComments(settingH2s[16]);
 
-    // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
-    uconfigPageReWrapperForm(contentForm);
+        // Gallery Tags
+        uconfigPageGalleryTags(settingH2s[17]);
 
-    // 保存更改
-    contentForm.lastElementChild.children[0].value = "保存修改";
+        // Gallery Page Numbering
+        uconfigPageGalleryPageNumbering(settingH2s[18]);
+
+        // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
+        uconfigPageReWrapperForm(contentForm);
+
+        // 保存更改
+        contentForm.lastElementChild.children[0].value = "保存修改";
+
+    }, () => {
+        // Show Filtered Removal Count  exhentai
+        uconfigPageShowFilteredRemovalCount(settingH2s[10]);
+
+        // Excluded Languages
+        uconfigTagExcludedLanguages(settingH2s[11]);
+
+        // Excluded Uploaders
+        uconfigPageExcludedUploaders(settingH2s[12]);
+
+        // Search Result Count
+        uconfigPageSearchResultCount(settingH2s[13]);
+
+        // Thumbnail Settings
+        uconfigPageThumbnailSettings(settingH2s[14]);
+
+        // Thumbnail Scaling
+        uconfigPageThumbnailScaling(settingH2s[15]);
+
+        // Viewport Override
+        uconfigPageViewportOverride(settingH2s[16]);
+
+        // Gallery Comments
+        uconfigPageGalleryComments(settingH2s[17]);
+
+        // Gallery Tags
+        uconfigPageGalleryTags(settingH2s[18]);
+
+        // Gallery Page Numbering
+        uconfigPageGalleryPageNumbering(settingH2s[19]);
+
+        // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
+        uconfigPageReWrapperForm(contentForm);
+
+        // 保存更改
+        contentForm.lastElementChild.children[0].value = "保存修改";
+    });
+
+
 }
 
 // 头部翻译
@@ -392,6 +436,17 @@ function uconfigTagWatchingThreshold(titleH2) {
     titleH2.innerText = "-- 标签订阅阀值设置 --";
     var tagWatchingLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
     tagWatchingLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>正权重</strong> 来关注它们。一旦某个作品所有的标签权重之和 <strong>高于</strong> 设定值，此作品将包含在菜单 [ 偏好 ] 的作品列表中。这个值的设定范围为 [ 0 ~ 9999 ] 。`
+}
+
+// 显示过滤删除数量
+function uconfigPageShowFilteredRemovalCount(titleH2){
+    titleH2.innerText = "-- 显示过滤删除数量 --";
+    var displayWayDiv = titleH2.nextElementSibling;
+    var p = displayWayDiv.querySelector("p");
+    p.innerText = "1. 是否显示 “ 您的默认过滤器从此页面中删除了 XX 个画廊 ” 数量?";
+    var displayWayRadios = p.nextElementSibling.children;
+    displayWayRadios[0].children[0].childNodes[2].data = "是";
+    displayWayRadios[1].children[0].childNodes[2].data = "否";
 }
 
 // 屏蔽语种

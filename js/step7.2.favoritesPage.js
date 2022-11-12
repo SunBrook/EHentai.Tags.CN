@@ -131,20 +131,38 @@ function favoritePage() {
     dropDownlistTranslate();
 
     // 底部删除选中、移动作品下拉框，确认按钮
-    var ddact = document.getElementById("ddact");
-    if (ddact) {
-        var options = ddact.querySelectorAll("option");
+    func_eh_ex(() => {
+        // e-hentai
+        var ddact = document.getElementById("ddact");
+        if (ddact) {
+            var options = ddact.querySelectorAll("option");
+            if (options.length > 0) {
+                if (options[0].innerText == "Delete Selected") {
+                    options[0].innerText = "删除选中的作品";
+                }
+            }
+
+            var optgroup = ddact.children[1];
+            if (optgroup.getAttribute("label") == "Change Category") {
+                optgroup.setAttribute("label", "作品迁移到以下收藏夹");
+            }
+        }
+    }, () => {
+        // exhentai
+        var favsel = document.getElementById("favsel");
+        var options = favsel.querySelectorAll("option");
         if (options.length > 0) {
             if (options[0].innerText == "Delete Selected") {
                 options[0].innerText = "删除选中的作品";
             }
         }
 
-        var optgroup = ddact.children[1];
+        var optgroup = favsel.children[1];
         if (optgroup.getAttribute("label") == "Change Category") {
             optgroup.setAttribute("label", "作品迁移到以下收藏夹");
         }
-    }
+    })
+
 
     let bottomConfirmBtn;
     func_eh_ex(() => {
@@ -152,7 +170,7 @@ function favoritePage() {
         bottomConfirmBtn = ido[0].children[3].children[5].children[0].children[0].children[1].children[0];
     }, () => {
         // exhentai
-        bottomConfirmBtn = ido[0].children[2].children[4].children[0].children[0].children[1].children[0];
+        bottomConfirmBtn = ido[0].children[6].children[6].children[0].children[1].children[0];
     });
     if (bottomConfirmBtn.value == "Confirm") {
         bottomConfirmBtn.value = "确 认";
@@ -264,7 +282,7 @@ function favoritePage() {
         favForm.insertBefore(translateDiv, favForm.firstChild);
 
         // 样式调整
-        translateDiv.style.marginTop = "-43px";
+        translateDiv.style.marginTop = "-85px";
         translateDiv.style.position = "absolute";
         translateDiv.style.right = "16px";
         translateDiv.style.backgroundColor = "#34353b";
