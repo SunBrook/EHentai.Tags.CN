@@ -1912,11 +1912,27 @@ func_eh_ex(() => {
 		transform: scale(2);
 	}
 	
-	#dms #googleTranslateDiv,
+	.searchtext #googleTranslateDiv #googleTranslateCheckbox,
+	.ip #googleTranslateDiv #googleTranslateCheckbox {
+		margin-left: -3px;
+	}
+	
+	.t_popular_toppane #googleTranslateDiv #googleTranslateCheckbox,
+	.t_favorite_ido #googleTranslateDiv #googleTranslateCheckbox {
+		margin-left: 5px;
+	}
+	
+	.t_torrentsPage_ido #googleTranslateDiv #googleTranslateCheckbox {
+		margin-left: 11px;
+	}
+	
+	.searchtext #googleTranslateDiv,
+	.ip #googleTranslateDiv,
 	.t_popular_toppane #googleTranslateDiv,
 	.t_toplist_ido #googleTranslateDiv,
 	.t_torrentsPage_ido #googleTranslateDiv,
-	.t_tosPage_stuffbox #googleTranslateDiv {
+	.t_tosPage_stuffbox #googleTranslateDiv,
+	.t_favorite_ido #googleTranslateDiv {
 		float: left;
 		background-color: #edebdf;
 		padding: 2px 3px 6px 7px;
@@ -1925,10 +1941,18 @@ func_eh_ex(() => {
 		position: absolute;
 		border: 1px solid #8d8d8d;
 		border-radius: 3px;
+		font-weight: bold;
 	}
 	
-	#dms #googleTranslateDiv {
-		margin-top: -13px;
+	.t_favorite_ido #googleTranslateDiv {
+		margin-top: -76px;
+		position: absolute;
+		right: 16px;
+	}
+	
+	.searchtext #googleTranslateDiv,
+	.ip #googleTranslateDiv {
+		top: 25px;
 	}
 	
 	.t_favorite_ido #dms #googleTranslateDiv {
@@ -1960,9 +1984,10 @@ func_eh_ex(() => {
 		position: relative;
 	}
 	
-	#dms #translateLabel,
+	.searchtext #translateLabel,
 	.t_popular_toppane #translateLabel,
-	.t_toplist_ido #translateLabel {
+	.t_toplist_ido #translateLabel,
+	.t_favorite_ido #translateLabel {
 		padding-left: 5px;
 		font-weight: bold;
 		font-size: 13px;
@@ -1979,7 +2004,9 @@ func_eh_ex(() => {
 	.t_torrentsPage_ido #googleTranslateDiv,
 	.t_torrentsPage_ido #translateLabel,
 	.t_tosPage_stuffbox #googleTranslateDiv,
-	.t_tosPage_stuffbox #translateLabel {
+	.t_tosPage_stuffbox #translateLabel,
+	.t_favorite_ido #googleTranslateDiv,
+	.t_favorite_ido #translateLabel {
 		cursor: pointer;
 	}
 	
@@ -2037,6 +2064,8 @@ func_eh_ex(() => {
 		display: none;
 	}
 	
+	.searchtext #googleTranslateDiv:hover,
+	.ip #googleTranslateDiv:hover,
 	#gd5 #googleTranslateDiv:hover,
 	#div_ee8413b2_detail_clearBtn:hover,
 	#div_ee8413b2_detail_addFavoriteBtn:hover,
@@ -2044,7 +2073,9 @@ func_eh_ex(() => {
 	.t_popular_toppane #googleTranslateDiv:hover,
 	.t_toplist_ido #googleTranslateDiv:hover,
 	.t_torrentsPage_ido #googleTranslateDiv:hover,
-	.t_tosPage_stuffbox #googleTranslateDiv:hover {
+	.t_tosPage_stuffbox #googleTranslateDiv:hover,
+	.t_torrentsPage_ido #googleTranslateDiv:hover,
+	.t_favorite_ido #googleTranslateDiv:hover {
 		background-color: rgba(255, 246, 246, 0.397);
 	}
 	
@@ -3903,7 +3934,7 @@ func_eh_ex(() => {
 	#div_ee8413b2 #favorites_editor #favorites_cancel:hover,
 	#div_ee8413b2 #favorites_editor #favorites_export:hover,
 	#div_ee8413b2 #favorites_editor #favorites_recover:hover {
-		background-color: rgba(255, 246, 246, 0.397);
+		background-color: rgba(255, 246, 246, 0.1);
 	}
 	
 	#div_ee8413b2 #category_list .category_extend:hover,
@@ -3914,21 +3945,44 @@ func_eh_ex(() => {
 		transform: scale(2);
 	}
 	
-	#dms #googleTranslateDiv,
+	.searchtext #googleTranslateDiv #googleTranslateCheckbox,
+	.ip #googleTranslateDiv #googleTranslateCheckbox {
+		margin-left: -3px;
+	}
+	
+	.t_popular_toppane #googleTranslateDiv #googleTranslateCheckbox,
+	.t_torrentsPage_ido #googleTranslateDiv #googleTranslateCheckbox,
+	.t_favorite_ido #googleTranslateDiv #googleTranslateCheckbox {
+		margin-left: 11px;
+	}
+	
+	.searchtext #googleTranslateDiv,
+	.ip #googleTranslateDiv,
 	.t_popular_toppane #googleTranslateDiv,
-	.t_torrentsPage_ido #googleTranslateDiv {
+	.t_torrentsPage_ido #googleTranslateDiv,
+	.t_favorite_ido #googleTranslateDiv {
 		float: left;
 		background-color: #34353b;
 		padding: 2px 3px 6px 7px;
 		margin-left: 10px;
-		width: 120px;
+		width: 135px;
+		height: 23px;
+		line-height: 28px;
 		position: absolute;
-		border: 1px solid #8d8d8d;
 		border-radius: 3px;
+		font-weight: bold;
 	}
 	
-	#dms #googleTranslateDiv {
-		margin-top: -13px;
+	.t_favorite_ido #googleTranslateDiv {
+		margin-top: -76px;
+		position: absolute;
+		right: 16px;
+	}
+	
+	.searchtext #googleTranslateDiv,
+	.ip #googleTranslateDiv {
+		top: 25px;
+		left: -4px;
 	}
 	
 	.t_favorite_ido #dms #googleTranslateDiv {
@@ -3944,8 +3998,10 @@ func_eh_ex(() => {
 		top: 105px;
 	}
 	
-	#dms #translateLabel,
-	.t_popular_toppane #translateLabel {
+	.searchtext #translateLabel,
+	.t_popular_toppane #translateLabel,
+	.t_torrentsPage_ido #translateLabel,
+	.t_favorite_ido #translateLabel {
 		padding-left: 5px;
 		font-weight: bold;
 		font-size: 13px;
@@ -3955,10 +4011,14 @@ func_eh_ex(() => {
 	#dms,
 	#dms #googleTranslateCheckbox,
 	#dms #translateLabel,
+	.searchtext #translateLabel,
+	.ip #translateLabel,
 	.t_popular_toppane #googleTranslateDiv,
 	.t_popular_toppane #translateLabel,
 	.t_torrentsPage_ido #googleTranslateDiv,
-	.t_torrentsPage_ido #translateLabel {
+	.t_torrentsPage_ido #translateLabel,
+	.t_favorite_ido #googleTranslateDiv,
+	.t_favorite_ido #translateLabel {
 		cursor: pointer;
 	}
 	
@@ -3971,7 +4031,6 @@ func_eh_ex(() => {
 		padding: 2px 3px 6px 7px;
 		margin-left: 10px;
 		width: 120px;
-		border: 1px solid #8d8d8d;
 		border-radius: 3px;
 		margin-bottom: 15px;
 	}
@@ -3997,7 +4056,6 @@ func_eh_ex(() => {
 		line-height: 25px;
 		font-weight: bold;
 		font-size: 13px;
-		border: 1px solid #8d8d8d;
 		background-color: #34353b;
 		border-radius: 3px;
 		text-align: center;
@@ -4008,13 +4066,16 @@ func_eh_ex(() => {
 		display: none;
 	}
 	
+	.searchtext #googleTranslateDiv:hover,
+	.ip #googleTranslateDiv:hover,
 	#gd5 #googleTranslateDiv:hover,
 	#div_ee8413b2_detail_clearBtn:hover,
 	#div_ee8413b2_detail_addFavoriteBtn:hover,
 	#div_ee8413b2_detail_searchBtn:hover,
 	.t_popular_toppane #googleTranslateDiv:hover,
-	.t_torrentsPage_ido #googleTranslateDiv:hover {
-		background-color: rgba(255, 246, 246, 0.397);
+	.t_torrentsPage_ido #googleTranslateDiv:hover,
+	.t_favorite_ido #googleTranslateDiv:hover {
+		background-color: rgba(255, 246, 246, 0.1);
 	}
 	
 	#nb {
@@ -4562,7 +4623,7 @@ func_eh_ex(() => {
 	#t_mytags_bottom #mytags_right_all_collapse:hover,
 	#t_mytags_bottom #mytags_right_all_expand:hover,
 	#t_mytags_bottom .mytags_item_wrapper:hover {
-		background-color: rgba(255, 246, 246, 0.397);
+		background-color: rgba(255, 246, 246, 0.1);
 	}
 	
 	.t_mytagsPage_outer #tagset_outer div:nth-child(1) {
@@ -4743,7 +4804,7 @@ func_eh_ex(() => {
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #tag_color_reset_btn:hover,
 	.t_mytagsPage_outer #upload_tag_form #weight_reset_btn:hover {
-		background-color: rgba(255, 246, 246, 0.397);
+		background-color: rgba(255, 246, 246, 0.1);
 	}
 	
 	.t_mytagsPage_outer #upload_tag_form #behavior_reset_btn {
@@ -4859,7 +4920,7 @@ func_eh_ex(() => {
 	}
 	
 	.t_mytagsPage_outer #upload_tag_form #upload_tag_form_middle_right #checkTags_reset_btn:hover {
-		background-color: rgba(255, 246, 246, 0.397);
+		background-color: rgba(255, 246, 246, 0.1);
 	}
 	
 	.t_mytagsPage_outer #upload_tag_ing {
@@ -7132,36 +7193,6 @@ function mainPageTranslate() {
 	var beforeDiv = dms.parentNode.firstChild;
 	beforeDiv.insertBefore(translateDiv, beforeDiv.lastChild);
 
-	// TODO
-	func_eh_ex(() => {
-		// e-hentai
-		translateDiv.style.marginTop = "0 !important";
-		translateDiv.style.float = "lfet";
-		translateDiv.style.position = "absolute";
-		translateDiv.style.left = "10px";
-		translateDiv.style.padding = "7px 15px";
-		translateDiv.style.border = "1px solid #8d8d8d";
-		translateDiv.style.borderRadius = "3px";
-		translateDiv.style.cursor = "pointer";
-		translateLabel.style.cursor = "pointer";
-	}, () => {
-		// exhentai
-		translateDiv.style.marginTop = "0 !important";
-		translateDiv.style.float = "lfet";
-		translateDiv.style.position = "absolute";
-		translateDiv.style.left = "10px";
-		translateDiv.style.backgroundColor = "#34353b";
-		translateDiv.style.padding = "10px 15px";
-		translateDiv.style.border = "1px solid #8d8d8d";
-		translateDiv.style.borderRadius = "3px";
-		translateDiv.style.cursor = "pointer";
-		translateLabel.style.cursor = "pointer";
-	});
-
-
-
-
-
 	// 读取是否选中
 	read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
 		if (result && result.value) {
@@ -9031,6 +9062,7 @@ function popularPage() {
     translateLabel.setAttribute("for", translateCheckbox.id);
     translateLabel.id = "translateLabel";
     translateLabel.innerText = "谷歌机翻 : 标题";
+    translateDiv.style.zIndex = 9999;
 
     translateDiv.appendChild(translateLabel);
     translateCheckbox.addEventListener("click", translateMainPageTitle);
@@ -9135,6 +9167,10 @@ function otherPageTryUseOldDataAndTranslateTag() {
 
 
 //#endregion
+
+
+
+
 
 //#region step7.2.favoritePage.js 收藏列表
 
@@ -9338,25 +9374,6 @@ function favoritePage() {
     var favForm = document.getElementsByTagName("form")[1];
     favForm.insertBefore(translateDiv, favForm.firstChild);
 
-    // 样式调整
-    translateDiv.style.marginTop = "-85px";
-    translateDiv.style.position = "absolute";
-    translateDiv.style.right = "16px";
-    translateDiv.style.padding = "8px 15px";
-    translateDiv.style.border = "1px solid #8d8d8d";
-    translateDiv.style.borderRadius = "3px";
-    translateDiv.style.cursor = "pointer";
-
-    func_eh_ex(() => {
-        // e-hentai
-        translateDiv.style.backgroundColor = "#e3e0d1";
-        
-    }, () => {
-        // exhentai
-        translateDiv.style.backgroundColor = "#34353b";
-    });
-
-
     indexDbInit(() => {
         // 读取是否选中
         read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
@@ -9504,7 +9521,6 @@ function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInpu
 }
 
 //#endregion
-
 
 
 //#region 7.3.watchedPage.js 偏好

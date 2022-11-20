@@ -774,11 +774,27 @@
     transform: scale(2);
 }
 
-#dms #googleTranslateDiv,
+.searchtext #googleTranslateDiv #googleTranslateCheckbox,
+.ip #googleTranslateDiv #googleTranslateCheckbox {
+    margin-left: -3px;
+}
+
+.t_popular_toppane #googleTranslateDiv #googleTranslateCheckbox,
+.t_favorite_ido #googleTranslateDiv #googleTranslateCheckbox {
+    margin-left: 5px;
+}
+
+.t_torrentsPage_ido #googleTranslateDiv #googleTranslateCheckbox {
+    margin-left: 11px;
+}
+
+.searchtext #googleTranslateDiv,
+.ip #googleTranslateDiv,
 .t_popular_toppane #googleTranslateDiv,
 .t_toplist_ido #googleTranslateDiv,
 .t_torrentsPage_ido #googleTranslateDiv,
-.t_tosPage_stuffbox #googleTranslateDiv {
+.t_tosPage_stuffbox #googleTranslateDiv,
+.t_favorite_ido #googleTranslateDiv {
     float: left;
     background-color: #edebdf;
     padding: 2px 3px 6px 7px;
@@ -787,10 +803,18 @@
     position: absolute;
     border: 1px solid #8d8d8d;
     border-radius: 3px;
+    font-weight: bold;
 }
 
-#dms #googleTranslateDiv {
-    margin-top: -13px;
+.t_favorite_ido #googleTranslateDiv {
+    margin-top: -76px;
+    position: absolute;
+    right: 16px;
+}
+
+.searchtext #googleTranslateDiv,
+.ip #googleTranslateDiv {
+    top: 25px;
 }
 
 .t_favorite_ido #dms #googleTranslateDiv {
@@ -822,9 +846,10 @@
     position: relative;
 }
 
-#dms #translateLabel,
+.searchtext #translateLabel,
 .t_popular_toppane #translateLabel,
-.t_toplist_ido #translateLabel {
+.t_toplist_ido #translateLabel,
+.t_favorite_ido #translateLabel {
     padding-left: 5px;
     font-weight: bold;
     font-size: 13px;
@@ -841,7 +866,9 @@
 .t_torrentsPage_ido #googleTranslateDiv,
 .t_torrentsPage_ido #translateLabel,
 .t_tosPage_stuffbox #googleTranslateDiv,
-.t_tosPage_stuffbox #translateLabel {
+.t_tosPage_stuffbox #translateLabel,
+.t_favorite_ido #googleTranslateDiv,
+.t_favorite_ido #translateLabel {
     cursor: pointer;
 }
 
@@ -899,6 +926,8 @@
     display: none;
 }
 
+.searchtext #googleTranslateDiv:hover,
+.ip #googleTranslateDiv:hover,
 #gd5 #googleTranslateDiv:hover,
 #div_ee8413b2_detail_clearBtn:hover,
 #div_ee8413b2_detail_addFavoriteBtn:hover,
@@ -906,7 +935,9 @@
 .t_popular_toppane #googleTranslateDiv:hover,
 .t_toplist_ido #googleTranslateDiv:hover,
 .t_torrentsPage_ido #googleTranslateDiv:hover,
-.t_tosPage_stuffbox #googleTranslateDiv:hover {
+.t_tosPage_stuffbox #googleTranslateDiv:hover,
+.t_torrentsPage_ido #googleTranslateDiv:hover,
+.t_favorite_ido #googleTranslateDiv:hover {
     background-color: rgba(255, 246, 246, 0.397);
 }
 

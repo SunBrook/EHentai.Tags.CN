@@ -28,6 +28,7 @@ function popularPage() {
     translateLabel.setAttribute("for", translateCheckbox.id);
     translateLabel.id = "translateLabel";
     translateLabel.innerText = "谷歌机翻 : 标题";
+    translateDiv.style.zIndex = 9999;
 
     translateDiv.appendChild(translateLabel);
     translateCheckbox.addEventListener("click", translateMainPageTitle);

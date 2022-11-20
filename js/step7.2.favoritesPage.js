@@ -200,25 +200,6 @@ function favoritePage() {
     var favForm = document.getElementsByTagName("form")[1];
     favForm.insertBefore(translateDiv, favForm.firstChild);
 
-    // 样式调整
-    translateDiv.style.marginTop = "-85px";
-    translateDiv.style.position = "absolute";
-    translateDiv.style.right = "16px";
-    translateDiv.style.padding = "8px 15px";
-    translateDiv.style.border = "1px solid #8d8d8d";
-    translateDiv.style.borderRadius = "3px";
-    translateDiv.style.cursor = "pointer";
-
-    func_eh_ex(() => {
-        // e-hentai
-        translateDiv.style.backgroundColor = "#e3e0d1";
-        
-    }, () => {
-        // exhentai
-        translateDiv.style.backgroundColor = "#34353b";
-    });
-
-
     indexDbInit(() => {
         // 读取是否选中
         read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {

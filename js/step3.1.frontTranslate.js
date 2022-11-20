@@ -396,36 +396,6 @@ function mainPageTranslate() {
 	var beforeDiv = dms.parentNode.firstChild;
 	beforeDiv.insertBefore(translateDiv, beforeDiv.lastChild);
 
-	// TODO
-	func_eh_ex(() => {
-		// e-hentai
-		translateDiv.style.marginTop = "0 !important";
-		translateDiv.style.float = "lfet";
-		translateDiv.style.position = "absolute";
-		translateDiv.style.left = "10px";
-		translateDiv.style.padding = "7px 15px";
-		translateDiv.style.border = "1px solid #8d8d8d";
-		translateDiv.style.borderRadius = "3px";
-		translateDiv.style.cursor = "pointer";
-		translateLabel.style.cursor = "pointer";
-	}, () => {
-		// exhentai
-		translateDiv.style.marginTop = "0 !important";
-		translateDiv.style.float = "lfet";
-		translateDiv.style.position = "absolute";
-		translateDiv.style.left = "10px";
-		translateDiv.style.backgroundColor = "#34353b";
-		translateDiv.style.padding = "10px 15px";
-		translateDiv.style.border = "1px solid #8d8d8d";
-		translateDiv.style.borderRadius = "3px";
-		translateDiv.style.cursor = "pointer";
-		translateLabel.style.cursor = "pointer";
-	});
-
-
-
-
-
 	// 读取是否选中
 	read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {
 		if (result && result.value) {
