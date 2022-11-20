@@ -5,11 +5,13 @@ const webOrigin = window.location.origin;
 //#region 头部菜单
 
 const fontMenusData = {
+	"Front": "首页",
 	"Front Page": "首页",
 	"Watched": "偏好",
 	"Popular": "热门",
 	"Torrents": "种子",
 	"Favorites": "收藏",
+	"Favs": "收藏",
 	"Settings": "设置",
 	"My Uploads": "我的上传",
 	"My Tags": "我的标签",
@@ -19,7 +21,8 @@ const fontMenusData = {
 	"News": "新闻",
 	"Forums": "论坛",
 	"Wiki": "维基百科",
-	"HentaiVerse": "變態之道(游戏)"
+	"HentaiVerse": "變態之道(游戏)",
+	"HV": "變態之道(游戏)"
 };
 
 //#endregion

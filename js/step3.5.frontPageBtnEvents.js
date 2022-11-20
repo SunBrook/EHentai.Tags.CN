@@ -2,8 +2,15 @@
 // 全部类别按钮
 allCategoryBtn.onclick = function () {
     var isDisplay = displayDiv.clientHeight != 537;
-    allCategoryBtn.classList.add("chooseTab");
-    categoryFavoritesBtn.classList.remove("chooseTab");
+    func_eh_ex(() => {
+        // e-henatai
+        allCategoryBtn.classList.add("chooseTab");
+        categoryFavoritesBtn.classList.remove("chooseTab");
+    }, () => {
+        // exhentai
+        allCategoryBtn.classList.add("btn_checked_class1");
+        categoryFavoritesBtn.classList.remove("btn_checked_class1");
+    });
     categoryDisplayDiv.style.display = "block";
     favoritesDisplayDiv.style.display = "none";
     if (checkDictNull(searchItemDict)) {
@@ -27,8 +34,15 @@ allCategoryBtn.onclick = function () {
 // 本地收藏按钮
 categoryFavoritesBtn.onclick = function () {
     var isDisplay = displayDiv.clientHeight != 537;
-    categoryFavoritesBtn.classList.add("chooseTab");
-    allCategoryBtn.classList.remove("chooseTab");
+    func_eh_ex(() => {
+        // e-hentai
+        categoryFavoritesBtn.classList.add("chooseTab");
+        allCategoryBtn.classList.remove("chooseTab");
+    }, () => {
+        // exhentai
+        categoryFavoritesBtn.classList.add("btn_checked_class1");
+        allCategoryBtn.classList.remove("btn_checked_class1");
+    });
     favoritesDisplayDiv.style.display = "block";
     categoryDisplayDiv.style.display = "none";
 
@@ -54,10 +68,16 @@ categoryFavoritesBtn.onclick = function () {
 
 // 收起按钮
 searchCloseBtn.onclick = function () {
-    categoryFavoritesBtn.classList.remove("chooseTab");
-    allCategoryBtn.classList.remove("chooseTab");
-
-    slideLeft(searchCloseBtn, 10, function(){
+    func_eh_ex(() => {
+        // e-hentai
+        allCategoryBtn.classList.remove("chooseTab");
+        categoryFavoritesBtn.classList.remove("chooseTab");
+    }, () => {
+        // exhentai
+        allCategoryBtn.classList.remove("btn_checked_class1");
+        categoryFavoritesBtn.classList.remove("btn_checked_class1");
+    });
+    slideLeft(searchCloseBtn, 10, function () {
         searchCloseBtn.style.display = "none";
     });
 

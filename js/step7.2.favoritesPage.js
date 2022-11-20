@@ -87,6 +87,7 @@ function favoritePage() {
 
         // 隐藏排序和底部操作框
         var orderDiv = ido[0].children[2].children[0];
+        if (!orderDiv) return;
         orderDiv.style.display = "none";
         var nullBottomDiv = ido[0].children[3].children[1];
         nullBottomDiv.style.display = "none";

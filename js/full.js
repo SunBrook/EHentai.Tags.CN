@@ -343,11 +343,13 @@ const webOrigin = window.location.origin;
 //#region 头部菜单
 
 const fontMenusData = {
+	"Front": "首页",
 	"Front Page": "首页",
 	"Watched": "偏好",
 	"Popular": "热门",
 	"Torrents": "种子",
 	"Favorites": "收藏",
+	"Favs": "收藏",
 	"Settings": "设置",
 	"My Uploads": "我的上传",
 	"My Tags": "我的标签",
@@ -357,7 +359,8 @@ const fontMenusData = {
 	"News": "新闻",
 	"Forums": "论坛",
 	"Wiki": "维基百科",
-	"HentaiVerse": "變態之道(游戏)"
+	"HentaiVerse": "變態之道(游戏)",
+	"HV": "變態之道(游戏)"
 };
 
 //#endregion
@@ -3270,7 +3273,7 @@ func_eh_ex(() => {
 		margin-top: 10px;
 		position: relative;
 		z-index: 3;
-		background-color: #40454B;
+		background-color: #4f535b;
 	}
 	
 	#div_ee8413b2 #category_loading_div {
@@ -3496,14 +3499,15 @@ func_eh_ex(() => {
 	#div_ee8413b2 #search_wrapper {
 		width: calc(100% - 20px);
 		min-height: 50px;
-		border: 1px solid black;
+		border: 1px solid #484b53;
 		margin: 0 auto;
 		padding: 10px;
 		color: #F1F1F1;
 	}
 	
 	#div_ee8413b2 #search_wrapper #search_close {
-		border: 1px solid #f1f1f1;
+		border: 1px solid #34353b;
+		background-color: rgb(52 53 59 / 25%);
 		border-left: 0;
 		float: left;
 		margin-right: -11px;
@@ -3529,12 +3533,17 @@ func_eh_ex(() => {
 		width: 100px;
 		height: 48px;
 		line-height: 48px;
-		border: 1px solid #F1F1F1;
+		border: 1px solid #34353b;
+		background-color: rgb(52 53 59 / 25%);
 		text-align: center;
 		vertical-align: middle;
 		float: left;
 		cursor: pointer;
 		font-size: 18px;
+	}
+	
+	.btn_checked_class1 {
+		background-color: transparent !important;
 	}
 	
 	#div_ee8413b2 #search_top #category_favorites_button {
@@ -3545,7 +3554,8 @@ func_eh_ex(() => {
 		width: 100px;
 		height: 48px;
 		line-height: 48px;
-		border: 1px solid #F1F1F1;
+		border: 1px solid #34353b;
+		background-color: #34353b78;
 		text-align: center;
 		vertical-align: middle;
 		float: right;
@@ -3558,7 +3568,8 @@ func_eh_ex(() => {
 		width: 100px;
 		height: 48px;
 		line-height: 48px;
-		border: 1px solid #f1f1f145;
+		border: 1px solid #34353b45;
+		background-color: rgb(52 53 59 / 25%);
 		text-align: center;
 		vertical-align: middle;
 		float: right;
@@ -3570,7 +3581,8 @@ func_eh_ex(() => {
 	#div_ee8413b2 #search_top #category_search_input {
 		width: calc(100% - 392px);
 		height: 48px;
-		border: 1px solid #F1F1F1;
+		border: 1px solid #34353b;
+		background-color: rgb(52 53 59 / 25%);
 		float: left;
 		margin: 0 10px 0 40px;
 	}
@@ -3658,10 +3670,6 @@ func_eh_ex(() => {
 		display: none;
 	}
 	
-	#div_ee8413b2 #category_search_input #category_enter_button {
-		border-left: 1px solid #F1F1F1;
-	}
-	
 	#div_ee8413b2 #category_search_input #input_clear {
 		border-left: 0;
 	}
@@ -3673,9 +3681,10 @@ func_eh_ex(() => {
 	#div_ee8413b2 #search_wrapper #category_favorites_div,
 	#div_ee8413b2 #search_wrapper #category_all_div {
 		width: calc(100% - 2px);
-		border: 1px solid #F1F1F1;
+		border: 1px solid #34353bb5;
 		margin-top: 10px;
 		overflow: hidden;
+		background-color: rgb(52 53 59 / 25%);
 	}
 	
 	#div_ee8413b2 #search_wrapper #category_all_div,
@@ -3749,8 +3758,8 @@ func_eh_ex(() => {
 	#div_ee8413b2 #favorites_editor #favorites_clear,
 	#div_ee8413b2 #favorites_editor #favorites_save,
 	#div_ee8413b2 #favorites_editor #favorites_cancel {
-		border-bottom: 1px solid #F1F1F1;
-		border-right: 1px solid #F1F1F1;
+		border-bottom: 1px solid #42454c;
+		border-right: 1px solid #42454c;
 		width: 49.5px;
 		float: left;
 		text-align: center;
@@ -3761,8 +3770,8 @@ func_eh_ex(() => {
 	
 	#div_ee8413b2 #favorites_editor #favorites_export,
 	#div_ee8413b2 #favorites_editor #favorites_recover {
-		border-bottom: 1px solid #F1F1F1;
-		border-left: 1px solid #F1F1F1;
+		border-bottom: 1px solid #42454c;
+		border-left: 1px solid #42454c;
 		width: 49.5px;
 		float: right;
 		text-align: center;
@@ -3776,20 +3785,20 @@ func_eh_ex(() => {
 	}
 	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend {
-		width: calc(100% - 48px);
+		width: 100%;
 		margin-left: -1px;
-		border: 1px solid #F1F1F1;
+		border: 1px solid #34353b;
 		border-top: 0;
-		background-color: #40454B;
+		background-color: #484b53;
 		max-height: 500px;
 		overflow-y: auto;
 		position: relative;
 	}
 	
 	.t_favorite_ido #category_user_input_recommend {
-		border: 1px solid #C2C1C1;
+		border: 1px solid #34353b;
 		border-top: 0;
-		background-color: #40454B;
+		background-color: #484b53;
 		max-height: 500px;
 		position: relative;
 		top: -10px;
@@ -3812,10 +3821,6 @@ func_eh_ex(() => {
 	
 	.t_favorite_ido #category_user_input_recommend .category_user_input_recommend_items:first-child {
 		border-top: 1px solid #C2C1C1;
-	}
-	
-	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:first-child {
-		border-top: 1px solid #f1f1f1;
 	}
 	
 	#div_ee8413b2 #category_search_input #category_user_input_recommend .category_user_input_recommend_items:not(:first-child),
@@ -3875,7 +3880,7 @@ func_eh_ex(() => {
 	#div_ee8413b2 #category_search_input #category_user_input_recommend::-webkit-scrollbar-track,
 	.t_favorite_ido #category_user_input_recommend::-webkit-scrollbar-track,
 	.torrents_detail_info #etd p::-webkit-scrollbar-track {
-		background-color: #2d2e32;
+		background-color: rgb(52 53 59 / 25%);
 		border-radius: 10px;
 	}
 	
@@ -3886,7 +3891,7 @@ func_eh_ex(() => {
 	#div_ee8413b2 #category_favorites_div #favorites_list::-webkit-scrollbar-thumb,
 	#div_ee8413b2 #category_favorites_div #favorites_edit_list::-webkit-scrollbar-thumb,
 	.torrents_detail_info #etd p::-webkit-scrollbar-thumb {
-		background-color: #a5a5a5;
+		background-color: rgb(52 53 59 / 50%);
 		border-radius: 10px;
 	}
 	
@@ -9261,6 +9266,7 @@ function favoritePage() {
 
         // 隐藏排序和底部操作框
         var orderDiv = ido[0].children[2].children[0];
+        if (!orderDiv) return;
         orderDiv.style.display = "none";
         var nullBottomDiv = ido[0].children[3].children[1];
         nullBottomDiv.style.display = "none";
@@ -9521,7 +9527,6 @@ function favoriteUserInputOnInputEvent(inputValue, inputRecommendDiv, searchInpu
 }
 
 //#endregion
-
 
 //#region 7.3.watchedPage.js 偏好
 
@@ -14030,77 +14035,97 @@ function mainPageCategory() {
 
 		// 本地列表、本地收藏、收起按钮点击事件
 		//#region step3.5.frontPageBtnEvents.js 首页插件的按钮点击事件
-		// 全部类别按钮
-		allCategoryBtn.onclick = function () {
-			var isDisplay = displayDiv.clientHeight != 537;
-			allCategoryBtn.classList.add("chooseTab");
-			categoryFavoritesBtn.classList.remove("chooseTab");
-			categoryDisplayDiv.style.display = "block";
-			favoritesDisplayDiv.style.display = "none";
-			if (checkDictNull(searchItemDict)) {
-				addFavoritesBtn.style.display = "none";
-				addFavoritesDisabledBtn.style.display = "block";
-			}
-			else {
-				addFavoritesBtn.style.display = "block";
-				addFavoritesDisabledBtn.style.display = "none";
-			}
+// 全部类别按钮
+allCategoryBtn.onclick = function () {
+    var isDisplay = displayDiv.clientHeight != 537;
+    func_eh_ex(() => {
+        // e-henatai
+        allCategoryBtn.classList.add("chooseTab");
+        categoryFavoritesBtn.classList.remove("chooseTab");
+    }, () => {
+        // exhentai
+        allCategoryBtn.classList.add("btn_checked_class1");
+        categoryFavoritesBtn.classList.remove("btn_checked_class1");
+    });
+    categoryDisplayDiv.style.display = "block";
+    favoritesDisplayDiv.style.display = "none";
+    if (checkDictNull(searchItemDict)) {
+        addFavoritesBtn.style.display = "none";
+        addFavoritesDisabledBtn.style.display = "block";
+    }
+    else {
+        addFavoritesBtn.style.display = "block";
+        addFavoritesDisabledBtn.style.display = "none";
+    }
 
-			// 展开动画
-			if (isDisplay) {
-				slideDown(displayDiv, 537, 15, function () { });
+    // 展开动画
+    if (isDisplay) {
+        slideDown(displayDiv, 537, 15, function () { });
 
-				searchCloseBtn.style.display = "block";
-				slideRight(searchCloseBtn, 20, 10, function () { });
-			}
-		};
+        searchCloseBtn.style.display = "block";
+        slideRight(searchCloseBtn, 20, 10, function () { });
+    }
+};
 
-		// 本地收藏按钮
-		categoryFavoritesBtn.onclick = function () {
-			var isDisplay = displayDiv.clientHeight != 537;
-			categoryFavoritesBtn.classList.add("chooseTab");
-			allCategoryBtn.classList.remove("chooseTab");
-			favoritesDisplayDiv.style.display = "block";
-			categoryDisplayDiv.style.display = "none";
+// 本地收藏按钮
+categoryFavoritesBtn.onclick = function () {
+    var isDisplay = displayDiv.clientHeight != 537;
+    func_eh_ex(() => {
+        // e-hentai
+        categoryFavoritesBtn.classList.add("chooseTab");
+        allCategoryBtn.classList.remove("chooseTab");
+    }, () => {
+        // exhentai
+        categoryFavoritesBtn.classList.add("btn_checked_class1");
+        allCategoryBtn.classList.remove("btn_checked_class1");
+    });
+    favoritesDisplayDiv.style.display = "block";
+    categoryDisplayDiv.style.display = "none";
 
-			if (favoriteSave.style.display == "block" || checkDictNull(searchItemDict)) {
-				addFavoritesBtn.style.display = "none";
-				addFavoritesDisabledBtn.style.display = "block";
-			}
-			else {
-				addFavoritesBtn.style.display = "block";
-				addFavoritesDisabledBtn.style.display = "none";
-			}
+    if (favoriteSave.style.display == "block" || checkDictNull(searchItemDict)) {
+        addFavoritesBtn.style.display = "none";
+        addFavoritesDisabledBtn.style.display = "block";
+    }
+    else {
+        addFavoritesBtn.style.display = "block";
+        addFavoritesDisabledBtn.style.display = "none";
+    }
 
-			// 展开动画
-			if (isDisplay) {
-				slideDown(displayDiv, 537, 15, function () { });
+    // 展开动画
+    if (isDisplay) {
+        slideDown(displayDiv, 537, 15, function () { });
 
-				searchCloseBtn.style.display = "block";
-				slideRight(searchCloseBtn, 20, 10, function () {
-				});
-			}
-		}
-
-
-		// 收起按钮
-		searchCloseBtn.onclick = function () {
-			categoryFavoritesBtn.classList.remove("chooseTab");
-			allCategoryBtn.classList.remove("chooseTab");
-
-			slideLeft(searchCloseBtn, 10, function () {
-				searchCloseBtn.style.display = "none";
-			});
-
-			// 折叠动画
-			slideUp(displayDiv, 15, function () {
-				categoryDisplayDiv.style.display = "none";
-				favoritesDisplayDiv.style.display = "none";
-			});
-		}
+        searchCloseBtn.style.display = "block";
+        slideRight(searchCloseBtn, 20, 10, function () {
+        });
+    }
+}
 
 
-		//#endregion
+// 收起按钮
+searchCloseBtn.onclick = function () {
+    func_eh_ex(() => {
+        // e-hentai
+        allCategoryBtn.classList.remove("chooseTab");
+        categoryFavoritesBtn.classList.remove("chooseTab");
+    }, () => {
+        // exhentai
+        allCategoryBtn.classList.remove("btn_checked_class1");
+        categoryFavoritesBtn.classList.remove("btn_checked_class1");
+    });
+    slideLeft(searchCloseBtn, 10, function () {
+        searchCloseBtn.style.display = "none";
+    });
+
+    // 折叠动画
+    slideUp(displayDiv, 15, function () {
+        categoryDisplayDiv.style.display = "none";
+        favoritesDisplayDiv.style.display = "none";
+    });
+}
+
+
+//#endregion
 
 		//#region step3.6.category.js 本地列表模块
 
