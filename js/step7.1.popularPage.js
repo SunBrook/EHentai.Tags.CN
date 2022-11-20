@@ -34,10 +34,7 @@ function popularPage() {
     toppane.insertBefore(translateDiv, toppane.lastChild);
 
     // 按钮位置调整
-    func_eh_ex(() => { }, () => {
-        // exhentai 需要调整
-        translateDiv.style.marginTop = "0";
-    });
+    translateDiv.style.marginTop = "0";
 
     // 头部添加词库升级提示
     var dataUpdateDiv = document.createElement("div");

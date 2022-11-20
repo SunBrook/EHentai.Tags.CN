@@ -8,12 +8,8 @@ function frontTopOldSearchTranslate() {
     var fSerach = document.getElementById("f_search");
 
     fSerach.parentNode.className = "nopm";
-
-    func_eh_ex(() => { }, () => {
-        // exhentai
-        fSerach.parentNode.nextSibling.className = "nopm";
-    });
-
+    fSerach.parentNode.nextSibling.className = "nopm";
+    
 
     var nopms = document.getElementsByClassName("nopm");
 
@@ -38,9 +34,6 @@ function frontTopOldSearchTranslate() {
             advanceLink.onclick = function () {
                 this.innerText == "隐藏高级选项" ? copyModify_hide_advsearch_pane(this) : copyModify_show_advsearch_pane(this)
             }
-
-            // 如果高级选项存在，则直接翻译
-            checkAdvSearchDiv(advanceLink);
         }
 
         // 文件搜索
@@ -62,19 +55,7 @@ function frontTopOldSearchTranslate() {
             // 如果文件搜索存在，则直接翻译
             checkFsDiv(fileSearchLink);
         }
-    } else {
-        // 搜索图片结果
-        var fileSearchResultDiv = nopms[0].nextElementSibling;
-        // TODO
-        func_eh_ex(() => {
-            frontPageTranslateFileSearchResult(fileSearchResultDiv);
-        }, () => {
-            // frontPageTranslateFileSearchResult(fileSearchResultDiv);
-        });
-
     }
-
-
 }
 
 
@@ -186,47 +167,6 @@ function copyModify_hide_filesearch_pane(b) {
     c.style.display = "none"; c.innerHTML = ""
 }
 
-function checkAdvSearchDiv(advanceLink) {
-    var advdiv = document.getElementById("advdiv");
-    if (advdiv.innerHTML) {
-        func_eh_ex(() => {
-            // ehentai
-            var trs = advdiv.querySelectorAll("tr");
-            trs[0].children[0].children[1].innerText = "搜索作品名称";
-            trs[0].children[1].children[1].innerText = "搜索标签";
-            trs[0].children[2].children[1].innerText = "搜索描述";
-            trs[1].children[0].children[1].innerText = "搜索已经删除的作品";
-            trs[1].children[1].children[1].innerText = "只显示有种子的作品";
-            trs[2].children[0].children[1].innerText = "搜索低权重的标签";
-            trs[2].children[1].children[1].innerText = "搜索被否决的标签";
-
-            var tdPages = trs[3].children[0].childNodes;
-            tdPages[0].data = "搜索 ";
-            tdPages[2].data = " 至 ";
-            tdPages[4].data = " 页";
-
-            trs[3].children[1].children[1].innerText = "评分不低于：";
-            var tdOptions = trs[3].children[1].children[2].querySelectorAll("option");
-            for (const i in tdOptions) {
-                if (Object.hasOwnProperty.call(tdOptions, i)) {
-                    const option = tdOptions[i];
-                    option.innerText = option.innerText.replace("stars", "星");
-                }
-            }
-
-            trs[4].children[0].childNodes[0].data = "默认禁用筛选： ";
-            trs[4].children[0].children[1].innerText = "语言";
-            trs[4].children[0].children[3].innerText = "上传者";
-            trs[4].children[0].children[5].innerText = "标签";
-
-            advanceLink.innerText = "隐藏高级选项";
-        }, () => {
-            // exhentai
-
-        });
-    }
-}
-
 function checkFsDiv(fileSearchLink) {
     var fsDiv = document.getElementById("fsdiv");
     if (fsDiv.innerHTML) {
@@ -242,17 +182,6 @@ function checkFsDiv(fileSearchLink) {
 
         fileSearchLink.innerText = "隐藏文件搜索";
     }
-}
-
-function frontPageTranslateFileSearchResult(fileSearchResultDiv) {
-    fileSearchResultDiv.children[3].innerText = "搜索的文件：";
-    var tip = fileSearchResultDiv.children[5];
-    var isEnableSimilarSearch = tip.children[0].innerText == "enabled";
-    tip.innerHTML = `在本次搜索中，相似性查询 <strong>${isEnableSimilarSearch ? "已启用" : "已禁用"}</strong>。若要更改相似性查询的设置，你必须重新搜索。`;
-    var options = fileSearchResultDiv.children[6].querySelectorAll("td");
-    options[0].children[1].innerText = "仅搜索封面";
-    options[1].children[1].innerText = "显示已删除的作品";
-    fileSearchResultDiv.children[7].children[0].innerText = "搜索新文件";
 }
 
 //#endregion

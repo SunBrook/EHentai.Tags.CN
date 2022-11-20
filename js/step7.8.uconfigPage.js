@@ -8,13 +8,6 @@ function uconfigPage() {
     var outer = document.getElementById("outer");
     outer.classList.add("t_uconfigPage_outer");
 
-    // eh 二级菜单翻译
-    func_eh_ex(() => {
-        var menu2 = document.getElementById("lb").children[2];
-        menu2.innerText = " 我的设置 ";
-    }, () => { });
-
-
     // 头部翻译
     uconfigPageTopDiv();
 
@@ -51,80 +44,41 @@ function uconfigPage() {
     // Tag Watching Threshold
     uconfigTagWatchingThreshold(settingH2s[9]);
 
+    // Show Filtered Removal Count  exhentai
+    uconfigPageShowFilteredRemovalCount(settingH2s[10]);
 
-    func_eh_ex(() => {
-        // e-hentai
+    // Excluded Languages
+    uconfigTagExcludedLanguages(settingH2s[11]);
 
-        // Excluded Languages
-        uconfigTagExcludedLanguages(settingH2s[10]);
+    // Excluded Uploaders
+    uconfigPageExcludedUploaders(settingH2s[12]);
 
-        // Excluded Uploaders
-        uconfigPageExcludedUploaders(settingH2s[11]);
+    // Search Result Count
+    uconfigPageSearchResultCount(settingH2s[13]);
 
-        // Search Result Count
-        uconfigPageSearchResultCount(settingH2s[12]);
+    // Thumbnail Settings
+    uconfigPageThumbnailSettings(settingH2s[14]);
 
-        // Thumbnail Settings
-        uconfigPageThumbnailSettings(settingH2s[13]);
+    // Thumbnail Scaling
+    uconfigPageThumbnailScaling(settingH2s[15]);
 
-        // Thumbnail Scaling
-        uconfigPageThumbnailScaling(settingH2s[14]);
+    // Viewport Override
+    uconfigPageViewportOverride(settingH2s[16]);
 
-        // Viewport Override
-        uconfigPageViewportOverride(settingH2s[15]);
+    // Gallery Comments
+    uconfigPageGalleryComments(settingH2s[17]);
 
-        // Gallery Comments
-        uconfigPageGalleryComments(settingH2s[16]);
+    // Gallery Tags
+    uconfigPageGalleryTags(settingH2s[18]);
 
-        // Gallery Tags
-        uconfigPageGalleryTags(settingH2s[17]);
+    // Gallery Page Numbering
+    uconfigPageGalleryPageNumbering(settingH2s[19]);
 
-        // Gallery Page Numbering
-        uconfigPageGalleryPageNumbering(settingH2s[18]);
+    // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
+    uconfigPageReWrapperForm(contentForm);
 
-        // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
-        uconfigPageReWrapperForm(contentForm);
-
-        // 保存更改
-        contentForm.lastElementChild.children[0].value = "保存修改";
-
-    }, () => {
-        // Show Filtered Removal Count  exhentai
-        uconfigPageShowFilteredRemovalCount(settingH2s[10]);
-
-        // Excluded Languages
-        uconfigTagExcludedLanguages(settingH2s[11]);
-
-        // Excluded Uploaders
-        uconfigPageExcludedUploaders(settingH2s[12]);
-
-        // Search Result Count
-        uconfigPageSearchResultCount(settingH2s[13]);
-
-        // Thumbnail Settings
-        uconfigPageThumbnailSettings(settingH2s[14]);
-
-        // Thumbnail Scaling
-        uconfigPageThumbnailScaling(settingH2s[15]);
-
-        // Viewport Override
-        uconfigPageViewportOverride(settingH2s[16]);
-
-        // Gallery Comments
-        uconfigPageGalleryComments(settingH2s[17]);
-
-        // Gallery Tags
-        uconfigPageGalleryTags(settingH2s[18]);
-
-        // Gallery Page Numbering
-        uconfigPageGalleryPageNumbering(settingH2s[19]);
-
-        // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
-        uconfigPageReWrapperForm(contentForm);
-
-        // 保存更改
-        contentForm.lastElementChild.children[0].value = "保存修改";
-    });
+    // 保存更改
+    contentForm.lastElementChild.children[0].value = "保存修改";
 
 
 }

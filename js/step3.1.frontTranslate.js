@@ -1,19 +1,12 @@
 //#region step3.1.frontTranslate.js 首页谷歌翻译
 
-// TODO
 let dms;
 
-func_eh_ex(() => {
-	//e-hentai
-	dms = document.getElementById("dms");
-}, () => {
-	//exhentai
-	var searchnav = document.getElementsByClassName("searchnav");
-	if (searchnav.length > 0) {
-		dms = searchnav[0];
-		dms.id = "dms";
-	}
-});
+var searchnav = document.getElementsByClassName("searchnav");
+if (searchnav.length > 0) {
+	dms = searchnav[0];
+	dms.id = "dms";
+}
 
 
 // 首页谷歌翻译：标签
@@ -310,82 +303,36 @@ function mainPageTranslate() {
 
 	// 展示总数量
 	var ip = document.getElementsByClassName("ip");
-	func_eh_ex(() => {
-		// e-hentai.org
-		if (ip.length > 1) {
-			var ipElement = ip[ip.length - 2];
-			ipElement.innerText = ipElement.innerText.replace("Showing", "共")
-				.replace("results", "条记录").replace("result", "条记录")
-				.replace(". Your filters excluded", "，本页面你的过滤排除了")
-				.replace("galleries from this page", "个作品").replace("gallery from this page", "个作品");
-		}
-
-		if (ip.length > 2) {
-			var ipTagElement = ip[ip.length - 3];
-			var strongText = ipTagElement.children[0];
-			strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
-			ipTagElement.children[1].innerText = "我的标签";
-		}
-	}, () => {
-		// exhentai.org
-		if (window.location.pathname == "/") {
-			// 首页
-			if (document.getElementsByClassName("searchtext").length > 0){
-				document.getElementsByClassName("searchtext")[0].lastChild.innerText =
+	if (window.location.pathname == "/") {
+		// 首页
+		if (document.getElementsByClassName("searchtext").length > 0) {
+			document.getElementsByClassName("searchtext")[0].lastChild.innerText =
 				document.getElementsByClassName("searchtext")[0].lastChild.innerText
 					.replace("Found", "共找到")
 					.replace("results", "条记录")
 					.replace("result", "条记录");
+		}
+	}
+	else {
+		// 其他页面
+		if (ip.length > 0) {
+			let ipTagElement = ip[0];
+			// func_eh_ex(() => {
+			// 	// e-hentai
+			// 	ipTagElement = ip[0];
+			// }, () => {
+			// 	// exhentai
+			// 	ipTagElement = ip[ip.length - 1];
+
+			// });
+			var strongText = ipTagElement.children[0];
+			strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
+			ipTagElement.children[1].innerText = "我的标签";
+			if (document.getElementsByClassName("searchtext").length > 0 && document.getElementsByClassName("searchtext")[0].lastChild.innerText == "Found many results.") {
+				document.getElementsByClassName("searchtext")[0].lastChild.innerText = "找到许多结果.";
 			}
 		}
-		else {
-			// 其他页面
-			if (ip.length > 0) {
-				var ipTagElement = ip[ip.length - 1];
-				var strongText = ipTagElement.children[0];
-				strongText.innerText = strongText.innerText.replace("Showing results for", "展示").replace("watched tags", "个偏好标签的结果");
-				ipTagElement.children[1].innerText = "我的标签";
-				if (document.getElementsByClassName("searchtext").length > 0 && document.getElementsByClassName("searchtext")[0].lastChild.innerText == "Found many results.") {
-					document.getElementsByClassName("searchtext")[0].lastChild.innerText = "找到许多结果.";
-				} else {
-					translatePageElementEN(document.getElementsByClassName("searchtext")[0].lastChild);
-				}
-			}
-		}
-	});
-
-
-	// 错误信息
-	func_eh_ex(() => { }, () => {
-		// exhentai
-		var searchwarn = document.getElementsByClassName("searchwarn");
-		if (searchwarn.length > 0) {
-			var p = searchwarn[0].lastChild;
-			if (p.children.length > 0) {
-				var strongText = p.children[0].innerText;
-				if (p.innerText.replace(strongText, "") == "The keyword  is short and will be searched as an exact tag only.") {
-					// 直接翻译
-					p.innerText = p.innerText
-						.replace("The keyword", "搜索关键字")
-						.replace("is short and will be searched as an exact tag only.", "很短，当前仅作为精准标签进行搜索。");
-				}
-				else {
-					translatePageElementEN(p);
-				}
-			}
-			else {
-				if (p.innerText == "The provided date is invalid or outside the range of posted galleries.") {
-					p.innerText = "提供的日期无效或超出已发布画廊的范围。";
-				}
-				else {
-					translatePageElementEN(p);
-				}
-
-			}
-		}
-	});
-
-
+	}
 
 	// 预览下拉框
 	var dms = document.getElementById("dms");
