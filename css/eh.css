@@ -1383,15 +1383,8 @@ table .gtw {
     overflow-y: hidden;
 }
 
-#t_mytags_div #t_mytags_bottom #t_split_line {
-    border-left: 1px solid #5c0d11;
-    height: 100%;
-    float: left;
-}
-
-#t_mytags_div #t_mytags_bottom #t_allCategories,
 #t_mytags_div #t_mytags_bottom #t_favoriteCategories {
-    width: calc(50% - 0.5px);
+    width: 100%;
     height: 100%;
     float: left;
 }
@@ -1447,26 +1440,8 @@ table .gtw {
     min-width: 100px;
 }
 
-#t_mytags_bottom #t_allCategories #t_allCategories_tool,
 #t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_tool {
     height: 25px;
-}
-
-#t_mytags_bottom .mytags_allCheck_div {
-    border-right: 1px solid #5c0d11;
-    border-top: 1px solid #5c0d11;
-    height: 24px;
-    line-height: 24px;
-    width: 80px;
-    float: left;
-    text-align: center;
-    color: #5c0d11;
-}
-
-#t_mytags_bottom .mytags_allCheck_div,
-#t_mytags_bottom .mytags_allCheck_div input[type="checkbox"],
-#t_mytags_bottom .mytags_allCheck_div label {
-    cursor: pointer;
 }
 
 #t_mytags_bottom p {
@@ -1480,7 +1455,6 @@ table .gtw {
     color: #5c0d11;
 }
 
-#t_mytags_bottom #allCategories_allCheck:indeterminate::after,
 #t_mytags_bottom #favoriteCategories_allCheck:indeterminate::after {
     display: block;
     content: "";
@@ -1492,8 +1466,6 @@ table .gtw {
     margin-top: 5px;
 }
 
-#t_mytags_bottom #mytags_left_all_collapse,
-#t_mytags_bottom #mytags_left_all_expand,
 #t_mytags_bottom #mytags_right_all_collapse,
 #t_mytags_bottom #mytags_right_all_expand {
     border-left: 1px solid #5c0d11;
@@ -1508,30 +1480,25 @@ table .gtw {
     cursor: pointer;
 }
 
-#t_mytags_bottom #t_allCategories #t_allCategories_window,
 #t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window {
     height: 325px;
     overflow-y: auto;
 }
 
-#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar,
 #t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar {
     width: 10px;
     height: 1px;
 }
 
-#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-track,
 #t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-track {
     border-radius: 10px;
 }
 
-#t_mytags_bottom #t_allCategories #t_allCategories_window::-webkit-scrollbar-thumb,
 #t_mytags_bottom #t_favoriteCategories #t_favoriteCategories_window::-webkit-scrollbar-thumb {
     background-color: #b5a297;
     border-radius: 10px;
 }
 
-#t_mytags_bottom #t_allCategories_window h4,
 #t_mytags_bottom #t_favoriteCategories_window h4 {
     color: #5c0d11;
     font-weight: bold;
@@ -1540,7 +1507,6 @@ table .gtw {
     padding-left: 10px;
 }
 
-#t_mytags_bottom #t_allCategories_window h4 span,
 #t_mytags_bottom #t_favoriteCategories_window h4 span {
     border: 1px solid #5c0d11;
     width: 12px;
@@ -1552,7 +1518,6 @@ table .gtw {
     cursor: pointer;
 }
 
-#t_mytags_bottom #t_allCategories_window h4 span:hover,
 #t_mytags_bottom #t_favoriteCategories_window h4 span:hover {
     transform: scale(1.2);
 }
@@ -1576,7 +1541,6 @@ table .gtw {
     line-height: 20px;
 }
 
-#t_mytags_bottom #t_mytags_allcategory_loading_div,
 #t_mytags_bottom #t_mytags_favoritecategory_loading_div {
     height: 325px;
     width: 100%;
@@ -1590,14 +1554,10 @@ table .gtw {
 #t_mytags_top #t_mytags_extend_btn,
 #t_mytags_top #t_mytags_submitCategories_btn,
 #t_mytags_top #t_mytags_clodToFavorite_btn,
-#t_mytags_bottom #mytags_left_all_collapse,
-#t_mytags_bottom #mytags_left_all_expand,
 #t_mytags_bottom #mytags_right_all_collapse,
 #t_mytags_bottom #mytags_right_all_expand,
-#t_mytags_bottom .mytags_allCheck_div,
 #t_mytags_bottom p,
 #t_mytags_bottom .mytags_item_wrapper,
-#t_mytags_bottom #t_allCategories_window h4 span,
 #t_mytags_bottom #t_favoriteCategories_window h4 span {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1609,11 +1569,8 @@ table .gtw {
 #t_mytags_top #t_mytags_extend_btn:hover,
 #t_mytags_top #t_mytags_submitCategories_btn:hover,
 #t_mytags_top #t_mytags_clodToFavorite_btn:hover,
-#t_mytags_bottom #mytags_left_all_collapse:hover,
-#t_mytags_bottom #mytags_left_all_expand:hover,
 #t_mytags_bottom #mytags_right_all_collapse:hover,
 #t_mytags_bottom #mytags_right_all_expand:hover,
-#t_mytags_bottom .mytags_allCheck_div:hover,
 #t_mytags_bottom .mytags_item_wrapper:hover {
     background-color: rgba(255, 246, 246, 0.397);
 }

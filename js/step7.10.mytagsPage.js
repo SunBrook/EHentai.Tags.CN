@@ -86,7 +86,7 @@ function mytagsPage() {
         uploadingTagSuccess.style.display = "none";
         uploadingRemainder.style.display = "block";
         uploadingTagError.style.display = "none";
-        uploadingBtn.innerText = "标签：勾选 -> 账号";
+        uploadingBtn.innerText = "↑ 上传到账号 ↑";
     }
 
 
@@ -214,25 +214,10 @@ function mytagsCategoryWindow() {
         <div id="t_mytags_extend_btn">展开 / 折叠</div>
         <input type="text" id="t_mytags_search" placeholder="请输入关键字进行搜索，等待搜索完毕后勾选" />
         <div id="clear_search_btn">清空</div>
-        <div id="t_mytags_clodToFavorite_btn" title="账号的标签，同步到本地收藏列表">标签：账号 -> 收藏</div>
-        <div id="t_mytags_submitCategories_btn" title="下方勾选的标签，同步添加到账号标签中">标签：勾选 -> 账号</div>
+        <div id="t_mytags_clodToFavorite_btn" title="账号的标签，同步到本地收藏列表">↓ 下载到收藏 ↓</div>
+        <div id="t_mytags_submitCategories_btn" title="下方勾选的标签，同步添加到账号标签中">↑ 上传到账号 ↑</div>
     </div>
-    <div id="t_mytags_bottom">
-        <div id="t_allCategories">
-            <div id="t_allCategories_window">
-                <div id="t_mytags_allcategory_loading_div">💕 请等待一小会儿，马上就好 💕</div>
-            </div>
-            <div id="t_allCategories_tool">
-                <div id="mytags_left_all_collapse">折叠</div>
-                <div id="mytags_left_all_expand">展开</div>
-                <div class="mytags_allCheck_div">
-                    <input type="checkbox" id="allCategories_allCheck" />
-                    <label for="allCategories_allCheck">全选</label>
-                </div>
-                <p>全部类别，仅展示可操作标签</p>
-            </div>
-        </div>
-        <div id="t_split_line"></div>
+    <div id="t_mytags_bottom">       
         <div id="t_favoriteCategories">
             <div id="t_favoriteCategories_window">
                 <div id="t_mytags_favoritecategory_loading_div">💕 请等待一小会儿，马上就好 💕</div>
@@ -240,12 +225,10 @@ function mytagsCategoryWindow() {
             <div id="t_favoriteCategories_tool">
                 <div id="mytags_right_all_collapse">折叠</div>
                 <div id="mytags_right_all_expand">展开</div>
-
                 <div class="mytags_allCheck_div">
                     <input type="checkbox" id="favoriteCategories_allCheck" />
                     <label for="favoriteCategories_allCheck">全选</label>
                 </div>
-                <p>本地收藏，仅展示可操作标签</p>
             </div>
         </div>
     </div>
@@ -257,7 +240,7 @@ function mytagsCategoryWindow() {
     div.innerHTML = mainHtml;
     outer.insertBefore(div, outer.children[0]);
 
-    // 标签：勾选 -> 账号 弹框
+    // ↑ 上传到账号 ↑ 弹框
     var uploadFormHtml = `<div id="upload_tag_form_top">勾选的标签，添加到账号</div>
     <div id="upload_tag_form_close" title="关闭">X</div>
     <div id="upload_tag_form_middle">
@@ -323,8 +306,8 @@ function mytagsCategoryWindow() {
         isMouseDown = false;
     }
 
-    // 标签：勾选 -> 账号 ING 弹框
-    var uploadIngHtml = `<div id="upload_tag_ing_top">标签：勾选 -> 账号</div>
+    // ↑ 上传到账号 ↑ ING 弹框
+    var uploadIngHtml = `<div id="upload_tag_ing_top">↑ 上传到账号 ↑</div>
     <p id="upload_tag_ing_tips_1">鼠标移入方框，<span id="tip_pause">暂停</span></p>
     <p id="upload_tag_ing_tips_2">鼠标移出方框，<span id="tip_continue">继续</span></p>
     <p id="upload_tag_remainder">剩余 <strong id="upload_remainder_count"></strong> 个</p>
@@ -387,12 +370,6 @@ function mytagsCategoryWindowEvents() {
     var clodToFavoriteBtn = document.getElementById("t_mytags_clodToFavorite_btn");
     var bottomDiv = document.getElementById("t_mytags_bottom");
 
-    // 全部类别：数据展示div、全选按钮、展开按钮、折叠按钮
-    var allCategoriesWindow = document.getElementById("t_allCategories_window");
-    var allCategoriesAllCheckBox = document.getElementById("allCategories_allCheck");
-    var leftAllCollapseBtn = document.getElementById("mytags_left_all_collapse");
-    var leftAllExpandBtn = document.getElementById("mytags_left_all_expand");
-
     // 本地收藏：数据展示div、全选按钮、展开按钮、折叠按钮
     var favoriteCategoriesWindow = document.getElementById("t_favoriteCategories_window");
     var favoriteCategoriesAllCheckBox = document.getElementById("favoriteCategories_allCheck");
@@ -420,7 +397,7 @@ function mytagsCategoryWindowEvents() {
     //#region 主插件
 
     // 展示数据填充
-    mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
+    mytagsInitWindowsData(favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
 
     // 展开折叠功能
     extendBtn.onclick = function () {
@@ -429,28 +406,13 @@ function mytagsCategoryWindowEvents() {
 
     // 输入框
     searchInput.oninput = function () {
-        searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
+        searchOnInput(searchInput, bottomDiv, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
     }
 
     // 清空按钮
     clearBtn.onclick = function () {
         searchInput.value = "";
-        searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
-    }
-
-    // 全部类别：全部折叠
-    leftAllCollapseBtn.onclick = function () {
-        mytagAllTotalExtend(allCategoriesWindow, "+", "none");
-    }
-
-    // 全部类别：全部取消
-    leftAllExpandBtn.onclick = function () {
-        mytagAllTotalExtend(allCategoriesWindow, "-", "block");
-    }
-
-    // 全部类别：全反选
-    allCategoriesAllCheckBox.onclick = function () {
-        mytagTotalCheckboxClick(allCategoriesWindow, allCategoriesAllCheckBox);
+        searchOnInput(searchInput, bottomDiv, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
     }
 
     // 收藏：全部折叠
@@ -554,9 +516,6 @@ function mytagsCategoryWindowEvents() {
         try {
             console.log(e);
             switch (e.newValue) {
-                case sync_mytagsAllTagUpdate:
-                    syncMytagsAllTagUpdate();
-                    break;
                 case sync_mytagsFavoriteTagUpdate:
                     syncMytagsFavoriteTagUpdate();
                     break;
@@ -564,23 +523,6 @@ function mytagsCategoryWindowEvents() {
         } catch (error) {
             removeDbSyncMessage();
         }
-    }
-
-    // 全部标签同步更新
-    function syncMytagsAllTagUpdate() {
-        indexDbInit(() => {
-            read(table_Settings, table_Settings_key_MyTagsAllCategory_Html, result => {
-                if (result && result.value) {
-                    allCategoriesWindow.innerHTML = result.value;
-                    mytagAllSpanExtend(allCategoriesWindow);
-                    mytagItemsCheckbox(allCategoriesWindow, allCategoriesAllCheckBox);
-                } else {
-                    allCategoriesWindow.innerHTML = "";
-                }
-                allCategoriesAllCheckBox.checked = false;
-                allCategoriesAllCheckBox.indeterminate = false;
-            }, () => { });
-        });
     }
 
     // 收藏标签同步更新
@@ -612,7 +554,6 @@ function windowSlideUpDown(bottomDiv) {
     var usertagsMassDiv = document.getElementById("usertags_mass");
     var usertagsOuterDiv = document.getElementById("usertags_outer");
 
-
     if (bottomDiv.dataset.visible == 1) {
         bottomDiv.dataset.visible = 0;
 
@@ -620,6 +561,7 @@ function windowSlideUpDown(bottomDiv) {
         if (usertagsMassDiv) {
             foldHeight += 42;
         }
+
         slideUp(bottomDiv, 10, () => {
             usertagsOuterDiv.style.height = `calc(100vh - ${foldHeight}px)`;
             mytagsAlignAll();
@@ -670,7 +612,7 @@ function mytagsBuildFavoriteTagHtml(favoriteDict) {
 }
 
 // 展示数据填充
-function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox) {
+function mytagsInitWindowsData(favoriteCategoriesWindow, favoriteCategoriesAllCheckBox) {
 
     indexDbInit(() => {
 
@@ -723,146 +665,8 @@ function mytagsInitWindowsData(allCategoriesWindow, allCategoriesAllCheckBox, fa
             }
         }, () => { });
 
-        // 全部类别html
-        // 先尝试获取备份的全部类别html，如果没有就根据entag 生成html，如果没有ehtag 就更新ehtag 并生成最新的html。最后检查新版本
-        function mytagTryGetAllTagsCategory(func_compelete) {
-            read(table_Settings, table_Settings_key_MyTagsAllCategory_Html, result => {
-                if (result && result.value) {
-                    // 存在html，直接更新html
-                    allCategoriesWindow.innerHTML = result.value;
-                    mytagAllSpanExtend(allCategoriesWindow);
-                    mytagItemsCheckbox(allCategoriesWindow, allCategoriesAllCheckBox);
-                    func_compelete();
-                } else {
-                    // 尝试读取ehtag表数据
-                    var ehTagDict = {};
-                    readAll(table_EhTagSubItems, (k, v) => {
-                        ehTagDict[k] = v;
-                    }, () => {
-                        if (!checkDictNull(ehTagDict)) {
-                            // 存在数据，生成全部类别html
-                            var ehtagListHtml = ``;
-                            var lastParentEn = ``;
-                            for (const k in ehTagDict) {
-                                if (Object.hasOwnProperty.call(ehTagDict, k)) {
-                                    const v = ehTagDict[k];
-                                    if (v.parent_en != lastParentEn) {
-                                        if (lastParentEn != '') {
-                                            ehtagListHtml += `</div>`;
-                                        }
-                                        lastParentEn = v.parent_en;
-                                        // 新建父级
-                                        ehtagListHtml += `<h4> ${v.parent_zh} <span data-category="${v.parent_en}" class="category_extend category_extend_mytags">-</span></h4>`;
-                                        ehtagListHtml += `<div id="all_items_div_${v.parent_en}">`;
-                                    }
-                                    // 添加子级
-                                    ehtagListHtml += `<span class="mytags_item_wrapper" id="all_span_${v.ps_en}" title="${v.ps_en}">
-                                        <input type="checkbox" value="${v.ps_en}" id="allCate_${v.ps_en}" data-visible="1" data-parent_zh="${v.parent_zh}" data-sub_zh="${v.sub_zh}" />
-                                        <label for="allCate_${v.ps_en}">${v.sub_zh}</label>
-                                    </span>`;
-                                }
-                            }
-                            // 读完后操作
-                            if (ehtagListHtml != ``) {
-                                ehtagListHtml += `</div>`;
-                            }
-
-                            // 页面附加html
-                            allCategoriesWindow.innerHTML = ehtagListHtml;
-                            mytagAllSpanExtend(allCategoriesWindow);
-                            mytagItemsCheckbox(allCategoriesWindow, allCategoriesAllCheckBox);
-
-                            // 保存全部html数据
-                            var settings_myTagsAllCategory_html = {
-                                item: table_Settings_key_MyTagsAllCategory_Html,
-                                value: ehtagListHtml
-                            };
-                            update(table_Settings, settings_myTagsAllCategory_html, () => { }, () => { });
-                            func_compelete();
-                        } else {
-                            // 不存在数据，删除 ehtag 版本号信息，等待删除完毕
-                            remove(table_Settings, table_Settings_key_EhTagVersion, () => {
-                                func_compelete();
-                            }, () => {
-                                func_compelete();
-                            });
-                        }
-                    });
-                }
-            });
-        }
-
-        // 尝试生成数据，并检查更新全部类别
-        mytagTryGetAllTagsCategory(() => {
-            checkUdpateEhtagData(() => {
-                mytagTryGetAllTagsCategory(() => { });
-            }, () => { });
-        });
-
     });
 
-}
-
-// 单个全部类别折叠按钮
-function mytagAllSpanExtend(allCategoriesWindow) {
-    var allh4Spans = allCategoriesWindow.querySelectorAll("span.category_extend");
-    for (const i in allh4Spans) {
-        if (Object.hasOwnProperty.call(allh4Spans, i)) {
-            const span = allh4Spans[i];
-            span.onclick = function () {
-                var expandDiv = document.getElementById(`all_items_div_${span.dataset.category}`);
-                if (span.innerText == "-") {
-                    // 需要折叠
-                    expandDiv.style.display = "none";
-                    span.innerText = "+";
-                } else {
-                    // 需要展开
-                    expandDiv.style.display = "block";
-                    span.innerText = "-";
-                }
-            }
-        }
-    }
-}
-
-// 单个全部类别折叠按钮，收藏
-function mytagAllSearchSpanExtend(allCategoriesWindow) {
-    var allh4Spans = allCategoriesWindow.querySelectorAll("span.category_extend");
-    for (const i in allh4Spans) {
-        if (Object.hasOwnProperty.call(allh4Spans, i)) {
-            const span = allh4Spans[i];
-            span.onclick = function () {
-                var displayDiv = document.getElementById(`all_items_div_${span.dataset.category}`);
-                if (span.innerText == "-") {
-                    // 需要折叠
-                    span.innerText = "+";
-                    displayDiv.style.display = "none";
-                } else {
-                    // 需要展开
-                    span.innerText = "-";
-                    displayDiv.style.display = "block";
-                }
-            }
-        }
-    }
-}
-
-// 全部类别全部折叠或者展开
-function mytagAllTotalExtend(allCategoriesWindow, innerText, display) {
-    var h4spans = allCategoriesWindow.querySelectorAll("span.category_extend");
-    var divWrappers = allCategoriesWindow.querySelectorAll("div");
-    for (const i in h4spans) {
-        if (Object.hasOwnProperty.call(h4spans, i)) {
-            const span = h4spans[i];
-            span.innerText = innerText;
-        }
-    }
-    for (const i in divWrappers) {
-        if (Object.hasOwnProperty.call(divWrappers, i)) {
-            const div = divWrappers[i];
-            div.style.display = display;
-        }
-    }
 }
 
 // 单个收藏折叠按钮
@@ -905,7 +709,7 @@ function mytagFavoriteTotalExtend(favoriteCategoriesWindow, innerText, display) 
     }
 }
 
-// 单个勾选框勾选 （全部类别或者收藏）
+// 单个勾选框勾选 （收藏）
 function mytagItemsCheckbox(categoryWindow, allCategoryCheckBox) {
     var totalCheckboxs = categoryWindow.querySelectorAll('input[type="checkbox"][data-visible="1"]');
     for (const i in totalCheckboxs) {
@@ -931,7 +735,7 @@ function mytagItemsCheckbox(categoryWindow, allCategoryCheckBox) {
     }
 }
 
-// 全反选 (全部类别或者收藏)
+// 全反选 (收藏)
 function mytagTotalCheckboxClick(categoriesWindow, categoriesAllCheckBox) {
     if (categoriesAllCheckBox.checked) {
         // 需要全选
@@ -957,7 +761,7 @@ function mytagTotalCheckboxClick(categoriesWindow, categoriesAllCheckBox) {
     categoriesAllCheckBox.indeterminate = false;
 }
 
-// 更新全反选状态 (全部类别或者收藏)
+// 更新全反选状态 (收藏)
 function mytagUpdateAllCheckboxStatus(categoriesWindow, categoriesAllCheckBox) {
     var allcheckboxs = categoriesWindow.querySelectorAll('input[type="checkbox"][data-visible="1"]');
     var checkedboxs = categoriesWindow.querySelectorAll('input[type="checkbox"][data-visible="1"]:checked');
@@ -976,7 +780,7 @@ function mytagUpdateAllCheckboxStatus(categoriesWindow, categoriesAllCheckBox) {
 }
 
 // 输入时候选
-function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategoriesAllCheckBox, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox) {
+function searchOnInput(searchInput, bottomDiv, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox) {
     var inputValue = trimStartEnd(searchInput.value.toLowerCase());
 
     // 从 EhTag 中模糊搜索，绑定数据
@@ -998,7 +802,6 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategorie
                 }
             }
 
-            mytagUpdateAllCheckboxStatus(allCategoriesWindow, allCategoriesAllCheckBox);
             mytagUpdateAllCheckboxStatus(favoriteCategoriesWindow, favoriteCategoriesAllCheckBox);
 
         } else if (foundArrays.length > 0) {
@@ -1016,59 +819,10 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategorie
                 }
             }
 
-            ehtagSearch(psenDict, psDict);
             favoriteSearch(psenDict, psDict);
         }
     });
 
-    function ehtagSearch(psenDict, psDict) {
-        var parentDivs = allCategoriesWindow.querySelectorAll("div");
-        for (const i in parentDivs) {
-            if (Object.hasOwnProperty.call(parentDivs, i)) {
-                const parentDiv = parentDivs[i];
-                var h4 = parentDiv.previousElementSibling;
-                var ps = parentDiv.id.replace("all_items_div_", "");
-                if (psDict[ps]) {
-                    // 当前父子级包含搜索项
-                    parentDiv.classList.remove("hide");
-                    h4.classList.remove("hide");
-                    h4.children[0].innerText = "-";
-                    h4.nextElementSibling.style.display = "block";
-
-                    // 判断每个子项是否是搜索结果
-                    var spanItems = parentDiv.querySelectorAll("span");
-                    for (const s in spanItems) {
-                        if (Object.hasOwnProperty.call(spanItems, s)) {
-                            const span = spanItems[s];
-                            var psEn = span.id.replace("all_span_", "");
-                            var checkbox = span.querySelector('input[type="checkbox"]');
-                            if (psenDict[psEn]) {
-                                // 是搜索项
-                                span.classList.remove("hide");
-                                checkbox.dataset.visible = 1;
-                            } else {
-                                // 不是搜索项
-                                span.classList.add("hide");
-                                checkbox.dataset.visible = 0;
-                            }
-                        }
-                    }
-                } else {
-                    // 当前父子级不包含搜索项
-                    parentDiv.classList.add("hide");
-                    h4.classList.add("hide");
-                    var checkboxs = parentDiv.querySelectorAll('input[type="checkbox"]');
-                    for (const i in checkboxs) {
-                        if (Object.hasOwnProperty.call(checkboxs, i)) {
-                            const checkbox = checkboxs[i];
-                            checkbox.dataset.visible = 0;
-                        }
-                    }
-                }
-            }
-        }
-        mytagUpdateAllCheckboxStatus(allCategoriesWindow, allCategoriesAllCheckBox);
-    }
 
     function favoriteSearch(psenDict) {
         var favoritePsEnDict = {};
@@ -1136,13 +890,13 @@ function searchOnInput(searchInput, bottomDiv, allCategoriesWindow, allCategorie
 
 //#endregion
 
-//#region mytag 标签：勾选 -> 账号
+//#region mytag ↑ 上传到账号 ↑
 
 // 显示弹框
 function uploadTagFormDivShow(bottomDiv, submitCategoriesBtn, uploadTagFormDiv, uploadTagFormTagsDiv, uploadTagFormTagsResetBtn) {
     var checkedboxs = bottomDiv.querySelectorAll('input[type="checkbox"][data-visible="1"]:checked');
     if (checkedboxs.length == 0) {
-        alert("请从 全部类别 或 本地收藏 中 勾选标签");
+        alert("请从 本地收藏 中 勾选标签");
         return;
     }
 
@@ -1348,7 +1102,7 @@ function mytagUploadSubmit(uploadTagFormTagsDiv, uploadTagFormDiv, submitCategor
             submitCategoriesBtn.innerText = "同步完成";
         }, 250);
         setTimeout(function () {
-            submitCategoriesBtn.innerText = "标签：勾选 -> 账号";
+            submitCategoriesBtn.innerText = "↑ 上传到账号 ↑";
         }, 500);
 
         return;
@@ -1447,7 +1201,7 @@ function myTagGetUserTagsDict() {
 
 //#endregion
 
-//#region mytag 标签：账号 -> 收藏
+//#region mytag ↓ 下载到收藏 ↓
 function mytagClodToFavorite(clodToFavoriteBtn, favoriteCategoriesWindow, favoriteCategoriesAllCheckBox) {
     clodToFavoriteBtn.innerText = "同步中..."
     var userTagsDict = myTagGetUserTagsDict();
@@ -1604,7 +1358,7 @@ function mytagClodToFavoriteFinish(clodToFavoriteBtn) {
         clodToFavoriteBtn.innerText = "同步完成";
     }, 250);
     setTimeout(function () {
-        clodToFavoriteBtn.innerText = "标签：账号 -> 收藏";
+        clodToFavoriteBtn.innerText = "↓ 下载到收藏 ↓";
     }, 500);
 }
 //#endregion
