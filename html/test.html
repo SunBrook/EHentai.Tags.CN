@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>网页大致页面</title>
+    <link rel="stylesheet" href="../css/ex.css">
+    <script>
+        // 总数据
+        const total = 10000;
+        // 每次插入的数据
+        const once = 20;
+        // 需要插入的次数
+        const times = Math.ceil(total / once);
+        // 当前插入的次数
+        var curTimes = 0;
+        // 需要插入的位置
+        function add() {
+            var ul = document.getElementById('ul');
+            let frag = document.createDocumentFragment();
+            for (let i = 0; i < once; i++) {
+                let li = document.createElement('li');
+                li.innerHTML = Math.floor(i + curTimes * once);
+                frag.appendChild(li);
+            }
+            curTimes++;
+            ul.appendChild(frag);
+            if (curTimes < times){
+                window.requestAnimationFrame(add);
+            }
+        }
+
+        window.requestAnimationFrame(add);
+    </script>
+</head>
+
+<body style="margin: 0;padding: 0;background-color: #4F535B;">
+    <ul id="ul"></ul>
+
+</body>
+
+</html>
