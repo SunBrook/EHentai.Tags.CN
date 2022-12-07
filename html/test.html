@@ -7,30 +7,43 @@
     <link rel="stylesheet" href="../css/ex.css">
     <script>
         // 总数据
-        const total = 10000;
+        const total = 10000000;
         // 每次插入的数据
-        const once = 20;
+        const once = 200;
         // 需要插入的次数
         const times = Math.ceil(total / once);
         // 当前插入的次数
         var curTimes = 0;
         // 需要插入的位置
-        function add() {
-            var ul = document.getElementById('ul');
-            let frag = document.createDocumentFragment();
-            for (let i = 0; i < once; i++) {
-                let li = document.createElement('li');
-                li.innerHTML = Math.floor(i + curTimes * once);
-                frag.appendChild(li);
+        function v_add() {
+            function add() {
+                var ul = document.getElementById('ul');
+                let frag = document.createDocumentFragment();
+                for (let i = 0; i < once; i++) {
+                    let li = document.createElement('li');
+                    // li.innerHTML = Math.floor(i + curTimes * once);
+                    var msg = i + curTimes * once;
+                    li.innerHTML = '<button onclick="v_alert(' + msg + ')">' + msg + '</button>';
+                    frag.appendChild(li);
+                }
+                curTimes++;
+                ul.appendChild(frag);
+                // if (curTimes < times) {
+                //     window.requestAnimationFrame(add);
+                // }
+
+                // window.requestAnimationFrame(add);
             }
-            curTimes++;
-            ul.appendChild(frag);
-            if (curTimes < times){
-                window.requestAnimationFrame(add);
-            }
+
+            window.requestAnimationFrame(add);
         }
 
-        window.requestAnimationFrame(add);
+        function v_alert(i) {
+            alert(i);
+        }
+
+        v_add();
+
     </script>
 </head>
 

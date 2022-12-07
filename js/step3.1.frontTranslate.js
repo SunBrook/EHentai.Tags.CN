@@ -393,8 +393,9 @@ function mainPageTranslate() {
 	translateDiv.appendChild(translateLabel);
 	translateCheckbox.addEventListener("click", translateMainPageTitle);
 	var dms = document.getElementById("dms");
-	var beforeDiv = dms.parentNode.firstChild;
-	beforeDiv.insertBefore(translateDiv, beforeDiv.lastChild);
+	// var beforeDiv = dms.firstChild;
+	// var beforeDiv = dms.parentNode.firstChild;
+	dms.insertBefore(translateDiv, dms.childNodes[2]);
 
 	// 读取是否选中
 	read(table_Settings, table_Settings_key_TranslateFrontPageTitles, result => {

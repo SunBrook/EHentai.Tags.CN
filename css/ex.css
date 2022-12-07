@@ -774,6 +774,7 @@
     margin-left: 11px;
 }
 
+
 .searchtext #googleTranslateDiv,
 .ip #googleTranslateDiv,
 .t_popular_toppane #googleTranslateDiv,
@@ -789,6 +790,23 @@
     position: absolute;
     border-radius: 3px;
     font-weight: bold;
+}
+
+#dms #googleTranslateDiv {
+    background-color: #34353b;
+    padding: 2px 3px 6px 7px;
+    width: 135px;
+    height: 23px;
+    line-height: 28px;
+    border-radius: 3px;
+    font-weight: bold;
+    position: absolute;
+    left: 6px;
+    font-size: 13px;
+}
+
+#dms #googleTranslateDiv input {
+    margin-left: -4px;
 }
 
 .t_favorite_ido #googleTranslateDiv {
@@ -884,6 +902,7 @@
     display: none;
 }
 
+#dms #googleTranslateDiv:hover,
 .searchtext #googleTranslateDiv:hover,
 .ip #googleTranslateDiv:hover,
 #gd5 #googleTranslateDiv:hover,
