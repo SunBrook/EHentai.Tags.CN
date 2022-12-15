@@ -505,6 +505,22 @@ favoriteAllExtend.onclick = function () {
 
 // 全部折叠
 favoriteAllCollapse.onclick = function () {
+    favoriteAllCollapse_Func();
+
+    // 并更新存储全部的父级名称
+    var settings_favoriteList_extend = {
+        item: table_Settings_Key_FavoriteList_Extend,
+        value: favoriteParentData
+    };
+
+    update(table_Settings, settings_favoriteList_extend, () => {
+        // 通知折叠
+        setDbSyncMessage(sync_favoriteList_Extend);
+    }, () => { });
+}
+
+// 全部折叠 - 不含存储
+function favoriteAllCollapse_Func() {
     var extendBtns = document.getElementsByClassName("favorite_extend");
     for (const i in extendBtns) {
         if (Object.hasOwnProperty.call(extendBtns, i)) {
@@ -526,18 +542,8 @@ favoriteAllCollapse.onclick = function () {
             favoriteParentData.push(div.id.replace("favorite_div_", ""));
         }
     }
-
-    // 并更新存储全部的父级名称
-    var settings_favoriteList_extend = {
-        item: table_Settings_Key_FavoriteList_Extend,
-        value: favoriteParentData
-    };
-
-    update(table_Settings, settings_favoriteList_extend, () => {
-        // 通知折叠
-        setDbSyncMessage(sync_favoriteList_Extend);
-    }, () => { });
 }
+
 
 // 编辑
 var favoriteRemoveKeys = []; // 删除记录
