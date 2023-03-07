@@ -324,9 +324,9 @@ function uconfigPageFrontPageSettings(titleH2) {
     displayStyleRadios[0].children[0].childNodes[2].data = "显示";
     displayStyleRadios[1].children[0].childNodes[2].data = "禁用";
     var bookTypeFilterBtnsDiv = bookTypeFilterDiv.nextElementSibling;
-	var bookTypeFilterBtnsP = bookTypeFilterBtnsDiv.children[0];
-	bookTypeFilterBtnsP.innerText = "3. 你希望首页和搜索范围默认包含或排除哪些作品类型?";
-	var bookTypeFilterBtns = bookTypeFilterBtnsDiv.querySelectorAll("div.cs");
+    var bookTypeFilterBtnsP = bookTypeFilterBtnsDiv.children[0];
+    bookTypeFilterBtnsP.innerText = "3. 你希望首页和搜索范围默认包含或排除哪些作品类型?";
+    var bookTypeFilterBtns = bookTypeFilterBtnsDiv.querySelectorAll("div.cs");
     for (const i in bookTypeFilterBtns) {
         if (Object.hasOwnProperty.call(bookTypeFilterBtns, i)) {
             const bookType = bookTypeFilterBtns[i];
