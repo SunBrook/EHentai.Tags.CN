@@ -35,44 +35,41 @@ function uconfigPage() {
     // Ratings
     uconfigPageRatings(settingH2s[6]);
 
-    // Tag Namespaces
-    uconfigPageTagNamespaces(settingH2s[7]);
-
     // Tag Filtering Threshold
-    uconfigPageTagFilteringThreshold(settingH2s[8]);
+    uconfigPageTagFilteringThreshold(settingH2s[7]);
 
     // Tag Watching Threshold
-    uconfigTagWatchingThreshold(settingH2s[9]);
+    uconfigTagWatchingThreshold(settingH2s[8]);
 
     // Show Filtered Removal Count  exhentai
-    uconfigPageShowFilteredRemovalCount(settingH2s[10]);
+    uconfigPageShowFilteredRemovalCount(settingH2s[9]);
 
     // Excluded Languages
-    uconfigTagExcludedLanguages(settingH2s[11]);
+    uconfigTagExcludedLanguages(settingH2s[10]);
 
     // Excluded Uploaders
-    uconfigPageExcludedUploaders(settingH2s[12]);
+    uconfigPageExcludedUploaders(settingH2s[11]);
 
     // Search Result Count
-    uconfigPageSearchResultCount(settingH2s[13]);
+    uconfigPageSearchResultCount(settingH2s[12]);
 
     // Thumbnail Settings
-    uconfigPageThumbnailSettings(settingH2s[14]);
+    uconfigPageThumbnailSettings(settingH2s[13]);
 
     // Thumbnail Scaling
-    uconfigPageThumbnailScaling(settingH2s[15]);
+    uconfigPageThumbnailScaling(settingH2s[14]);
 
     // Viewport Override
-    uconfigPageViewportOverride(settingH2s[16]);
+    uconfigPageViewportOverride(settingH2s[15]);
 
     // Gallery Comments
-    uconfigPageGalleryComments(settingH2s[17]);
+    uconfigPageGalleryComments(settingH2s[16]);
 
     // Gallery Tags
-    uconfigPageGalleryTags(settingH2s[18]);
+    uconfigPageGalleryTags(settingH2s[17]);
 
     // Gallery Page Numbering
-    uconfigPageGalleryPageNumbering(settingH2s[19]);
+    uconfigPageGalleryPageNumbering(settingH2s[18]);
 
     // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
     uconfigPageReWrapperForm(contentForm);
@@ -309,7 +306,7 @@ function uconfigPageArchiverSettings(titleH2) {
 
 // 首页设置
 function uconfigPageFrontPageSettings(titleH2) {
-    titleH2.innerText = "-- 首页设置 --";
+    titleH2.innerText = "-- 首页 / 搜索设置 --";
     var displayWayDiv = titleH2.nextElementSibling;
     var p = displayWayDiv.querySelector("p");
     p.innerText = "1. 你想以哪种方式浏览首页?";
@@ -322,8 +319,14 @@ function uconfigPageFrontPageSettings(titleH2) {
 
     var bookTypeFilterDiv = displayWayDiv.nextElementSibling;
     var bookTypeFilterP = bookTypeFilterDiv.children[0];
-    bookTypeFilterP.innerText = "2. 你希望首页包含或排除哪些作品类型?";
-    var bookTypeFilterBtns = bookTypeFilterP.nextElementSibling.querySelectorAll("div.cs");
+    bookTypeFilterP.innerText = "2. 是否显示搜索范围快速跳转?";
+    var displayStyleRadios = bookTypeFilterP.nextElementSibling.children;
+    displayStyleRadios[0].children[0].childNodes[2].data = "显示";
+    displayStyleRadios[1].children[0].childNodes[2].data = "禁用";
+    var bookTypeFilterBtnsDiv = bookTypeFilterDiv.nextElementSibling;
+    var bookTypeFilterBtnsP = bookTypeFilterBtnsDiv.children[0];
+    bookTypeFilterBtnsP.innerText = "3. 你希望首页和搜索范围默认包含或排除哪些作品类型?";
+    var bookTypeFilterBtns = bookTypeFilterBtnsDiv.querySelectorAll("div.cs");
     for (const i in bookTypeFilterBtns) {
         if (Object.hasOwnProperty.call(bookTypeFilterBtns, i)) {
             const bookType = bookTypeFilterBtns[i];
