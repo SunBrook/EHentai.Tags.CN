@@ -309,4 +309,31 @@ function divHasScrollBar(div) {
     return (div.scrollHeight > div.clientHeight) || (div.offsetHeight > div.clientHeight);
 }
 
+// 将新增dom树添加到虚拟节点中
+function addInVirtualNode(parentNode, innHtml, complete_func) {
+    var completed = false;
+    function add() {
+        var fragment = document.createDocumentFragment();
+
+        var div = document.createElement('div');
+        div.innerHTML = innHtml;
+
+        fragment.appendChild(div);
+        console.log(fragment);
+        parentNode.appendChild(fragment);
+    }
+    window.requestAnimationFrame(add);
+    completed = true;
+
+    var t = setInterval(() => {
+        if (completed) {
+            t && clearInterval(t);
+            console.log('addInVirtualNode 执行完毕');
+            complete_func();
+        }
+    }, 10);
+
+    
+}
+
 //#endregion

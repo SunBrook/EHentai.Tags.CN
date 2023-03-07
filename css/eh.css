@@ -806,6 +806,22 @@
     font-weight: bold;
 }
 
+#dms #googleTranslateDiv {
+    background-color: #edebdf;
+    padding: 2px 3px 6px 7px;
+    width: 120px;
+    position: absolute;
+    border: 1px solid #8d8d8d;
+    border-radius: 3px;
+    font-weight: bold;
+    left: 6px;
+    font-size: 13px;
+}
+
+#dms #googleTranslateDiv input {
+    margin-left: -4px;
+}
+
 .t_favorite_ido #googleTranslateDiv {
     margin-top: -76px;
     position: absolute;
@@ -926,6 +942,7 @@
     display: none;
 }
 
+#dms #googleTranslateDiv:hover,
 .searchtext #googleTranslateDiv:hover,
 .ip #googleTranslateDiv:hover,
 #gd5 #googleTranslateDiv:hover,
