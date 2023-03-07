@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         ExHentai 中文标签助手_测试版_beta
+// @name         ExHentai 中文标签助手
 // @namespace    ExHentai 中文标签助手_DYZYFTS
 // @license		 MIT
 // @compatible  firefox >= 60
@@ -7,7 +7,7 @@
 // @compatible  chrome >= 61
 // @compatible  safari >= 11
 // @compatible  opera >= 48
-// @version      3.14.4
+// @version      3.15.6
 // @icon         http://exhentai.org/favicon.ico
 // @description  E-hentai + ExHentai 丰富的本地中文标签库 + 自定义管理收藏库，搜索时支持点击选择标签或者手动输入，页面翻译英文标签时支持本地标签库匹配和谷歌机翻。
 // @author       地狱天使
@@ -344,7 +344,6 @@ function addInVirtualNode(parentNode, innHtml, complete_func) {
 		div.innerHTML = innHtml;
 
 		fragment.appendChild(div);
-		console.log(fragment);
 		parentNode.appendChild(fragment);
 	}
 	window.requestAnimationFrame(add);
@@ -353,7 +352,6 @@ function addInVirtualNode(parentNode, innHtml, complete_func) {
 	var t = setInterval(() => {
 		if (completed) {
 			t && clearInterval(t);
-			console.log('addInVirtualNode 执行完毕');
 			complete_func();
 		}
 	}, 10);
@@ -362,9 +360,6 @@ function addInVirtualNode(parentNode, innHtml, complete_func) {
 }
 
 //#endregion
-
-
-
 
 //#region step0.constDatas.js 数据字典
 
@@ -1164,7 +1159,6 @@ function func_eh_ex(ehFunc, exFunc) {
 }
 
 //#endregion
-
 
 //#region step1.1.styleInject.js 样式注入
 func_eh_ex(() => {
@@ -5137,7 +5131,6 @@ func_eh_ex(() => {
 
 //#endregion
 
-
 //#region step1.2.translateTopBottomMenu.js 头部菜单、底部菜单翻译
 
 function topMenuTranslateZh() {
@@ -5302,7 +5295,6 @@ function copy_update_jump_mode(e) {
 
 //#endregion
 
-
 //#region step2.getTagDatas.js 获取标签数据
 
 //#region 恋物数据和ehTag数据
@@ -5378,19 +5370,16 @@ function indexDbInit(func_start_use) {
 	} else {
 		request.onsuccess = function () {
 			db = request.result;
-			console.log("数据库打开成功", db);
 			func_start_use();
 		}
 	}
 }
 
 request.onerror = function (event) {
-	console.log("数据库打开报错", event);
 }
 
 request.onupgradeneeded = function (event) {
 	db = event.target.result;
-	console.log("升级数据库", db);
 
 	// 对象仓库 Settings
 	//
@@ -5435,7 +5424,6 @@ function read(tableName, key, func_success, func_error) {
 	var request = objectStore.get(key);
 
 	request.onerror = function (event) {
-		console.log('读取事务失败', event);
 		func_error();
 	}
 
@@ -5452,7 +5440,6 @@ function readAll(tableName, func_success, func_end) {
 			func_success(cursor.key, cursor.value);
 			cursor.continue();
 		} else {
-			console.log('没有更多数据了');
 			func_end();
 		}
 	}
@@ -5468,7 +5455,6 @@ function readByIndex(tableName, indexName, indexValue, func_success, func_none) 
 		if (result) {
 			func_success(result);
 		} else {
-			console.log('没找到');
 			func_none();
 		}
 	}
@@ -5524,12 +5510,10 @@ function add(tableName, data, func_success, func_error) {
 		.add(data);
 
 	request.onsuccess = function (event) {
-		console.log('数据写入成功', event);
 		func_success(event);
 	}
 
 	request.onerror = function (event) {
-		console.log('数据写入失败', event);
 		func_error(event);
 	}
 }
@@ -5562,12 +5546,10 @@ function update(tableName, data, func_success, func_error) {
 		.put(data);
 
 	request.onsuccess = function (event) {
-		console.log("数据更新成功", event);
 		func_success();
 	}
 
 	request.onerror = function (event) {
-		console.log("数据更新失败");
 		func_error(event);
 	}
 }
@@ -5577,11 +5559,9 @@ function remove(tableName, key, func_success, func_error) {
 		.objectStore(tableName)
 		.delete(key);
 	request.onsuccess = function (event) {
-		console.log("数据删除成功", event);
 		func_success();
 	}
 	request.onerror = function (event) {
-		console.log('数据删除失败', event);
 		func_error(event);
 	}
 }
@@ -5642,7 +5622,6 @@ function fetishListDataInit(update_func, local_func) {
 			}
 		});
 	}, error => {
-		console.log('error', error);
 	})
 }
 
@@ -5661,7 +5640,6 @@ function ehTagDataInit(update_func, local_func) {
 		});
 
 	}, error => {
-		console.log('error', error);
 	});
 }
 
@@ -5755,7 +5733,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete1 = true;
 				batchAdd(table_fetishListSubItems, table_fetishListSubItems_key, newData.data, newData.count, () => {
 					complete2 = true;
-					console.log('批量添加完成');
 				});
 			});
 
@@ -5810,7 +5787,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete3 = true;
 			complete4 = true;
 			complete5 = true;
-			console.log('fet', "没有新数据");
 		});
 
 		// 如果 EhTag 版本更新，这尝试更新用户收藏（可能没有翻译过的标签进行翻译）
@@ -5878,7 +5854,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 				complete6 = true;
 				batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
 					complete7 = true;
-					console.log("批量添加完成");
 					updateMyTagAllTagHtml(() => {
 						setDbSyncMessage(sync_mytagsAllTagUpdate);
 					}, () => { });
@@ -5888,7 +5863,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			// 批量添加详情页父级信息
 			batchAdd(table_detailParentItems, table_detailParentItems_key, detailDict, detailDictCount, () => {
 				complete8 = true;
-				console.log("批量添加完成");
 			});
 
 			var settings_ehTag_parentEnArray = {
@@ -5944,7 +5918,6 @@ function checkUpdateData(func_needUpdate, func_none) {
 			complete9 = true;
 			complete10 = true;
 			complete11 = true;
-			console.log('ehtag', "没有新数据");
 		});
 
 		// 用户收藏更新
@@ -6175,14 +6148,12 @@ function checkUdpateEhtagData(func_needUpdate, func_none) {
 			complete6 = true;
 			batchAdd(table_EhTagSubItems, table_EhTagSubItems_key, psDict, psDictCount, () => {
 				complete7 = true;
-				console.log("批量添加完成");
 			});
 		});
 
 		// 批量添加详情页父级信息
 		batchAdd(table_detailParentItems, table_detailParentItems_key, detailDict, detailDictCount, () => {
 			complete8 = true;
-			console.log("批量添加完成");
 		});
 
 		var settings_ehTag_parentEnArray = {
@@ -6238,7 +6209,6 @@ function checkUdpateEhtagData(func_needUpdate, func_none) {
 		complete9 = true;
 		complete10 = true;
 		complete11 = true;
-		console.log('ehtag', "没有新数据");
 	});
 
 	// 用户收藏更新
@@ -6676,7 +6646,6 @@ function updateMyTagAllTagHtml(func_complete, func_error) {
 
 //#endregion
 
-
 //#region step3.0.frontTopTranslate.js 首页头部翻译
 
 function frontTopOldSearchTranslate() {
@@ -6865,7 +6834,6 @@ function checkFsDiv(fileSearchLink) {
 
 //#endregion
 
-
 //#region step3.1.frontTranslate.js 首页谷歌翻译
 
 let dms;
@@ -7021,7 +6989,6 @@ function tableTagTranslate() {
 	}
 
 	// 父项:子项，偶尔出现单个子项
-	// TODO
 
 
 	// var dms = document.getElementById("dms");
@@ -7305,9 +7272,6 @@ function frontPageTitleTranslate() {
 
 //#endregion
 
-
-
-
 //#region step3.2.frontPageTopStyle 首页头部搜索显示隐藏
 
 // 添加样式和逻辑，从 localstroage 中读取显示隐藏
@@ -7526,8 +7490,6 @@ function fsdivShow() {
 
 //#endregion
 
-
-
 //#region step3.3.frontPageHtml.js 首页HTML
 
 // 首页代码
@@ -7647,8 +7609,6 @@ function frontPageHtml() {
 }
 
 //#endregion
-
-
 
 //#region step4.1.detailTranslate.js 详情页翻译
 
@@ -8208,8 +8168,6 @@ function recursionDetailPageWarnTranslate(element) {
 
 //#endregion
 
-
-
 //#region step4.2.detailbtn.js 详情页主要按钮功能
 
 // 详情页选中的标签信息
@@ -8277,8 +8235,6 @@ function translateDetailPageTitleDisplay() {
 				txtArray.push(cstr);
 			}
 
-			console.log(txtArray);
-			console.log(signDictArray);
 
 			var totalCount = txtArray.length;
 			var indexCount = 0;
@@ -8312,7 +8268,6 @@ function translateDetailPageTitleDisplay() {
 			}, 50);
 
 			function translateCompelete() {
-				console.log(translateDict);
 				if (signDictArray.length == 0 && txtArray.length > 0) {
 					// 纯文字
 					var str = '';
@@ -8843,8 +8798,6 @@ function detailTryUseOldData() {
 
 //#endregion
 
-
-
 //#region 7.4.2.torrentsDetailPages.js 种子详情页
 
 function torrentsDetailPages() {
@@ -8998,7 +8951,6 @@ function DataSyncTranslateTorrentDetailInfoCommand() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_torrentDetailInfo_command:
 					updateGoogleTorrentDetailInfoCommand();
@@ -9070,15 +9022,12 @@ function closeWindow() {
 
 //#endregion
 
-
-
 //#region step5.3.datasync.common.translateTitle.js 热门页数据同步
 
 function DataSyncCommonTranslateTitle() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_frontPage_title:
 					updateGoogleTranslateFrontPageTitle();
@@ -9239,10 +9188,6 @@ function otherPageTryUseOldDataAndTranslateTag() {
 
 
 //#endregion
-
-
-
-
 
 //#region step7.2.favoritePage.js 收藏列表
 
@@ -9868,7 +9813,6 @@ function DataSyncTranslateTorrentDetailInfoCommand() {
 	// 谷歌机翻：标题
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_torrentDetailInfo_command:
 					updateGoogleTorrentDetailInfoCommand();
@@ -9939,7 +9883,6 @@ function closeWindow() {
 }
 
 //#endregion
-
 
 //#region step7.5.toplistPage.js 排行榜
 
@@ -10335,10 +10278,6 @@ function toplistBookpages() {
 
 //#endregion
 
-
-
-
-
 //#region step7.6.myHomePage.js 我的主页 - 总览
 
 function myHomePage() {
@@ -10361,8 +10300,6 @@ function myHomePage() {
 }
 
 //#endregion
-
-
 
 //#region step7.7.newsPage.js
 
@@ -10538,7 +10475,6 @@ function newsPage() {
 	// 数据同步
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_newsPage_topImage_visible:
 					newsPageSyncTopImageVisible();
@@ -10843,613 +10779,609 @@ function newsPagesTranslateCommon(className, isChecked) {
 
 //#endregion
 
-
 //#region step7.8.uconfigPage.js 设置页面
 
 function uconfigPage() {
-    // 跨域
-    crossDomain();
+	// 跨域
+	crossDomain();
 
-    // 添加样式方便调整页面样式
-    var outer = document.getElementById("outer");
-    outer.classList.add("t_uconfigPage_outer");
+	// 添加样式方便调整页面样式
+	var outer = document.getElementById("outer");
+	outer.classList.add("t_uconfigPage_outer");
 
-    // 头部翻译
-    uconfigPageTopDiv();
+	// 头部翻译
+	uconfigPageTopDiv();
 
-    var contentForm = outer.querySelectorAll("form")[1];
-    var settingH2s = contentForm.querySelectorAll("h2");
+	var contentForm = outer.querySelectorAll("form")[1];
+	var settingH2s = contentForm.querySelectorAll("h2");
 
-    // Image Load Settings
-    uconfigPageImageLoadSettings(settingH2s[0]);
+	// Image Load Settings
+	uconfigPageImageLoadSettings(settingH2s[0]);
 
-    // Image Size Settings
-    uconfigImageSizeSettings(settingH2s[1]);
+	// Image Size Settings
+	uconfigImageSizeSettings(settingH2s[1]);
 
-    // Gallery Name Display
-    uconfigPageGalleryNameDisplay(settingH2s[2]);
+	// Gallery Name Display
+	uconfigPageGalleryNameDisplay(settingH2s[2]);
 
-    // Archiver Settings
-    uconfigPageArchiverSettings(settingH2s[3]);
+	// Archiver Settings
+	uconfigPageArchiverSettings(settingH2s[3]);
 
-    // Front Page Settings
-    uconfigPageFrontPageSettings(settingH2s[4]);
+	// Front Page Settings
+	uconfigPageFrontPageSettings(settingH2s[4]);
 
-    // Favorites
-    uconfigPageFavorites(settingH2s[5]);
+	// Favorites
+	uconfigPageFavorites(settingH2s[5]);
 
-    // Ratings
-    uconfigPageRatings(settingH2s[6]);
+	// Ratings
+	uconfigPageRatings(settingH2s[6]);
 
-    // Tag Filtering Threshold
-    uconfigPageTagFilteringThreshold(settingH2s[7]);
+	// Tag Filtering Threshold
+	uconfigPageTagFilteringThreshold(settingH2s[7]);
 
-    // Tag Watching Threshold
-    uconfigTagWatchingThreshold(settingH2s[8]);
+	// Tag Watching Threshold
+	uconfigTagWatchingThreshold(settingH2s[8]);
 
-    // Show Filtered Removal Count  exhentai
-    uconfigPageShowFilteredRemovalCount(settingH2s[9]);
+	// Show Filtered Removal Count  exhentai
+	uconfigPageShowFilteredRemovalCount(settingH2s[9]);
 
-    // Excluded Languages
-    uconfigTagExcludedLanguages(settingH2s[10]);
+	// Excluded Languages
+	uconfigTagExcludedLanguages(settingH2s[10]);
 
-    // Excluded Uploaders
-    uconfigPageExcludedUploaders(settingH2s[11]);
+	// Excluded Uploaders
+	uconfigPageExcludedUploaders(settingH2s[11]);
 
-    // Search Result Count
-    uconfigPageSearchResultCount(settingH2s[12]);
+	// Search Result Count
+	uconfigPageSearchResultCount(settingH2s[12]);
 
-    // Thumbnail Settings
-    uconfigPageThumbnailSettings(settingH2s[13]);
+	// Thumbnail Settings
+	uconfigPageThumbnailSettings(settingH2s[13]);
 
-    // Thumbnail Scaling
-    uconfigPageThumbnailScaling(settingH2s[14]);
+	// Thumbnail Scaling
+	uconfigPageThumbnailScaling(settingH2s[14]);
 
-    // Viewport Override
-    uconfigPageViewportOverride(settingH2s[15]);
+	// Viewport Override
+	uconfigPageViewportOverride(settingH2s[15]);
 
-    // Gallery Comments
-    uconfigPageGalleryComments(settingH2s[16]);
+	// Gallery Comments
+	uconfigPageGalleryComments(settingH2s[16]);
 
-    // Gallery Tags
-    uconfigPageGalleryTags(settingH2s[17]);
+	// Gallery Tags
+	uconfigPageGalleryTags(settingH2s[17]);
 
-    // Gallery Page Numbering
-    uconfigPageGalleryPageNumbering(settingH2s[18]);
+	// Gallery Page Numbering
+	uconfigPageGalleryPageNumbering(settingH2s[18]);
 
-    // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
-    uconfigPageReWrapperForm(contentForm);
+	// 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
+	uconfigPageReWrapperForm(contentForm);
 
-    // 保存更改
-    contentForm.lastElementChild.children[0].value = "保存修改";
+	// 保存更改
+	contentForm.lastElementChild.children[0].value = "保存修改";
 
 
 }
 
 // 头部翻译
 function uconfigPageTopDiv() {
-    var profileOuter = document.getElementById("profile_outer");
-    var profileForm = document.getElementById("profile_form");
-    var profileAction = document.getElementById("profile_action");
-    var profileName = document.getElementById("profile_name");
-    var select = profileForm.querySelectorAll("select")[0];
+	var profileOuter = document.getElementById("profile_outer");
+	var profileForm = document.getElementById("profile_form");
+	var profileAction = document.getElementById("profile_action");
+	var profileName = document.getElementById("profile_name");
+	var select = profileForm.querySelectorAll("select")[0];
 
-    var profileSelect = document.getElementById("profile_select");
-    var selectProfile = profileSelect.children[0];
-    var profileActionDiv = profileOuter.querySelector("div#profile_action");
-    if (profileActionDiv.children.length > 0) {
-        // 删除配置
-        var deletebtn = profileActionDiv.children[0];
-        deletebtn.value = "删除配置";
-        deletebtn.onclick = function () {
-            var selectedIndex = select.selectedIndex;
-            var selectText = select.options[selectedIndex].text;
-            if (confirm(`是否删除配置："${selectText}" ?`)) {
-                profileAction.value = "delete";
-                profileForm.submit();
-            }
-        }
+	var profileSelect = document.getElementById("profile_select");
+	var selectProfile = profileSelect.children[0];
+	var profileActionDiv = profileOuter.querySelector("div#profile_action");
+	if (profileActionDiv.children.length > 0) {
+		// 删除配置
+		var deletebtn = profileActionDiv.children[0];
+		deletebtn.value = "删除配置";
+		deletebtn.onclick = function () {
+			var selectedIndex = select.selectedIndex;
+			var selectText = select.options[selectedIndex].text;
+			if (confirm(`是否删除配置："${selectText}" ?`)) {
+				profileAction.value = "delete";
+				profileForm.submit();
+			}
+		}
 
-        // 设置为默认
-        var defaultBtn = profileActionDiv.children[1];
-        defaultBtn.value = "设为默认";
-        defaultBtn.onclick = function () {
-            var selectedIndex = select.selectedIndex;
-            var selectText = select.options[selectedIndex].text;
-            if (confirm(`将配置："${selectText}" 设为默认?`)) {
-                profileAction.value = "default";
-                profileForm.submit();
-            }
-        }
+		// 设置为默认
+		var defaultBtn = profileActionDiv.children[1];
+		defaultBtn.value = "设为默认";
+		defaultBtn.onclick = function () {
+			var selectedIndex = select.selectedIndex;
+			var selectText = select.options[selectedIndex].text;
+			if (confirm(`将配置："${selectText}" 设为默认?`)) {
+				profileAction.value = "default";
+				profileForm.submit();
+			}
+		}
 
-        selectProfile.innerText = "配置名称：";
-    } else {
-        selectProfile.innerText = "配置名称 [ 使用中 ] ：";
-    }
+		selectProfile.innerText = "配置名称：";
+	} else {
+		selectProfile.innerText = "配置名称 [ 使用中 ] ：";
+	}
 
-    var topbtnDiv = profileSelect.children[2];
-    var renameBtn = topbtnDiv.children[0];
-    renameBtn.value = "重命名";
+	var topbtnDiv = profileSelect.children[2];
+	var renameBtn = topbtnDiv.children[0];
+	renameBtn.value = "重命名";
 
-    var promptTips = "\r\n\r\n -- 建议 -- \r\n1. 请输入英文、数字，不支持中文等其他语种。\r\n2. 输入字符长度不能超过20。\r\n3. 尽量不要使用默认名称 \"Default Profile\"，如果使用该默认名称，在存在多个配置页情况下，设置默认配置页时，配置名称会互换。";
+	var promptTips = "\r\n\r\n -- 建议 -- \r\n1. 请输入英文、数字，不支持中文等其他语种。\r\n2. 输入字符长度不能超过20。\r\n3. 尽量不要使用默认名称 \"Default Profile\"，如果使用该默认名称，在存在多个配置页情况下，设置默认配置页时，配置名称会互换。";
 
-    renameBtn.onclick = function () {
-        var promptText = `重命名：请输入配置名称 ${promptTips}`;
-        var selectedIndex = select.selectedIndex;
-        var selectText = select.options[selectedIndex].text.replace(" (Default)", "");
-        var name = prompt(promptText, selectText);
-        if (name != null) {
-            profileAction.value = "rename";
-            profileName.value = name;
-            profileForm.submit();
-        }
-    }
+	renameBtn.onclick = function () {
+		var promptText = `重命名：请输入配置名称 ${promptTips}`;
+		var selectedIndex = select.selectedIndex;
+		var selectText = select.options[selectedIndex].text.replace(" (Default)", "");
+		var name = prompt(promptText, selectText);
+		if (name != null) {
+			profileAction.value = "rename";
+			profileName.value = name;
+			profileForm.submit();
+		}
+	}
 
-    if (topbtnDiv.children.length > 1) {
-        var createNewBtn = topbtnDiv.children[1];
-        createNewBtn.value = "新建配置";
-        createNewBtn.onclick = function () {
-            var promptText = `新建配置：请输入配置名称 ${promptTips}`;
-            var name = prompt(promptText, "New Profile");
-            if (name != null) {
-                profileAction.value = "create";
-                profileName.value = name;
-                profileForm.submit();
-            }
-        }
-    }
+	if (topbtnDiv.children.length > 1) {
+		var createNewBtn = topbtnDiv.children[1];
+		createNewBtn.value = "新建配置";
+		createNewBtn.onclick = function () {
+			var promptText = `新建配置：请输入配置名称 ${promptTips}`;
+			var name = prompt(promptText, "New Profile");
+			if (name != null) {
+				profileAction.value = "create";
+				profileName.value = name;
+				profileForm.submit();
+			}
+		}
+	}
 
-    // 错误提示
-    var msgDiv = document.getElementById("msg");
-    if (msgDiv) {
-        var msgText = msgDiv.innerText;
-        switch (msgText) {
-            case "Name must be less than 20 characters.":
-                msgDiv.innerText = "操作失败：字符长度不能超过20。";
-                func_eh_ex(() => {
-                    msgDiv.style.color = "red";
-                }, () => {
-                    msgDiv.style.color = "yellow";
-                });
-                break;
-            case "Name contains invalid characters.":
-                msgDiv.innerText = "操作失败：输入中存在非法字符。"
-                func_eh_ex(() => {
-                    msgDiv.style.color = "red";
-                }, () => {
-                    msgDiv.style.color = "yellow";
-                });
-                break;
-            case "Settings were updated":
-                msgDiv.innerText = "操作成功：设置已更新。"
-                msgDiv.style.color = "lightgreen";
-                func_eh_ex(() => {
-                    msgDiv.style.color = "black";
-                }, () => {
-                    msgDiv.style.color = "lightgreen";
-                });
-                break;
-            default:
-                msgDiv.innerText = `${msgDiv.innerText}`;
-                translatePageElementEN(msgDiv);
-                break;
-        }
-    }
+	// 错误提示
+	var msgDiv = document.getElementById("msg");
+	if (msgDiv) {
+		var msgText = msgDiv.innerText;
+		switch (msgText) {
+			case "Name must be less than 20 characters.":
+				msgDiv.innerText = "操作失败：字符长度不能超过20。";
+				func_eh_ex(() => {
+					msgDiv.style.color = "red";
+				}, () => {
+					msgDiv.style.color = "yellow";
+				});
+				break;
+			case "Name contains invalid characters.":
+				msgDiv.innerText = "操作失败：输入中存在非法字符。"
+				func_eh_ex(() => {
+					msgDiv.style.color = "red";
+				}, () => {
+					msgDiv.style.color = "yellow";
+				});
+				break;
+			case "Settings were updated":
+				msgDiv.innerText = "操作成功：设置已更新。"
+				msgDiv.style.color = "lightgreen";
+				func_eh_ex(() => {
+					msgDiv.style.color = "black";
+				}, () => {
+					msgDiv.style.color = "lightgreen";
+				});
+				break;
+			default:
+				msgDiv.innerText = `${msgDiv.innerText}`;
+				translatePageElementEN(msgDiv);
+				break;
+		}
+	}
 }
 
 // 图片加载设置
 function uconfigPageImageLoadSettings(titleH2) {
-    titleH2.innerText = "-- 图片加载设置 --";
+	titleH2.innerText = "-- 图片加载设置 --";
 
-    var loadSelectDiv = titleH2.nextElementSibling;
-    var p = loadSelectDiv.querySelector("p");
-    p.innerText = "1. 你是否希望通过 Hentai@Home 网络加载图片，如果可用的话？";
-    var inputItems = p.nextElementSibling.children;
-    inputItems[0].children[0].childNodes[2].data = " 所有客户端（推荐）";
-    inputItems[1].children[0].childNodes[2].data = " 仅使用默认端口的客户端（可能会更慢，请在防火墙或代理阻止非标准接口的流量时选择此项。）";
-    inputItems[2].children[0].childNodes[2].data = " 否 [ 现代 / HTTPS ]（仅限捐赠者，你将无法浏览尽可能多的页面，请在出现严重的问题时选择此项。）";
-    inputItems[3].children[0].childNodes[2].data = " 否 [ 传统 / HTTP ]（仅限捐赠者，默认情况下无法在新版浏览器中使用，建议在使用过时的浏览器时选择此项。）";
+	var loadSelectDiv = titleH2.nextElementSibling;
+	var p = loadSelectDiv.querySelector("p");
+	p.innerText = "1. 你是否希望通过 Hentai@Home 网络加载图片，如果可用的话？";
+	var inputItems = p.nextElementSibling.children;
+	inputItems[0].children[0].childNodes[2].data = " 所有客户端（推荐）";
+	inputItems[1].children[0].childNodes[2].data = " 仅使用默认端口的客户端（可能会更慢，请在防火墙或代理阻止非标准接口的流量时选择此项。）";
+	inputItems[2].children[0].childNodes[2].data = " 否 [ 现代 / HTTPS ]（仅限捐赠者，你将无法浏览尽可能多的页面，请在出现严重的问题时选择此项。）";
+	inputItems[3].children[0].childNodes[2].data = " 否 [ 传统 / HTTP ]（仅限捐赠者，默认情况下无法在新版浏览器中使用，建议在使用过时的浏览器时选择此项。）";
 
-    if (inputItems[2].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
-        inputItems[2].children[0].children[1].style.cursor = "not-allowed";
-        inputItems[2].children[0].style.cursor = "not-allowed";
-    }
+	if (inputItems[2].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
+		inputItems[2].children[0].children[1].style.cursor = "not-allowed";
+		inputItems[2].children[0].style.cursor = "not-allowed";
+	}
 
-    if (inputItems[3].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
-        inputItems[3].children[0].children[1].style.cursor = "not-allowed";
-        inputItems[3].children[0].style.cursor = "not-allowed";
-    }
+	if (inputItems[3].children[0].childNodes[0].getAttribute("disabled") == "disabled") {
+		inputItems[3].children[0].children[1].style.cursor = "not-allowed";
+		inputItems[3].children[0].style.cursor = "not-allowed";
+	}
 
-    var countryDiv = loadSelectDiv.nextElementSibling;
-    var countryP = countryDiv.children[0];
-    var countryPStrong = countryP.querySelector("strong");
-    countryP.innerHTML = `2. 您似乎是从 <strong id="country_span">${countryPStrong.innerText}</strong> 浏览该网站或在该国家/地区使用 VPN 或代理，这意味着该网站将尝试从该一般地理区域的 H@H 客户端加载图像。如果这是不正确的，或者如果您出于任何原因想要使用不同的区域（例如，如果您使用的是拆分隧道 VPN），您可以在下面选择不同的国家/地区。`;
+	var countryDiv = loadSelectDiv.nextElementSibling;
+	var countryP = countryDiv.children[0];
+	var countryPStrong = countryP.querySelector("strong");
+	countryP.innerHTML = `2. 您似乎是从 <strong id="country_span">${countryPStrong.innerText}</strong> 浏览该网站或在该国家/地区使用 VPN 或代理，这意味着该网站将尝试从该一般地理区域的 H@H 客户端加载图像。如果这是不正确的，或者如果您出于任何原因想要使用不同的区域（例如，如果您使用的是拆分隧道 VPN），您可以在下面选择不同的国家/地区。`;
 
-    var countrySelectDiv = countryDiv.children[1];
-    countrySelectDiv.childNodes[0].data = "国家或地区：";
+	var countrySelectDiv = countryDiv.children[1];
+	countrySelectDiv.childNodes[0].data = "国家或地区：";
 
-    var countrySelect = countrySelectDiv.children[0];
-    var countryOptions = countrySelect.options;
-    for (const i in countryOptions) {
-        if (Object.hasOwnProperty.call(countryOptions, i)) {
-            const option = countryOptions[i];
-            switch (option.value) {
-                case "":
-                    option.innerText = "自动检测";
-                    break;
-                case "-":
-                    option.innerText = "-";
-                    break;
-                default:
-                    if (settingsPage_countryDict[option.value]) {
-                        var countryZH = settingsPage_countryDict[option.value];
-                        if (countryPStrong.innerText == option.innerText) {
-                            document.getElementById("country_span").innerText = countryZH;
-                        }
-                        option.innerText = `${countryZH} ${option.innerText}`;
-                    }
-                    break;
-            }
-        }
-    }
+	var countrySelect = countrySelectDiv.children[0];
+	var countryOptions = countrySelect.options;
+	for (const i in countryOptions) {
+		if (Object.hasOwnProperty.call(countryOptions, i)) {
+			const option = countryOptions[i];
+			switch (option.value) {
+				case "":
+					option.innerText = "自动检测";
+					break;
+				case "-":
+					option.innerText = "-";
+					break;
+				default:
+					if (settingsPage_countryDict[option.value]) {
+						var countryZH = settingsPage_countryDict[option.value];
+						if (countryPStrong.innerText == option.innerText) {
+							document.getElementById("country_span").innerText = countryZH;
+						}
+						option.innerText = `${countryZH} ${option.innerText}`;
+					}
+					break;
+			}
+		}
+	}
 
 
 }
 
 // 图片大小设置
 function uconfigImageSizeSettings(titleH2) {
-    titleH2.innerText = "-- 图片大小设置 --";
-    var imgResolutionDiv = titleH2.nextElementSibling;
-    var p = imgResolutionDiv.querySelector("p");
-    p.innerText = "1. 通常情况下，图片会被重新采样到 1280 像素的水平分辨率以供在线查看，您也可以选择以下重新采样分辨率。但是为了避免负载过高，高于 1280 像素将只供给于赞助者、特殊贡献者，以及 UID 小于 3,000,000 的用户。"
-    var resolutionRadios = p.nextElementSibling.children;
-    resolutionRadios[0].children[0].childNodes[2].data = "自动";
-    for (var i = 1; i < resolutionRadios.length; i++) {
-        const radioDiv = resolutionRadios[i];
-        var innerText = radioDiv.children[0].childNodes[2].data;
-        radioDiv.children[0].childNodes[2].data = innerText.replace("x", " 像素");
-        if (radioDiv.children[0].children[0].getAttribute("disabled") == "disabled") {
-            radioDiv.children[0].children[1].style.cursor = "not-allowed";
-            radioDiv.children[0].style.cursor = "not-allowed";
-        }
-    }
+	titleH2.innerText = "-- 图片大小设置 --";
+	var imgResolutionDiv = titleH2.nextElementSibling;
+	var p = imgResolutionDiv.querySelector("p");
+	p.innerText = "1. 通常情况下，图片会被重新采样到 1280 像素的水平分辨率以供在线查看，您也可以选择以下重新采样分辨率。但是为了避免负载过高，高于 1280 像素将只供给于赞助者、特殊贡献者，以及 UID 小于 3,000,000 的用户。"
+	var resolutionRadios = p.nextElementSibling.children;
+	resolutionRadios[0].children[0].childNodes[2].data = "自动";
+	for (var i = 1; i < resolutionRadios.length; i++) {
+		const radioDiv = resolutionRadios[i];
+		var innerText = radioDiv.children[0].childNodes[2].data;
+		radioDiv.children[0].childNodes[2].data = innerText.replace("x", " 像素");
+		if (radioDiv.children[0].children[0].getAttribute("disabled") == "disabled") {
+			radioDiv.children[0].children[1].style.cursor = "not-allowed";
+			radioDiv.children[0].style.cursor = "not-allowed";
+		}
+	}
 
-    var imgZoomDiv = imgResolutionDiv.nextElementSibling;
-    var imgZoomP = imgZoomDiv.children[0];
-    imgZoomP.innerText = "2. 虽然该网站会自动缩小图像以适应您的屏幕宽度，但您也可以手动限制图像的最大显示尺寸。就像自动缩放一样，这不会重新采样图像，因为调整大小是在浏览器端完成的。（0 = 无限制）";
-    var imgZoomTds = imgZoomP.nextElementSibling.querySelectorAll("td");
-    imgZoomTds[0].innerText = "水平缩放：";
-    imgZoomTds[1].childNodes[1].data = " 像素";
-    imgZoomTds[2].innerText = "垂直缩放：";
-    imgZoomTds[3].childNodes[1].data = " 像素";
+	var imgZoomDiv = imgResolutionDiv.nextElementSibling;
+	var imgZoomP = imgZoomDiv.children[0];
+	imgZoomP.innerText = "2. 虽然该网站会自动缩小图像以适应您的屏幕宽度，但您也可以手动限制图像的最大显示尺寸。就像自动缩放一样，这不会重新采样图像，因为调整大小是在浏览器端完成的。（0 = 无限制）";
+	var imgZoomTds = imgZoomP.nextElementSibling.querySelectorAll("td");
+	imgZoomTds[0].innerText = "水平缩放：";
+	imgZoomTds[1].childNodes[1].data = " 像素";
+	imgZoomTds[2].innerText = "垂直缩放：";
+	imgZoomTds[3].childNodes[1].data = " 像素";
 }
 
 // 作品标题显示
 function uconfigPageGalleryNameDisplay(titleH2) {
-    titleH2.innerText = "-- 作品标题显示 --";
-    var galleryTitleDiv = titleH2.nextElementSibling;
-    var p = galleryTitleDiv.querySelector("p");
-    p.innerText = "1. 很多作品都同时拥有 英文 / 日语罗马音标题 和 日文标题，你想默认显示哪一个？";
-    var galleryTitleRadios = p.nextElementSibling.children;
-    galleryTitleRadios[0].children[0].childNodes[2].data = " 默认标题";
-    galleryTitleRadios[1].children[0].childNodes[2].data = " 日语标题（如果有日语标题的情况下）";
+	titleH2.innerText = "-- 作品标题显示 --";
+	var galleryTitleDiv = titleH2.nextElementSibling;
+	var p = galleryTitleDiv.querySelector("p");
+	p.innerText = "1. 很多作品都同时拥有 英文 / 日语罗马音标题 和 日文标题，你想默认显示哪一个？";
+	var galleryTitleRadios = p.nextElementSibling.children;
+	galleryTitleRadios[0].children[0].childNodes[2].data = " 默认标题";
+	galleryTitleRadios[1].children[0].childNodes[2].data = " 日语标题（如果有日语标题的情况下）";
 }
 
 // 存档下载设置
 function uconfigPageArchiverSettings(titleH2) {
-    titleH2.innerText = "-- 存档下载设置 --";
-    var archiverDiv = titleH2.nextElementSibling;
-    var p = archiverDiv.querySelector("p");
-    p.innerText = "1. 存档下载的默认行为是手动选择存档（原始画质或压缩画质），然后复制下载链接或直接点击下载，您可以在此处更改设置。";
-    var archiverRadios = p.nextElementSibling.children;
-    archiverRadios[0].children[0].childNodes[2].data = "手动选择 - 画质，手动下载（默认）";
-    archiverRadios[1].children[0].childNodes[2].data = "手动选择 - 画质，自动下载";
-    archiverRadios[2].children[0].childNodes[2].data = "自动选择 - 原始画质，手动下载";
-    archiverRadios[3].children[0].childNodes[2].data = "自动选择 - 原始画质，自动下载";
-    archiverRadios[4].children[0].childNodes[2].data = "自动选择 - 压缩画质，手动下载";
-    archiverRadios[5].children[0].childNodes[2].data = "自动选择 - 压缩画质，自动下载";
+	titleH2.innerText = "-- 存档下载设置 --";
+	var archiverDiv = titleH2.nextElementSibling;
+	var p = archiverDiv.querySelector("p");
+	p.innerText = "1. 存档下载的默认行为是手动选择存档（原始画质或压缩画质），然后复制下载链接或直接点击下载，您可以在此处更改设置。";
+	var archiverRadios = p.nextElementSibling.children;
+	archiverRadios[0].children[0].childNodes[2].data = "手动选择 - 画质，手动下载（默认）";
+	archiverRadios[1].children[0].childNodes[2].data = "手动选择 - 画质，自动下载";
+	archiverRadios[2].children[0].childNodes[2].data = "自动选择 - 原始画质，手动下载";
+	archiverRadios[3].children[0].childNodes[2].data = "自动选择 - 原始画质，自动下载";
+	archiverRadios[4].children[0].childNodes[2].data = "自动选择 - 压缩画质，手动下载";
+	archiverRadios[5].children[0].childNodes[2].data = "自动选择 - 压缩画质，自动下载";
 }
 
 // 首页设置
 function uconfigPageFrontPageSettings(titleH2) {
-    titleH2.innerText = "-- 首页 / 搜索设置 --";
-    var displayWayDiv = titleH2.nextElementSibling;
-    var p = displayWayDiv.querySelector("p");
-    p.innerText = "1. 你想以哪种方式浏览首页?";
-    var displayWayRadios = p.nextElementSibling.children;
-    displayWayRadios[0].children[0].childNodes[2].data = "标题 + 悬浮图";
-    displayWayRadios[1].children[0].childNodes[2].data = "标题 + 悬浮图 + 账号收藏标签";
-    displayWayRadios[2].children[0].childNodes[2].data = "标题 + 悬浮图 + 标签";
-    displayWayRadios[3].children[0].childNodes[2].data = "标题 + 图片 + 标签";
-    displayWayRadios[4].children[0].childNodes[2].data = "标题 + 缩略图";
+	titleH2.innerText = "-- 首页 / 搜索设置 --";
+	var displayWayDiv = titleH2.nextElementSibling;
+	var p = displayWayDiv.querySelector("p");
+	p.innerText = "1. 你想以哪种方式浏览首页?";
+	var displayWayRadios = p.nextElementSibling.children;
+	displayWayRadios[0].children[0].childNodes[2].data = "标题 + 悬浮图";
+	displayWayRadios[1].children[0].childNodes[2].data = "标题 + 悬浮图 + 账号收藏标签";
+	displayWayRadios[2].children[0].childNodes[2].data = "标题 + 悬浮图 + 标签";
+	displayWayRadios[3].children[0].childNodes[2].data = "标题 + 图片 + 标签";
+	displayWayRadios[4].children[0].childNodes[2].data = "标题 + 缩略图";
 
-    var bookTypeFilterDiv = displayWayDiv.nextElementSibling;
-    var bookTypeFilterP = bookTypeFilterDiv.children[0];
-    bookTypeFilterP.innerText = "2. 是否显示搜索范围快速跳转?";
-    var displayStyleRadios = bookTypeFilterP.nextElementSibling.children;
-    displayStyleRadios[0].children[0].childNodes[2].data = "显示";
-    displayStyleRadios[1].children[0].childNodes[2].data = "禁用";
-    var bookTypeFilterBtnsDiv = bookTypeFilterDiv.nextElementSibling;
-    var bookTypeFilterBtnsP = bookTypeFilterBtnsDiv.children[0];
-    bookTypeFilterBtnsP.innerText = "3. 你希望首页和搜索范围默认包含或排除哪些作品类型?";
-    var bookTypeFilterBtns = bookTypeFilterBtnsDiv.querySelectorAll("div.cs");
-    for (const i in bookTypeFilterBtns) {
-        if (Object.hasOwnProperty.call(bookTypeFilterBtns, i)) {
-            const bookType = bookTypeFilterBtns[i];
-            if (bookTypeData[bookType.innerText]) {
-                bookType.innerText = bookTypeData[bookType.innerText];
-            }
-        }
-    }
+	var bookTypeFilterDiv = displayWayDiv.nextElementSibling;
+	var bookTypeFilterP = bookTypeFilterDiv.children[0];
+	bookTypeFilterP.innerText = "2. 是否显示搜索范围快速跳转?";
+	var displayStyleRadios = bookTypeFilterP.nextElementSibling.children;
+	displayStyleRadios[0].children[0].childNodes[2].data = "显示";
+	displayStyleRadios[1].children[0].childNodes[2].data = "禁用";
+	var bookTypeFilterBtnsDiv = bookTypeFilterDiv.nextElementSibling;
+	var bookTypeFilterBtnsP = bookTypeFilterBtnsDiv.children[0];
+	bookTypeFilterBtnsP.innerText = "3. 你希望首页和搜索范围默认包含或排除哪些作品类型?";
+	var bookTypeFilterBtns = bookTypeFilterBtnsDiv.querySelectorAll("div.cs");
+	for (const i in bookTypeFilterBtns) {
+		if (Object.hasOwnProperty.call(bookTypeFilterBtns, i)) {
+			const bookType = bookTypeFilterBtns[i];
+			if (bookTypeData[bookType.innerText]) {
+				bookType.innerText = bookTypeData[bookType.innerText];
+			}
+		}
+	}
 }
 
 // 收藏设置
 function uconfigPageFavorites(titleH2) {
-    titleH2.innerText = "-- 收藏设置 --";
-    var favoriteRenameDiv = titleH2.nextElementSibling;
-    var p = favoriteRenameDiv.querySelector("p");
-    p.innerText = "1. 重命名你的收藏夹名称";
-    var orderDiv = favoriteRenameDiv.nextElementSibling;
-    var orderP = orderDiv.children[0];
-    orderP.innerText = "2. 设置作品在收藏夹中的默认排序，需注意，2016年3月网站改版前没有记录收藏时间，会按作品的上传日期计算";
-    var orderRadios = orderP.nextElementSibling.children;
-    orderRadios[0].children[0].childNodes[2].data = "按作品更新时间排序";
-    orderRadios[1].children[0].childNodes[2].data = "按用户收藏时间排序";
+	titleH2.innerText = "-- 收藏设置 --";
+	var favoriteRenameDiv = titleH2.nextElementSibling;
+	var p = favoriteRenameDiv.querySelector("p");
+	p.innerText = "1. 重命名你的收藏夹名称";
+	var orderDiv = favoriteRenameDiv.nextElementSibling;
+	var orderP = orderDiv.children[0];
+	orderP.innerText = "2. 设置作品在收藏夹中的默认排序，需注意，2016年3月网站改版前没有记录收藏时间，会按作品的上传日期计算";
+	var orderRadios = orderP.nextElementSibling.children;
+	orderRadios[0].children[0].childNodes[2].data = "按作品更新时间排序";
+	orderRadios[1].children[0].childNodes[2].data = "按用户收藏时间排序";
 }
 
 // 评分设置
 function uconfigPageRatings(titleH2) {
-    titleH2.innerText = "-- 评分设置 --";
-    var rateingDiv = titleH2.nextElementSibling;
-    var p = rateingDiv.querySelector("p");
-    p.innerText = "1. 每个英文字母代表每颗星的颜色，请使用 R / G / B / Y（红 / 绿 / 蓝 / 黄）组合你的评分颜色。";
-    var rateinglabel = rateingDiv.querySelectorAll("td")[1];
-    rateinglabel.innerText = "默认设置下，作品的评分设置是 RRGGB，对应分数和颜色显示：2 星及以下显示红星，2.5 ~ 4 星显示为绿星，4.5 ~ 5 星显示为蓝星。你可以设置为其他颜色组合。";
+	titleH2.innerText = "-- 评分设置 --";
+	var rateingDiv = titleH2.nextElementSibling;
+	var p = rateingDiv.querySelector("p");
+	p.innerText = "1. 每个英文字母代表每颗星的颜色，请使用 R / G / B / Y（红 / 绿 / 蓝 / 黄）组合你的评分颜色。";
+	var rateinglabel = rateingDiv.querySelectorAll("td")[1];
+	rateinglabel.innerText = "默认设置下，作品的评分设置是 RRGGB，对应分数和颜色显示：2 星及以下显示红星，2.5 ~ 4 星显示为绿星，4.5 ~ 5 星显示为蓝星。你可以设置为其他颜色组合。";
 }
 
 // 标签组设置
 function uconfigPageTagNamespaces(titleH2) {
-    titleH2.innerText = "-- 标签组设置 --";
-    var searchTagFilterDiv = titleH2.nextElementSibling;
-    var p = searchTagFilterDiv.querySelector("p");
-    p.innerText = "1. 如果要从默认标签搜索中排除某些标签组，可以勾选以下标签组。请注意，这不会阻止在这些标签组中的标签的展示区出现，它只是在搜索标签时排除这些标签组。";
-    var tagGroupRadios = p.nextElementSibling.children;
-    tagGroupRadios[0].children[0].childNodes[2].data = "重新分类";
-    tagGroupRadios[1].children[0].childNodes[2].data = "语言";
-    tagGroupRadios[2].children[0].childNodes[2].data = "原作";
-    tagGroupRadios[3].children[0].childNodes[2].data = "角色";
-    tagGroupRadios[4].children[0].childNodes[2].data = "社团";
-    tagGroupRadios[5].children[0].childNodes[2].data = "艺术家";
-    tagGroupRadios[6].children[0].childNodes[2].data = "角色扮演";
-    tagGroupRadios[7].children[0].childNodes[2].data = "男性";
-    tagGroupRadios[8].children[0].childNodes[2].data = "女性";
-    tagGroupRadios[9].children[0].childNodes[2].data = "混合";
-    tagGroupRadios[10].children[0].childNodes[2].data = "其他";
+	titleH2.innerText = "-- 标签组设置 --";
+	var searchTagFilterDiv = titleH2.nextElementSibling;
+	var p = searchTagFilterDiv.querySelector("p");
+	p.innerText = "1. 如果要从默认标签搜索中排除某些标签组，可以勾选以下标签组。请注意，这不会阻止在这些标签组中的标签的展示区出现，它只是在搜索标签时排除这些标签组。";
+	var tagGroupRadios = p.nextElementSibling.children;
+	tagGroupRadios[0].children[0].childNodes[2].data = "重新分类";
+	tagGroupRadios[1].children[0].childNodes[2].data = "语言";
+	tagGroupRadios[2].children[0].childNodes[2].data = "原作";
+	tagGroupRadios[3].children[0].childNodes[2].data = "角色";
+	tagGroupRadios[4].children[0].childNodes[2].data = "社团";
+	tagGroupRadios[5].children[0].childNodes[2].data = "艺术家";
+	tagGroupRadios[6].children[0].childNodes[2].data = "角色扮演";
+	tagGroupRadios[7].children[0].childNodes[2].data = "男性";
+	tagGroupRadios[8].children[0].childNodes[2].data = "女性";
+	tagGroupRadios[9].children[0].childNodes[2].data = "混合";
+	tagGroupRadios[10].children[0].childNodes[2].data = "其他";
 }
 
 // 标签过滤阀值设置
 function uconfigPageTagFilteringThreshold(titleH2) {
-    titleH2.innerText = "-- 标签过滤阀值设置 --";
-    var tagFilterLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
-    tagFilterLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>负权重</strong> 来软过滤它们。一旦某个作品所有的标签权重之和 <strong>低于</strong> 设定值，此作品将从视图中被过滤。这个值的设定范围为 [ -9999 ~ 0 ] 。`
+	titleH2.innerText = "-- 标签过滤阀值设置 --";
+	var tagFilterLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
+	tagFilterLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>负权重</strong> 来软过滤它们。一旦某个作品所有的标签权重之和 <strong>低于</strong> 设定值，此作品将从视图中被过滤。这个值的设定范围为 [ -9999 ~ 0 ] 。`
 }
 
 // 标签订阅阀值设置
 function uconfigTagWatchingThreshold(titleH2) {
-    titleH2.innerText = "-- 标签订阅阀值设置 --";
-    var tagWatchingLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
-    tagWatchingLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>正权重</strong> 来关注它们。一旦某个作品所有的标签权重之和 <strong>高于</strong> 设定值，此作品将包含在菜单 [ 偏好 ] 的作品列表中。这个值的设定范围为 [ 0 ~ 9999 ] 。`
+	titleH2.innerText = "-- 标签订阅阀值设置 --";
+	var tagWatchingLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
+	tagWatchingLabel.innerHTML = `你可以通过将标签加入 <a href="https://exhentai.org/mytags">我的标签</a> 并设置一个 <strong>正权重</strong> 来关注它们。一旦某个作品所有的标签权重之和 <strong>高于</strong> 设定值，此作品将包含在菜单 [ 偏好 ] 的作品列表中。这个值的设定范围为 [ 0 ~ 9999 ] 。`
 }
 
 // 显示过滤删除数量
-function uconfigPageShowFilteredRemovalCount(titleH2){
-    titleH2.innerText = "-- 显示过滤删除数量 --";
-    var displayWayDiv = titleH2.nextElementSibling;
-    var p = displayWayDiv.querySelector("p");
-    p.innerText = "1. 是否显示 “ 您的默认过滤器从此页面中删除了 XX 个画廊 ” 数量?";
-    var displayWayRadios = p.nextElementSibling.children;
-    displayWayRadios[0].children[0].childNodes[2].data = "是";
-    displayWayRadios[1].children[0].childNodes[2].data = "否";
+function uconfigPageShowFilteredRemovalCount(titleH2) {
+	titleH2.innerText = "-- 显示过滤删除数量 --";
+	var displayWayDiv = titleH2.nextElementSibling;
+	var p = displayWayDiv.querySelector("p");
+	p.innerText = "1. 是否显示 “ 您的默认过滤器从此页面中删除了 XX 个画廊 ” 数量?";
+	var displayWayRadios = p.nextElementSibling.children;
+	displayWayRadios[0].children[0].childNodes[2].data = "是";
+	displayWayRadios[1].children[0].childNodes[2].data = "否";
 }
 
 // 屏蔽语种
 function uconfigTagExcludedLanguages(titleH2) {
-    titleH2.innerText = "-- 屏蔽语种 --";
-    var filterLabelDiv = titleH2.nextElementSibling;
-    filterLabelDiv.children[0].innerText = "如果你希望从作品列表和搜索中隐藏某国语言的作品，请从下面的列表中选择它们。";
-    filterLabelDiv.children[1].innerText = "请注意，无论您的搜索查询如何，屏蔽语言的作品都不会被搜索出来。";
-    var languageTable = filterLabelDiv.children[2];
-    var ths = languageTable.querySelectorAll("th");
-    ths[1].innerText = "原始";
-    ths[2].innerText = "翻译";
-    ths[3].innerText = "重写";
-    ths[4].innerText = "全部";
-    var trs = languageTable.querySelectorAll("tr");
-    trs[1].children[0].innerText = "日语";
-    trs[2].children[0].innerText = "英语";
-    trs[3].children[0].innerText = "汉语";
-    trs[4].children[0].innerText = "荷兰语";
-    trs[5].children[0].innerText = "法语";
-    trs[6].children[0].innerText = "德语";
-    trs[7].children[0].innerText = "匈牙利语";
-    trs[8].children[0].innerText = "意大利语";
-    trs[9].children[0].innerText = "韩语";
-    trs[10].children[0].innerText = "波兰语";
-    trs[11].children[0].innerText = "葡萄牙语";
-    trs[12].children[0].innerText = "俄语";
-    trs[13].children[0].innerText = "西班牙语";
-    trs[14].children[0].innerText = "泰语";
-    trs[15].children[0].innerText = "越南语";
-    trs[16].children[0].innerText = "无语言";
-    trs[17].children[0].innerText = "其他";
+	titleH2.innerText = "-- 屏蔽语种 --";
+	var filterLabelDiv = titleH2.nextElementSibling;
+	filterLabelDiv.children[0].innerText = "如果你希望从作品列表和搜索中隐藏某国语言的作品，请从下面的列表中选择它们。";
+	filterLabelDiv.children[1].innerText = "请注意，无论您的搜索查询如何，屏蔽语言的作品都不会被搜索出来。";
+	var languageTable = filterLabelDiv.children[2];
+	var ths = languageTable.querySelectorAll("th");
+	ths[1].innerText = "原始";
+	ths[2].innerText = "翻译";
+	ths[3].innerText = "重写";
+	ths[4].innerText = "全部";
+	var trs = languageTable.querySelectorAll("tr");
+	trs[1].children[0].innerText = "日语";
+	trs[2].children[0].innerText = "英语";
+	trs[3].children[0].innerText = "汉语";
+	trs[4].children[0].innerText = "荷兰语";
+	trs[5].children[0].innerText = "法语";
+	trs[6].children[0].innerText = "德语";
+	trs[7].children[0].innerText = "匈牙利语";
+	trs[8].children[0].innerText = "意大利语";
+	trs[9].children[0].innerText = "韩语";
+	trs[10].children[0].innerText = "波兰语";
+	trs[11].children[0].innerText = "葡萄牙语";
+	trs[12].children[0].innerText = "俄语";
+	trs[13].children[0].innerText = "西班牙语";
+	trs[14].children[0].innerText = "泰语";
+	trs[15].children[0].innerText = "越南语";
+	trs[16].children[0].innerText = "无语言";
+	trs[17].children[0].innerText = "其他";
 }
 
 // 屏蔽上传者
 function uconfigPageExcludedUploaders(titleH2) {
-    titleH2.innerText = "-- 屏蔽上传者 --";
-    var fitlerUploaderDiv = titleH2.nextElementSibling;
-    fitlerUploaderDiv.children[0].innerText = "如果你希望从作品列表和搜索中隐藏某些上传者的作品，请将上传者的用户名添加到下方。每行输入一个用户名。";
-    fitlerUploaderDiv.children[1].innerText = "请注意，无论您的搜索查询如何，屏蔽上传者的作品都不会被搜索出来。";
-    var totalCount = fitlerUploaderDiv.children[3];
-    var usedCount = totalCount.children[0].innerText;
-    var allCount = totalCount.children[1].innerText;
-    totalCount.innerHTML = `可用容量：<strong>${usedCount}</strong> / <strong>${allCount}</strong>`;
+	titleH2.innerText = "-- 屏蔽上传者 --";
+	var fitlerUploaderDiv = titleH2.nextElementSibling;
+	fitlerUploaderDiv.children[0].innerText = "如果你希望从作品列表和搜索中隐藏某些上传者的作品，请将上传者的用户名添加到下方。每行输入一个用户名。";
+	fitlerUploaderDiv.children[1].innerText = "请注意，无论您的搜索查询如何，屏蔽上传者的作品都不会被搜索出来。";
+	var totalCount = fitlerUploaderDiv.children[3];
+	var usedCount = totalCount.children[0].innerText;
+	var allCount = totalCount.children[1].innerText;
+	totalCount.innerHTML = `可用容量：<strong>${usedCount}</strong> / <strong>${allCount}</strong>`;
 }
 
 // 搜索数量设置
 function uconfigPageSearchResultCount(titleH2) {
-    titleH2.innerText = "-- 搜索数量设置 --";
-    var searchCountDiv = titleH2.nextElementSibling;
-    var p = searchCountDiv.querySelector("p");
-    var commonText = "1. 对于首页、搜索页面 和 种子搜索页面，您希望每页有多少条结果？";
-    var otherText = p.innerText.replace("How many results would you like per page for the index/search page and torrent search pages? ", "");
-    if (otherText.length == 0) {
-        p.innerText = commonText;
-    } else {
-        if (otherText == "(Hath Perk: Paging Enlargement Required)") {
-            p.innerText = `${commonText}（需要解锁权限： Hath Perk 分页扩大）`;
-        } else {
-            p.innerText = `${commonText}${otherText}`;
-            translatePageElementEN(p);
-        }
-    }
+	titleH2.innerText = "-- 搜索数量设置 --";
+	var searchCountDiv = titleH2.nextElementSibling;
+	var p = searchCountDiv.querySelector("p");
+	var commonText = "1. 对于首页、搜索页面 和 种子搜索页面，您希望每页有多少条结果？";
+	var otherText = p.innerText.replace("How many results would you like per page for the index/search page and torrent search pages? ", "");
+	if (otherText.length == 0) {
+		p.innerText = commonText;
+	} else {
+		if (otherText == "(Hath Perk: Paging Enlargement Required)") {
+			p.innerText = `${commonText}（需要解锁权限： Hath Perk 分页扩大）`;
+		} else {
+			p.innerText = `${commonText}${otherText}`;
+			translatePageElementEN(p);
+		}
+	}
 
-    var searchCountRadios = p.nextElementSibling.children;
-    for (const i in searchCountRadios) {
-        if (Object.hasOwnProperty.call(searchCountRadios, i)) {
-            const radio = searchCountRadios[i];
-            var innerText = radio.children[0].childNodes[2].data;
-            radio.children[0].childNodes[2].data = innerText.replace("results", "条");
-            if (radio.children[0].children[0].getAttribute("disabled") == "disabled") {
-                radio.children[0].children[1].style.cursor = "not-allowed";
-                radio.children[0].style.cursor = "not-allowed";
-            }
-        }
-    }
+	var searchCountRadios = p.nextElementSibling.children;
+	for (const i in searchCountRadios) {
+		if (Object.hasOwnProperty.call(searchCountRadios, i)) {
+			const radio = searchCountRadios[i];
+			var innerText = radio.children[0].childNodes[2].data;
+			radio.children[0].childNodes[2].data = innerText.replace("results", "条");
+			if (radio.children[0].children[0].getAttribute("disabled") == "disabled") {
+				radio.children[0].children[1].style.cursor = "not-allowed";
+				radio.children[0].style.cursor = "not-allowed";
+			}
+		}
+	}
 
 }
 
 // 缩略图设置
 function uconfigPageThumbnailSettings(titleH2) {
-    titleH2.innerText = "-- 缩略图设置 --";
-    var thumbnailLoadWayDiv = titleH2.nextElementSibling;
-    var p = thumbnailLoadWayDiv.querySelector("p");
-    p.innerText = "1. 你希望鼠标悬停时显示的缩略图何时加载？";
-    var thumbnailLoadWayRadios = p.nextElementSibling.children;
-    thumbnailLoadWayRadios[0].children[0].childNodes[2].data = "鼠标悬停时（页面加载快，缩略图加载有延迟）";
-    thumbnailLoadWayRadios[1].children[0].childNodes[2].data = "页面加载时（页面加载需要更长的时间，但缩略图显示是无需等待的）";
+	titleH2.innerText = "-- 缩略图设置 --";
+	var thumbnailLoadWayDiv = titleH2.nextElementSibling;
+	var p = thumbnailLoadWayDiv.querySelector("p");
+	p.innerText = "1. 你希望鼠标悬停时显示的缩略图何时加载？";
+	var thumbnailLoadWayRadios = p.nextElementSibling.children;
+	thumbnailLoadWayRadios[0].children[0].childNodes[2].data = "鼠标悬停时（页面加载快，缩略图加载有延迟）";
+	thumbnailLoadWayRadios[1].children[0].childNodes[2].data = "页面加载时（页面加载需要更长的时间，但缩略图显示是无需等待的）";
 
-    var thumbnailDisplayDiv = thumbnailLoadWayDiv.nextElementSibling;
-    var thumbnailDisplayP = thumbnailDisplayDiv.children[0];
-    thumbnailDisplayP.innerText = "2. 作品详情页面缩略图设置";
-    var thumbnailDisplayTable = thumbnailDisplayP.nextElementSibling;
-    var trs = thumbnailDisplayTable.querySelectorAll("tr");
-    trs[0].children[0].innerText = "大小：";
-    var tdSizeNormal = trs[0].children[1].children[0].children[0].children[0];
-    if (tdSizeNormal.children[0].getAttribute("disabled") == "disabled") {
-        tdSizeNormal.children[1].style.cursor = "not-allowed";
-        tdSizeNormal.style.cursor = "not-allowed";
-    }
-    tdSizeNormal.childNodes[2].data = "普通";
+	var thumbnailDisplayDiv = thumbnailLoadWayDiv.nextElementSibling;
+	var thumbnailDisplayP = thumbnailDisplayDiv.children[0];
+	thumbnailDisplayP.innerText = "2. 作品详情页面缩略图设置";
+	var thumbnailDisplayTable = thumbnailDisplayP.nextElementSibling;
+	var trs = thumbnailDisplayTable.querySelectorAll("tr");
+	trs[0].children[0].innerText = "大小：";
+	var tdSizeNormal = trs[0].children[1].children[0].children[0].children[0];
+	if (tdSizeNormal.children[0].getAttribute("disabled") == "disabled") {
+		tdSizeNormal.children[1].style.cursor = "not-allowed";
+		tdSizeNormal.style.cursor = "not-allowed";
+	}
+	tdSizeNormal.childNodes[2].data = "普通";
 
-    var tdSizeLarge = trs[0].children[1].children[0].children[1].children[0];
-    if (tdSizeLarge.children[0].getAttribute("disabled") == "disabled") {
-        tdSizeLarge.children[1].style.cursor = "not-allowed";
-        tdSizeLarge.style.cursor = "not-allowed";
-    }
-    tdSizeLarge.childNodes[2].data = "大图";
+	var tdSizeLarge = trs[0].children[1].children[0].children[1].children[0];
+	if (tdSizeLarge.children[0].getAttribute("disabled") == "disabled") {
+		tdSizeLarge.children[1].style.cursor = "not-allowed";
+		tdSizeLarge.style.cursor = "not-allowed";
+	}
+	tdSizeLarge.childNodes[2].data = "大图";
 
-    trs[1].children[0].innerText = "行数：";
-    var rowsDivs = trs[1].children[1].children[0].children;
-    for (var i = 1; i < rowsDivs.length; i++) {
-        const rows = rowsDivs[i];
-        if (rows.children[0].children[0].getAttribute("disabled") == "disabled") {
-            rows.children[0].children[1].style.cursor = "not-allowed";
-            rows.children[0].style.cursor = "not-allowed";
-        }
-    }
+	trs[1].children[0].innerText = "行数：";
+	var rowsDivs = trs[1].children[1].children[0].children;
+	for (var i = 1; i < rowsDivs.length; i++) {
+		const rows = rowsDivs[i];
+		if (rows.children[0].children[0].getAttribute("disabled") == "disabled") {
+			rows.children[0].children[1].style.cursor = "not-allowed";
+			rows.children[0].style.cursor = "not-allowed";
+		}
+	}
 }
 
 // 缩略图缩放
 function uconfigPageThumbnailScaling(titleH2) {
-    titleH2.innerText = "-- 缩略图缩放 --";
-    var thumbScaleLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
-    thumbScaleLabel.innerText = "缩略图和扩展图库列表视图上的缩略图可以缩放到 75% 到 150% 之间的自定义值。";
+	titleH2.innerText = "-- 缩略图缩放 --";
+	var thumbScaleLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
+	thumbScaleLabel.innerText = "缩略图和扩展图库列表视图上的缩略图可以缩放到 75% 到 150% 之间的自定义值。";
 }
 
 // 移动端宽度设置
 function uconfigPageViewportOverride(titleH2) {
-    titleH2.innerText = "-- 移动端宽度设置 --";
-    var tds = titleH2.nextElementSibling.querySelectorAll("td");
-    tds[0].removeChild(tds[0].childNodes[1]);
-    var span = document.createElement("span");
-    span.classList.add("span_pixel");
-    span.innerText = "像素";
-    tds[0].appendChild(span);
-    tds[1].innerText = "允许您覆盖移动设备站点的虚拟宽度。这通常由您的设备根据其 DPI 自动确定。100% 缩略图比例的合理值介于 640 和 1400 之间。";
+	titleH2.innerText = "-- 移动端宽度设置 --";
+	var tds = titleH2.nextElementSibling.querySelectorAll("td");
+	tds[0].removeChild(tds[0].childNodes[1]);
+	var span = document.createElement("span");
+	span.classList.add("span_pixel");
+	span.innerText = "像素";
+	tds[0].appendChild(span);
+	tds[1].innerText = "允许您覆盖移动设备站点的虚拟宽度。这通常由您的设备根据其 DPI 自动确定。100% 缩略图比例的合理值介于 640 和 1400 之间。";
 }
 
 // 作品评论设置
 function uconfigPageGalleryComments(titleH2) {
-    titleH2.innerText = "-- 作品评论设置 --";
-    var commentOrderDiv = titleH2.nextElementSibling;
-    var p = commentOrderDiv.querySelector("p");
-    p.innerText = "1. 评论排序方式：";
-    var commentOrderItems = p.nextElementSibling.children;
-    commentOrderItems[0].children[0].childNodes[2].data = " 最古老的评论";
-    commentOrderItems[1].children[0].childNodes[2].data = " 最新的评论";
-    commentOrderItems[2].children[0].childNodes[2].data = " 按评论的分数";
+	titleH2.innerText = "-- 作品评论设置 --";
+	var commentOrderDiv = titleH2.nextElementSibling;
+	var p = commentOrderDiv.querySelector("p");
+	p.innerText = "1. 评论排序方式：";
+	var commentOrderItems = p.nextElementSibling.children;
+	commentOrderItems[0].children[0].childNodes[2].data = " 最古老的评论";
+	commentOrderItems[1].children[0].childNodes[2].data = " 最新的评论";
+	commentOrderItems[2].children[0].childNodes[2].data = " 按评论的分数";
 
-    var commentNoteDiv = commentOrderDiv.nextElementSibling;
-    var commentNoteP = commentNoteDiv.children[0];
-    commentNoteP.innerText = "2. 显示评论的投票数：";
-    var commentNotes = commentNoteDiv.children[1].children;
-    commentNotes[0].children[0].childNodes[2].data = "鼠标悬停或点击时";
-    commentNotes[1].children[0].childNodes[2].data = "总是显示";
+	var commentNoteDiv = commentOrderDiv.nextElementSibling;
+	var commentNoteP = commentNoteDiv.children[0];
+	commentNoteP.innerText = "2. 显示评论的投票数：";
+	var commentNotes = commentNoteDiv.children[1].children;
+	commentNotes[0].children[0].childNodes[2].data = "鼠标悬停或点击时";
+	commentNotes[1].children[0].childNodes[2].data = "总是显示";
 }
 
 // 我的标签设置
 function uconfigPageGalleryTags(titleH2) {
-    titleH2.innerText = "-- 我的标签设置 --";
-    var tagOrderDiv = titleH2.nextElementSibling;
-    var p = tagOrderDiv.querySelector("p");
-    p.innerText = "1. 标签排序方式：";
-    var tagOrderItems = p.nextElementSibling.children;
-    tagOrderItems[0].children[0].childNodes[2].data = " 按字母排序";
-    tagOrderItems[1].children[0].childNodes[2].data = " 按权重排序";
+	titleH2.innerText = "-- 我的标签设置 --";
+	var tagOrderDiv = titleH2.nextElementSibling;
+	var p = tagOrderDiv.querySelector("p");
+	p.innerText = "1. 标签排序方式：";
+	var tagOrderItems = p.nextElementSibling.children;
+	tagOrderItems[0].children[0].childNodes[2].data = " 按字母排序";
+	tagOrderItems[1].children[0].childNodes[2].data = " 按权重排序";
 }
 
 // 作品页面页码设置
 function uconfigPageGalleryPageNumbering(titleH2) {
-    titleH2.innerText = "-- 作品页面页码设置 --";
-    var galleryNumberDiv = titleH2.nextElementSibling;
-    var p = galleryNumberDiv.querySelector("p");
-    p.innerText = "1. 是否显示作品页码？";
-    var galleryNumberItems = p.nextElementSibling.children;
-    galleryNumberItems[0].children[0].childNodes[2].data = " 否";
-    galleryNumberItems[1].children[0].childNodes[2].data = " 是";
+	titleH2.innerText = "-- 作品页面页码设置 --";
+	var galleryNumberDiv = titleH2.nextElementSibling;
+	var p = galleryNumberDiv.querySelector("p");
+	p.innerText = "1. 是否显示作品页码？";
+	var galleryNumberItems = p.nextElementSibling.children;
+	galleryNumberItems[0].children[0].childNodes[2].data = " 否";
+	galleryNumberItems[1].children[0].childNodes[2].data = " 是";
 }
 
 // 重新包裹页面元素
 function uconfigPageReWrapperForm(contentForm) {
-    // 删除提交按钮
-    var submitBtn = contentForm.lastElementChild;
-    contentForm.removeChild(submitBtn);
-    // 包裹表单元素
-    var contentFormInnerHTML = contentForm.innerHTML;
-    var wrapperDiv = document.createElement("div");
-    wrapperDiv.id = "contentForm_wrapper";
-    wrapperDiv.innerHTML = contentFormInnerHTML;
-    contentForm.innerHTML = "";
-    contentForm.appendChild(wrapperDiv);
-    // 添加提交按钮
-    contentForm.appendChild(submitBtn);
+	// 删除提交按钮
+	var submitBtn = contentForm.lastElementChild;
+	contentForm.removeChild(submitBtn);
+	// 包裹表单元素
+	var contentFormInnerHTML = contentForm.innerHTML;
+	var wrapperDiv = document.createElement("div");
+	wrapperDiv.id = "contentForm_wrapper";
+	wrapperDiv.innerHTML = contentFormInnerHTML;
+	contentForm.innerHTML = "";
+	contentForm.appendChild(wrapperDiv);
+	// 添加提交按钮
+	contentForm.appendChild(submitBtn);
 }
 
 //#endregion
-
-
-
 
 //#region step7.9.tosPage.js 帮助页面
 
@@ -11497,7 +11429,6 @@ function tosPage() {
 	// 数据同步
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_tosPage:
 					tosPageTranslateSync();
@@ -12110,7 +12041,6 @@ function mytagsCategoryWindowEvents() {
 	//#region 消息通知
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_mytagsFavoriteTagUpdate:
 					syncMytagsFavoriteTagUpdate();
@@ -12851,7 +12781,6 @@ function mytagClodToFavorite(clodToFavoriteBtn, favoriteCategoriesWindow, favori
 		var t = setInterval(() => {
 			if (index == newTagFavoriteArray.length) {
 				t && clearInterval(t);
-				console.log(newTagFavoriteDict);
 
 				// 更新收藏表，更新收藏 html 和页面，添加通知
 				var complete1 = false;
@@ -13181,7 +13110,6 @@ function do_usertags_mass_copy() {
 
 //#endregion
 
-
 //#region step8.1.eventpane.js hentaivase 弹框
 
 function hentaiVaseDialog() {
@@ -13242,19 +13170,6 @@ function recursionTranslate(element) {
 }
 
 //#endregion
-
-
-
-
-//TODO 样式细化
-//TODO 悬浮显示预览图
-//TODO 上下键选择候选项
-//TODO 排行榜收藏上传者
-//TODO 收藏上传者，显示 收藏他/她 或者 取消收藏
-//TODO 详情页显示已收藏的标签，按钮可收藏按钮，也可取消收藏
-//TODO 首页显示已收藏的标签
-//TODO 首页背景
-//TODO 检查其他bug问题
 
 //#region main.js 主方法
 
@@ -13384,7 +13299,6 @@ function mainPageCategory() {
 	// 直接从 localStroage 中取出有损图片先行展示，然后用无损图片替换
 	var bglowbase64 = getBgLowImage();
 	if (bglowbase64) {
-		console.log('有损图片附加');
 		var bg = `url(${bglowbase64}) 0 / cover`;
 		var style = document.createElement('style');
 		style.innerHTML = `#div_ee8413b2_bg::before{background:${bg}}`;
@@ -13394,7 +13308,6 @@ function mainPageCategory() {
 	// 消息通知提前，只要数据改变就应该马上通知，方便快速其他页面快速反应
 	// 初始化用户配置信息
 	initUserSettings(() => {
-		console.log('初始化用户配置信息完毕');
 
 		// 首页头部样式调整，补充事件
 		frontPageTopStyleStep02();
@@ -13560,7 +13473,6 @@ function mainPageCategory() {
 				reader.readAsDataURL(resultFile);
 				reader.onload = function (e) {
 					var fileContent = e.target.result;
-					console.log(fileContent);
 					t_imgBase64 = fileContent;
 					setListBackgroundImage(t_imgBase64);
 
@@ -14105,580 +14017,578 @@ function mainPageCategory() {
 
 		// 本地列表、本地收藏、收起按钮点击事件
 		//#region step3.5.frontPageBtnEvents.js 首页插件的按钮点击事件
-// 全部类别按钮
-allCategoryBtn.onclick = function () {
-    var isDisplay = displayDiv.clientHeight != 537;
-    func_eh_ex(() => {
-        // e-henatai
-        allCategoryBtn.classList.add("chooseTab");
-        categoryFavoritesBtn.classList.remove("chooseTab");
-    }, () => {
-        // exhentai
-        allCategoryBtn.classList.add("btn_checked_class1");
-        categoryFavoritesBtn.classList.remove("btn_checked_class1");
-    });
-    categoryDisplayDiv.style.display = "block";
-    favoritesDisplayDiv.style.display = "none";
-    if (checkDictNull(searchItemDict)) {
-        addFavoritesBtn.style.display = "none";
-        addFavoritesDisabledBtn.style.display = "block";
-    }
-    else {
-        addFavoritesBtn.style.display = "block";
-        addFavoritesDisabledBtn.style.display = "none";
-    }
+		// 全部类别按钮
+		allCategoryBtn.onclick = function () {
+			var isDisplay = displayDiv.clientHeight != 537;
+			func_eh_ex(() => {
+				// e-henatai
+				allCategoryBtn.classList.add("chooseTab");
+				categoryFavoritesBtn.classList.remove("chooseTab");
+			}, () => {
+				// exhentai
+				allCategoryBtn.classList.add("btn_checked_class1");
+				categoryFavoritesBtn.classList.remove("btn_checked_class1");
+			});
+			categoryDisplayDiv.style.display = "block";
+			favoritesDisplayDiv.style.display = "none";
+			if (checkDictNull(searchItemDict)) {
+				addFavoritesBtn.style.display = "none";
+				addFavoritesDisabledBtn.style.display = "block";
+			}
+			else {
+				addFavoritesBtn.style.display = "block";
+				addFavoritesDisabledBtn.style.display = "none";
+			}
 
-    // 折叠 用户收藏 的全部父级
-    categoryFavoriteTempFoldAll();
+			// 折叠 用户收藏 的全部父级
+			categoryFavoriteTempFoldAll();
 
-    // 展开动画
-    if (isDisplay) {
-        slideDown(displayDiv, 537, 15, function () {
-            // 展开完后，展开 全部类别 临时折叠需要展开的父级
-            allCategoryTempUnFold();
-        });
+			// 展开动画
+			if (isDisplay) {
+				slideDown(displayDiv, 537, 15, function () {
+					// 展开完后，展开 全部类别 临时折叠需要展开的父级
+					allCategoryTempUnFold();
+				});
 
-        searchCloseBtn.style.display = "block";
-        slideRight(searchCloseBtn, 20, 10, function () { });
-    }
-    else {
-        allCategoryTempUnFold();
-    }
-};
+				searchCloseBtn.style.display = "block";
+				slideRight(searchCloseBtn, 20, 10, function () { });
+			}
+			else {
+				allCategoryTempUnFold();
+			}
+		};
 
-// 本地收藏按钮
-categoryFavoritesBtn.onclick = function () {
-    var isDisplay = displayDiv.clientHeight != 537;
-    func_eh_ex(() => {
-        // e-hentai
-        categoryFavoritesBtn.classList.add("chooseTab");
-        allCategoryBtn.classList.remove("chooseTab");
-    }, () => {
-        // exhentai
-        categoryFavoritesBtn.classList.add("btn_checked_class1");
-        allCategoryBtn.classList.remove("btn_checked_class1");
-    });
-    favoritesDisplayDiv.style.display = "block";
-    categoryDisplayDiv.style.display = "none";
+		// 本地收藏按钮
+		categoryFavoritesBtn.onclick = function () {
+			var isDisplay = displayDiv.clientHeight != 537;
+			func_eh_ex(() => {
+				// e-hentai
+				categoryFavoritesBtn.classList.add("chooseTab");
+				allCategoryBtn.classList.remove("chooseTab");
+			}, () => {
+				// exhentai
+				categoryFavoritesBtn.classList.add("btn_checked_class1");
+				allCategoryBtn.classList.remove("btn_checked_class1");
+			});
+			favoritesDisplayDiv.style.display = "block";
+			categoryDisplayDiv.style.display = "none";
 
-    if (favoriteSave.style.display == "block" || checkDictNull(searchItemDict)) {
-        addFavoritesBtn.style.display = "none";
-        addFavoritesDisabledBtn.style.display = "block";
-    }
-    else {
-        addFavoritesBtn.style.display = "block";
-        addFavoritesDisabledBtn.style.display = "none";
-    }
+			if (favoriteSave.style.display == "block" || checkDictNull(searchItemDict)) {
+				addFavoritesBtn.style.display = "none";
+				addFavoritesDisabledBtn.style.display = "block";
+			}
+			else {
+				addFavoritesBtn.style.display = "block";
+				addFavoritesDisabledBtn.style.display = "none";
+			}
 
-    // 折叠 全部类别 的全部父级
-    allCategoryTempFoldAll();
+			// 折叠 全部类别 的全部父级
+			allCategoryTempFoldAll();
 
-    // 展开动画
-    if (isDisplay) {
-        slideDown(displayDiv, 537, 15, function () {
-            // 展开完后，展开 临时折叠用户收藏 的父级
-            categoryFavoriteTempUnFold();
-        });
+			// 展开动画
+			if (isDisplay) {
+				slideDown(displayDiv, 537, 15, function () {
+					// 展开完后，展开 临时折叠用户收藏 的父级
+					categoryFavoriteTempUnFold();
+				});
 
-        searchCloseBtn.style.display = "block";
-        slideRight(searchCloseBtn, 20, 10, function () {
-        });
-    }
-    else {
-        categoryFavoriteTempUnFold();
-    }
-}
-
-
-// 收起按钮
-searchCloseBtn.onclick = function () {
-    func_eh_ex(() => {
-        // e-hentai
-        allCategoryBtn.classList.remove("chooseTab");
-        categoryFavoritesBtn.classList.remove("chooseTab");
-    }, () => {
-        // exhentai
-        allCategoryBtn.classList.remove("btn_checked_class1");
-        categoryFavoritesBtn.classList.remove("btn_checked_class1");
-    });
-    slideLeft(searchCloseBtn, 10, function () {
-        searchCloseBtn.style.display = "none";
-    });
-
-    // 折叠 全部类别 和 用户收藏
-    allCategoryTempFoldAll();
-    categoryFavoriteTempFoldAll();
-
-    // 折叠动画
-    slideUp(displayDiv, 15, function () {
-        categoryDisplayDiv.style.display = "none";
-        favoritesDisplayDiv.style.display = "none";
-    });
-}
-
-// 全部类别 - 全部临时折叠父级，用于收起或者切换到本地收藏页面
-function allCategoryTempFoldAll() {
-    allCollapse_Func();
-}
-
-// 全部类别 - 展开需要展开的父级，用于展开或者切换回全部类别页面
-function allCategoryTempUnFold() {
-    var complete1 = false;
-    var extendSpans01 = document.getElementsByClassName("category_extend_fetish");
-    var extendSpans02 = document.getElementsByClassName("category_extend_ehTag");
-    read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
-        if (extendResult) {
-            allCategoryUnFold_Func(extendSpans01, extendResult.value);
-            allCategoryUnFold_Func(extendSpans02, extendResult.value);
-        } else {
-            allCategoryUnFold_Func(extendSpans01, []);
-            allCategoryUnFold_Func(extendSpans02, []);
-        }
-        complete1 = true;
-    }, () => { complete1 = true; });
-
-    var t = setInterval(() => {
-        if (complete1) {
-            t && clearInterval(t);
-        }
-    }, 10);
-}
-
-function allCategoryUnFold_Func(extendSpans, extendArray) {
-    if (extendArray.length > 0) {
-        for (const i in extendSpans) {
-            if (Object.hasOwnProperty.call(extendSpans, i)) {
-                const span = extendSpans[i];
-                var parent_en = span.dataset.category;
-                var itemDiv = document.getElementById("items_div_" + parent_en);
-                if (extendArray.indexOf(parent_en) == -1) {
-                    span.innerText = "-";
-                    itemDiv.style.display = "block";
-                }
-            }
-        }
-    } else {
-        for (const i in extendSpans) {
-            if (Object.hasOwnProperty.call(extendSpans, i)) {
-                const span = extendSpans[i];
-                var parent_en = span.dataset.category;
-                var itemDiv = document.getElementById("items_div_" + parent_en);
-                span.innerText = "-";
-                itemDiv.style.display = "block";
-            }
-        }
-    }
-}
-
-// 本地收藏 - 全部临时折叠父级，用于收起或者切换到全部类别页面
-function categoryFavoriteTempFoldAll() {
-    var extendBtns = document.getElementsByClassName("favorite_extend");
-    for (const i in extendBtns) {
-        if (Object.hasOwnProperty.call(extendBtns, i)) {
-            const btn = extendBtns[i];
-            if (btn.innerHTML != "+") {
-                btn.innerHTML = "+";
-            }
-        }
-    }
-
-    var favoriteParentData = [];
-    var favoriteItemsDiv = document.getElementsByClassName("favorite_items_div");
-    for (const i in favoriteItemsDiv) {
-        if (Object.hasOwnProperty.call(favoriteItemsDiv, i)) {
-            const div = favoriteItemsDiv[i];
-            if (div.style.display != "none") {
-                div.style.display = "none";
-            }
-            favoriteParentData.push(div.id.replace("favorite_div_", ""));
-        }
-    }
-}
-
-// 本地收藏 - 展开需要展开的父级，用于展开或者切换回本地收藏页面
-function categoryFavoriteTempUnFold() {
-    read(table_Settings, table_Settings_Key_FavoriteList_Extend, result => {
-        var expendBtns = document.getElementsByClassName("favorite_extend");
-        if (result && result.value) {
-            var expendArray = result.value;
-            for (const i in expendBtns) {
-                if (Object.hasOwnProperty.call(expendBtns, i)) {
-                    const btn = expendBtns[i];
-                    var category = btn.dataset.category;
-                    var itemDiv = document.getElementById("favorite_div_" + category);
-                    if (expendArray.indexOf(category) == -1) {
-                        btn.innerText = "-";
-                        itemDiv.style.display = "block";
-                    }
-                }
-            }
-        } else {
-            for (const i in expendBtns) {
-                if (Object.hasOwnProperty.call(expendBtns, i)) {
-                    const btn = expendBtns[i];
-                    btn.innerText = "-";
-                    var category = btn.dataset.category;
-                    var itemDiv = document.getElementById("favorite_div_" + category);
-                    itemDiv.style.display = "block";
-                }
-            }
-        }
-    }, () => { });
-}
+				searchCloseBtn.style.display = "block";
+				slideRight(searchCloseBtn, 20, 10, function () {
+				});
+			}
+			else {
+				categoryFavoriteTempUnFold();
+			}
+		}
 
 
-//#endregion
+		// 收起按钮
+		searchCloseBtn.onclick = function () {
+			func_eh_ex(() => {
+				// e-hentai
+				allCategoryBtn.classList.remove("chooseTab");
+				categoryFavoritesBtn.classList.remove("chooseTab");
+			}, () => {
+				// exhentai
+				allCategoryBtn.classList.remove("btn_checked_class1");
+				categoryFavoritesBtn.classList.remove("btn_checked_class1");
+			});
+			slideLeft(searchCloseBtn, 10, function () {
+				searchCloseBtn.style.display = "none";
+			});
+
+			// 折叠 全部类别 和 用户收藏
+			allCategoryTempFoldAll();
+			categoryFavoriteTempFoldAll();
+
+			// 折叠动画
+			slideUp(displayDiv, 15, function () {
+				categoryDisplayDiv.style.display = "none";
+				favoritesDisplayDiv.style.display = "none";
+			});
+		}
+
+		// 全部类别 - 全部临时折叠父级，用于收起或者切换到本地收藏页面
+		function allCategoryTempFoldAll() {
+			allCollapse_Func();
+		}
+
+		// 全部类别 - 展开需要展开的父级，用于展开或者切换回全部类别页面
+		function allCategoryTempUnFold() {
+			var complete1 = false;
+			var extendSpans01 = document.getElementsByClassName("category_extend_fetish");
+			var extendSpans02 = document.getElementsByClassName("category_extend_ehTag");
+			read(table_Settings, table_Settings_key_CategoryList_Extend, extendResult => {
+				if (extendResult) {
+					allCategoryUnFold_Func(extendSpans01, extendResult.value);
+					allCategoryUnFold_Func(extendSpans02, extendResult.value);
+				} else {
+					allCategoryUnFold_Func(extendSpans01, []);
+					allCategoryUnFold_Func(extendSpans02, []);
+				}
+				complete1 = true;
+			}, () => { complete1 = true; });
+
+			var t = setInterval(() => {
+				if (complete1) {
+					t && clearInterval(t);
+				}
+			}, 10);
+		}
+
+		function allCategoryUnFold_Func(extendSpans, extendArray) {
+			if (extendArray.length > 0) {
+				for (const i in extendSpans) {
+					if (Object.hasOwnProperty.call(extendSpans, i)) {
+						const span = extendSpans[i];
+						var parent_en = span.dataset.category;
+						var itemDiv = document.getElementById("items_div_" + parent_en);
+						if (extendArray.indexOf(parent_en) == -1) {
+							span.innerText = "-";
+							itemDiv.style.display = "block";
+						}
+					}
+				}
+			} else {
+				for (const i in extendSpans) {
+					if (Object.hasOwnProperty.call(extendSpans, i)) {
+						const span = extendSpans[i];
+						var parent_en = span.dataset.category;
+						var itemDiv = document.getElementById("items_div_" + parent_en);
+						span.innerText = "-";
+						itemDiv.style.display = "block";
+					}
+				}
+			}
+		}
+
+		// 本地收藏 - 全部临时折叠父级，用于收起或者切换到全部类别页面
+		function categoryFavoriteTempFoldAll() {
+			var extendBtns = document.getElementsByClassName("favorite_extend");
+			for (const i in extendBtns) {
+				if (Object.hasOwnProperty.call(extendBtns, i)) {
+					const btn = extendBtns[i];
+					if (btn.innerHTML != "+") {
+						btn.innerHTML = "+";
+					}
+				}
+			}
+
+			var favoriteParentData = [];
+			var favoriteItemsDiv = document.getElementsByClassName("favorite_items_div");
+			for (const i in favoriteItemsDiv) {
+				if (Object.hasOwnProperty.call(favoriteItemsDiv, i)) {
+					const div = favoriteItemsDiv[i];
+					if (div.style.display != "none") {
+						div.style.display = "none";
+					}
+					favoriteParentData.push(div.id.replace("favorite_div_", ""));
+				}
+			}
+		}
+
+		// 本地收藏 - 展开需要展开的父级，用于展开或者切换回本地收藏页面
+		function categoryFavoriteTempUnFold() {
+			read(table_Settings, table_Settings_Key_FavoriteList_Extend, result => {
+				var expendBtns = document.getElementsByClassName("favorite_extend");
+				if (result && result.value) {
+					var expendArray = result.value;
+					for (const i in expendBtns) {
+						if (Object.hasOwnProperty.call(expendBtns, i)) {
+							const btn = expendBtns[i];
+							var category = btn.dataset.category;
+							var itemDiv = document.getElementById("favorite_div_" + category);
+							if (expendArray.indexOf(category) == -1) {
+								btn.innerText = "-";
+								itemDiv.style.display = "block";
+							}
+						}
+					}
+				} else {
+					for (const i in expendBtns) {
+						if (Object.hasOwnProperty.call(expendBtns, i)) {
+							const btn = expendBtns[i];
+							btn.innerText = "-";
+							var category = btn.dataset.category;
+							var itemDiv = document.getElementById("favorite_div_" + category);
+							itemDiv.style.display = "block";
+						}
+					}
+				}
+			}, () => { });
+		}
+
+
+		//#endregion
 
 
 		//#region step3.6.category.js 本地列表模块
 
-// 折叠方法
-function extendDiv(extendSpans, extendArray) {
-    if (extendArray.length > 0) {
-        for (const i in extendSpans) {
-            if (Object.hasOwnProperty.call(extendSpans, i)) {
-                const span = extendSpans[i];
-                var parent_en = span.dataset.category;
-                var itemDiv = document.getElementById("items_div_" + parent_en);
-                if (extendArray.indexOf(parent_en) != -1) {
-                    span.innerText = "+";
-                    itemDiv.style.display = "none";
-                } else {
-                    span.innerText = "-";
-                    itemDiv.style.display = "block";
-                }
-            }
-        }
-    } else {
-        for (const i in extendSpans) {
-            if (Object.hasOwnProperty.call(extendSpans, i)) {
-                const span = extendSpans[i];
-                var parent_en = span.dataset.category;
-                var itemDiv = document.getElementById("items_div_" + parent_en);
-                span.innerText = "-";
-                itemDiv.style.display = "block";
-            }
-        }
-    }
+		// 折叠方法
+		function extendDiv(extendSpans, extendArray) {
+			if (extendArray.length > 0) {
+				for (const i in extendSpans) {
+					if (Object.hasOwnProperty.call(extendSpans, i)) {
+						const span = extendSpans[i];
+						var parent_en = span.dataset.category;
+						var itemDiv = document.getElementById("items_div_" + parent_en);
+						if (extendArray.indexOf(parent_en) != -1) {
+							span.innerText = "+";
+							itemDiv.style.display = "none";
+						} else {
+							span.innerText = "-";
+							itemDiv.style.display = "block";
+						}
+					}
+				}
+			} else {
+				for (const i in extendSpans) {
+					if (Object.hasOwnProperty.call(extendSpans, i)) {
+						const span = extendSpans[i];
+						var parent_en = span.dataset.category;
+						var itemDiv = document.getElementById("items_div_" + parent_en);
+						span.innerText = "-";
+						itemDiv.style.display = "block";
+					}
+				}
+			}
 
-}
+		}
 
-// 单个折叠、展开
-function parentItemsExtend(extendSpans) {
-    for (const i in extendSpans) {
-        if (Object.hasOwnProperty.call(extendSpans, i)) {
-            const item = extendSpans[i];
-            item.addEventListener("click", function () {
-                // 获取存储折叠信息
-                read(table_Settings, table_Settings_key_CategoryList_Extend, result => {
-                    var extendData = [];
-                    if (result) {
-                        extendData = result.value;
-                    }
+		// 单个折叠、展开
+		function parentItemsExtend(extendSpans) {
+			for (const i in extendSpans) {
+				if (Object.hasOwnProperty.call(extendSpans, i)) {
+					const item = extendSpans[i];
+					item.addEventListener("click", function () {
+						// 获取存储折叠信息
+						read(table_Settings, table_Settings_key_CategoryList_Extend, result => {
+							var extendData = [];
+							if (result) {
+								extendData = result.value;
+							}
 
-                    var cateDivName = item.dataset.category;
-                    if (item.innerHTML == "+") {
-                        // 需要展开
-                        item.innerHTML = "-";
-                        document.getElementById("items_div_" + cateDivName).style.display = "block";
-                        if (extendData.indexOf(cateDivName) != -1) {
-                            extendData.remove(cateDivName);
-                        }
-                    }
-                    else {
-                        // 需要折叠
-                        item.innerHTML = "+";
-                        document.getElementById("items_div_" + cateDivName).style.display = "none";
-                        if (extendData.indexOf(cateDivName) == -1) {
-                            extendData.push(cateDivName);
-                        }
-                    }
+							var cateDivName = item.dataset.category;
+							if (item.innerHTML == "+") {
+								// 需要展开
+								item.innerHTML = "-";
+								document.getElementById("items_div_" + cateDivName).style.display = "block";
+								if (extendData.indexOf(cateDivName) != -1) {
+									extendData.remove(cateDivName);
+								}
+							}
+							else {
+								// 需要折叠
+								item.innerHTML = "+";
+								document.getElementById("items_div_" + cateDivName).style.display = "none";
+								if (extendData.indexOf(cateDivName) == -1) {
+									extendData.push(cateDivName);
+								}
+							}
 
-                    // 保存存储信息
-                    var setting_categoryExtend = {
-                        item: table_Settings_key_CategoryList_Extend,
-                        value: extendData
-                    }
-                    update(table_Settings, setting_categoryExtend, () => {
-                        // 通知折叠
-                        setDbSyncMessage(sync_categoryList_Extend);
-                    }, () => { });
+							// 保存存储信息
+							var setting_categoryExtend = {
+								item: table_Settings_key_CategoryList_Extend,
+								value: extendData
+							}
+							update(table_Settings, setting_categoryExtend, () => {
+								// 通知折叠
+								setDbSyncMessage(sync_categoryList_Extend);
+							}, () => { });
 
-                }, () => { });
-            });
-        }
-    }
-}
+						}, () => { });
+					});
+				}
+			}
+		}
 
-// 添加小项到搜索框
-function addItemToInput(parent_en, parent_zh, sub_en, sub_zh, sub_desc) {
-    if (searchItemDict[`${parent_en}:${sub_en}`] == undefined) {
-        if (checkDictNull(searchItemDict)) {
-            inputClearBtn.style.display = "block";
-            searchBtn.innerText = "搜索";
-        }
+		// 添加小项到搜索框
+		function addItemToInput(parent_en, parent_zh, sub_en, sub_zh, sub_desc) {
+			if (searchItemDict[`${parent_en}:${sub_en}`] == undefined) {
+				if (checkDictNull(searchItemDict)) {
+					inputClearBtn.style.display = "block";
+					searchBtn.innerText = "搜索";
+				}
 
-        var newSearchInputItem = document.createElement("span");
-        newSearchInputItem.classList.add("input_item");
-        newSearchInputItem.id = `input_item_${parent_en}_${sub_en}`;
-        newSearchInputItem.title = sub_en;
+				var newSearchInputItem = document.createElement("span");
+				newSearchInputItem.classList.add("input_item");
+				newSearchInputItem.id = `input_item_${parent_en}_${sub_en}`;
+				newSearchInputItem.title = sub_en;
 
-        const key = `${parent_en}:${sub_en}`;
-        newSearchInputItem.dataset.item = key;
-        searchItemDict[key] = { parent_en, parent_zh, sub_en, sub_zh, sub_desc };
+				const key = `${parent_en}:${sub_en}`;
+				newSearchInputItem.dataset.item = key;
+				searchItemDict[key] = { parent_en, parent_zh, sub_en, sub_zh, sub_desc };
 
-        var searchItemText = document.createTextNode(`${parent_zh} : ${sub_zh} X`);
-        newSearchInputItem.appendChild(searchItemText);
-        newSearchInputItem.addEventListener("click", removeSearchItem);
-        readonlyDiv.appendChild(newSearchInputItem);
+				var searchItemText = document.createTextNode(`${parent_zh} : ${sub_zh} X`);
+				newSearchInputItem.appendChild(searchItemText);
+				newSearchInputItem.addEventListener("click", removeSearchItem);
+				readonlyDiv.appendChild(newSearchInputItem);
 
-        addFavoritesBtn.style.display = "block";
-        addFavoritesDisabledBtn.style.display = "none";
+				addFavoritesBtn.style.display = "block";
+				addFavoritesDisabledBtn.style.display = "none";
 
-        // 滚动条滚动到底部
-        searchInput.scrollTop = searchInput.scrollHeight;
-    }
-}
-
-
-// 点击小项加入到搜索框
-function cItemJsonSearchInput(cItems) {
-    for (const i in cItems) {
-        if (Object.hasOwnProperty.call(cItems, i)) {
-            const searchItem = cItems[i];
-            searchItem.addEventListener("click", function () {
-                var parentEn = searchItem.dataset.parent_en;
-                var parentZh = searchItem.dataset.parent_zh;
-                var subDesc = searchItem.dataset.sub_desc;
-                var enItem = searchItem.dataset.item;
-                var zhItem = searchItem.innerHTML;
-                addItemToInput(parentEn, parentZh, enItem, zhItem, subDesc);
-            });
-        }
-    }
-}
-
-// 初始化本地列表页面，已存在数据
-function categoryInit() {
-    var complete1 = false;
-    var complete2 = false;
-    var complete3 = false;
-    var complete4 = false;
-
-    // 恋物列表模块
-    read(table_Settings, table_Settings_key_FetishList_Html, result => {
-        // 先清空html代码，然后生成 html 代码
-        categoryList_fetishDiv.innerHTML = '';
-        addInVirtualNode(categoryList_fetishDiv, result.value, () => {
-            // 单个展开折叠
-            var extendSpans = document.getElementsByClassName("category_extend_fetish");
-            parentItemsExtend(extendSpans);
-            // 具体小项点击加入搜索框
-            var cItems = document.getElementsByClassName("c_item_fetish");
-            cItemJsonSearchInput(cItems);
-            complete1 = true;
-            complete2 = true;
-        });
-    }, () => {
-        complete1 = true;
-        complete2 = true;
-    });
-
-    // EhTag列表模块
-    read(table_Settings, table_Settings_key_EhTag_Html, result => {
-        // 先清空html代码，然后生成 html 代码
-        categoryList_ehTagDiv.innerHTML = '';
-        addInVirtualNode(categoryList_ehTagDiv, result.value, () => {
-            // 单个展开折叠
-            var extendSpans = document.getElementsByClassName("category_extend_ehTag");
-            parentItemsExtend(extendSpans);
-            // 具体小项点击加入搜索框
-            var cItems = document.getElementsByClassName("c_item_ehTag");
-            cItemJsonSearchInput(cItems);
-            complete3 = true;
-            complete4 = true;
-        });
-    }, () => {
-        complete3 = true;
-        complete4 = true;
-    });
-
-    var t = setInterval(() => {
-        if (complete1 && complete2 && complete3 && complete4) {
-            t && clearInterval(t);
-            // 当前页面打开没有，如果没有打开就全部折叠，否则就不折叠
-            if (document.getElementById("category_all_div").style.display != "block" || categoryDisplayDiv.style.display == "none") {
-                // 全部折叠起来
-                allCollapse_Func();
-            }
-            else{
-                allCollapse_Func();
-                allCategoryTempUnFold();
-            }
-            // 隐藏等待div
-            categoryLoadingDiv.style.display = "none";
-            // 展示列表
-            categoryEditor.style.display = "block";
-            categoryListDiv.style.display = "block";
-        }
-    }, 10);
-}
-
-// 如果存在可用的词库的话，先尝试使用旧词库，然后比对版本号，看是否需要更新
-function tryUseOldDataFirst(func_compelete) {
-    indexDbInit(() => {
-
-        // 验证数据完整性
-        checkDataIntact(() => {
-            // 判断是否存在旧数据
-            var fetishHasValue = false;
-            var ehTagHasValue = false;
-            var complete1 = false;
-            var complete2 = false;
-            checkFieldEmpty(table_Settings, table_Settings_key_FetishList_Html, () => {
-                complete1 = true;
-            }, () => {
-                fetishHasValue = true;
-                complete1 = true;
-            });
-            checkFieldEmpty(table_Settings, table_Settings_key_EhTag_Html, () => {
-                complete2 = true;
-            }, () => {
-                ehTagHasValue = true;
-                complete2 = true;
-            });
-
-            var t = setInterval(() => {
-                if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
-                    t && clearInterval(t);
-                    // 存在数据
-                    categoryInit();
-                    // 检查更新
-                    checkUpdateData(() => {
-                        // 存在更新
-                        categoryInit();
-                        // 表格标签翻译
-                        tableTagTranslate();
-                        func_compelete();
-                    }, () => {
-                        func_compelete();
-                    });
-                } else if (complete1 && complete2) {
-                    t && clearInterval(t);
-                    // 不存在数据
-                    checkUpdateData(() => {
-                        // 存在更新
-                        categoryInit();
-                        // 表格标签翻译
-                        tableTagTranslate();
-                        func_compelete();
-                    }, () => {
-                        func_compelete();
-                    });
-                }
-            }, 10);
-        });
-    });
-}
+				// 滚动条滚动到底部
+				searchInput.scrollTop = searchInput.scrollHeight;
+			}
+		}
 
 
-// 全部折叠
-allCollapse.onclick = function () {
-    allCollapse_Func();
+		// 点击小项加入到搜索框
+		function cItemJsonSearchInput(cItems) {
+			for (const i in cItems) {
+				if (Object.hasOwnProperty.call(cItems, i)) {
+					const searchItem = cItems[i];
+					searchItem.addEventListener("click", function () {
+						var parentEn = searchItem.dataset.parent_en;
+						var parentZh = searchItem.dataset.parent_zh;
+						var subDesc = searchItem.dataset.sub_desc;
+						var enItem = searchItem.dataset.item;
+						var zhItem = searchItem.innerHTML;
+						addItemToInput(parentEn, parentZh, enItem, zhItem, subDesc);
+					});
+				}
+			}
+		}
 
-    // 存储全部父级
-    var allParentDataArray = [];
+		// 初始化本地列表页面，已存在数据
+		function categoryInit() {
+			var complete1 = false;
+			var complete2 = false;
+			var complete3 = false;
+			var complete4 = false;
 
-    // 并更新存储全部的父级名称
-    read(table_Settings, table_Settings_key_FetishList_ParentEnArray, fetishParentData => {
-        allParentDataArray = fetishParentData.value;
-        read(table_Settings, table_Settings_key_EhTag_ParentEnArray, ehTagParentData => {
-            allParentDataArray = allParentDataArray.concat(ehTagParentData.value);
-            // 存储全部
-            var setting_categoryExtend = {
-                item: table_Settings_key_CategoryList_Extend,
-                value: allParentDataArray
-            }
-            update(table_Settings, setting_categoryExtend, () => {
-                // 通知折叠
-                setDbSyncMessage(sync_categoryList_Extend);
-            }, () => { });
-        }, () => { });
-    }, () => { });
-}
+			// 恋物列表模块
+			read(table_Settings, table_Settings_key_FetishList_Html, result => {
+				// 先清空html代码，然后生成 html 代码
+				categoryList_fetishDiv.innerHTML = '';
+				addInVirtualNode(categoryList_fetishDiv, result.value, () => {
+					// 单个展开折叠
+					var extendSpans = document.getElementsByClassName("category_extend_fetish");
+					parentItemsExtend(extendSpans);
+					// 具体小项点击加入搜索框
+					var cItems = document.getElementsByClassName("c_item_fetish");
+					cItemJsonSearchInput(cItems);
+					complete1 = true;
+					complete2 = true;
+				});
+			}, () => {
+				complete1 = true;
+				complete2 = true;
+			});
 
-// 全部展开
-allExtend.onclick = function () {
-    var extendBtns = document.getElementsByClassName("category_extend");
-    for (const i in extendBtns) {
-        if (Object.hasOwnProperty.call(extendBtns, i)) {
-            const btn = extendBtns[i];
-            if (btn.innerHTML != "-") {
-                btn.innerHTML = "-";
-            }
-        }
-    }
+			// EhTag列表模块
+			read(table_Settings, table_Settings_key_EhTag_Html, result => {
+				// 先清空html代码，然后生成 html 代码
+				categoryList_ehTagDiv.innerHTML = '';
+				addInVirtualNode(categoryList_ehTagDiv, result.value, () => {
+					// 单个展开折叠
+					var extendSpans = document.getElementsByClassName("category_extend_ehTag");
+					parentItemsExtend(extendSpans);
+					// 具体小项点击加入搜索框
+					var cItems = document.getElementsByClassName("c_item_ehTag");
+					cItemJsonSearchInput(cItems);
+					complete3 = true;
+					complete4 = true;
+				});
+			}, () => {
+				complete3 = true;
+				complete4 = true;
+			});
 
-    var categoryItemsDiv = document.getElementsByClassName("category_items_div");
-    for (const i in categoryItemsDiv) {
-        if (Object.hasOwnProperty.call(categoryItemsDiv, i)) {
-            const div = categoryItemsDiv[i];
-            if (div.style.display != "block") {
-                div.style.display = "block";
-            }
-        }
-    }
+			var t = setInterval(() => {
+				if (complete1 && complete2 && complete3 && complete4) {
+					t && clearInterval(t);
+					// 当前页面打开没有，如果没有打开就全部折叠，否则就不折叠
+					if (document.getElementById("category_all_div").style.display != "block" || categoryDisplayDiv.style.display == "none") {
+						// 全部折叠起来
+						allCollapse_Func();
+					}
+					else {
+						allCollapse_Func();
+						allCategoryTempUnFold();
+					}
+					// 隐藏等待div
+					categoryLoadingDiv.style.display = "none";
+					// 展示列表
+					categoryEditor.style.display = "block";
+					categoryListDiv.style.display = "block";
+				}
+			}, 10);
+		}
 
-    // 清空折叠记录
-    remove(table_Settings, table_Settings_key_CategoryList_Extend, () => {
-        // 通知折叠
-        setDbSyncMessage(sync_categoryList_Extend);
-    }, () => { });
-}
+		// 如果存在可用的词库的话，先尝试使用旧词库，然后比对版本号，看是否需要更新
+		function tryUseOldDataFirst(func_compelete) {
+			indexDbInit(() => {
 
-// 删除搜索框子项
-function removeSearchItem(e) {
-    var id = e.path[0].id;
-    var item = document.getElementById(id);
-    var cateItem = item.dataset.item;
-    delete searchItemDict[cateItem];
-    console.log(cateItem);
-    console.log(searchItemDict);
+				// 验证数据完整性
+				checkDataIntact(() => {
+					// 判断是否存在旧数据
+					var fetishHasValue = false;
+					var ehTagHasValue = false;
+					var complete1 = false;
+					var complete2 = false;
+					checkFieldEmpty(table_Settings, table_Settings_key_FetishList_Html, () => {
+						complete1 = true;
+					}, () => {
+						fetishHasValue = true;
+						complete1 = true;
+					});
+					checkFieldEmpty(table_Settings, table_Settings_key_EhTag_Html, () => {
+						complete2 = true;
+					}, () => {
+						ehTagHasValue = true;
+						complete2 = true;
+					});
 
-    if (checkDictNull(searchItemDict)) {
-        inputClearBtn.style.display = "none";
-        searchBtn.innerText = "首页";
-        addFavoritesBtn.style.display = "none";
-        addFavoritesDisabledBtn.style.display = "block";
-    }
+					var t = setInterval(() => {
+						if ((complete1 && fetishHasValue) || (complete2 && ehTagHasValue)) {
+							t && clearInterval(t);
+							// 存在数据
+							categoryInit();
+							// 检查更新
+							checkUpdateData(() => {
+								// 存在更新
+								categoryInit();
+								// 表格标签翻译
+								tableTagTranslate();
+								func_compelete();
+							}, () => {
+								func_compelete();
+							});
+						} else if (complete1 && complete2) {
+							t && clearInterval(t);
+							// 不存在数据
+							checkUpdateData(() => {
+								// 存在更新
+								categoryInit();
+								// 表格标签翻译
+								tableTagTranslate();
+								func_compelete();
+							}, () => {
+								func_compelete();
+							});
+						}
+					}, 10);
+				});
+			});
+		}
 
-    item.parentNode.removeChild(item);
-}
 
-// 全部折叠 - 不含存储
-function allCollapse_Func() {
-    var extendBtns = document.getElementsByClassName("category_extend");
-    for (const i in extendBtns) {
-        if (Object.hasOwnProperty.call(extendBtns, i)) {
-            const btn = extendBtns[i];
-            if (btn.innerHTML != "+") {
-                btn.innerHTML = "+";
-            }
-        }
-    }
+		// 全部折叠
+		allCollapse.onclick = function () {
+			allCollapse_Func();
 
-    var categoryItemsDiv = document.getElementsByClassName("category_items_div");
-    for (const i in categoryItemsDiv) {
-        if (Object.hasOwnProperty.call(categoryItemsDiv, i)) {
-            const div = categoryItemsDiv[i];
-            if (div.style.display != "none") {
-                div.style.display = "none";
-            }
-        }
-    }
-}
+			// 存储全部父级
+			var allParentDataArray = [];
 
-//#endregion
+			// 并更新存储全部的父级名称
+			read(table_Settings, table_Settings_key_FetishList_ParentEnArray, fetishParentData => {
+				allParentDataArray = fetishParentData.value;
+				read(table_Settings, table_Settings_key_EhTag_ParentEnArray, ehTagParentData => {
+					allParentDataArray = allParentDataArray.concat(ehTagParentData.value);
+					// 存储全部
+					var setting_categoryExtend = {
+						item: table_Settings_key_CategoryList_Extend,
+						value: allParentDataArray
+					}
+					update(table_Settings, setting_categoryExtend, () => {
+						// 通知折叠
+						setDbSyncMessage(sync_categoryList_Extend);
+					}, () => { });
+				}, () => { });
+			}, () => { });
+		}
+
+		// 全部展开
+		allExtend.onclick = function () {
+			var extendBtns = document.getElementsByClassName("category_extend");
+			for (const i in extendBtns) {
+				if (Object.hasOwnProperty.call(extendBtns, i)) {
+					const btn = extendBtns[i];
+					if (btn.innerHTML != "-") {
+						btn.innerHTML = "-";
+					}
+				}
+			}
+
+			var categoryItemsDiv = document.getElementsByClassName("category_items_div");
+			for (const i in categoryItemsDiv) {
+				if (Object.hasOwnProperty.call(categoryItemsDiv, i)) {
+					const div = categoryItemsDiv[i];
+					if (div.style.display != "block") {
+						div.style.display = "block";
+					}
+				}
+			}
+
+			// 清空折叠记录
+			remove(table_Settings, table_Settings_key_CategoryList_Extend, () => {
+				// 通知折叠
+				setDbSyncMessage(sync_categoryList_Extend);
+			}, () => { });
+		}
+
+		// 删除搜索框子项
+		function removeSearchItem(e) {
+			var id = e.path[0].id;
+			var item = document.getElementById(id);
+			var cateItem = item.dataset.item;
+			delete searchItemDict[cateItem];
+
+			if (checkDictNull(searchItemDict)) {
+				inputClearBtn.style.display = "none";
+				searchBtn.innerText = "首页";
+				addFavoritesBtn.style.display = "none";
+				addFavoritesDisabledBtn.style.display = "block";
+			}
+
+			item.parentNode.removeChild(item);
+		}
+
+		// 全部折叠 - 不含存储
+		function allCollapse_Func() {
+			var extendBtns = document.getElementsByClassName("category_extend");
+			for (const i in extendBtns) {
+				if (Object.hasOwnProperty.call(extendBtns, i)) {
+					const btn = extendBtns[i];
+					if (btn.innerHTML != "+") {
+						btn.innerHTML = "+";
+					}
+				}
+			}
+
+			var categoryItemsDiv = document.getElementsByClassName("category_items_div");
+			for (const i in categoryItemsDiv) {
+				if (Object.hasOwnProperty.call(categoryItemsDiv, i)) {
+					const div = categoryItemsDiv[i];
+					if (div.style.display != "none") {
+						div.style.display = "none";
+					}
+				}
+			}
+		}
+
+		//#endregion
 
 
 
@@ -14758,7 +14668,6 @@ function allCollapse_Func() {
 									}
 								}
 								else {
-									console.log(itemArray);
 									// 从恋物列表中查询，看是否存在
 									readByIndex(table_fetishListSubItems, table_fetishListSubItems_index_subEn, itemArray[0], fetishData => {
 										if (fetishData) {
@@ -14785,8 +14694,6 @@ function allCollapse_Func() {
 				var item = document.getElementById(id);
 				var cateItem = item.dataset.item;
 				delete searchItemDict[cateItem];
-				console.log(cateItem);
-				console.log(searchItemDict);
 
 				if (checkDictNull(searchItemDict)) {
 					inputClearBtn.style.display = "none";
@@ -15213,7 +15120,6 @@ function allCollapse_Func() {
 			function firstUpdateFavoriteSubItems(favoriteSubItems, foundTotalCount) {
 				// 更新本地收藏表
 				batchAdd(table_favoriteSubItems, table_favoriteSubItems_key, favoriteSubItems, foundTotalCount, () => {
-					console.log('批量添加本地收藏表完成');
 					// 稳妥起见，更新完之后再删除本地的原始收藏列表
 					remove(table_Settings, table_Settings_key_FavoriteList, () => { }, () => { });
 
@@ -16033,7 +15939,6 @@ function allCollapse_Func() {
 
 			window.onstorage = function (e) {
 				try {
-					console.log(e);
 					switch (e.newValue) {
 						case sync_oldSearchTopVisible:
 							updatePageTopVisible();
@@ -16108,7 +16013,6 @@ function allCollapse_Func() {
 					editToFavorite();
 
 					read(table_Settings, table_Settings_key_FavoriteList_Html, result => {
-						console.log('r', result);
 						if (result && result.value) {
 							// 存在收藏 html
 							// 页面附加Html
@@ -16294,7 +16198,6 @@ function detailPage() {
 
 	window.onstorage = function (e) {
 		try {
-			console.log(e);
 			switch (e.newValue) {
 				case sync_googleTranslate_detailPage_title:
 					updateGoogleTranslateDetailPageTitle();
