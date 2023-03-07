@@ -35,44 +35,41 @@ function uconfigPage() {
     // Ratings
     uconfigPageRatings(settingH2s[6]);
 
-    // Tag Namespaces
-    uconfigPageTagNamespaces(settingH2s[7]);
-
     // Tag Filtering Threshold
-    uconfigPageTagFilteringThreshold(settingH2s[8]);
+    uconfigPageTagFilteringThreshold(settingH2s[7]);
 
     // Tag Watching Threshold
-    uconfigTagWatchingThreshold(settingH2s[9]);
+    uconfigTagWatchingThreshold(settingH2s[8]);
 
     // Show Filtered Removal Count  exhentai
-    uconfigPageShowFilteredRemovalCount(settingH2s[10]);
+    uconfigPageShowFilteredRemovalCount(settingH2s[9]);
 
     // Excluded Languages
-    uconfigTagExcludedLanguages(settingH2s[11]);
+    uconfigTagExcludedLanguages(settingH2s[10]);
 
     // Excluded Uploaders
-    uconfigPageExcludedUploaders(settingH2s[12]);
+    uconfigPageExcludedUploaders(settingH2s[11]);
 
     // Search Result Count
-    uconfigPageSearchResultCount(settingH2s[13]);
+    uconfigPageSearchResultCount(settingH2s[12]);
 
     // Thumbnail Settings
-    uconfigPageThumbnailSettings(settingH2s[14]);
+    uconfigPageThumbnailSettings(settingH2s[13]);
 
     // Thumbnail Scaling
-    uconfigPageThumbnailScaling(settingH2s[15]);
+    uconfigPageThumbnailScaling(settingH2s[14]);
 
     // Viewport Override
-    uconfigPageViewportOverride(settingH2s[16]);
+    uconfigPageViewportOverride(settingH2s[15]);
 
     // Gallery Comments
-    uconfigPageGalleryComments(settingH2s[17]);
+    uconfigPageGalleryComments(settingH2s[16]);
 
     // Gallery Tags
-    uconfigPageGalleryTags(settingH2s[18]);
+    uconfigPageGalleryTags(settingH2s[17]);
 
     // Gallery Page Numbering
-    uconfigPageGalleryPageNumbering(settingH2s[19]);
+    uconfigPageGalleryPageNumbering(settingH2s[18]);
 
     // 单独包裹一层，将除保存按钮外的全部元素包裹，然后添加保存按钮
     uconfigPageReWrapperForm(contentForm);
