@@ -306,7 +306,7 @@ function uconfigPageArchiverSettings(titleH2) {
 
 // 首页设置
 function uconfigPageFrontPageSettings(titleH2) {
-    titleH2.innerText = "-- 首页设置 --";
+    titleH2.innerText = "-- 首页 / 搜索设置 --";
     var displayWayDiv = titleH2.nextElementSibling;
     var p = displayWayDiv.querySelector("p");
     p.innerText = "1. 你想以哪种方式浏览首页?";
@@ -319,8 +319,14 @@ function uconfigPageFrontPageSettings(titleH2) {
 
     var bookTypeFilterDiv = displayWayDiv.nextElementSibling;
     var bookTypeFilterP = bookTypeFilterDiv.children[0];
-    bookTypeFilterP.innerText = "2. 你希望首页包含或排除哪些作品类型?";
-    var bookTypeFilterBtns = bookTypeFilterP.nextElementSibling.querySelectorAll("div.cs");
+    bookTypeFilterP.innerText = "2. 是否显示搜索范围快速跳转?";
+    var displayStyleRadios = bookTypeFilterP.nextElementSibling.children;
+    displayStyleRadios[0].children[0].childNodes[2].data = "显示";
+    displayStyleRadios[1].children[0].childNodes[2].data = "禁用";
+    var bookTypeFilterBtnsDiv = bookTypeFilterDiv.nextElementSibling;
+	var bookTypeFilterBtnsP = bookTypeFilterBtnsDiv.children[0];
+	bookTypeFilterBtnsP.innerText = "3. 你希望首页和搜索范围默认包含或排除哪些作品类型?";
+	var bookTypeFilterBtns = bookTypeFilterBtnsDiv.querySelectorAll("div.cs");
     for (const i in bookTypeFilterBtns) {
         if (Object.hasOwnProperty.call(bookTypeFilterBtns, i)) {
             const bookType = bookTypeFilterBtns[i];
