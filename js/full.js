@@ -11,6 +11,7 @@
 // @icon         http://exhentai.org/favicon.ico
 // @description  E-hentai + ExHentai 丰富的本地中文标签库 + 自定义管理收藏库，搜索时支持点击选择标签或者手动输入，页面翻译英文标签时支持本地标签库匹配和谷歌机翻。
 // @author       地狱天使
+// @match        *.e-hentai.org/*
 // @match        *://e-hentai.org/*
 // @match        *://www.e-hentai.org/*
 // @match        *://exhentai.org/*
