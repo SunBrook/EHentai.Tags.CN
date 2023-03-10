@@ -13312,6 +13312,7 @@ else {
 			case '/bitcoin.php':			// 捐赠
 				break;
 			case '/hathperks.php':			// 权限解锁
+				hathperksPage();
 				break;
 			case '/exchange.php':			// 交易
 				//?t=hath		权限积分交易
