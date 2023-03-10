@@ -461,7 +461,7 @@ function uconfigPageSearchResultCount(titleH2) {
         p.innerText = commonText;
     } else {
         if (otherText == "(Hath Perk: Paging Enlargement Required)") {
-            p.innerText = `${commonText}（需要解锁权限： Hath Perk 分页扩大）`;
+            p.innerText = `${commonText}（需要解锁权限：版面扩容 (Paging Enlargement)）`;
         } else {
             p.innerText = `${commonText}${otherText}`;
             translatePageElementEN(p);
