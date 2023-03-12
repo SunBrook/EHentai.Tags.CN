@@ -1,9 +1,8 @@
 //#region step8.2.hathperksPage.js Hath权限页面
 
-function hathperksPage(){
-    // 跨域
-    //不知道需不需要跨，先写着，麻烦作者review
-    crossDomain();
+function hathperksPage() {
+    // // 跨域
+    // crossDomain();
 
     //头部翻译
     hathperksPageTop();
@@ -12,7 +11,7 @@ function hathperksPage(){
     hathperksTable();
 }
 
-function hathperksPageTop(){
+function hathperksPageTop() {
     let title = document.querySelectorAll("h1");
     title[0].innerHTML = myMainPageSubPageDict[title[0].innerHTML];
     let section = document.querySelectorAll("h1")[0].nextElementSibling.children;
@@ -32,36 +31,34 @@ function hathperksPageTop(){
 }
 
 
-function hathperksTable(){
+function hathperksTable() {
     let tableRow = document.querySelectorAll("tr");
     //翻译列名
     tableRow[0].children[0].innerHTML = 'Hath 权限';
     tableRow[0].children[1].innerHTML = '描述';
 
+
     let index = 1;
-    for(;index < tableRow.length;index++){
-        try{
-            if(hathPerksPageDict[tableRow[index].children[0].innerHTML] != undefined){
-                let trans = hathPerksPageDict[tableRow[index].children[0].innerHTML];
-                //翻译特权名
-                tableRow[index].children[0].innerHTML = trans[0];
-                //翻译描述
-                tableRow[index].children[1].childNodes[0].data = trans[1];
-            }
-            //捐赠xx之后自动解锁
-            if(tableRow[index].children[1].childNodes.length > 1){
-                let money = / .?\d+.? /.exec(tableRow[index].children[1].querySelectorAll("span")[0].innerHTML);
-                tableRow[index].children[1].querySelectorAll("span")[0].innerHTML = '捐赠' + money + '后免费解锁';
-            }
-            //翻译购买按钮
-            let inputButtomColl = tableRow[index].children[2].getElementsByTagName('input');
-            if(inputButtomColl.length != 0){//未购买
-                inputButtomColl['purchase'].value = '购买';
-            }else{
-                tableRow[index].children[2].getElementsByTagName('p')[0].innerHTML = '已获得'
-            }
-        }catch(err){
-            console.log(err);
+    for (; index < tableRow.length; index++) {
+        if (hathPerksPageDict[tableRow[index].children[0].innerHTML] != undefined) {
+
+            let trans = hathPerksPageDict[tableRow[index].children[0].innerHTML];
+            //翻译特权名
+            tableRow[index].children[0].innerHTML = trans[0];
+            //翻译描述
+            tableRow[index].children[1].childNodes[0].data = trans[1];
+        }
+        //捐赠xx之后自动解锁
+        if (tableRow[index].children[1].childNodes.length > 1 && tableRow[index].children[1].querySelectorAll("span")[0] != undefined) {
+            let money = / .?\d+.? /.exec(tableRow[index].children[1].querySelectorAll("span")[0].innerHTML);
+            tableRow[index].children[1].querySelectorAll("span")[0].innerHTML = '捐赠' + money + '后免费解锁';
+        }
+        //翻译购买按钮
+        let inputButtomColl = tableRow[index].children[2].getElementsByTagName('input');
+        if (inputButtomColl.length != 0) {//未购买
+            inputButtomColl['purchase'].value = '购买';
+        } else {
+            tableRow[index].children[2].getElementsByTagName('p')[0].innerHTML = '已获得'
         }
     }
 }
