@@ -306,11 +306,26 @@ function mainPageTranslate() {
 	if (window.location.pathname == "/") {
 		// 首页
 		if (document.getElementsByClassName("searchtext").length > 0) {
-			document.getElementsByClassName("searchtext")[0].lastChild.innerText =
-				document.getElementsByClassName("searchtext")[0].lastChild.innerText
-					.replace("Found", "共找到")
-					.replace("results", "条记录")
-					.replace("result", "条记录");
+			var p = document.getElementsByClassName("searchtext")[0].lastChild;
+			var p_childNodes = p.childNodes;
+			for (const i in p_childNodes) {
+				if (Object.hasOwnProperty.call(p_childNodes, i)) {
+					const childNode = p_childNodes[i];
+					if (childNode.nodeName == "#text") {
+						childNode.textContent = childNode.textContent
+							.replace("about", "有关的")
+							.replace("Found", "共找到")
+							.replace("results", "条记录")
+							.replace("result", "条记录")
+							.replace("Filtered", "过滤了")
+							.replace("galleries from this page.", "条作品")
+							.replace("gallery from this page.", "条作品");
+					} else if (childNode.nodeName == "A") {
+						childNode.text = childNode.text
+							.replace("Disable Filters", "取消过滤");
+					}
+				}
+			}
 		}
 	}
 	else {

@@ -88,7 +88,7 @@ if (searchParam) {
 
 // 删除搜索框子项
 function removeSearchItem(e) {
-    var id = e.path[0].id;
+    var id = e.srcElement.id;
     var item = document.getElementById(id);
     var cateItem = item.dataset.item;
     delete searchItemDict[cateItem];
