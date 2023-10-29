@@ -112,19 +112,20 @@ function detailPageTranslate() {
     var gpc = document.getElementsByClassName("gpc")[0];
     gpc.innerText = gpc.innerText.replace("Showing", "展示").replace("of", "共").replace("images", "张");
 
-    // 展示行数
-    var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
-    for (const i in gdo2) {
-        if (Object.hasOwnProperty.call(gdo2, i)) {
-            const div = gdo2[i];
-            div.innerText = div.innerText.replace("rows", "行");
-        }
-    }
+    // 网页已经没有行数和尺寸功能
+    // // 展示行数
+    // var gdo2 = document.getElementById("gdo2").querySelectorAll("div");
+    // for (const i in gdo2) {
+    //     if (Object.hasOwnProperty.call(gdo2, i)) {
+    //         const div = gdo2[i];
+    //         div.innerText = div.innerText.replace("rows", "行");
+    //     }
+    // }
 
-    // 图片尺寸
-    var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
-    gdo4[0].innerText = "小图";
-    gdo4[1].innerText = "大图";
+    // // 图片尺寸
+    // var gdo4 = document.getElementById("gdo4").querySelectorAll("div");
+    // gdo4[0].innerText = "小图";
+    // gdo4[1].innerText = "大图";
 
 
     // 评论翻译

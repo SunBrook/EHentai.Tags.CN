@@ -26,38 +26,38 @@ function uconfigPage() {
     // Archiver Settings
     uconfigPageArchiverSettings(settingH2s[3]);
 
-    // Front Page Settings
+    // Front Page / Search Settings
     uconfigPageFrontPageSettings(settingH2s[4]);
 
     // Favorites
     uconfigPageFavorites(settingH2s[5]);
 
-    // Ratings
-    uconfigPageRatings(settingH2s[6]);
-
-    // Tag Filtering Threshold
-    uconfigPageTagFilteringThreshold(settingH2s[7]);
-
-    // Tag Watching Threshold
-    uconfigTagWatchingThreshold(settingH2s[8]);
-
-    // Show Filtered Removal Count  exhentai
-    uconfigPageShowFilteredRemovalCount(settingH2s[9]);
-
-    // Excluded Languages
-    uconfigTagExcludedLanguages(settingH2s[10]);
-
-    // Excluded Uploaders
-    uconfigPageExcludedUploaders(settingH2s[11]);
-
     // Search Result Count
-    uconfigPageSearchResultCount(settingH2s[12]);
+    uconfigPageSearchResultCount(settingH2s[6]);
 
     // Thumbnail Settings
-    uconfigPageThumbnailSettings(settingH2s[13]);
+    uconfigPageThumbnailSettings(settingH2s[7]);
 
     // Thumbnail Scaling
-    uconfigPageThumbnailScaling(settingH2s[14]);
+    uconfigPageThumbnailScaling(settingH2s[8]);
+
+    // Ratings
+    uconfigPageRatings(settingH2s[9]);
+
+    // Tag Watching Threshold
+    uconfigTagWatchingThreshold(settingH2s[10]);
+
+    // Tag Filtering Threshold
+    uconfigPageTagFilteringThreshold(settingH2s[11]);
+
+    // Show Filtered Removal Count  exhentai
+    uconfigPageShowFilteredRemovalCount(settingH2s[12]);
+
+    // Excluded Languages
+    uconfigTagExcludedLanguages(settingH2s[13]);
+
+    // Excluded Uploaders
+    uconfigPageExcludedUploaders(settingH2s[14]);
 
     // Viewport Override
     uconfigPageViewportOverride(settingH2s[15]);
@@ -76,8 +76,6 @@ function uconfigPage() {
 
     // 保存更改
     contentForm.lastElementChild.children[0].value = "保存修改";
-
-
 }
 
 // 头部翻译
@@ -268,9 +266,18 @@ function uconfigImageSizeSettings(titleH2) {
         }
     }
 
-    var imgZoomDiv = imgResolutionDiv.nextElementSibling;
+    // 图片质量大小
+    var imgQuality = imgResolutionDiv.nextElementSibling.nextElementSibling;
+    var imgQualityP = imgQuality.children[0];
+    imgQualityP.innerText = "2. 使用原始图像而不是重新采样的版本？如果您选择的水平分辨率不同于上面的“自动”，并且有问题的图像更宽，或者原始图像大于10 MiB（对于一年以上的画廊，则为4 MiB），则仍将使用重新采样的图像。";
+    var imgQualityRadios = imgQualityP.nextElementSibling.children;
+    imgQualityRadios[0].children[0].childNodes[2].data = " 首选重新采样的图像";
+    imgQualityRadios[1].children[0].childNodes[2].data = " 偏好原始图像（需要Source Nexus额外福利或银星）";
+
+    // 图片分辨率
+    var imgZoomDiv = imgQuality.nextElementSibling;
     var imgZoomP = imgZoomDiv.children[0];
-    imgZoomP.innerText = "2. 虽然该网站会自动缩小图像以适应您的屏幕宽度，但您也可以手动限制图像的最大显示尺寸。就像自动缩放一样，这不会重新采样图像，因为调整大小是在浏览器端完成的。（0 = 无限制）";
+    imgZoomP.innerText = "3. 虽然该网站会自动缩小图像以适应您的屏幕宽度，但您也可以手动限制图像的最大显示尺寸。就像自动缩放一样，这不会重新采样图像，因为调整大小是在浏览器端完成的。（0 = 无限制）";
     var imgZoomTds = imgZoomP.nextElementSibling.querySelectorAll("td");
     imgZoomTds[0].innerText = "水平缩放：";
     imgZoomTds[1].childNodes[1].data = " 像素";
@@ -307,9 +314,28 @@ function uconfigPageArchiverSettings(titleH2) {
 // 首页设置
 function uconfigPageFrontPageSettings(titleH2) {
     titleH2.innerText = "-- 首页 / 搜索设置 --";
-    var displayWayDiv = titleH2.nextElementSibling;
+
+    // 首页作品分类
+    var displayCategoryDiv = titleH2.nextElementSibling;
+    var displayCategoryP = displayCategoryDiv.querySelector("p");
+    displayCategoryP.innerText = "1. 默认情况下，您希望在首页和搜索中显示哪些类别？";
+    var categoryDiv = displayCategoryP.nextElementSibling.children;
+    categoryDiv[0].lastElementChild.innerText = "同人志";
+    categoryDiv[1].lastElementChild.innerText = "漫画";
+    categoryDiv[2].lastElementChild.innerText = "艺术家 CG";
+    categoryDiv[3].lastElementChild.innerText = "游戏 CG";
+    categoryDiv[4].lastElementChild.innerText = "西方风格";
+    categoryDiv[5].lastElementChild.innerText = "无 H 风格";
+    categoryDiv[6].lastElementChild.innerText = "图像集";
+    categoryDiv[7].lastElementChild.innerText = "角色扮演";
+    categoryDiv[8].lastElementChild.innerText = "亚洲色情";
+    categoryDiv[9].lastElementChild.innerText = "杂项";
+
+
+    // 首页展示方式
+    var displayWayDiv = titleH2.nextElementSibling.nextElementSibling;
     var p = displayWayDiv.querySelector("p");
-    p.innerText = "1. 你想以哪种方式浏览首页?";
+    p.innerText = "2. 你想以哪种方式浏览首页?";
     var displayWayRadios = p.nextElementSibling.children;
     displayWayRadios[0].children[0].childNodes[2].data = "标题 + 悬浮图";
     displayWayRadios[1].children[0].childNodes[2].data = "标题 + 悬浮图 + 账号收藏标签";
@@ -319,22 +345,10 @@ function uconfigPageFrontPageSettings(titleH2) {
 
     var bookTypeFilterDiv = displayWayDiv.nextElementSibling;
     var bookTypeFilterP = bookTypeFilterDiv.children[0];
-    bookTypeFilterP.innerText = "2. 是否显示搜索范围快速跳转?";
+    bookTypeFilterP.innerText = "3. 您希望搜索范围指示器采用哪种显示样式?";
     var displayStyleRadios = bookTypeFilterP.nextElementSibling.children;
     displayStyleRadios[0].children[0].childNodes[2].data = "显示";
     displayStyleRadios[1].children[0].childNodes[2].data = "禁用";
-    var bookTypeFilterBtnsDiv = bookTypeFilterDiv.nextElementSibling;
-    var bookTypeFilterBtnsP = bookTypeFilterBtnsDiv.children[0];
-    bookTypeFilterBtnsP.innerText = "3. 你希望首页和搜索范围默认包含或排除哪些作品类型?";
-    var bookTypeFilterBtns = bookTypeFilterBtnsDiv.querySelectorAll("div.cs");
-    for (const i in bookTypeFilterBtns) {
-        if (Object.hasOwnProperty.call(bookTypeFilterBtns, i)) {
-            const bookType = bookTypeFilterBtns[i];
-            if (bookTypeData[bookType.innerText]) {
-                bookType.innerText = bookTypeData[bookType.innerText];
-            }
-        }
-    }
 }
 
 // 收藏设置
@@ -351,14 +365,16 @@ function uconfigPageFavorites(titleH2) {
     orderRadios[1].children[0].childNodes[2].data = "按用户收藏时间排序";
 }
 
-// 评分设置
-function uconfigPageRatings(titleH2) {
-    titleH2.innerText = "-- 评分设置 --";
-    var rateingDiv = titleH2.nextElementSibling;
-    var p = rateingDiv.querySelector("p");
-    p.innerText = "1. 每个英文字母代表每颗星的颜色，请使用 R / G / B / Y（红 / 绿 / 蓝 / 黄）组合你的评分颜色。";
-    var rateinglabel = rateingDiv.querySelectorAll("td")[1];
-    rateinglabel.innerText = "默认设置下，作品的评分设置是 RRGGB，对应分数和颜色显示：2 星及以下显示红星，2.5 ~ 4 星显示为绿星，4.5 ~ 5 星显示为蓝星。你可以设置为其他颜色组合。";
+// 搜索结果数量
+function uconfigPageSearchResultCount(titleH2) {
+    titleH2.innerText = "-- 搜索结果数量 --";
+    var searchCountDiv = titleH2.nextElementSibling;
+    var p = searchCountDiv.querySelector("p");
+    p.innerText = "1. 对于索引/搜索页面和种子搜索页面，您希望每页有多少结果？（Hath Perk：需要页面放大）";
+    var searchCountRadios = p.nextElementSibling.children;
+    searchCountRadios[0].children[0].childNodes[2].data = "25 条";
+    searchCountRadios[1].children[0].childNodes[2].data = "50 条";
+    searchCountRadios[2].children[0].childNodes[2].data = "100 条";
 }
 
 // 标签组设置
@@ -529,6 +545,16 @@ function uconfigPageThumbnailScaling(titleH2) {
     titleH2.innerText = "-- 缩略图缩放 --";
     var thumbScaleLabel = titleH2.nextElementSibling.querySelectorAll("td")[1];
     thumbScaleLabel.innerText = "缩略图和扩展图库列表视图上的缩略图可以缩放到 75% 到 150% 之间的自定义值。";
+}
+
+// 评分设置
+function uconfigPageRatings(titleH2) {
+    titleH2.innerText = "-- 评分设置 --";
+    var rateingDiv = titleH2.nextElementSibling;
+    var p = rateingDiv.querySelector("p");
+    p.innerText = "1. 每个英文字母代表每颗星的颜色，请使用 R / G / B / Y（红 / 绿 / 蓝 / 黄）组合你的评分颜色。";
+    var rateinglabel = rateingDiv.querySelectorAll("td")[1];
+    rateinglabel.innerText = "默认设置下，作品的评分设置是 RRGGB，对应分数和颜色显示：2 星及以下显示红星，2.5 ~ 4 星显示为绿星，4.5 ~ 5 星显示为蓝星。你可以设置为其他颜色组合。";
 }
 
 // 移动端宽度设置
