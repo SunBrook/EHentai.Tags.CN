@@ -47,7 +47,13 @@ function detailPageTranslate() {
 
     // 上传时间
     trList[0].firstChild.innerText = "上传:";
-
+    // 需要添加一个隐藏的 Posted，用于 E-Hentai Downloader 的逻辑判断，否则会产生误判
+    var td_posted = document.createElement("td");
+    td_posted.classList.add("gdt1");
+    td_posted.style.display = "none";
+    td_posted.innerText = "Posted:";
+    trList[0].firstChild.parentNode.insertBefore(td_posted, trList[0].children[1]);
+    
     // 父级
     trList[1].firstChild.innerText = "父级:";
     if (trList[1].lastChild.innerText == "None") {
@@ -80,6 +86,9 @@ function detailPageTranslate() {
     else {
         trList[6].lastChild.innerText = favoriteText.replace("times", "次");
     }
+
+
+
 
     // 评分
     var trRateList = document.getElementById("gdr").querySelectorAll("tr");
