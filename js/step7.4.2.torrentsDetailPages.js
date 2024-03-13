@@ -2,20 +2,21 @@
 
 function torrentsDetailPages() {
 
-    // 判断是哪个页面
-    var forms = document.getElementsByTagName("form");
-    var inputs = forms[forms.length - 1].querySelectorAll("input");
-    var submitBtn = inputs[inputs.length - 1];
-    if (submitBtn.value == "Back to Index") {
-        // 详情页
-        submitBtn.value = "返回";
-        torrentsDetailInfo();
+    torrentsDetailIndex();
 
-    } else if (submitBtn.value == "Upload Torrent") {
-        // 首页
-        submitBtn.value = "上传种子";
-        torrentsDetailIndex();
-    }
+    // var forms = document.getElementsByTagName("form");
+    // var inputs = forms[forms.length - 1].querySelectorAll("input");
+    // var submitBtn = inputs[inputs.length - 1];
+    // if (submitBtn.value == "Back to Index") {
+    //     // 详情页
+    //     submitBtn.value = "返回";
+    //     torrentsDetailInfo();
+
+    // } else if (submitBtn.value == "Upload Torrent") {
+    //     // 首页
+    //     submitBtn.value = "上传种子";
+    //     torrentsDetailIndex();
+    // }
 }
 
 function torrentsDetailInfo() {
@@ -174,8 +175,13 @@ function torrentsDetailIndex() {
     // 翻译找到种子数量
     var torrentinfo = document.getElementById("torrentinfo");
     var torrentCount = torrentinfo.children[0].children[1];
-    var count = torrentCount.innerText.replace("torrent was found for this gallery.", "").replace("torrents were found for this gallery.", "");
-    torrentCount.innerText = `本作品共有 ${count} 个种子。`
+
+
+
+    // var count = torrentCount.innerText.replace("torrent was found for this gallery.", "").replace("torrents were found for this gallery.", "");
+    // torrentCount.innerText = `本作品共有 ${count} 个种子。`
+
+
 
     // 逐个翻译种子模块说明
     var torrentForms = torrentinfo.children[0].querySelectorAll("form");
@@ -195,11 +201,18 @@ function torrentsDetailIndex() {
     }
 
     // 翻译底部
-    var bottomDiv = torrentinfo.children[1].children[0];
-    bottomDiv.children[0].innerText = "新种子：";
-    bottomDiv.children[0].nextSibling.textContent = "你可以在这里为本作品上传种子，种子文件最大大小为 10 MB";
-    bottomDiv.children[1].nextSibling.textContent = "如果你自己创建种子，请将其设置为 AnnounceTracker：";
-    bottomDiv.children[3].nextSibling.textContent = "请注意，你必须在上传后从该站点下载私有种子，以便记录统计信息。";
+    if (torrentForms.length > 0 && torrentinfo.children[1]) {
+        var bottomDiv = torrentinfo.children[1].children[0];
+        bottomDiv.children[0].innerText = "新种子：";
+        bottomDiv.children[0].nextSibling.textContent = "你可以在这里为本作品上传种子，种子文件最大大小为 10 MB";
+        bottomDiv.children[1].nextSibling.textContent = "如果你自己创建种子，请将其设置为 AnnounceTracker：";
+        bottomDiv.children[3].nextSibling.textContent = "请注意，你必须在上传后从该站点下载私有种子，以便记录统计信息。";
+
+        var uploadForm = torrentinfo.children[1].children[1];
+        uploadForm.children[0].children[2].value = "上传种子";
+    }
+
+    // TODO 种子详情
 
     // 关闭窗口
     closeWindow();

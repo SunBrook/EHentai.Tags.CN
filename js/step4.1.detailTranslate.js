@@ -308,9 +308,13 @@ function detailPageTranslate() {
     postnewcomment.children[0].innerText = " 评 论 ";
     var formDiv = document.getElementById("formdiv");
     var mycommentInput = formDiv.querySelector("textarea");
-    mycommentInput.setAttribute("placeholder", "在此处输入您的评论，然后点击发表评论。如果最后发布的评论是您的，则此评论将附加到该帖子中。");
+    if (mycommentInput) {
+        mycommentInput.setAttribute("placeholder", "在此处输入您的评论，然后点击发表评论。如果最后发布的评论是您的，则此评论将附加到该帖子中。");
+    }
     var mycommentSubmit = formDiv.querySelector("input");
-    mycommentSubmit.value = "发表评论";
+    if (mycommentSubmit) {
+        mycommentSubmit.value = "发表评论";
+    }
 }
 
 function edit_comment_copy(b) {
